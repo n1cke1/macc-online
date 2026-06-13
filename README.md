@@ -7,15 +7,14 @@
 электроэнергии, WACC) — и кривая **пересчитывается в браузере** в реальном времени.
 
 > ⚠️ **Это сценарный конструктор, а не прогноз.** Каждый вид привязан к датированной,
-> «отпечатанной» версии модели. Цифры показывают, *что было бы при заданных допущениях* —
-> не предсказание будущего.
+> «отпечатанной» версии модели. Цифры показывают, *что было бы при заданных допущениях*.
 
-**Текущая версия модели:** `kz-53ba0d602773` · источник `MACC_KZ_2026-05-29.xlsx`
+**Текущая версия модели:** `kz-4c2d4a8b30a3` · источник `MACC_KZ_2026-05-29.xlsx`
 Сводно: суммарное сокращение ≈ **214 353 кт CO₂-экв/год**, средневзвешенный MAC ≈ **95.6 USD/т**.
 
 ## Что умеет
 
-- 📊 **Современная MACC-кривая** (26 проектов по 5 секторам IPCC), сортировка по MAC.
+- 📊 **Верхнеуровневая MACC-кривая** (26 проектов по 5 секторам IPCC), сортировка по MAC.
 - 🎚️ **Живой пересчёт**: ползунки цен угля/газа/электроэнергии и WACC — бары пересортируются
   при отпускании ползунка.
 - 🔍 **Drill-down** по каждому проекту: CAPEX/OPEX, NPV, физические индикаторы масштаба,
@@ -27,15 +26,14 @@
   комментарии-«якоря» к кривой / проекту / сценарию / конкретному допущению) — *выключается
   одним флагом*, ядро работает и без него.
 
-## Почему «открытая» — это архитектура, а не лозунг
+## Архитектура
 
 1. **Статичное ядро без бэкенда.** Кривая, пересчёт, drill-down, URL-сценарии и экспорт
    работают как чистый статический бандл. Если сервер совместной работы выключен — инструмент
    полностью функционален (скрыты только комментарии). Ядро **никогда** не импортирует
    Supabase-клиент.
-2. **Опубликованный «якорь доверия».** Кривую можно проверить третьей стороной — мы публикуем
-   исходные данные, ETL и golden-тест (см. ниже).
-3. **Честная рамка.** Сценарный конструктор, а не прогноз; каждый вид привязан к версии модели.
+2. **Информация полностью доступна для проверки.** Кривую можно проверить третьей стороной — публикуются
+   исходные данные, ETL и тесты (см. ниже).
 
 ## Проверка кривой (trust anchor)
 
@@ -66,21 +64,9 @@ npm run golden               # → PASS, 188/188 проверок
 - **Фронтенд:** Next.js 15 (App Router, **static export**) + React 18.3 + TypeScript +
   Tailwind + [Visx](https://airbnb.io/visx/) (график) + [Zustand](https://github.com/pmndrs/zustand)
   (состояние) + [next-intl](https://next-intl-docs.vercel.app/) (`/[locale]`, ru/en).
-- **Совместная работа (опционально):** [Supabase](https://supabase.com/) (Postgres + Auth + RLS),
+- **Совместная работа:** [Supabase](https://supabase.com/) (Postgres + Auth + RLS),
   OSS и self-hostable.
-- **Хостинг:** Cloudflare Pages (статическое ядро). Работает на бесплатных тарифах за **$0/мес**.
-
-## Запуск локально
-
-```bash
-npm install
-npm run dev        # http://localhost:3000  → редирект на /ru/
-npm run build      # статический сайт в out/
-```
-
-Слой совместной работы по умолчанию выключен. Чтобы включить — скопируйте `.env.example`
-в `.env.local` и заполните `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-(оба значения публичные, защищены RLS). См. [`supabase/README.md`](supabase/README.md).
+- **Хостинг:** Cloudflare Pages (статическое ядро).
 
 ## Деплой
 
@@ -103,15 +89,14 @@ into an **interactive curve**: change global assumptions (coal / gas / electrici
 and the curve **recalculates in the browser** in real time.
 
 > ⚠️ **This is a scenario explorer, not a forecast.** Every view is tied to a dated, fingerprinted
-> model version. The numbers show *what it would look like under the given assumptions* — not a
-> prediction of the future.
+> model version. The numbers show *what it would look like under the given assumptions*.
 
-**Current model version:** `kz-53ba0d602773` · source `MACC_KZ_2026-05-29.xlsx`
+**Current model version:** `kz-4c2d4a8b30a3` · source `MACC_KZ_2026-05-29.xlsx`
 Totals: total abatement ≈ **214,353 kt CO₂eq/yr**, weighted-avg MAC ≈ **95.6 USD/t**.
 
 ## Features
 
-- 📊 **Modern MACC chart** (26 projects across 5 IPCC sectors), sorted by MAC.
+- 📊 **High-level MACC chart** (26 projects across 5 IPCC sectors), sorted by MAC.
 - 🎚️ **Live recalc**: coal/gas/electricity price + WACC sliders; bars re-sort on slider release.
 - 🔍 **Per-project drill-down**: CAPEX/OPEX, NPV, physical-scale indicators, an "Assumptions" section.
 - 🔗 **URL-encoded scenarios** — share a link and the other person sees exactly your assumption set.
@@ -121,14 +106,13 @@ Totals: total abatement ≈ **214,353 kt CO₂eq/yr**, weighted-avg MAC ≈ **95
   on the curve / project / scenario / a specific assumption) — feature-flagged off; the core works
   without it.
 
-## Openness as architecture
+## Architecture
 
 1. **Static core, zero backend.** Chart, recalc, drill-down, URL scenarios and exports run as a pure
    static bundle. If the collaboration backend is absent, the tool still fully works (comments just
    hidden). The core **never** imports the Supabase client.
-2. **Published trust anchor.** The curve is third-party verifiable — we ship the source data, the ETL
-   and the golden test (below).
-3. **Honest framing.** A scenario explorer, not a forecast; every view tied to a model version.
+2. **Fully verifiable, open information.** The curve is third-party verifiable — the source data, the
+   ETL and tests are published (below).
 
 ## Verifying the curve (trust anchor)
 
@@ -153,20 +137,8 @@ The model uses only `IF`, `PV`, `SUM` (+ `^` and arithmetic):
 - **Frontend:** Next.js 15 (App Router, static export) + React 18.3 + TypeScript + Tailwind +
   [Visx](https://airbnb.io/visx/) + [Zustand](https://github.com/pmndrs/zustand) +
   [next-intl](https://next-intl-docs.vercel.app/) (`/[locale]`, ru/en).
-- **Collaboration (optional):** [Supabase](https://supabase.com/) (Postgres + Auth + RLS), OSS / self-hostable.
-- **Hosting:** Cloudflare Pages for the static core. Runs at **$0/month** on free tiers.
-
-## Run locally
-
-```bash
-npm install
-npm run dev        # http://localhost:3000  → redirects to /ru/
-npm run build      # static site in out/
-```
-
-The collaboration layer is off by default. To enable it, copy `.env.example` to `.env.local`
-and fill in `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` (both public, RLS-guarded).
-See [`supabase/README.md`](supabase/README.md).
+- **Collaboration:** [Supabase](https://supabase.com/) (Postgres + Auth + RLS), OSS / self-hostable.
+- **Hosting:** Cloudflare Pages for the static core.
 
 ## Deploy
 
