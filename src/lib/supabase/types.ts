@@ -3,7 +3,7 @@
 // the app's. These types are imported ONLY by the collaboration layer.
 
 export type UserRole = 'user' | 'reviewer' | 'owner';
-export type CommentTarget = 'curve' | 'project' | 'assumption' | 'scenario';
+export type CommentTarget = 'curve' | 'project' | 'assumption' | 'scenario' | 'object';
 export type CommentStatus = 'open' | 'accepted' | 'rejected' | 'wontfix';
 export type ScenarioVisibility = 'private' | 'unlisted' | 'public';
 

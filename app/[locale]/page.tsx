@@ -13,7 +13,7 @@ import AssumptionsPanel from '@/components/assumptions/AssumptionsPanel';
 import ExportBar from '@/components/assumptions/ExportBar';
 import ScenarioUrlSync from '@/components/assumptions/ScenarioUrlSync';
 import AuthButtonGate from '@/components/collab/AuthButtonGate';
-import AnchorComments from '@/components/collab/AnchorComments';
+import AllComments from '@/components/collab/AllComments';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -66,12 +66,9 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <MaccChart />
         </section>
 
-        {/* Curve-level discussion (collab layer; renders nothing when backend off) */}
-        <AnchorComments
-          type="curve"
-          id="kz"
-          className="rounded-lg border border-line bg-white p-4"
-        />
+        {/* Global comments feed — every comment, tagged with its anchor (collab
+            layer; renders nothing when backend off) */}
+        <AllComments className="rounded-lg border border-line bg-white p-4" />
       </div>
 
       <ProjectDrilldown />

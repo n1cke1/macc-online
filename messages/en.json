@@ -72,6 +72,13 @@
   "collab": {
     "threadTitle": "Review",
     "discuss": "Discuss this assumption",
+    "addComment": "Comment on this value",
+    "viewComments": "{n} comment(s) — click to view",
+    "feedTitle": "All comments",
+    "feedComposerPlaceholder": "General comment on the curve…",
+    "anchorCurve": "Curve (general)",
+    "anchorAssumption": "Assumption",
+    "anchorScenario": "Scenario",
     "loading": "Loading comments…",
     "offline": "Comments are offline.",
     "noComments": "No comments yet. Start the discussion.",

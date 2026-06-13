@@ -5,6 +5,7 @@ import type { CostItem, PhysicalItem } from '@data/schema';
 import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
 import { useUi, useScenario } from '@/store';
 import AnchorComments from '@/components/collab/AnchorComments';
+import Commentable from '@/components/collab/Commentable';
 
 export default function ProjectDrilldown() {
   const locale = useLocale() as 'ru' | 'en';
@@ -15,15 +16,15 @@ export default function ProjectDrilldown() {
   if (!p) return null;
 
   const totalEmissionsKt = dataset.meta.totalEmissionsMt * 1000;
-  const rows: [string, string][] = [
-    [t('sector'), sectorLabel(p.sector, locale)],
-    [t('abatement'), `${fmtMt(p.abatementKt, locale)} Mt/${locale === 'en' ? 'yr' : 'год'}`],
-    [t('shareNational'), fmtPct(p.abatementKt / totalEmissionsKt, locale)],
-    [t('mac'), `${fmtMac(p.mac, locale)} USD/${locale === 'en' ? 't' : 'т'}`],
-    [t('capex'), `${fmtInt(p.capex, locale)} mUSD`],
-    [t('opex'), `${fmtInt(p.opex, locale)} mUSD/${locale === 'en' ? 'yr' : 'год'}`],
-    [t('duration'), `${p.durationYrs} ${locale === 'en' ? 'yr' : 'лет'}`],
-    [t('npv'), `${fmtInt(p.npv, locale)} mUSD`],
+  const rows: { key: string; label: string; value: string }[] = [
+    { key: 'sector', label: t('sector'), value: sectorLabel(p.sector, locale) },
+    { key: 'abatement', label: t('abatement'), value: `${fmtMt(p.abatementKt, locale)} Mt/${locale === 'en' ? 'yr' : 'год'}` },
+    { key: 'shareNational', label: t('shareNational'), value: fmtPct(p.abatementKt / totalEmissionsKt, locale) },
+    { key: 'mac', label: t('mac'), value: `${fmtMac(p.mac, locale)} USD/${locale === 'en' ? 't' : 'т'}` },
+    { key: 'capex', label: t('capex'), value: `${fmtInt(p.capex, locale)} mUSD` },
+    { key: 'opex', label: t('opex'), value: `${fmtInt(p.opex, locale)} mUSD/${locale === 'en' ? 'yr' : 'год'}` },
+    { key: 'duration', label: t('duration'), value: `${p.durationYrs} ${locale === 'en' ? 'yr' : 'лет'}` },
+    { key: 'npv', label: t('npv'), value: `${fmtInt(p.npv, locale)} mUSD` },
   ];
 
   return (
@@ -38,27 +39,33 @@ export default function ProjectDrilldown() {
         </button>
       </div>
       <dl className="divide-y divide-line">
-        {rows.map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-4 py-2 text-sm">
-            <dt className="text-muted">{k}</dt>
-            <dd className="text-right font-medium tabular-nums">{v}</dd>
+        {rows.map((r) => (
+          <div key={r.key} className="flex justify-between gap-4 py-2 text-sm">
+            <dt className="text-muted">{r.label}</dt>
+            <dd className="text-right font-medium tabular-nums">
+              <Commentable id={`project:${p.id}:${r.key}`} label={`${pick(p.name, locale)} · ${r.label}`}>
+                {r.value}
+              </Commentable>
+            </dd>
           </div>
         ))}
       </dl>
 
-      <PhysicalScale title={t('physicalScale')} items={p.physicalItems} locale={locale} />
+      <PhysicalScale title={t('physicalScale')} items={p.physicalItems} locale={locale} projectId={p.id} />
 
       <CostBreakdown
         title={`${t('capex')}, mUSD`}
         items={p.capexItems}
         total={p.capex}
         locale={locale}
+        projectId={p.id}
       />
       <CostBreakdown
         title={`${t('opex')}, mUSD/${locale === 'en' ? 'yr' : 'год'}`}
         items={p.opexItems}
         total={p.opex}
         locale={locale}
+        projectId={p.id}
       />
 
       <p className="mt-4 rounded-md bg-slate-50 px-3 py-2 text-xs text-muted">{t('provenance')}</p>
@@ -73,11 +80,13 @@ function CostBreakdown({
   items,
   total,
   locale,
+  projectId,
 }: {
   title: string;
   items?: CostItem[];
   total: number;
   locale: 'ru' | 'en';
+  projectId: number;
 }) {
   if (!items || items.length === 0) return null;
   const num = (v: number) => fmt(v, locale, { maximumFractionDigits: 1 });
@@ -88,7 +97,9 @@ function CostBreakdown({
         {items.map((it) => (
           <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
             <span className="text-slate-700">{pick(it.label, locale)}</span>
-            <span className={`tabular-nums ${it.value < 0 ? 'text-green-600' : ''}`}>{num(it.value)}</span>
+            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
+              <span className={`tabular-nums ${it.value < 0 ? 'text-green-600' : ''}`}>{num(it.value)}</span>
+            </Commentable>
           </li>
         ))}
         <li className="flex justify-between gap-3 bg-slate-50 px-3 py-1.5 text-sm font-semibold">
@@ -105,10 +116,12 @@ function PhysicalScale({
   title,
   items,
   locale,
+  projectId,
 }: {
   title: string;
   items?: PhysicalItem[];
   locale: 'ru' | 'en';
+  projectId: number;
 }) {
   if (!items || items.length === 0) return null;
   return (
@@ -118,10 +131,12 @@ function PhysicalScale({
         {items.map((it) => (
           <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
             <span className="text-slate-700">{pick(it.label, locale)}</span>
-            <span className="shrink-0 tabular-nums">
-              {fmt(it.value, locale, { maximumFractionDigits: Math.abs(it.value) < 100 ? 1 : 0 })}{' '}
-              <span className="text-muted">{formatUnit(it.unit, locale)}</span>
-            </span>
+            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
+              <span className="shrink-0 tabular-nums">
+                {fmt(it.value, locale, { maximumFractionDigits: Math.abs(it.value) < 100 ? 1 : 0 })}{' '}
+                <span className="text-muted">{formatUnit(it.unit, locale)}</span>
+              </span>
+            </Commentable>
           </li>
         ))}
       </ul>

@@ -10,15 +10,18 @@ import {
   setPinned,
   deleteComment,
 } from '@/lib/supabase/comments';
+import { refreshSummaries } from '@/lib/supabase/summaries';
 import type { Anchor, CommentStatus, CommentWithAuthor } from '@/lib/supabase/types';
 import CommentItem from './CommentItem';
 import CommentComposer from './CommentComposer';
 
 /**
  * A self-contained comment thread for one anchor (curve / project / assumption /
- * scenario). Loaded lazily by `AnchorComments` only when the collab layer is on.
+ * scenario / object). Loaded lazily by `AnchorComments` / `Commentable` only when
+ * the collab layer is on. `title` overrides the default heading (e.g. the name of
+ * the specific value being discussed in a Commentable popover).
  */
-export default function CommentThread({ anchor }: { anchor: Anchor }) {
+export default function CommentThread({ anchor, title }: { anchor: Anchor; title?: string }) {
   const t = useTranslations('collab');
   const { session, profile } = useAuth();
   const [comments, setComments] = useState<CommentWithAuthor[] | null>(null);
@@ -42,6 +45,7 @@ export default function CommentThread({ anchor }: { anchor: Anchor }) {
     if (!userId) return;
     await postComment({ anchor, body, parentId, modelVersion, authorId: userId });
     await reload();
+    void refreshSummaries(); // keep presence badges in sync
   };
 
   const onSetStatus = async (id: string, status: CommentStatus) => {
@@ -55,6 +59,7 @@ export default function CommentThread({ anchor }: { anchor: Anchor }) {
   const onDelete = async (id: string) => {
     await deleteComment(id);
     await reload();
+    void refreshSummaries();
   };
 
   if (error) {
@@ -83,7 +88,8 @@ export default function CommentThread({ anchor }: { anchor: Anchor }) {
   return (
     <div className="space-y-3">
       <h4 className="text-xs font-semibold uppercase tracking-wide text-muted">
-        {t('threadTitle')} {comments.length > 0 && <span className="text-slate-400">({comments.length})</span>}
+        {title ?? t('threadTitle')}{' '}
+        {comments.length > 0 && <span className="text-slate-400">({comments.length})</span>}
       </h4>
 
       {userId ? (
