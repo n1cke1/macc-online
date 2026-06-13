@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "country": "kz",
-  "modelVersion": "kz-732cf2835cb9",
+  "modelVersion": "kz-53ba0d602773",
   "meta": {
     "sourceFile": "MACC_KZ_29052026_rev.xlsx",
     "sourceDate": "2026-05-29",
@@ -354,10 +354,10 @@
       "capex": 180,
       "opex": -66,
       "durationYrs": 10,
-      "abatementKt": 4280,
+      "abatementKt": 1160,
       "npv": -192.9147198751172,
-      "discCo2Kt": 24182.954561598515,
-      "mac": -7.977301507296277,
+      "discCo2Kt": 6554.258712956605,
+      "mac": -29.433491768300062,
       "sourceCells": {
         "capex": "Расчёты!C670",
         "opex": "Расчёты!C671",
@@ -411,8 +411,60 @@
           "cell": "Расчёты!C655"
         }
       ],
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C654"
+        },
+        {
+          "label": {
+            "ru": "Площадь под точное земледелие",
+            "en": "Precision-farming area"
+          },
+          "value": 5000,
+          "unit": "тыс. га",
+          "source": "Зерновой пояс",
+          "cell": "Расчёты!C655"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX (GPS, датчики)",
+            "en": ""
+          },
+          "value": 30,
+          "unit": "$/га",
+          "source": "Variable rate application",
+          "cell": "Расчёты!C656"
+        },
+        {
+          "label": {
+            "ru": "Экономия удобрений",
+            "en": "Fertilizer savings"
+          },
+          "value": 15,
+          "unit": "$/га/год",
+          "source": "15-20% снижение нормы",
+          "cell": "Расчёты!C657"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 10,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C658"
+        }
+      ],
       "cumAbatementStartKt": 0.0,
-      "cumAbatementEndKt": 4280.0
+      "cumAbatementEndKt": 1160.0
     },
     {
       "id": 23,
@@ -425,10 +477,10 @@
       "capex": 230,
       "opex": -45.4,
       "durationYrs": 20,
-      "abatementKt": 2140,
+      "abatementKt": 580,
       "npv": -109.1127405444729,
-      "discCo2Kt": 15984.609356061057,
-      "mac": -6.826112425643949,
+      "discCo2Kt": 4332.2773021100065,
+      "mac": -25.186001018755256,
       "sourceCells": {
         "capex": "Расчёты!C694",
         "opex": "Расчёты!C695",
@@ -482,8 +534,60 @@
           "cell": "Расчёты!C679"
         }
       ],
-      "cumAbatementStartKt": 4280.0,
-      "cumAbatementEndKt": 6420.0
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.05,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C678"
+        },
+        {
+          "label": {
+            "ru": "Площадь восстановления",
+            "en": "Restoration area"
+          },
+          "value": 10000,
+          "unit": "тыс. га",
+          "source": "Деградированные пастбища",
+          "cell": "Расчёты!C679"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX восстановления",
+            "en": ""
+          },
+          "value": 20,
+          "unit": "$/га",
+          "source": "Подсев, огораживание",
+          "cell": "Расчёты!C680"
+        },
+        {
+          "label": {
+            "ru": "Экономия кормов",
+            "en": "Feed savings"
+          },
+          "value": 5,
+          "unit": "$/га/год",
+          "source": "Повышение продуктивности",
+          "cell": "Расчёты!C681"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C682"
+        }
+      ],
+      "cumAbatementStartKt": 1160.0,
+      "cumAbatementEndKt": 1740.0
     },
     {
       "id": 15,
@@ -562,8 +666,60 @@
           "cell": "Расчёты!C484"
         }
       ],
-      "cumAbatementStartKt": 6420.0,
-      "cumAbatementEndKt": 13260.0
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C477"
+        },
+        {
+          "label": {
+            "ru": "Объём сжигаемого ПНГ",
+            "en": ""
+          },
+          "value": 3,
+          "unit": "млрд м³/год",
+          "source": "МЭ РК, World Bank GGFR",
+          "cell": "Расчёты!C478"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX ГТЭС / компрессии",
+            "en": ""
+          },
+          "value": 500,
+          "unit": "$/тыс.м³/год",
+          "source": "Малые ГТУ",
+          "cell": "Расчёты!C479"
+        },
+        {
+          "label": {
+            "ru": "Выручка от электроэнергии",
+            "en": ""
+          },
+          "value": 40,
+          "unit": "$/МВтч",
+          "source": "Продажа в сеть",
+          "cell": "Расчёты!C480"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C481"
+        }
+      ],
+      "cumAbatementStartKt": 1740.0,
+      "cumAbatementEndKt": 8580.0
     },
     {
       "id": 8,
@@ -691,8 +847,110 @@
           "cell": "Расчёты!C115"
         }
       ],
-      "cumAbatementStartKt": 13260.0,
-      "cumAbatementEndKt": 17289.6
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Уд. CAPEX угольная ТЭЦ",
+            "en": ""
+          },
+          "value": 3000,
+          "unit": "$/кВт",
+          "source": "",
+          "cell": "Расчёты!C96"
+        },
+        {
+          "label": {
+            "ru": "КПД",
+            "en": "Efficiency"
+          },
+          "value": 0.47,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C98"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX электрокотельная",
+            "en": ""
+          },
+          "value": 200,
+          "unit": "$/кВт(т)",
+          "source": "Водогрейная котельная",
+          "cell": "Расчёты!C99"
+        },
+        {
+          "label": {
+            "ru": "КИУМ ТЭЦ",
+            "en": "CHP capacity factor"
+          },
+          "value": 0.55,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C101"
+        },
+        {
+          "label": {
+            "ru": "КИУМ пикера",
+            "en": "Peaker capacity factor"
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C102"
+        },
+        {
+          "label": {
+            "ru": "КИУМ по теплу",
+            "en": "Heat capacity factor"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C103"
+        },
+        {
+          "label": {
+            "ru": "Тепловые мощности ТЭЦ",
+            "en": "CHP heat capacity"
+          },
+          "value": 0.4,
+          "unit": "",
+          "source": "Условое соотношение тепловой нагрузки к электрической",
+          "cell": "Расчёты!C104"
+        },
+        {
+          "label": {
+            "ru": "Стоимость присоединения пикеров к сетям",
+            "en": ""
+          },
+          "value": 0.15,
+          "unit": "",
+          "source": "от CAPEX",
+          "cell": "Расчёты!C105"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C109"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТЭЦ",
+            "en": "CHP capacity"
+          },
+          "value": 1000,
+          "unit": "МВт",
+          "source": "",
+          "cell": "Расчёты!C115"
+        }
+      ],
+      "cumAbatementStartKt": 8580.0,
+      "cumAbatementEndKt": 12609.6
     },
     {
       "id": 14,
@@ -762,79 +1020,80 @@
           "cell": "Расчёты!C452"
         }
       ],
-      "cumAbatementStartKt": 17289.6,
-      "cumAbatementEndKt": 25839.6
-    },
-    {
-      "id": 21,
-      "sector": "3",
-      "variant": 4,
-      "name": {
-        "ru": "Улучшение управления навозом (биогаз)",
-        "en": "Improved manure management (biogas)"
-      },
-      "capex": 300,
-      "opex": -13,
-      "durationYrs": 15,
-      "abatementKt": 3424,
-      "npv": 211.45876163695493,
-      "discCo2Kt": 23320.40001192818,
-      "mac": 9.067544361537351,
-      "sourceCells": {
-        "capex": "Расчёты!C646",
-        "opex": "Расчёты!C647",
-        "durationYrs": "Расчёты!C648",
-        "abatementKt": "Расчёты!C649"
-      },
-      "capexItems": [
+      "localInputs": [
         {
           "label": {
-            "ru": "Биогазовые установки",
-            "en": ""
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
           },
-          "value": 250,
-          "cell": "Расчёты!C638"
+          "value": 0.25,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C451"
         },
         {
           "label": {
-            "ru": "Покрытие лагун и инфраструктура",
-            "en": ""
+            "ru": "Кол-во объектов",
+            "en": "Number of facilities"
           },
-          "value": 50,
-          "cell": "Расчёты!C639"
-        }
-      ],
-      "opexItems": [
-        {
-          "label": {
-            "ru": "ТОиР",
-            "en": "O&M"
-          },
-          "value": 12,
-          "cell": "Расчёты!C642"
-        },
-        {
-          "label": {
-            "ru": "Выручка от биогаза",
-            "en": ""
-          },
-          "value": -25,
-          "cell": "Расчёты!C643"
-        }
-      ],
-      "physicalItems": [
-        {
-          "label": {
-            "ru": "Кол-во биогазовых установок",
-            "en": "Number of biogas plants"
-          },
-          "value": 500,
+          "value": 5000,
           "unit": "шт",
-          "cell": "Расчёты!C631"
+          "source": "Скважины, КС, НПЗ. Оценка МЭ РК",
+          "cell": "Расчёты!C452"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX: обследование+ремонт",
+            "en": ""
+          },
+          "value": 8,
+          "unit": "тыс. $/объект",
+          "source": "EPA LDAR cost",
+          "cell": "Расчёты!C453"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX: OGI оборудование",
+            "en": ""
+          },
+          "value": 3,
+          "unit": "тыс. $/объект",
+          "source": "FLIR GF320, распределённый",
+          "cell": "Расчёты!C454"
+        },
+        {
+          "label": {
+            "ru": "Уд. OPEX: мониторинг",
+            "en": ""
+          },
+          "value": 2,
+          "unit": "тыс. $/объект/год",
+          "source": "Персонал + повторные обходы",
+          "cell": "Расчёты!C455"
+        },
+        {
+          "label": {
+            "ru": "Выручка от сохранённого газа",
+            "en": ""
+          },
+          "value": 1.5,
+          "unit": "тыс. $/объект/год",
+          "source": "~$3/MMBTU",
+          "cell": "Расчёты!C456"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 10,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C457"
         }
       ],
-      "cumAbatementStartKt": 25839.6,
-      "cumAbatementEndKt": 29263.6
+      "cumAbatementStartKt": 12609.6,
+      "cumAbatementEndKt": 21159.6
     },
     {
       "id": 16,
@@ -896,8 +1155,50 @@
           "cell": "Расчёты!C509"
         }
       ],
-      "cumAbatementStartKt": 29263.6,
-      "cumAbatementEndKt": 31163.6
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C502"
+        },
+        {
+          "label": {
+            "ru": "CAPEX программы дегазации",
+            "en": ""
+          },
+          "value": 300,
+          "unit": "mUSD",
+          "source": "Караганда, 10-15 шахт",
+          "cell": "Расчёты!C503"
+        },
+        {
+          "label": {
+            "ru": "Выгода от продажи метана",
+            "en": ""
+          },
+          "value": 150,
+          "unit": "$/тыс м3",
+          "source": "",
+          "cell": "Расчёты!C505"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C506"
+        }
+      ],
+      "cumAbatementStartKt": 21159.6,
+      "cumAbatementEndKt": 23059.6
     },
     {
       "id": 26,
@@ -959,8 +1260,60 @@
           "cell": "Расчёты!C731"
         }
       ],
-      "cumAbatementStartKt": 31163.6,
-      "cumAbatementEndKt": 31483.6
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C730"
+        },
+        {
+          "label": {
+            "ru": "Кол-во КОС под модернизацию",
+            "en": ""
+          },
+          "value": 15,
+          "unit": "шт",
+          "source": "Крупные города",
+          "cell": "Расчёты!C731"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX модернизации очистных",
+            "en": ""
+          },
+          "value": 10,
+          "unit": "mUSD/шт",
+          "source": "Аэробная обработка + биогаз",
+          "cell": "Расчёты!C732"
+        },
+        {
+          "label": {
+            "ru": "Экономия энергии от биогаза",
+            "en": ""
+          },
+          "value": 1,
+          "unit": "mUSD/шт/год",
+          "source": "",
+          "cell": "Расчёты!C733"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C734"
+        }
+      ],
+      "cumAbatementStartKt": 23059.6,
+      "cumAbatementEndKt": 23379.6
     },
     {
       "id": 3,
@@ -1030,8 +1383,70 @@
           "cell": "Расчёты!C74"
         }
       ],
-      "cumAbatementStartKt": 31483.6,
-      "cumAbatementEndKt": 59077.600000000006
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C62"
+        },
+        {
+          "label": {
+            "ru": "Доля curtailment",
+            "en": ""
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C64"
+        },
+        {
+          "label": {
+            "ru": "Доля солнца в миксе",
+            "en": ""
+          },
+          "value": 0.25,
+          "unit": "",
+          "source": "Допущение 50/50",
+          "cell": "Расчёты!C67"
+        },
+        {
+          "label": {
+            "ru": "Затраты на сети",
+            "en": ""
+          },
+          "value": 0.15,
+          "unit": "от CAPEX обор.",
+          "source": "Экспертная оценка",
+          "cell": "Расчёты!C68"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C71"
+        },
+        {
+          "label": {
+            "ru": "Установленная мощность ВИЭ",
+            "en": "Installed renewables capacity"
+          },
+          "value": 10000,
+          "unit": "МВт",
+          "source": "дополнительно к базовому плану",
+          "cell": "Расчёты!C74"
+        }
+      ],
+      "cumAbatementStartKt": 23379.6,
+      "cumAbatementEndKt": 50973.600000000006
     },
     {
       "id": 6,
@@ -1144,8 +1559,80 @@
           "cell": "Расчёты!C228"
         }
       ],
-      "cumAbatementStartKt": 59077.600000000006,
-      "cumAbatementEndKt": 64302.600000000006
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Общий объем проивзодства тепла",
+            "en": ""
+          },
+          "value": 95000,
+          "unit": "тыс Гкал",
+          "source": "",
+          "cell": "Расчёты!C211"
+        },
+        {
+          "label": {
+            "ru": "COP теплового насоса",
+            "en": "Heat-pump COP"
+          },
+          "value": 3.5,
+          "unit": "",
+          "source": "Промышленные ТН, зимний режим",
+          "cell": "Расчёты!C213"
+        },
+        {
+          "label": {
+            "ru": "Модернизация сетей теплоснабжения",
+            "en": ""
+          },
+          "value": 0.3,
+          "unit": "от CAPEX ТН",
+          "source": "",
+          "cell": "Расчёты!C215"
+        },
+        {
+          "label": {
+            "ru": "УРУТ на тепло (уголь)",
+            "en": ""
+          },
+          "value": 180,
+          "unit": "кг у.т./Гкал",
+          "source": "",
+          "cell": "Расчёты!C217"
+        },
+        {
+          "label": {
+            "ru": "КИУМ по теплу",
+            "en": "Heat capacity factor"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "Отопительный сезон",
+          "cell": "Расчёты!C220"
+        },
+        {
+          "label": {
+            "ru": "Снижение потерь в теплосетях",
+            "en": "Heat-network loss reduction"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C221"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C223"
+        }
+      ],
+      "cumAbatementStartKt": 50973.600000000006,
+      "cumAbatementEndKt": 56198.600000000006
     },
     {
       "id": 25,
@@ -1233,8 +1720,60 @@
           "cell": "Расчёты!C712"
         }
       ],
-      "cumAbatementStartKt": 64302.600000000006,
-      "cumAbatementEndKt": 64662.600000000006
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C702"
+        },
+        {
+          "label": {
+            "ru": "Кол-во полигонов под дегазацию",
+            "en": ""
+          },
+          "value": 20,
+          "unit": "шт",
+          "source": "Крупные города",
+          "cell": "Расчёты!C703"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX системы дегазации",
+            "en": ""
+          },
+          "value": 5,
+          "unit": "mUSD/полигон",
+          "source": "",
+          "cell": "Расчёты!C704"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX генераторов",
+            "en": ""
+          },
+          "value": 1400,
+          "unit": "$/кВт",
+          "source": "",
+          "cell": "Расчёты!C707"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C709"
+        }
+      ],
+      "cumAbatementStartKt": 56198.600000000006,
+      "cumAbatementEndKt": 56558.600000000006
     },
     {
       "id": 9,
@@ -1296,8 +1835,40 @@
           "cell": "Расчёты!C287"
         }
       ],
-      "cumAbatementStartKt": 64662.600000000006,
-      "cumAbatementEndKt": 82182.6
+      "localInputs": [
+        {
+          "label": {
+            "ru": "CF ожидаемый",
+            "en": "Expected capacity factor"
+          },
+          "value": 0.8,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C286"
+        },
+        {
+          "label": {
+            "ru": "Потенциальная электрическая мощность",
+            "en": "Potential electrical capacity"
+          },
+          "value": 2500,
+          "unit": "МВт",
+          "source": "Металлургия+НПЗ, оценка",
+          "cell": "Расчёты!C287"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C290"
+        }
+      ],
+      "cumAbatementStartKt": 56558.600000000006,
+      "cumAbatementEndKt": 74078.6
     },
     {
       "id": 18,
@@ -1368,8 +1939,80 @@
           "cell": "Расчёты!C557"
         }
       ],
-      "cumAbatementStartKt": 82182.6,
-      "cumAbatementEndKt": 83042.6
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C552"
+        },
+        {
+          "label": {
+            "ru": "Кол-во цементных заводов",
+            "en": "Number of cement plants"
+          },
+          "value": 4,
+          "unit": "шт",
+          "source": "",
+          "cell": "Расчёты!C553"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX модернизации завода",
+            "en": ""
+          },
+          "value": 50,
+          "unit": "mUSD/завод",
+          "source": "Помольные мощности, силосы",
+          "cell": "Расчёты!C554"
+        },
+        {
+          "label": {
+            "ru": "Стоимость добавок (зола, шлак)",
+            "en": ""
+          },
+          "value": 20,
+          "unit": "$/т",
+          "source": "Дешёвые отходы ТЭЦ и металлургии + транспортировка",
+          "cell": "Расчёты!C555"
+        },
+        {
+          "label": {
+            "ru": "Экономия клинкера",
+            "en": "Clinker savings"
+          },
+          "value": 10,
+          "unit": "$/т цемента",
+          "source": "Снижение обжига",
+          "cell": "Расчёты!C556"
+        },
+        {
+          "label": {
+            "ru": "Объём цемента",
+            "en": ""
+          },
+          "value": 10,
+          "unit": "млн т/год",
+          "source": "Производство КЗ",
+          "cell": "Расчёты!C557"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 30,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C558"
+        }
+      ],
+      "cumAbatementStartKt": 74078.6,
+      "cumAbatementEndKt": 74938.6
     },
     {
       "id": 4,
@@ -1489,8 +2132,90 @@
           "cell": "Расчёты!C158"
         }
       ],
-      "cumAbatementStartKt": 83042.6,
-      "cumAbatementEndKt": 111249.8
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Удельный CAPEX модернизации ТЭЦ",
+            "en": ""
+          },
+          "value": 1000,
+          "unit": "$/кВт",
+          "source": "",
+          "cell": "Расчёты!C141"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX переоборудование в котельную",
+            "en": ""
+          },
+          "value": 100,
+          "unit": "$/кВт(т)",
+          "source": "Паровая+водогрейная котельная",
+          "cell": "Расчёты!C143"
+        },
+        {
+          "label": {
+            "ru": "КИУМ ТЭЦ",
+            "en": "CHP capacity factor"
+          },
+          "value": 0.55,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C145"
+        },
+        {
+          "label": {
+            "ru": "КИУМ пикера",
+            "en": "Peaker capacity factor"
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C146"
+        },
+        {
+          "label": {
+            "ru": "КИУМ по теплу",
+            "en": "Heat capacity factor"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C147"
+        },
+        {
+          "label": {
+            "ru": "Тепловая мощности ТЭЦ",
+            "en": ""
+          },
+          "value": 0.4,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C148"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C152"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТЭЦ",
+            "en": "CHP capacity"
+          },
+          "value": 7000,
+          "unit": "МВт",
+          "source": "",
+          "cell": "Расчёты!C158"
+        }
+      ],
+      "cumAbatementStartKt": 74938.6,
+      "cumAbatementEndKt": 103145.8
     },
     {
       "id": 11,
@@ -1595,8 +2320,60 @@
           "cell": "Расчёты!C350"
         }
       ],
-      "cumAbatementStartKt": 111249.8,
-      "cumAbatementEndKt": 120467.04137931035
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Кол-во зданий",
+            "en": "Number of buildings"
+          },
+          "value": 50,
+          "unit": "тыс. шт",
+          "source": "Жилой фонд сов. постройки",
+          "cell": "Расчёты!C346"
+        },
+        {
+          "label": {
+            "ru": "Снижение теплопотребования в домах",
+            "en": ""
+          },
+          "value": 0.5,
+          "unit": "",
+          "source": "30-40% минимум, но для РК скорее всего в 2-3 раза, база очень высокая",
+          "cell": "Расчёты!C347"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 30,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C353"
+        },
+        {
+          "label": {
+            "ru": "Потери в тепловых сетях",
+            "en": "Heat-network losses"
+          },
+          "value": 0.25,
+          "unit": "",
+          "source": "Экспертно - типично для централизованного теплоснабжения с износом",
+          "cell": "Расчёты!C358"
+        },
+        {
+          "label": {
+            "ru": "Снижение эффективности работы ТЭЦ",
+            "en": ""
+          },
+          "value": 0.2,
+          "unit": "",
+          "source": "среднесрочный остаток - пока ТЭЦ не подстроятся по мощностях на новую тепловую нагрузку",
+          "cell": "Расчёты!C359"
+        }
+      ],
+      "cumAbatementStartKt": 103145.8,
+      "cumAbatementEndKt": 112363.04137931035
     },
     {
       "id": 17,
@@ -1675,8 +2452,60 @@
           "cell": "Расчёты!C534"
         }
       ],
-      "cumAbatementStartKt": 120467.04137931035,
-      "cumAbatementEndKt": 125597.04137931035
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.15,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C526"
+        },
+        {
+          "label": {
+            "ru": "Протяжённость газопроводов",
+            "en": "Gas pipeline length"
+          },
+          "value": 20000,
+          "unit": "км",
+          "source": "КазТрансГаз",
+          "cell": "Расчёты!C527"
+        },
+        {
+          "label": {
+            "ru": "Доля подлежащих модернизации",
+            "en": "Share to be retrofitted"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C528"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX модернизации электросетей",
+            "en": ""
+          },
+          "value": 0.1,
+          "unit": "mUSD/км",
+          "source": "Замена уплотнений, КС",
+          "cell": "Расчёты!C529"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C531"
+        }
+      ],
+      "cumAbatementStartKt": 112363.04137931035,
+      "cumAbatementEndKt": 117493.04137931035
     },
     {
       "id": 20,
@@ -1773,8 +2602,90 @@
           "cell": "Расчёты!C612"
         }
       ],
-      "cumAbatementStartKt": 125597.04137931035,
-      "cumAbatementEndKt": 127377.04137931035
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C601"
+        },
+        {
+          "label": {
+            "ru": "Поголовье КРС",
+            "en": "Cattle headcount"
+          },
+          "value": 8500,
+          "unit": "тыс. голов",
+          "source": "Бюро нац. статистики 2023",
+          "cell": "Расчёты!C602"
+        },
+        {
+          "label": {
+            "ru": "Доля под программу",
+            "en": "Share under programme"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "Крупные хозяйства",
+          "cell": "Расчёты!C603"
+        },
+        {
+          "label": {
+            "ru": "Стоимость добавки (3-NOP)",
+            "en": ""
+          },
+          "value": 50,
+          "unit": "$/голову/год",
+          "source": "DSM Bovaer",
+          "cell": "Расчёты!C604"
+        },
+        {
+          "label": {
+            "ru": "CAPEX дозирование на голову",
+            "en": ""
+          },
+          "value": 15,
+          "unit": "$",
+          "source": "",
+          "cell": "Расчёты!C605"
+        },
+        {
+          "label": {
+            "ru": "CAPEX обучение на хоз-во",
+            "en": ""
+          },
+          "value": 20,
+          "unit": "тыс. $",
+          "source": "",
+          "cell": "Расчёты!C606"
+        },
+        {
+          "label": {
+            "ru": "Среднее поголовье/хоз-во",
+            "en": "Average head per farm"
+          },
+          "value": 500,
+          "unit": "голов",
+          "source": "",
+          "cell": "Расчёты!C607"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 10,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C608"
+        }
+      ],
+      "cumAbatementStartKt": 117493.04137931035,
+      "cumAbatementEndKt": 119273.04137931035
     },
     {
       "id": 13,
@@ -1886,8 +2797,110 @@
           "cell": "Расчёты!C430"
         }
       ],
-      "cumAbatementStartKt": 127377.04137931035,
-      "cumAbatementEndKt": 139002.04137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Технический потенциал",
+            "en": ""
+          },
+          "value": 0.5,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C412"
+        },
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.5,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C413"
+        },
+        {
+          "label": {
+            "ru": "Затраты: электросети",
+            "en": ""
+          },
+          "value": 0.4,
+          "unit": "от CAPEX котла",
+          "source": "",
+          "cell": "Расчёты!C415"
+        },
+        {
+          "label": {
+            "ru": "Затраты: тепловые сети (СМР)",
+            "en": ""
+          },
+          "value": 0.3,
+          "unit": "от CAPEX котла",
+          "source": "",
+          "cell": "Расчёты!C416"
+        },
+        {
+          "label": {
+            "ru": "Экон. CAPEX: закрытие котельных",
+            "en": ""
+          },
+          "value": 30,
+          "unit": "$/кВт/год",
+          "source": "Avoided поддержание",
+          "cell": "Расчёты!C417"
+        },
+        {
+          "label": {
+            "ru": "УРУТ на тепло",
+            "en": ""
+          },
+          "value": 180,
+          "unit": "кг у.т./Гкал",
+          "source": "",
+          "cell": "Расчёты!C418"
+        },
+        {
+          "label": {
+            "ru": "КИУМ по теплу",
+            "en": "Heat capacity factor"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C421"
+        },
+        {
+          "label": {
+            "ru": "Цена ЭЭ ВИЭ",
+            "en": "Renewable electricity price"
+          },
+          "value": 50,
+          "unit": "$/МВтч",
+          "source": "",
+          "cell": "Расчёты!C422"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C424"
+        },
+        {
+          "label": {
+            "ru": "Снижение потерь",
+            "en": "Loss reduction"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "за счет более распределенного теплоснабжения",
+          "cell": "Расчёты!C425"
+        }
+      ],
+      "cumAbatementStartKt": 119273.04137931035,
+      "cumAbatementEndKt": 130898.04137931035
     },
     {
       "id": 7,
@@ -1983,8 +2996,203 @@
           "cell": "Расчёты!C266"
         }
       ],
-      "cumAbatementStartKt": 139002.04137931037,
-      "cumAbatementEndKt": 167217.04137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Общий объем проивзодства тепла",
+            "en": ""
+          },
+          "value": 95000,
+          "unit": "тыс Гкал",
+          "source": "",
+          "cell": "Расчёты!C248"
+        },
+        {
+          "label": {
+            "ru": "Затраты на сети",
+            "en": ""
+          },
+          "value": 0.4,
+          "unit": "от CAPEX котла",
+          "source": "",
+          "cell": "Расчёты!C252"
+        },
+        {
+          "label": {
+            "ru": "УРУТ на тепло",
+            "en": ""
+          },
+          "value": 180,
+          "unit": "кг у.т./Гкал",
+          "source": "",
+          "cell": "Расчёты!C253"
+        },
+        {
+          "label": {
+            "ru": "КИУМ по теплу",
+            "en": "Heat capacity factor"
+          },
+          "value": 0.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C255"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C259"
+        },
+        {
+          "label": {
+            "ru": "Снижение потерь",
+            "en": "Loss reduction"
+          },
+          "value": 0.1,
+          "unit": "",
+          "source": "за счет более распределенного теплоснабжения",
+          "cell": "Расчёты!C260"
+        },
+        {
+          "label": {
+            "ru": "Доля перехода",
+            "en": "Switching share"
+          },
+          "value": 0.6,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C261"
+        }
+      ],
+      "cumAbatementStartKt": 130898.04137931035,
+      "cumAbatementEndKt": 159113.04137931037
+    },
+    {
+      "id": 21,
+      "sector": "3",
+      "variant": 4,
+      "name": {
+        "ru": "Улучшение управления навозом (биогаз)",
+        "en": "Improved manure management (biogas)"
+      },
+      "capex": 300,
+      "opex": -13,
+      "durationYrs": 15,
+      "abatementKt": 264,
+      "npv": 211.45876163695493,
+      "discCo2Kt": 1798.0682252187614,
+      "mac": 117.60330262842383,
+      "sourceCells": {
+        "capex": "Расчёты!C646",
+        "opex": "Расчёты!C647",
+        "durationYrs": "Расчёты!C648",
+        "abatementKt": "Расчёты!C649"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Биогазовые установки",
+            "en": ""
+          },
+          "value": 250,
+          "cell": "Расчёты!C638"
+        },
+        {
+          "label": {
+            "ru": "Покрытие лагун и инфраструктура",
+            "en": ""
+          },
+          "value": 50,
+          "cell": "Расчёты!C639"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 12,
+          "cell": "Расчёты!C642"
+        },
+        {
+          "label": {
+            "ru": "Выручка от биогаза",
+            "en": ""
+          },
+          "value": -25,
+          "cell": "Расчёты!C643"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во биогазовых установок",
+            "en": "Number of biogas plants"
+          },
+          "value": 500,
+          "unit": "шт",
+          "cell": "Расчёты!C631"
+        }
+      ],
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.08,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C630"
+        },
+        {
+          "label": {
+            "ru": "Кол-во биогазовых установок",
+            "en": ""
+          },
+          "value": 500,
+          "unit": "шт",
+          "source": "Крупные фермы",
+          "cell": "Расчёты!C631"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX биогазовой установки",
+            "en": ""
+          },
+          "value": 0.5,
+          "unit": "mUSD",
+          "source": "500-1000 м³/сут",
+          "cell": "Расчёты!C632"
+        },
+        {
+          "label": {
+            "ru": "Выручка от биогаза/электричества",
+            "en": ""
+          },
+          "value": 50,
+          "unit": "тыс. $/установку/год",
+          "source": "",
+          "cell": "Расчёты!C633"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 15,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C634"
+        }
+      ],
+      "cumAbatementStartKt": 159113.04137931037,
+      "cumAbatementEndKt": 159377.04137931037
     },
     {
       "id": 19,
@@ -2046,8 +3254,50 @@
           "cell": "Расчёты!C578"
         }
       ],
-      "cumAbatementStartKt": 167217.04137931037,
-      "cumAbatementEndKt": 169377.04137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.08,
+          "unit": "",
+          "source": "Допущение",
+          "cell": "Расчёты!C577"
+        },
+        {
+          "label": {
+            "ru": "CF",
+            "en": "Capacity factor"
+          },
+          "value": 0.7,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C579"
+        },
+        {
+          "label": {
+            "ru": "Уд. OPEX",
+            "en": ""
+          },
+          "value": 60,
+          "unit": "$/т CO₂",
+          "source": "Энергия + реагенты + хранение",
+          "cell": "Расчёты!C581"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C582"
+        }
+      ],
+      "cumAbatementStartKt": 159377.04137931037,
+      "cumAbatementEndKt": 161537.04137931037
     },
     {
       "id": 12,
@@ -2152,8 +3402,80 @@
           "cell": "Расчёты!C393"
         }
       ],
-      "cumAbatementStartKt": 169377.04137931037,
-      "cumAbatementEndKt": 176352.04137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.15,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C381"
+        },
+        {
+          "label": {
+            "ru": "Протяжённость газопроводов",
+            "en": "Gas pipeline length"
+          },
+          "value": 5000,
+          "unit": "км",
+          "source": "Программа газификации",
+          "cell": "Расчёты!C382"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX газопровод",
+            "en": ""
+          },
+          "value": 0.5,
+          "unit": "mUSD/км",
+          "source": "",
+          "cell": "Расчёты!C383"
+        },
+        {
+          "label": {
+            "ru": "Кол-во подключений",
+            "en": "Number of connections"
+          },
+          "value": 300,
+          "unit": "тыс. шт",
+          "source": "",
+          "cell": "Расчёты!C384"
+        },
+        {
+          "label": {
+            "ru": "Уд. CAPEX подключение",
+            "en": ""
+          },
+          "value": 2,
+          "unit": "тыс. $/шт",
+          "source": "",
+          "cell": "Расчёты!C385"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 30,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C388"
+        },
+        {
+          "label": {
+            "ru": "Средний расход газа на точке",
+            "en": ""
+          },
+          "value": 12,
+          "unit": "тыс. м3/в год",
+          "source": "",
+          "cell": "Расчёты!C389"
+        }
+      ],
+      "cumAbatementStartKt": 161537.04137931037,
+      "cumAbatementEndKt": 168512.04137931037
     },
     {
       "id": 5,
@@ -2232,8 +3554,70 @@
           "cell": "Расчёты!C192"
         }
       ],
-      "cumAbatementStartKt": 176352.04137931037,
-      "cumAbatementEndKt": 203157.64137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Эскалация",
+            "en": "Escalation"
+          },
+          "value": 1.3,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C182"
+        },
+        {
+          "label": {
+            "ru": "КИУМ АЭС",
+            "en": "Nuclear capacity factor"
+          },
+          "value": 0.85,
+          "unit": "",
+          "source": "Типовой для PWR",
+          "cell": "Расчёты!C183"
+        },
+        {
+          "label": {
+            "ru": "Уд. ТОиР",
+            "en": ""
+          },
+          "value": 15,
+          "unit": "$/МВтч",
+          "source": "NEA/IEA Projected Costs 2020",
+          "cell": "Расчёты!C184"
+        },
+        {
+          "label": {
+            "ru": "Топливные затраты АЭС",
+            "en": ""
+          },
+          "value": 5,
+          "unit": "$/МВтч",
+          "source": "Урановый цикл",
+          "cell": "Расчёты!C185"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 60,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C188"
+        },
+        {
+          "label": {
+            "ru": "Мощность АЭС",
+            "en": "Nuclear capacity"
+          },
+          "value": 3600,
+          "unit": "МВт",
+          "source": "",
+          "cell": "Расчёты!C191"
+        }
+      ],
+      "cumAbatementStartKt": 168512.04137931037,
+      "cumAbatementEndKt": 195317.64137931037
     },
     {
       "id": 24,
@@ -2312,8 +3696,60 @@
           "cell": "Расчёты!C761"
         }
       ],
-      "cumAbatementStartKt": 203157.64137931037,
-      "cumAbatementEndKt": 205257.64137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Целевая площадь посадок",
+            "en": "Target planting area"
+          },
+          "value": 1000,
+          "unit": "тыс. га",
+          "source": "Программа «2 млрд деревьев», ~2000 шт/га",
+          "cell": "Расчёты!C753"
+        },
+        {
+          "label": {
+            "ru": "Доля выживаемости",
+            "en": "Survival rate"
+          },
+          "value": 0.7,
+          "unit": "",
+          "source": "Засушливые условия, степь. Исторически 50-80% в КЗ",
+          "cell": "Расчёты!C754"
+        },
+        {
+          "label": {
+            "ru": "Уд. секвестрация (молодые посадки, 10-30 лет)",
+            "en": ""
+          },
+          "value": 3,
+          "unit": "tCO₂/га/год",
+          "source": "IPCC 2006, Vol.4, табл.4.12. Temperate continental dry: 2-4",
+          "cell": "Расчёты!C755"
+        },
+        {
+          "label": {
+            "ru": "Уд. OPEX: уход, защита, противопожарная",
+            "en": ""
+          },
+          "value": 100,
+          "unit": "$/га/год",
+          "source": "Полив первые 3-5 лет, подсадка, охрана",
+          "cell": "Расчёты!C758"
+        },
+        {
+          "label": {
+            "ru": "Срок проекта",
+            "en": "Project lifetime"
+          },
+          "value": 30,
+          "unit": "лет",
+          "source": "Лесные проекты: 30-50 лет",
+          "cell": "Расчёты!C759"
+        }
+      ],
+      "cumAbatementStartKt": 195317.64137931037,
+      "cumAbatementEndKt": 197417.64137931037
     },
     {
       "id": 2,
@@ -2391,8 +3827,50 @@
           "cell": "Расчёты!C43"
         }
       ],
-      "cumAbatementStartKt": 205257.64137931037,
-      "cumAbatementEndKt": 217302.64137931037
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля затрат: газопровод и подключение",
+            "en": ""
+          },
+          "value": 0.4,
+          "unit": "",
+          "source": "Экспертная оценка",
+          "cell": "Расчёты!C34"
+        },
+        {
+          "label": {
+            "ru": "КИУМ",
+            "en": "Capacity factor"
+          },
+          "value": 0.5,
+          "unit": "",
+          "source": "",
+          "cell": "Расчёты!C39"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C40"
+        },
+        {
+          "label": {
+            "ru": "Замещаемая мощность",
+            "en": "Replaced capacity"
+          },
+          "value": 5000,
+          "unit": "МВт",
+          "source": "",
+          "cell": "Расчёты!C43"
+        }
+      ],
+      "cumAbatementStartKt": 197417.64137931037,
+      "cumAbatementEndKt": 209462.64137931037
     },
     {
       "id": 10,
@@ -2480,8 +3958,90 @@
           "cell": "Расчёты!C325"
         }
       ],
-      "cumAbatementStartKt": 217302.64137931037,
-      "cumAbatementEndKt": 219486.91897671297
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Доля мероприятия",
+            "en": "Measure share"
+          },
+          "value": 0.15,
+          "unit": "",
+          "source": "Лист «Мероприятия»",
+          "cell": "Расчёты!C310"
+        },
+        {
+          "label": {
+            "ru": "Средний пробег",
+            "en": "Average mileage"
+          },
+          "value": 15000,
+          "unit": "км/год",
+          "source": "",
+          "cell": "Расчёты!C312"
+        },
+        {
+          "label": {
+            "ru": "Расход ДВС",
+            "en": ""
+          },
+          "value": 8,
+          "unit": "л/100км",
+          "source": "",
+          "cell": "Расчёты!C313"
+        },
+        {
+          "label": {
+            "ru": "Цена бензина",
+            "en": "Petrol price"
+          },
+          "value": 0.5,
+          "unit": "$/л",
+          "source": "Внутренний рынок КЗ",
+          "cell": "Расчёты!C314"
+        },
+        {
+          "label": {
+            "ru": "Цена кВтч",
+            "en": "Price per kWh"
+          },
+          "value": 60,
+          "unit": "$/МВтч",
+          "source": "розница",
+          "cell": "Расчёты!C315"
+        },
+        {
+          "label": {
+            "ru": "расход ээ на пробег",
+            "en": ""
+          },
+          "value": 18,
+          "unit": "кВтч/100 км",
+          "source": "",
+          "cell": "Расчёты!C316"
+        },
+        {
+          "label": {
+            "ru": "EF бензина",
+            "en": ""
+          },
+          "value": 2.31,
+          "unit": "кгCO₂/л",
+          "source": "IPCC",
+          "cell": "Расчёты!C317"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 15,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C318"
+        }
+      ],
+      "cumAbatementStartKt": 209462.64137931037,
+      "cumAbatementEndKt": 211646.91897671297
     },
     {
       "id": 1,
@@ -2551,16 +4111,58 @@
           "cell": "Расчёты!C14"
         }
       ],
-      "cumAbatementStartKt": 219486.91897671297,
-      "cumAbatementEndKt": 222192.91897671297
+      "localInputs": [
+        {
+          "label": {
+            "ru": "Повышение КПД (абс.)",
+            "en": "Efficiency gain (abs.)"
+          },
+          "value": 0.02,
+          "unit": "п.п.",
+          "source": "2%, типичная модернизация",
+          "cell": "Расчёты!C6"
+        },
+        {
+          "label": {
+            "ru": "Средний КИУМ",
+            "en": "Average capacity factor"
+          },
+          "value": 0.55,
+          "unit": "",
+          "source": "Статистика KEGOC",
+          "cell": "Расчёты!C8"
+        },
+        {
+          "label": {
+            "ru": "Срок службы",
+            "en": "Service life"
+          },
+          "value": 20,
+          "unit": "лет",
+          "source": "",
+          "cell": "Расчёты!C11"
+        },
+        {
+          "label": {
+            "ru": "Замещаемая мощность",
+            "en": "Replaced capacity"
+          },
+          "value": 15000,
+          "unit": "МВт",
+          "source": "оценка действующей генерации",
+          "cell": "Расчёты!C14"
+        }
+      ],
+      "cumAbatementStartKt": 211646.91897671297,
+      "cumAbatementEndKt": 214352.91897671297
     }
   ],
   "totals": {
     "capexMUsd": 112927.77640783353,
-    "abatementKt": 222192.91897671297,
+    "abatementKt": 214352.91897671297,
     "npvMUsd": 157791.22845542282,
-    "discCo2Kt": 1701684.9254739543,
-    "weightedAvgMac": 92.7264654539234,
-    "noRegretsAbatementKt": 17289.6
+    "discCo2Kt": 1650881.565784652,
+    "weightedAvgMac": 95.57998085733414,
+    "noRegretsAbatementKt": 12609.6
   }
 }

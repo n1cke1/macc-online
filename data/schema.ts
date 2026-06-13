@@ -39,8 +39,24 @@ export interface CostItem {
 export interface PhysicalItem {
   label: Localized;
   value: number;
-  unit: string; // e.g. "МВт", "тыс. га", "млн м3"
+  unit: string; // e.g. "МВт", "тыс. га", "млн m3"
   cell: string; // provenance, e.g. "Расчёты!C74"
+}
+
+/**
+ * An editable per-measure assumption — a row tagged `IN-L` in the Расчёты
+ * classifier column D: the engineering/economic premises behind a measure
+ * (efficiency gain, capacity factor, lifetime, installed capacity, shares).
+ * Surfaced read-only in the drill-down so reviewers can see (and comment on)
+ * what each result rests on. Centralizing these onto a «Допущения» sheet with
+ * ranges is Phase C of the Excel restructure (see docs/excel-restructure-plan*).
+ */
+export interface LocalInput {
+  label: Localized;
+  value: number;
+  unit: string;   // verbatim from col E (RU), may be empty
+  source: string; // citation/note from col F (RU), may be empty
+  cell: string;   // provenance, e.g. "Расчёты!C8"
 }
 
 /** One abatement measure = one bar of the curve. Mirrors MACC sheet cols A..K. */
@@ -66,6 +82,8 @@ export interface MaccPoint {
   opexItems?: CostItem[];
   // Tangible physical-scale indicators behind the CAPEX (MW, ha, km, head, …).
   physicalItems?: PhysicalItem[];
+  // Editable per-measure assumptions (IN-L rows): the premises behind the result.
+  localInputs?: LocalInput[];
 }
 
 /** Live levers the user can move (subset of `assumptions` where isLever=true). */

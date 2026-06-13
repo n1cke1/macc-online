@@ -326,10 +326,39 @@ def build_physical_items(calc_v, start, end, phys_en) -> list:
     return items
 
 
+def build_local_inputs(calc_v, start, end, li_en) -> list:
+    """Editable per-measure assumptions: rows tagged IN-L in the classifier
+    column D (the engineering/economic premises behind a measure — efficiency
+    gains, capacity factors, lifetimes, capacities, shares). Read straight from
+    the tag, no heuristic guessing. Source/citation comes from col F when present.
+    Centralizing these onto a «Допущения» sheet is Phase C; here they are merely
+    surfaced read-only in the drill-down."""
+    items = []
+    for r in range(start, end):
+        if calc_v.cell(r, 4).value != "IN-L":   # col D = level classifier
+            continue
+        label = calc_v.cell(r, 2).value
+        value = calc_v.cell(r, 3).value
+        if not isinstance(label, str) or not isinstance(value, (int, float)) or isinstance(value, bool):
+            continue
+        unit = calc_v.cell(r, 5).value
+        source = calc_v.cell(r, 6).value
+        label = label.strip()
+        items.append({
+            "label": {"ru": label, "en": li_en.get(label, "")},
+            "value": value,
+            "unit": unit.strip() if isinstance(unit, str) else "",
+            "source": source.strip() if isinstance(source, str) else "",
+            "cell": f"{SHEET_CALC}!C{r}",
+        })
+    return items
+
+
 def build_projects(macc_f, macc_v, calc_v, translations) -> list:
     en_map = translations.get("projects", {})
     line_en = translations.get("lineItems", {})
     phys_en = translations.get("physicalItems", {})
+    li_en = translations.get("localInputs", {})
     ranges = calc_block_ranges(calc_v)
     rows = []
     for r in PROJECT_ROWS:
@@ -338,7 +367,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
         capex_src = extract_source_cell(macc_f[f"E{r}"].value)
 
         # Locate the Расчёты block via the CAPEX source cell row, then pull breakdowns.
-        capex_items = opex_items = physical_items = None
+        capex_items = opex_items = physical_items = local_inputs = None
         if capex_src:
             row_num = int(re.search(r"(\d+)$", capex_src).group(1))
             blk = find_block(ranges, row_num)
@@ -347,6 +376,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
                 capex_items, _ = extract_breakdown(calc_v, start, end, "CAPEX", line_en)
                 opex_items, _ = extract_breakdown(calc_v, start, end, "OPEX", line_en)
                 physical_items = build_physical_items(calc_v, start, end, phys_en)
+                local_inputs = build_local_inputs(calc_v, start, end, li_en)
 
         rows.append({
             "id": int(macc_v[f"B{r}"].value),
@@ -369,6 +399,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
             "capexItems": capex_items or [],
             "opexItems": opex_items or [],
             "physicalItems": physical_items or [],
+            "localInputs": local_inputs or [],
         })
     # curve order: ascending by MAC, with cumulative abatement spans
     rows.sort(key=lambda p: p["mac"])
@@ -446,10 +477,14 @@ def verify(macc_v, projects, totals) -> list:
     abate = sum(p["abatementKt"] for p in projects)
     if not approx(abate, totals["abatementKt"]):
         errors.append(f"sum abatement {abate} != totals {totals['abatementKt']}")
-    if not approx(totals["abatementKt"], 222192.91897671297, tol=1e-4):
-        errors.append(f"total abatement {totals['abatementKt']} != expected 222193")
-    if not approx(totals["weightedAvgMac"], 92.7264654539234, tol=1e-4):
-        errors.append(f"wavg MAC {totals['weightedAvgMac']} != expected 92.73")
+    # Headline sanity anchors. Updated 2026-06-13: the three agriculture measures
+    # (blocks 3-2/3-3/3-4) now reference their sub-category baselines on the Выбросы
+    # sheet (manure C23=3.3, soils C25=11.6) instead of a stale blanket 42.8 Mt that
+    # exceeded the whole sector — a correctness fix that lowers total abatement.
+    if not approx(totals["abatementKt"], 214352.91897671297, tol=1e-4):
+        errors.append(f"total abatement {totals['abatementKt']} != expected 214353")
+    if not approx(totals["weightedAvgMac"], 95.57998085733414, tol=1e-4):
+        errors.append(f"wavg MAC {totals['weightedAvgMac']} != expected 95.58")
     return errors
 
 

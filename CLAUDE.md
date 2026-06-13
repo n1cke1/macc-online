@@ -59,7 +59,8 @@ electricity `E38`=50 $/MWh · WACC `C2`=0.12. No carbon price (not in the model)
 **ETL gotchas:** (1) I/J/K rows 7–31 are **shared formulas with empty `<f>` nodes** — re-materialize from
 the row-6 masters and cross-check vs the cached `<v>`. (2) Abatement (bar width) is always positive; only
 MAC (height) can be negative. (3) Rows are NOT pre-sorted — the curve sorts ascending by K.
-Sanity totals: total abatement ≈ 222,193 kt, weighted-avg MAC ≈ 92.7 USD/t.
+Sanity totals: total abatement ≈ 214,353 kt, weighted-avg MAC ≈ 95.6 USD/t (since the
+2026-06-13 fix linking agriculture measures 3-2/3-3/3-4 to their sub-category baselines).
 
 ## Planned layout (greenfield — most of this is not created yet)
 

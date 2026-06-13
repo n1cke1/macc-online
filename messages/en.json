@@ -43,6 +43,8 @@
     "duration": "Lifetime",
     "npv": "NPV",
     "physicalScale": "Physical scale",
+    "assumptions": "Assumptions",
+    "assumptionsHint": "Key input assumptions behind the measure (editable in the model)",
     "provenance": "MAC = NPV / discounted CO₂ × 1000",
     "close": "Close"
   },

@@ -1,7 +1,7 @@
 'use client';
 import { useLocale, useTranslations } from 'next-intl';
 import { dataset, sectorLabel, pick } from '@/lib/data';
-import type { CostItem, PhysicalItem } from '@data/schema';
+import type { CostItem, PhysicalItem, LocalInput } from '@data/schema';
 import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
 import { useUi, useScenario } from '@/store';
 import AnchorComments from '@/components/collab/AnchorComments';
@@ -50,6 +50,14 @@ export default function ProjectDrilldown() {
           </div>
         ))}
       </dl>
+
+      <Assumptions
+        title={t('assumptions')}
+        hint={t('assumptionsHint')}
+        items={p.localInputs}
+        locale={locale}
+        projectId={p.id}
+      />
 
       <PhysicalScale title={t('physicalScale')} items={p.physicalItems} locale={locale} projectId={p.id} />
 
@@ -106,6 +114,49 @@ function CostBreakdown({
           <span>{locale === 'en' ? 'Total' : 'Итого'}</span>
           <span className="tabular-nums">{num(total)}</span>
         </li>
+      </ul>
+    </section>
+  );
+}
+
+/** Editable per-measure assumptions (IN-L rows) — the premises behind the result. */
+function Assumptions({
+  title,
+  hint,
+  items,
+  locale,
+  projectId,
+}: {
+  title: string;
+  hint: string;
+  items?: LocalInput[];
+  locale: 'ru' | 'en';
+  projectId: number;
+}) {
+  if (!items || items.length === 0) return null;
+  const num = (v: number) => {
+    const a = Math.abs(v);
+    return fmt(v, locale, { maximumFractionDigits: a < 1 ? 3 : a < 100 ? 1 : 0 });
+  };
+  return (
+    <section className="mt-4">
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{title}</h3>
+      <p className="mb-1 text-xs text-muted">{hint}</p>
+      <ul className="divide-y divide-line rounded-md border border-line">
+        {items.map((it) => (
+          <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
+            <span className="min-w-0 text-slate-700">
+              {pick(it.label, locale)}
+              {it.source && <span className="block truncate text-xs text-muted">{it.source}</span>}
+            </span>
+            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
+              <span className="shrink-0 tabular-nums">
+                {num(it.value)}
+                {it.unit && <span className="text-muted"> {formatUnit(it.unit, locale)}</span>}
+              </span>
+            </Commentable>
+          </li>
+        ))}
       </ul>
     </section>
   );
