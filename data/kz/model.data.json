@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "country": "kz",
-  "modelVersion": "kz-53ba0d602773",
+  "modelVersion": "kz-4c2d4a8b30a3",
   "meta": {
     "sourceFile": "MACC_KZ_29052026_rev.xlsx",
     "sourceDate": "2026-05-29",
@@ -9,7 +9,7 @@
     "totalEmissionsMt": 353,
     "totalEmissionsExclLulucfMt": 348.8,
     "emissionsSource": "UNFCCC BTR1 Kazakhstan (2024), inventory year 2022, GWP AR5",
-    "enTranslationStatus": "machine-draft-pending-review"
+    "enTranslationStatus": "owner-reviewed"
   },
   "sectors": {
     "1.A.1": {
@@ -322,7 +322,7 @@
       "cell": "MACC!E56",
       "label": {
         "ru": "Улавливание CCUS",
-        "en": "Unit CAPEX — CCUS capture"
+        "en": "Unit CAPEX — CCS capture"
       },
       "value": 300,
       "unit": "$/т CO₂/год",
@@ -901,7 +901,7 @@
         {
           "label": {
             "ru": "КИУМ по теплу",
-            "en": "Heat capacity factor"
+            "en": "Capacity factor (heat)"
           },
           "value": 0.3,
           "unit": "",
@@ -1013,7 +1013,7 @@
         {
           "label": {
             "ru": "Кол-во объектов",
-            "en": "Number of sites"
+            "en": "Number of facilities"
           },
           "value": 5000,
           "unit": "шт",
@@ -1169,7 +1169,7 @@
         {
           "label": {
             "ru": "CAPEX программы дегазации",
-            "en": "CAPEX of the degassing programme"
+            "en": "CAPEX of the degassing program"
           },
           "value": 300,
           "unit": "mUSD",
@@ -1253,7 +1253,7 @@
         {
           "label": {
             "ru": "Кол-во КОС под модернизацию",
-            "en": "WWTPs under upgrade"
+            "en": "Number of WWTPs to upgrade"
           },
           "value": 15,
           "unit": "шт",
@@ -1562,7 +1562,7 @@
       "localInputs": [
         {
           "label": {
-            "ru": "Общий объем проивзодства тепла",
+            "ru": "Общий объем производства тепла",
             "en": "Total heat production"
           },
           "value": 95000,
@@ -1593,7 +1593,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло (уголь)",
-            "en": "Specific fuel use for heat (coal)"
+            "en": "Specific fuel consumption (heat, coal)"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -1603,7 +1603,7 @@
         {
           "label": {
             "ru": "КИУМ по теплу",
-            "en": "Heat capacity factor"
+            "en": "Capacity factor (heat)"
           },
           "value": 0.3,
           "unit": "",
@@ -1667,7 +1667,7 @@
         {
           "label": {
             "ru": "Газопоршневые генераторы",
-            "en": "Gas-piston generators"
+            "en": "Reciprocating gas-engine generators"
           },
           "value": 40,
           "cell": "Расчёты!C715"
@@ -1695,7 +1695,7 @@
         {
           "label": {
             "ru": "Кол-во полигонов под дегазацию",
-            "en": "Landfills for degasification"
+            "en": "Landfills for degassing"
           },
           "value": 20,
           "unit": "шт",
@@ -1704,7 +1704,7 @@
         {
           "label": {
             "ru": "Мощности генераторов",
-            "en": "Genset capacity"
+            "en": "Generator capacity"
           },
           "value": 28.571428571428573,
           "unit": "МВт",
@@ -2176,7 +2176,7 @@
         {
           "label": {
             "ru": "КИУМ по теплу",
-            "en": "Heat capacity factor"
+            "en": "Capacity factor (heat)"
           },
           "value": 0.3,
           "unit": "",
@@ -2185,7 +2185,7 @@
         },
         {
           "label": {
-            "ru": "Тепловая мощности ТЭЦ",
+            "ru": "Тепловая мощность ТЭЦ",
             "en": "CHP heat capacity"
           },
           "value": 0.4,
@@ -2436,7 +2436,7 @@
         {
           "label": {
             "ru": "Протяжённость газопроводов",
-            "en": "Pipeline length"
+            "en": "Gas pipeline length"
           },
           "value": 20000,
           "unit": "км",
@@ -2568,7 +2568,7 @@
         {
           "label": {
             "ru": "Поголовье КРС",
-            "en": "Cattle population (total)"
+            "en": "Cattle headcount (total)"
           },
           "value": 8500,
           "unit": "тыс. голов",
@@ -2577,7 +2577,7 @@
         {
           "label": {
             "ru": "Среднее поголовье/хоз-во",
-            "en": "Average herd per farm"
+            "en": "Average herd size per farm"
           },
           "value": 500,
           "unit": "голов",
@@ -2586,7 +2586,7 @@
         {
           "label": {
             "ru": "Поголовье под программу",
-            "en": "Cattle under programme"
+            "en": "Cattle under program"
           },
           "value": 2550,
           "unit": "тыс. голов",
@@ -2626,7 +2626,7 @@
         {
           "label": {
             "ru": "Доля под программу",
-            "en": "Share under programme"
+            "en": "Share under program"
           },
           "value": 0.3,
           "unit": "",
@@ -2666,7 +2666,7 @@
         {
           "label": {
             "ru": "Среднее поголовье/хоз-во",
-            "en": "Average head per farm"
+            "en": "Average herd size per farm"
           },
           "value": 500,
           "unit": "голов",
@@ -2851,7 +2851,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло",
-            "en": "Specific fuel use for heat"
+            "en": "Specific fuel consumption (heat, coal-eq.)"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -2861,7 +2861,7 @@
         {
           "label": {
             "ru": "КИУМ по теплу",
-            "en": "Heat capacity factor"
+            "en": "Capacity factor (heat)"
           },
           "value": 0.3,
           "unit": "",
@@ -2999,7 +2999,7 @@
       "localInputs": [
         {
           "label": {
-            "ru": "Общий объем проивзодства тепла",
+            "ru": "Общий объем производства тепла",
             "en": "Total heat production"
           },
           "value": 95000,
@@ -3020,7 +3020,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло",
-            "en": "Specific fuel use for heat"
+            "en": "Specific fuel consumption (heat, coal-eq.)"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -3030,7 +3030,7 @@
         {
           "label": {
             "ru": "КИУМ по теплу",
-            "en": "Heat capacity factor"
+            "en": "Capacity factor (heat)"
           },
           "value": 0.3,
           "unit": "",
@@ -3237,7 +3237,7 @@
         {
           "label": {
             "ru": "Операционные затраты CCUS",
-            "en": "CCUS operating costs"
+            "en": "CCS operating costs"
           },
           "value": 185.14285714285717,
           "cell": "Расчёты!C590"
@@ -3368,7 +3368,7 @@
         {
           "label": {
             "ru": "Протяжённость газопроводов",
-            "en": "Pipeline length"
+            "en": "Gas pipeline length"
           },
           "value": 5000,
           "unit": "км",
@@ -3720,7 +3720,7 @@
         {
           "label": {
             "ru": "Уд. секвестрация (молодые посадки, 10-30 лет)",
-            "en": "Unit sequestration (young plantings, 10–30 yrs)"
+            "en": "Unit sequestration (young plantations, 10–30 yrs)"
           },
           "value": 3,
           "unit": "tCO₂/га/год",
@@ -3802,7 +3802,7 @@
         {
           "label": {
             "ru": "Затраты на газ",
-            "en": "Gas cost"
+            "en": "Gas costs"
           },
           "value": 1171.30195599022,
           "cell": "Расчёты!C50"

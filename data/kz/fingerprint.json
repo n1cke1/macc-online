@@ -1,10 +1,10 @@
 {
-  "modelVersion": "kz-53ba0d602773",
+  "modelVersion": "kz-4c2d4a8b30a3",
   "sourceFile": "MACC_KZ_29052026_rev.xlsx",
   "sourceDate": "2026-05-29",
-  "sourceSha256": "373ce12bc33e2141738b864af6b486822ab5c7eff216e7ead5d5c103d0b3b13e",
+  "sourceSha256": "438b4fe3074f269f2a24f4f27f7341a5c340e0ddcec3c55e960219bc4734f535",
   "etlVersion": "1",
   "structuralSignature": "MACC:57x11:f188|Выбросы:46x10:f0|Расчёты:776x13:f455",
   "formulaCount": 643,
-  "display": "Model v.53ba0d602773 · source MACC_KZ_2026-05-29.xlsx"
+  "display": "Model v.4c2d4a8b30a3 · source MACC_KZ_2026-05-29.xlsx"
 }

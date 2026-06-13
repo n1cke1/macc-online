@@ -537,7 +537,7 @@ def run(source: Path, country: str, check_only: bool) -> int:
             "totalEmissionsMt": wb_v[SHEET_EMISSIONS]["C33"].value,
             "totalEmissionsExclLulucfMt": wb_v[SHEET_EMISSIONS]["C32"].value,
             "emissionsSource": "UNFCCC BTR1 Kazakhstan (2024), inventory year 2022, GWP AR5",
-            "enTranslationStatus": "machine-draft-pending-review",
+            "enTranslationStatus": "owner-reviewed",
         },
         "sectors": sectors,
         "assumptions": assumptions,
