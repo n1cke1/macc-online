@@ -42,6 +42,7 @@
     "opex": "OPEX",
     "duration": "Lifetime",
     "npv": "NPV",
+    "physicalScale": "Physical scale",
     "provenance": "MAC = NPV / discounted CO₂ × 1000",
     "close": "Close"
   },

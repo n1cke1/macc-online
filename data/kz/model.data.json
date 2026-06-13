@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "country": "kz",
-  "modelVersion": "kz-b19702294886",
+  "modelVersion": "kz-732cf2835cb9",
   "meta": {
     "sourceFile": "MACC_KZ_29052026_rev.xlsx",
     "sourceDate": "2026-05-29",
@@ -400,6 +400,17 @@
           "cell": "Расчёты!C667"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Площадь под точное земледелие",
+            "en": "Precision-farming area"
+          },
+          "value": 5000,
+          "unit": "тыс. га",
+          "cell": "Расчёты!C655"
+        }
+      ],
       "cumAbatementStartKt": 0.0,
       "cumAbatementEndKt": 4280.0
     },
@@ -460,6 +471,17 @@
           "cell": "Расчёты!C691"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Площадь восстановления",
+            "en": "Restoration area"
+          },
+          "value": 10000,
+          "unit": "тыс. га",
+          "cell": "Расчёты!C679"
+        }
+      ],
       "cumAbatementStartKt": 4280.0,
       "cumAbatementEndKt": 6420.0
     },
@@ -518,6 +540,26 @@
           },
           "value": -333.33333333333337,
           "cell": "Расчёты!C491"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Объём сжигаемого ПНГ",
+            "en": "Flared APG volume"
+          },
+          "value": 3,
+          "unit": "млрд м³/год",
+          "cell": "Расчёты!C478"
+        },
+        {
+          "label": {
+            "ru": "Электрогенерация от ПНГ",
+            "en": "Power generation from APG"
+          },
+          "value": 8333.333333333334,
+          "unit": "тыс. МВтч",
+          "cell": "Расчёты!C484"
         }
       ],
       "cumAbatementStartKt": 6420.0,
@@ -620,6 +662,35 @@
           "cell": "Расчёты!C127"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Мощность ВИЭ",
+            "en": "Renewables capacity"
+          },
+          "value": 1342.8571428571427,
+          "unit": "МВт",
+          "cell": "Расчёты!C113"
+        },
+        {
+          "label": {
+            "ru": "Мощность пикера",
+            "en": "Peaker capacity"
+          },
+          "value": 1000,
+          "unit": "МВт",
+          "cell": "Расчёты!C114"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТЭЦ",
+            "en": "CHP capacity"
+          },
+          "value": 1000,
+          "unit": "МВт",
+          "cell": "Расчёты!C115"
+        }
+      ],
       "cumAbatementStartKt": 13260.0,
       "cumAbatementEndKt": 17289.6
     },
@@ -678,6 +749,17 @@
           },
           "value": -7.5,
           "cell": "Расчёты!C466"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во объектов",
+            "en": "Number of sites"
+          },
+          "value": 5000,
+          "unit": "шт",
+          "cell": "Расчёты!C452"
         }
       ],
       "cumAbatementStartKt": 17289.6,
@@ -740,6 +822,17 @@
           "cell": "Расчёты!C643"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во биогазовых установок",
+            "en": "Number of biogas plants"
+          },
+          "value": 500,
+          "unit": "шт",
+          "cell": "Расчёты!C631"
+        }
+      ],
       "cumAbatementStartKt": 25839.6,
       "cumAbatementEndKt": 29263.6
     },
@@ -792,6 +885,17 @@
           "cell": "Расчёты!C515"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Оценка количества метана",
+            "en": "Estimated methane volume"
+          },
+          "value": 9.791795506081222,
+          "unit": "млн м3",
+          "cell": "Расчёты!C509"
+        }
+      ],
       "cumAbatementStartKt": 29263.6,
       "cumAbatementEndKt": 31163.6
     },
@@ -842,6 +946,17 @@
           },
           "value": -15,
           "cell": "Расчёты!C742"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во КОС под модернизацию",
+            "en": "WWTPs under upgrade"
+          },
+          "value": 15,
+          "unit": "шт",
+          "cell": "Расчёты!C731"
         }
       ],
       "cumAbatementStartKt": 31163.6,
@@ -902,6 +1017,17 @@
           },
           "value": -282.2113636363636,
           "cell": "Расчёты!C81"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Установленная мощность ВИЭ",
+            "en": "Installed renewables capacity"
+          },
+          "value": 10000,
+          "unit": "МВт",
+          "cell": "Расчёты!C74"
         }
       ],
       "cumAbatementStartKt": 31483.6,
@@ -980,6 +1106,44 @@
           "cell": "Расчёты!C237"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Потенциал замещения тепловыми насосами",
+            "en": "Heat-pump substitution potential"
+          },
+          "value": 9500,
+          "unit": "тыс Гкал",
+          "cell": "Расчёты!C212"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТН (тепловая)",
+            "en": "Heat-pump capacity (thermal)"
+          },
+          "value": 2081.053082191781,
+          "unit": "МВт(т)",
+          "cell": "Расчёты!C226"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТН (электр.)",
+            "en": "Heat-pump capacity (electric)"
+          },
+          "value": 594.5865949119374,
+          "unit": "МВт(э)",
+          "cell": "Расчёты!C227"
+        },
+        {
+          "label": {
+            "ru": "Потребление ЭЭ",
+            "en": "Electricity consumption"
+          },
+          "value": 1562.573571428571,
+          "unit": "тыс. МВтч",
+          "cell": "Расчёты!C228"
+        }
+      ],
       "cumAbatementStartKt": 59077.600000000006,
       "cumAbatementEndKt": 64302.600000000006
     },
@@ -1040,6 +1204,35 @@
           "cell": "Расчёты!C719"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во полигонов под дегазацию",
+            "en": "Landfills for degasification"
+          },
+          "value": 20,
+          "unit": "шт",
+          "cell": "Расчёты!C703"
+        },
+        {
+          "label": {
+            "ru": "Мощности генераторов",
+            "en": "Genset capacity"
+          },
+          "value": 28.571428571428573,
+          "unit": "МВт",
+          "cell": "Расчёты!C708"
+        },
+        {
+          "label": {
+            "ru": "Генерация электроэнергии",
+            "en": "Electricity generation"
+          },
+          "value": 200228.57142857148,
+          "unit": "МВтч",
+          "cell": "Расчёты!C712"
+        }
+      ],
       "cumAbatementStartKt": 64302.600000000006,
       "cumAbatementEndKt": 64662.600000000006
     },
@@ -1092,6 +1285,17 @@
           "cell": "Расчёты!C299"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Потенциальная электрическая мощность",
+            "en": "Potential electrical capacity"
+          },
+          "value": 2500,
+          "unit": "МВт",
+          "cell": "Расчёты!C287"
+        }
+      ],
       "cumAbatementStartKt": 64662.600000000006,
       "cumAbatementEndKt": 82182.6
     },
@@ -1142,6 +1346,26 @@
           },
           "value": -20,
           "cell": "Расчёты!C566"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Кол-во цементных заводов",
+            "en": "Number of cement plants"
+          },
+          "value": 4,
+          "unit": "шт",
+          "cell": "Расчёты!C553"
+        },
+        {
+          "label": {
+            "ru": "Объём цемента",
+            "en": "Cement volume"
+          },
+          "value": 10,
+          "unit": "млн т/год",
+          "cell": "Расчёты!C557"
         }
       ],
       "cumAbatementStartKt": 82182.6,
@@ -1236,6 +1460,35 @@
           "cell": "Расчёты!C169"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Мощность ВИЭ",
+            "en": "Renewables capacity"
+          },
+          "value": 7000,
+          "unit": "МВт",
+          "cell": "Расчёты!C156"
+        },
+        {
+          "label": {
+            "ru": "Мощность пикера",
+            "en": "Peaker capacity"
+          },
+          "value": 7000,
+          "unit": "МВт",
+          "cell": "Расчёты!C157"
+        },
+        {
+          "label": {
+            "ru": "Мощность ТЭЦ",
+            "en": "CHP capacity"
+          },
+          "value": 7000,
+          "unit": "МВт",
+          "cell": "Расчёты!C158"
+        }
+      ],
       "cumAbatementStartKt": 83042.6,
       "cumAbatementEndKt": 111249.8
     },
@@ -1304,6 +1557,44 @@
           "cell": "Расчёты!C370"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Средняя площадь здания",
+            "en": "Average building area"
+          },
+          "value": 3375,
+          "unit": "м²",
+          "cell": "Расчёты!C345"
+        },
+        {
+          "label": {
+            "ru": "Кол-во зданий",
+            "en": "Number of buildings"
+          },
+          "value": 50,
+          "unit": "тыс. шт",
+          "cell": "Расчёты!C346"
+        },
+        {
+          "label": {
+            "ru": "Потребление тепла до проекта",
+            "en": "Heat consumption (before)"
+          },
+          "value": 48600,
+          "unit": "ГВтч",
+          "cell": "Расчёты!C348"
+        },
+        {
+          "label": {
+            "ru": "Потребление тепла после",
+            "en": "Heat consumption (after)"
+          },
+          "value": 24300,
+          "unit": "ГВтч",
+          "cell": "Расчёты!C350"
+        }
+      ],
       "cumAbatementStartKt": 111249.8,
       "cumAbatementEndKt": 120467.04137931035
     },
@@ -1364,6 +1655,26 @@
           "cell": "Расчёты!C541"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Протяжённость газопроводов",
+            "en": "Pipeline length"
+          },
+          "value": 20000,
+          "unit": "км",
+          "cell": "Расчёты!C527"
+        },
+        {
+          "label": {
+            "ru": "Сэкономленный газ",
+            "en": "Gas saved"
+          },
+          "value": 1.3431272727272727,
+          "unit": "млрд м3",
+          "cell": "Расчёты!C534"
+        }
+      ],
       "cumAbatementStartKt": 120467.04137931035,
       "cumAbatementEndKt": 125597.04137931035
     },
@@ -1422,6 +1733,44 @@
           },
           "value": 25.5,
           "cell": "Расчёты!C619"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Поголовье КРС",
+            "en": "Cattle population (total)"
+          },
+          "value": 8500,
+          "unit": "тыс. голов",
+          "cell": "Расчёты!C602"
+        },
+        {
+          "label": {
+            "ru": "Среднее поголовье/хоз-во",
+            "en": "Average herd per farm"
+          },
+          "value": 500,
+          "unit": "голов",
+          "cell": "Расчёты!C607"
+        },
+        {
+          "label": {
+            "ru": "Поголовье под программу",
+            "en": "Cattle under programme"
+          },
+          "value": 2550,
+          "unit": "тыс. голов",
+          "cell": "Расчёты!C611"
+        },
+        {
+          "label": {
+            "ru": "Количество хозяйств",
+            "en": "Number of farms"
+          },
+          "value": 5100,
+          "unit": "шт",
+          "cell": "Расчёты!C612"
         }
       ],
       "cumAbatementStartKt": 125597.04137931035,
@@ -1508,6 +1857,35 @@
           "cell": "Расчёты!C440"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Замещаемое тепло",
+            "en": "Substituted heat"
+          },
+          "value": 21136.363636363636,
+          "unit": "тыс. Гкал",
+          "cell": "Расчёты!C428"
+        },
+        {
+          "label": {
+            "ru": "Мощность электрокотлов",
+            "en": "Electric-boiler capacity"
+          },
+          "value": 9353.725612287257,
+          "unit": "МВт",
+          "cell": "Расчёты!C429"
+        },
+        {
+          "label": {
+            "ru": "Потребление ЭЭ",
+            "en": "Electricity consumption"
+          },
+          "value": 24581.590909090908,
+          "unit": "тыс. МВтч",
+          "cell": "Расчёты!C430"
+        }
+      ],
       "cumAbatementStartKt": 127377.04137931035,
       "cumAbatementEndKt": 139002.04137931037
     },
@@ -1576,6 +1954,35 @@
           "cell": "Расчёты!C274"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Тепло (замещаемое)",
+            "en": "Substituted heat"
+          },
+          "value": 51300,
+          "unit": "тыс. Гкал",
+          "cell": "Расчёты!C264"
+        },
+        {
+          "label": {
+            "ru": "Мощность электрокотлов",
+            "en": "Electric-boiler capacity"
+          },
+          "value": 22702.397260273974,
+          "unit": "МВт",
+          "cell": "Расчёты!C265"
+        },
+        {
+          "label": {
+            "ru": "Потребление ЭЭ",
+            "en": "Electricity consumption"
+          },
+          "value": 59661.9,
+          "unit": "тыс. МВтч",
+          "cell": "Расчёты!C266"
+        }
+      ],
       "cumAbatementStartKt": 139002.04137931037,
       "cumAbatementEndKt": 167217.04137931037
     },
@@ -1626,6 +2033,17 @@
           },
           "value": 185.14285714285717,
           "cell": "Расчёты!C590"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Мощность улавливания",
+            "en": "Capture capacity"
+          },
+          "value": 3085.714285714286,
+          "unit": "тыс. т CO₂/год",
+          "cell": "Расчёты!C578"
         }
       ],
       "cumAbatementStartKt": 167217.04137931037,
@@ -1696,6 +2114,44 @@
           "cell": "Расчёты!C401"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Протяжённость газопроводов",
+            "en": "Pipeline length"
+          },
+          "value": 5000,
+          "unit": "км",
+          "cell": "Расчёты!C382"
+        },
+        {
+          "label": {
+            "ru": "Кол-во подключений",
+            "en": "Number of connections"
+          },
+          "value": 300,
+          "unit": "тыс. шт",
+          "cell": "Расчёты!C384"
+        },
+        {
+          "label": {
+            "ru": "Потребление газа",
+            "en": "Gas consumption"
+          },
+          "value": 3.6,
+          "unit": "млрд м3",
+          "cell": "Расчёты!C392"
+        },
+        {
+          "label": {
+            "ru": "Сокращение потребления угля",
+            "en": "Coal-use reduction"
+          },
+          "value": 7.362,
+          "unit": "млн т",
+          "cell": "Расчёты!C393"
+        }
+      ],
       "cumAbatementStartKt": 169377.04137931037,
       "cumAbatementEndKt": 176352.04137931037
     },
@@ -1756,6 +2212,26 @@
           "cell": "Расчёты!C199"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Мощность АЭС",
+            "en": "Nuclear capacity"
+          },
+          "value": 3600,
+          "unit": "МВт",
+          "cell": "Расчёты!C191"
+        },
+        {
+          "label": {
+            "ru": "Выработка",
+            "en": "Generation"
+          },
+          "value": 26805.6,
+          "unit": "тыс. МВтч/год",
+          "cell": "Расчёты!C192"
+        }
+      ],
       "cumAbatementStartKt": 176352.04137931037,
       "cumAbatementEndKt": 203157.64137931037
     },
@@ -1814,6 +2290,26 @@
           },
           "value": 11,
           "cell": "Расчёты!C770"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Целевая площадь посадок",
+            "en": "Target planting area"
+          },
+          "value": 1000,
+          "unit": "тыс. га",
+          "cell": "Расчёты!C753"
+        },
+        {
+          "label": {
+            "ru": "Эффективная площадь (с учётом выживаемости)",
+            "en": "Effective area (survival-adjusted)"
+          },
+          "value": 700,
+          "unit": "тыс. га",
+          "cell": "Расчёты!C761"
         }
       ],
       "cumAbatementStartKt": 203157.64137931037,
@@ -1884,6 +2380,17 @@
           "cell": "Расчёты!C51"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Замещаемая мощность",
+            "en": "Replaced capacity"
+          },
+          "value": 5000,
+          "unit": "МВт",
+          "cell": "Расчёты!C43"
+        }
+      ],
       "cumAbatementStartKt": 205257.64137931037,
       "cumAbatementEndKt": 217302.64137931037
     },
@@ -1944,6 +2451,35 @@
           "cell": "Расчёты!C332"
         }
       ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Средний пробег",
+            "en": "Average mileage"
+          },
+          "value": 15000,
+          "unit": "км/год",
+          "cell": "Расчёты!C312"
+        },
+        {
+          "label": {
+            "ru": "Рост потребления электроэнергии",
+            "en": "Electricity demand increase"
+          },
+          "value": 3.9594155844155847,
+          "unit": "млрд кВтч",
+          "cell": "Расчёты!C323"
+        },
+        {
+          "label": {
+            "ru": "Количество EV",
+            "en": "Number of EVs"
+          },
+          "value": 1466.4502164502167,
+          "unit": "тыс. шт",
+          "cell": "Расчёты!C325"
+        }
+      ],
       "cumAbatementStartKt": 217302.64137931037,
       "cumAbatementEndKt": 219486.91897671297
     },
@@ -2002,6 +2538,17 @@
           },
           "value": -27.675000000000004,
           "cell": "Расчёты!C21"
+        }
+      ],
+      "physicalItems": [
+        {
+          "label": {
+            "ru": "Замещаемая мощность",
+            "en": "Replaced capacity"
+          },
+          "value": 15000,
+          "unit": "МВт",
+          "cell": "Расчёты!C14"
         }
       ],
       "cumAbatementStartKt": 219486.91897671297,

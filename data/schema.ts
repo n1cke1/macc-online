@@ -30,6 +30,19 @@ export interface CostItem {
   cell: string;  // provenance, e.g. "Расчёты!C511"
 }
 
+/**
+ * A tangible, non-monetary scale indicator behind a measure's CAPEX — what the
+ * money physically buys/builds (installed MW, hectares planted, km of pipeline,
+ * head of cattle, capture capacity). Extracted from the Расчёты project block;
+ * `unit` is kept verbatim from the workbook (RU). Sector baselines are excluded.
+ */
+export interface PhysicalItem {
+  label: Localized;
+  value: number;
+  unit: string; // e.g. "МВт", "тыс. га", "млн м3"
+  cell: string; // provenance, e.g. "Расчёты!C74"
+}
+
 /** One abatement measure = one bar of the curve. Mirrors MACC sheet cols A..K. */
 export interface MaccPoint {
   id: number;              // B — stable measure id (1..26)
@@ -51,6 +64,8 @@ export interface MaccPoint {
   // Breakdown of CAPEX / OPEX into their main line items (from the Расчёты block).
   capexItems?: CostItem[];
   opexItems?: CostItem[];
+  // Tangible physical-scale indicators behind the CAPEX (MW, ha, km, head, …).
+  physicalItems?: PhysicalItem[];
 }
 
 /** Live levers the user can move (subset of `assumptions` where isLever=true). */

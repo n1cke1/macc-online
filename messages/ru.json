@@ -42,6 +42,7 @@
     "opex": "OPEX",
     "duration": "Срок службы",
     "npv": "NPV",
+    "physicalScale": "Натуральные показатели",
     "provenance": "MAC = NPV / дисконтированное CO₂ × 1000",
     "close": "Закрыть"
   },

@@ -286,9 +286,50 @@ def extract_breakdown(calc_v, start, end, kind, line_en):
     return items, calc_v.cell(tot, 3).value
 
 
+# Physical-scale extraction (the tangible thing CAPEX buys: MW, ha, km, head…).
+# A physical unit is a standalone magnitude — NOT a monetary, emission, intensity
+# (per-something) or share/time unit. Capture/throughput rates "X/год" are kept.
+_PHYS_UNIT = re.compile(
+    r"(МВт|кВт|ГВт|Гкал|МВтч|кВтч|ГВтч|\bга\b|м²|м2|\bм3\b|м³|\bкм\b|шт|голов|объект|\bт\b|тонн|авто|чел)",
+    re.I,
+)
+_BAD_UNIT = re.compile(r"\$|USD|eq|доля|%|лет|у\.т\.|^год$", re.I)
+# A "/" that is NOT "/год" or "/хоз…" marks a per-unit intensity (e.g. tCO₂/Гкал).
+_INTENSITY = re.compile(r"/\s*(?!год|хоз)", re.I)
+# Sector baselines / context rows, not the measure's own scale.
+_BASELINE_LABEL = re.compile(r"^(Выбросы сектора|Общий объ|Общие |Доля )", re.I)
+_SECTION_LABEL = re.compile(r"^(ПРЕДПОСЫЛКИ|РАСЧ[ЁЕ]Т|КЛЮЧЕВЫЕ|CAPEX|OPEX|ИТОГО)", re.I)
+
+
+def build_physical_items(calc_v, start, end, phys_en) -> list:
+    """Tangible non-monetary scale indicators from a Расчёты block."""
+    items = []
+    for r in range(start, end):
+        label = calc_v.cell(r, 2).value   # col B
+        value = calc_v.cell(r, 3).value   # col C (data_only → cached number)
+        unit = calc_v.cell(r, 5).value    # col E
+        if not isinstance(label, str) or not isinstance(unit, str):
+            continue
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
+            continue
+        label, unit = label.strip(), unit.strip()
+        if not unit or _SECTION_LABEL.match(label) or _BASELINE_LABEL.match(label):
+            continue
+        if _BAD_UNIT.search(unit) or _INTENSITY.search(unit) or not _PHYS_UNIT.search(unit):
+            continue
+        items.append({
+            "label": {"ru": label, "en": phys_en.get(label, "")},
+            "value": value,
+            "unit": unit,
+            "cell": f"{SHEET_CALC}!C{r}",
+        })
+    return items
+
+
 def build_projects(macc_f, macc_v, calc_v, translations) -> list:
     en_map = translations.get("projects", {})
     line_en = translations.get("lineItems", {})
+    phys_en = translations.get("physicalItems", {})
     ranges = calc_block_ranges(calc_v)
     rows = []
     for r in PROJECT_ROWS:
@@ -297,7 +338,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
         capex_src = extract_source_cell(macc_f[f"E{r}"].value)
 
         # Locate the Расчёты block via the CAPEX source cell row, then pull breakdowns.
-        capex_items = opex_items = None
+        capex_items = opex_items = physical_items = None
         if capex_src:
             row_num = int(re.search(r"(\d+)$", capex_src).group(1))
             blk = find_block(ranges, row_num)
@@ -305,6 +346,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
                 start, end, _code, _title = blk
                 capex_items, _ = extract_breakdown(calc_v, start, end, "CAPEX", line_en)
                 opex_items, _ = extract_breakdown(calc_v, start, end, "OPEX", line_en)
+                physical_items = build_physical_items(calc_v, start, end, phys_en)
 
         rows.append({
             "id": int(macc_v[f"B{r}"].value),
@@ -326,6 +368,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
             },
             "capexItems": capex_items or [],
             "opexItems": opex_items or [],
+            "physicalItems": physical_items or [],
         })
     # curve order: ascending by MAC, with cumulative abatement spans
     rows.sort(key=lambda p: p["mac"])

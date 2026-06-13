@@ -1,8 +1,8 @@
 'use client';
 import { useLocale, useTranslations } from 'next-intl';
 import { dataset, sectorLabel, pick } from '@/lib/data';
-import type { CostItem } from '@data/schema';
-import { fmt, fmtMac, fmtInt, fmtMt, fmtPct } from '@/lib/format';
+import type { CostItem, PhysicalItem } from '@data/schema';
+import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
 import { useUi, useScenario } from '@/store';
 
 export default function ProjectDrilldown() {
@@ -44,6 +44,8 @@ export default function ProjectDrilldown() {
           </div>
         ))}
       </dl>
+
+      <PhysicalScale title={t('physicalScale')} items={p.physicalItems} locale={locale} />
 
       <CostBreakdown
         title={`${t('capex')}, mUSD`}
@@ -90,6 +92,35 @@ function CostBreakdown({
           <span>{locale === 'en' ? 'Total' : 'Итого'}</span>
           <span className="tabular-nums">{num(total)}</span>
         </li>
+      </ul>
+    </section>
+  );
+}
+
+/** Tangible non-monetary scale behind the CAPEX (MW, ha, km, head, …). */
+function PhysicalScale({
+  title,
+  items,
+  locale,
+}: {
+  title: string;
+  items?: PhysicalItem[];
+  locale: 'ru' | 'en';
+}) {
+  if (!items || items.length === 0) return null;
+  return (
+    <section className="mt-4">
+      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{title}</h3>
+      <ul className="divide-y divide-line rounded-md border border-line">
+        {items.map((it) => (
+          <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
+            <span className="text-slate-700">{pick(it.label, locale)}</span>
+            <span className="shrink-0 tabular-nums">
+              {fmt(it.value, locale, { maximumFractionDigits: Math.abs(it.value) < 100 ? 1 : 0 })}{' '}
+              <span className="text-muted">{formatUnit(it.unit, locale)}</span>
+            </span>
+          </li>
+        ))}
       </ul>
     </section>
   );

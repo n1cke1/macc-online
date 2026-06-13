@@ -1,7 +1,7 @@
 {
   "meta": {
     "sourceFile": "MACC_KZ_29052026_rev.xlsx",
-    "modelVersion": "kz-b19702294886",
+    "modelVersion": "kz-732cf2835cb9",
     "sheetOrder": [
       "MACC",
       "Выбросы",
@@ -6547,7 +6547,7 @@
         "Потребление тепла после",
         "=C348*(1-C347)",
         null,
-        "МВт",
+        "ГВтч",
         null,
         null,
         null,
