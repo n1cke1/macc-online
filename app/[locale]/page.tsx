@@ -12,6 +12,8 @@ import ProjectDrilldown from '@/components/drilldown/ProjectDrilldown';
 import AssumptionsPanel from '@/components/assumptions/AssumptionsPanel';
 import ExportBar from '@/components/assumptions/ExportBar';
 import ScenarioUrlSync from '@/components/assumptions/ScenarioUrlSync';
+import AuthButtonGate from '@/components/collab/AuthButtonGate';
+import AnchorComments from '@/components/collab/AnchorComments';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -31,6 +33,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </div>
         <div className="flex items-center gap-2">
           <VersionBadge />
+          <AuthButtonGate />
           <LocaleSwitch />
         </div>
       </header>
@@ -62,6 +65,13 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <section className="sm:hidden">
           <MaccChart />
         </section>
+
+        {/* Curve-level discussion (collab layer; renders nothing when backend off) */}
+        <AnchorComments
+          type="curve"
+          id="kz"
+          className="rounded-lg border border-line bg-white p-4"
+        />
       </div>
 
       <ProjectDrilldown />

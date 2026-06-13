@@ -68,5 +68,39 @@
     "svg": "Chart (SVG)"
   },
   "units": { "mt": "Mt", "usdPerTon": "USD/t" },
-  "version": { "model": "Model", "source": "source" }
+  "version": { "model": "Model", "source": "source" },
+  "collab": {
+    "threadTitle": "Review",
+    "discuss": "Discuss this assumption",
+    "loading": "Loading comments…",
+    "offline": "Comments are offline.",
+    "noComments": "No comments yet. Start the discussion.",
+    "signInToComment": "Sign in to leave a review comment.",
+    "composerPlaceholder": "Add a comment… use @name to mention",
+    "replyPlaceholder": "Write a reply…",
+    "post": "Post",
+    "posting": "Posting…",
+    "reply": "Reply",
+    "delete": "Delete",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "pinned": "Pinned",
+    "setStatus": "Status",
+    "status": {
+      "open": "Open",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "wontfix": "Won't fix"
+    },
+    "auth": {
+      "signIn": "Sign in",
+      "signOut": "Sign out",
+      "signInPrompt": "Sign in to review and comment.",
+      "continueWith": "Continue with {provider}",
+      "or": "or",
+      "emailPlaceholder": "you@example.org",
+      "sendLink": "Email me a sign-in link",
+      "linkSent": "Check your inbox for a sign-in link."
+    }
+  }
 }

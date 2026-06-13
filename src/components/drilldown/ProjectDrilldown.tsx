@@ -4,6 +4,7 @@ import { dataset, sectorLabel, pick } from '@/lib/data';
 import type { CostItem, PhysicalItem } from '@data/schema';
 import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
 import { useUi, useScenario } from '@/store';
+import AnchorComments from '@/components/collab/AnchorComments';
 
 export default function ProjectDrilldown() {
   const locale = useLocale() as 'ru' | 'en';
@@ -61,6 +62,8 @@ export default function ProjectDrilldown() {
       />
 
       <p className="mt-4 rounded-md bg-slate-50 px-3 py-2 text-xs text-muted">{t('provenance')}</p>
+
+      <AnchorComments type="project" id={String(p.id)} />
     </div>
   );
 }

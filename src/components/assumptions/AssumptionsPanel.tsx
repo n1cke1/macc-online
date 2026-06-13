@@ -5,6 +5,7 @@ import { pick } from '@/lib/data';
 import { fmt } from '@/lib/format';
 import { LEVER_META, type LeverKey, type LeverMeta } from '@/lib/scenario';
 import { useScenario } from '@/store';
+import AnchorComments from '@/components/collab/AnchorComments';
 
 /** Format a lever value with its unit (WACC shown as a percentage). */
 function formatValue(m: LeverMeta, value: number, locale: string): string {
@@ -60,6 +61,8 @@ function LeverSlider({ meta }: { meta: LeverMeta }) {
         </span>
         <span>{formatValue(meta, meta.max, locale)}</span>
       </div>
+      {/* Assumption-anchored review thread (collab layer; null when backend off). */}
+      <AnchorComments type="assumption" id={meta.key} collapsible className="mt-1.5" />
     </div>
   );
 }

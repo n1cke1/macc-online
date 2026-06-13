@@ -68,5 +68,39 @@
     "svg": "График (SVG)"
   },
   "units": { "mt": "Mt", "usdPerTon": "USD/т" },
-  "version": { "model": "Модель", "source": "источник" }
+  "version": { "model": "Модель", "source": "источник" },
+  "collab": {
+    "threadTitle": "Экспертная проверка",
+    "discuss": "Обсудить это допущение",
+    "loading": "Загрузка комментариев…",
+    "offline": "Комментарии недоступны.",
+    "noComments": "Пока нет комментариев. Начните обсуждение.",
+    "signInToComment": "Войдите, чтобы оставить комментарий.",
+    "composerPlaceholder": "Комментарий… используйте @имя для упоминания",
+    "replyPlaceholder": "Ответ…",
+    "post": "Отправить",
+    "posting": "Отправка…",
+    "reply": "Ответить",
+    "delete": "Удалить",
+    "pin": "Закрепить",
+    "unpin": "Открепить",
+    "pinned": "Закреплено",
+    "setStatus": "Статус",
+    "status": {
+      "open": "Открыт",
+      "accepted": "Принято",
+      "rejected": "Отклонено",
+      "wontfix": "Не исправлять"
+    },
+    "auth": {
+      "signIn": "Войти",
+      "signOut": "Выйти",
+      "signInPrompt": "Войдите, чтобы рецензировать и комментировать.",
+      "continueWith": "Войти через {provider}",
+      "or": "или",
+      "emailPlaceholder": "you@example.org",
+      "sendLink": "Прислать ссылку для входа",
+      "linkSent": "Проверьте почту — мы отправили ссылку для входа."
+    }
+  }
 }

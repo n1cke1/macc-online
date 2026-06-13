@@ -12,6 +12,7 @@
     "golden": "tsx scripts/golden.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.108.1",
     "@visx/axis": "^3.12.0",
     "@visx/event": "^3.12.0",
     "@visx/group": "^3.12.0",
