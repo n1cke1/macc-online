@@ -368,7 +368,7 @@
         {
           "label": {
             "ru": "GPS-навигация и датчики",
-            "en": ""
+            "en": "GPS navigation & sensors"
           },
           "value": 150,
           "cell": "Расчёты!C662"
@@ -376,7 +376,7 @@
         {
           "label": {
             "ru": "Обучение и агрономическая поддержка",
-            "en": ""
+            "en": "Training & agronomic support"
           },
           "value": 30,
           "cell": "Расчёты!C663"
@@ -386,7 +386,7 @@
         {
           "label": {
             "ru": "ТОиР оборудования",
-            "en": ""
+            "en": "Equipment O&M"
           },
           "value": 9,
           "cell": "Расчёты!C666"
@@ -394,7 +394,7 @@
         {
           "label": {
             "ru": "Экономия удобрений",
-            "en": ""
+            "en": "Fertilizer savings"
           },
           "value": -75,
           "cell": "Расчёты!C667"
@@ -435,7 +435,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX (GPS, датчики)",
-            "en": ""
+            "en": "Unit CAPEX (GPS, sensors)"
           },
           "value": 30,
           "unit": "$/га",
@@ -491,7 +491,7 @@
         {
           "label": {
             "ru": "Восстановление пастбищ",
-            "en": ""
+            "en": "Pasture restoration"
           },
           "value": 200,
           "cell": "Расчёты!C686"
@@ -499,7 +499,7 @@
         {
           "label": {
             "ru": "Инфраструктура ротационного выпаса",
-            "en": ""
+            "en": "Rotational-grazing infrastructure"
           },
           "value": 30,
           "cell": "Расчёты!C687"
@@ -509,7 +509,7 @@
         {
           "label": {
             "ru": "Поддержание пастбищ",
-            "en": ""
+            "en": "Pasture maintenance"
           },
           "value": 4.6000000000000005,
           "cell": "Расчёты!C690"
@@ -517,7 +517,7 @@
         {
           "label": {
             "ru": "Экономия кормов",
-            "en": ""
+            "en": "Feed savings"
           },
           "value": -50,
           "cell": "Расчёты!C691"
@@ -558,7 +558,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX восстановления",
-            "en": ""
+            "en": "Unit CAPEX of restoration"
           },
           "value": 20,
           "unit": "$/га",
@@ -614,7 +614,7 @@
         {
           "label": {
             "ru": "ГТЭС и компрессорное оборудование",
-            "en": ""
+            "en": "Gas-turbine plant & compressor equipment"
           },
           "value": 1500,
           "cell": "Расчёты!C486"
@@ -622,7 +622,7 @@
         {
           "label": {
             "ru": "Подводящая инфраструктура",
-            "en": ""
+            "en": "Feeder infrastructure"
           },
           "value": 375,
           "cell": "Расчёты!C487"
@@ -640,7 +640,7 @@
         {
           "label": {
             "ru": "Выручка от электроэнергии",
-            "en": ""
+            "en": "Electricity revenue"
           },
           "value": -333.33333333333337,
           "cell": "Расчёты!C491"
@@ -680,7 +680,7 @@
         {
           "label": {
             "ru": "Объём сжигаемого ПНГ",
-            "en": ""
+            "en": "Flared APG volume"
           },
           "value": 3,
           "unit": "млрд м³/год",
@@ -690,7 +690,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX ГТЭС / компрессии",
-            "en": ""
+            "en": "Unit CAPEX of gas-turbine plant / compression"
           },
           "value": 500,
           "unit": "$/тыс.м³/год",
@@ -700,7 +700,7 @@
         {
           "label": {
             "ru": "Выручка от электроэнергии",
-            "en": ""
+            "en": "Electricity revenue"
           },
           "value": 40,
           "unit": "$/МВтч",
@@ -746,7 +746,7 @@
         {
           "label": {
             "ru": "ВИЭ (солнце+ветер)",
-            "en": ""
+            "en": "Renewables (solar + wind)"
           },
           "value": 1074.285714285714,
           "cell": "Расчёты!C117"
@@ -754,7 +754,7 @@
         {
           "label": {
             "ru": "Развитие электросетей (на пикеры)",
-            "en": ""
+            "en": "Grid expansion (for peakers)"
           },
           "value": 150,
           "cell": "Расчёты!C118"
@@ -762,7 +762,7 @@
         {
           "label": {
             "ru": "Отказ от строительства ТЭЦ",
-            "en": ""
+            "en": "Avoided CHP construction"
           },
           "value": -3000,
           "cell": "Расчёты!C119"
@@ -770,7 +770,7 @@
         {
           "label": {
             "ru": "Газотурбинный пикер",
-            "en": ""
+            "en": "Gas-turbine peaker"
           },
           "value": 1000,
           "cell": "Расчёты!C120"
@@ -778,7 +778,7 @@
         {
           "label": {
             "ru": "Котельная",
-            "en": ""
+            "en": "Boiler house"
           },
           "value": 80,
           "cell": "Расчёты!C121"
@@ -796,7 +796,7 @@
         {
           "label": {
             "ru": "Снижение опекса ТЭЦ",
-            "en": ""
+            "en": "CHP OPEX reduction"
           },
           "value": 0,
           "cell": "Расчёты!C125"
@@ -804,7 +804,7 @@
         {
           "label": {
             "ru": "Потребление газа",
-            "en": ""
+            "en": "Gas consumption"
           },
           "value": 98.0903084846278,
           "cell": "Расчёты!C126"
@@ -851,7 +851,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX угольная ТЭЦ",
-            "en": ""
+            "en": "Unit CAPEX of coal CHP"
           },
           "value": 3000,
           "unit": "$/кВт",
@@ -871,7 +871,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX электрокотельная",
-            "en": ""
+            "en": "Unit CAPEX of electric boiler house"
           },
           "value": 200,
           "unit": "$/кВт(т)",
@@ -921,7 +921,7 @@
         {
           "label": {
             "ru": "Стоимость присоединения пикеров к сетям",
-            "en": ""
+            "en": "Cost of connecting peakers to the grid"
           },
           "value": 0.15,
           "unit": "",
@@ -977,7 +977,7 @@
         {
           "label": {
             "ru": "Обследование и ремонт",
-            "en": ""
+            "en": "Survey & repair"
           },
           "value": 40,
           "cell": "Расчёты!C461"
@@ -985,7 +985,7 @@
         {
           "label": {
             "ru": "OGI камеры и оборудование",
-            "en": ""
+            "en": "OGI cameras & equipment"
           },
           "value": 15,
           "cell": "Расчёты!C462"
@@ -995,7 +995,7 @@
         {
           "label": {
             "ru": "Мониторинг и обследования",
-            "en": ""
+            "en": "Monitoring & surveys"
           },
           "value": 10,
           "cell": "Расчёты!C465"
@@ -1003,7 +1003,7 @@
         {
           "label": {
             "ru": "Выручка от газа",
-            "en": ""
+            "en": "Gas revenue"
           },
           "value": -7.5,
           "cell": "Расчёты!C466"
@@ -1044,7 +1044,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX: обследование+ремонт",
-            "en": ""
+            "en": "Unit CAPEX: survey + repair"
           },
           "value": 8,
           "unit": "тыс. $/объект",
@@ -1054,7 +1054,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX: OGI оборудование",
-            "en": ""
+            "en": "Unit CAPEX: OGI equipment"
           },
           "value": 3,
           "unit": "тыс. $/объект",
@@ -1064,7 +1064,7 @@
         {
           "label": {
             "ru": "Уд. OPEX: мониторинг",
-            "en": ""
+            "en": "Unit OPEX: monitoring"
           },
           "value": 2,
           "unit": "тыс. $/объект/год",
@@ -1074,7 +1074,7 @@
         {
           "label": {
             "ru": "Выручка от сохранённого газа",
-            "en": ""
+            "en": "Revenue from saved gas"
           },
           "value": 1.5,
           "unit": "тыс. $/объект/год",
@@ -1120,7 +1120,7 @@
         {
           "label": {
             "ru": "Системы дегазации и утилизации",
-            "en": ""
+            "en": "Degassing & recovery systems"
           },
           "value": 300,
           "cell": "Расчёты!C511"
@@ -1169,7 +1169,7 @@
         {
           "label": {
             "ru": "CAPEX программы дегазации",
-            "en": ""
+            "en": "CAPEX of the degassing programme"
           },
           "value": 300,
           "unit": "mUSD",
@@ -1179,7 +1179,7 @@
         {
           "label": {
             "ru": "Выгода от продажи метана",
-            "en": ""
+            "en": "Benefit from methane sales"
           },
           "value": 150,
           "unit": "$/тыс м3",
@@ -1225,7 +1225,7 @@
         {
           "label": {
             "ru": "Модернизация КОС",
-            "en": ""
+            "en": "Wastewater-treatment-plant upgrade"
           },
           "value": 150,
           "cell": "Расчёты!C738"
@@ -1243,7 +1243,7 @@
         {
           "label": {
             "ru": "Экономия от биогаза",
-            "en": ""
+            "en": "Biogas savings"
           },
           "value": -15,
           "cell": "Расчёты!C742"
@@ -1274,7 +1274,7 @@
         {
           "label": {
             "ru": "Кол-во КОС под модернизацию",
-            "en": ""
+            "en": "Number of WWTPs to upgrade"
           },
           "value": 15,
           "unit": "шт",
@@ -1284,7 +1284,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX модернизации очистных",
-            "en": ""
+            "en": "Unit CAPEX of treatment-plant upgrade"
           },
           "value": 10,
           "unit": "mUSD/шт",
@@ -1294,7 +1294,7 @@
         {
           "label": {
             "ru": "Экономия энергии от биогаза",
-            "en": ""
+            "en": "Energy savings from biogas"
           },
           "value": 1,
           "unit": "mUSD/шт/год",
@@ -1340,7 +1340,7 @@
         {
           "label": {
             "ru": "ВИЭ",
-            "en": ""
+            "en": "Renewables"
           },
           "value": 8000,
           "cell": "Расчёты!C76"
@@ -1348,7 +1348,7 @@
         {
           "label": {
             "ru": "Сети и подключение",
-            "en": ""
+            "en": "Grid & connection"
           },
           "value": 1200,
           "cell": "Расчёты!C77"
@@ -1358,7 +1358,7 @@
         {
           "label": {
             "ru": "ТОиР ВИЭ",
-            "en": ""
+            "en": "Renewables O&M"
           },
           "value": 138,
           "cell": "Расчёты!C80"
@@ -1397,7 +1397,7 @@
         {
           "label": {
             "ru": "Доля curtailment",
-            "en": ""
+            "en": "Curtailment share"
           },
           "value": 0.1,
           "unit": "",
@@ -1407,7 +1407,7 @@
         {
           "label": {
             "ru": "Доля солнца в миксе",
-            "en": ""
+            "en": "Solar share in the mix"
           },
           "value": 0.25,
           "unit": "",
@@ -1417,7 +1417,7 @@
         {
           "label": {
             "ru": "Затраты на сети",
-            "en": ""
+            "en": "Grid costs"
           },
           "value": 0.15,
           "unit": "от CAPEX обор.",
@@ -1473,7 +1473,7 @@
         {
           "label": {
             "ru": "Тепловые насосы",
-            "en": ""
+            "en": "Heat pumps"
           },
           "value": 1040.5265410958903,
           "cell": "Расчёты!C230"
@@ -1481,7 +1481,7 @@
         {
           "label": {
             "ru": "Модернизация сетей теплоснабжения",
-            "en": ""
+            "en": "Heat-network upgrade"
           },
           "value": 312.15796232876704,
           "cell": "Расчёты!C231"
@@ -1499,7 +1499,7 @@
         {
           "label": {
             "ru": "Сокращение OPEX котельных и ТЭЦ",
-            "en": ""
+            "en": "OPEX reduction of boilers & CHP"
           },
           "value": -27.053690068493147,
           "cell": "Расчёты!C235"
@@ -1507,7 +1507,7 @@
         {
           "label": {
             "ru": "Электроэнергия",
-            "en": ""
+            "en": "Electricity"
           },
           "value": 78.12867857142855,
           "cell": "Расчёты!C236"
@@ -1563,7 +1563,7 @@
         {
           "label": {
             "ru": "Общий объем проивзодства тепла",
-            "en": ""
+            "en": "Total heat production"
           },
           "value": 95000,
           "unit": "тыс Гкал",
@@ -1583,7 +1583,7 @@
         {
           "label": {
             "ru": "Модернизация сетей теплоснабжения",
-            "en": ""
+            "en": "Heat-network upgrade"
           },
           "value": 0.3,
           "unit": "от CAPEX ТН",
@@ -1593,7 +1593,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло (уголь)",
-            "en": ""
+            "en": "Specific fuel use for heat (coal)"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -1659,7 +1659,7 @@
         {
           "label": {
             "ru": "Системы дегазации",
-            "en": ""
+            "en": "Degassing systems"
           },
           "value": 100,
           "cell": "Расчёты!C714"
@@ -1667,7 +1667,7 @@
         {
           "label": {
             "ru": "Газопоршневые генераторы",
-            "en": ""
+            "en": "Gas-piston generators"
           },
           "value": 40,
           "cell": "Расчёты!C715"
@@ -1685,7 +1685,7 @@
         {
           "label": {
             "ru": "Выручка от электроэнергии",
-            "en": ""
+            "en": "Electricity revenue"
           },
           "value": -10.011428571428574,
           "cell": "Расчёты!C719"
@@ -1734,7 +1734,7 @@
         {
           "label": {
             "ru": "Кол-во полигонов под дегазацию",
-            "en": ""
+            "en": "Number of landfills for degassing"
           },
           "value": 20,
           "unit": "шт",
@@ -1744,7 +1744,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX системы дегазации",
-            "en": ""
+            "en": "Unit CAPEX of degassing system"
           },
           "value": 5,
           "unit": "mUSD/полигон",
@@ -1754,7 +1754,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX генераторов",
-            "en": ""
+            "en": "Unit CAPEX of generators"
           },
           "value": 1400,
           "unit": "$/кВт",
@@ -1800,7 +1800,7 @@
         {
           "label": {
             "ru": "Генераторы",
-            "en": ""
+            "en": "Generators"
           },
           "value": 6250,
           "cell": "Расчёты!C294"
@@ -1895,7 +1895,7 @@
         {
           "label": {
             "ru": "Модернизация заводов",
-            "en": ""
+            "en": "Plant upgrade"
           },
           "value": 200,
           "cell": "Расчёты!C562"
@@ -1905,7 +1905,7 @@
         {
           "label": {
             "ru": "Закупка добавок",
-            "en": ""
+            "en": "Additive procurement"
           },
           "value": 40,
           "cell": "Расчёты!C565"
@@ -1913,7 +1913,7 @@
         {
           "label": {
             "ru": "Экономия на клинкере",
-            "en": ""
+            "en": "Clinker savings"
           },
           "value": -20,
           "cell": "Расчёты!C566"
@@ -1963,7 +1963,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX модернизации завода",
-            "en": ""
+            "en": "Unit CAPEX of plant upgrade"
           },
           "value": 50,
           "unit": "mUSD/завод",
@@ -1973,7 +1973,7 @@
         {
           "label": {
             "ru": "Стоимость добавок (зола, шлак)",
-            "en": ""
+            "en": "Cost of additives (ash, slag)"
           },
           "value": 20,
           "unit": "$/т",
@@ -1993,7 +1993,7 @@
         {
           "label": {
             "ru": "Объём цемента",
-            "en": ""
+            "en": "Cement volume"
           },
           "value": 10,
           "unit": "млн т/год",
@@ -2039,7 +2039,7 @@
         {
           "label": {
             "ru": "ВИЭ (солнце+ветер)",
-            "en": ""
+            "en": "Renewables (solar + wind)"
           },
           "value": 5600,
           "cell": "Расчёты!C160"
@@ -2047,7 +2047,7 @@
         {
           "label": {
             "ru": "Газотурбинный пикер",
-            "en": ""
+            "en": "Gas-turbine peaker"
           },
           "value": 7000,
           "cell": "Расчёты!C161"
@@ -2055,7 +2055,7 @@
         {
           "label": {
             "ru": "Отказ от модернизации ТЭЦ",
-            "en": ""
+            "en": "Avoided CHP upgrade"
           },
           "value": -7000,
           "cell": "Расчёты!C162"
@@ -2063,7 +2063,7 @@
         {
           "label": {
             "ru": "Котельная",
-            "en": ""
+            "en": "Boiler house"
           },
           "value": 280.00000000000006,
           "cell": "Расчёты!C163"
@@ -2081,7 +2081,7 @@
         {
           "label": {
             "ru": "Снижение опекса ТЭЦ",
-            "en": ""
+            "en": "CHP OPEX reduction"
           },
           "value": -168,
           "cell": "Расчёты!C167"
@@ -2089,7 +2089,7 @@
         {
           "label": {
             "ru": "Потребление газа",
-            "en": ""
+            "en": "Gas consumption"
           },
           "value": 918.3007334963324,
           "cell": "Расчёты!C168"
@@ -2136,7 +2136,7 @@
         {
           "label": {
             "ru": "Удельный CAPEX модернизации ТЭЦ",
-            "en": ""
+            "en": "Unit CAPEX of CHP upgrade"
           },
           "value": 1000,
           "unit": "$/кВт",
@@ -2146,7 +2146,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX переоборудование в котельную",
-            "en": ""
+            "en": "Unit CAPEX of conversion to boiler house"
           },
           "value": 100,
           "unit": "$/кВт(т)",
@@ -2186,7 +2186,7 @@
         {
           "label": {
             "ru": "Тепловая мощности ТЭЦ",
-            "en": ""
+            "en": "CHP heat capacity"
           },
           "value": 0.4,
           "unit": "",
@@ -2242,7 +2242,7 @@
         {
           "label": {
             "ru": "Утепление фасадов и кровли",
-            "en": ""
+            "en": "Facade & roof insulation"
           },
           "value": 9000,
           "cell": "Расчёты!C364"
@@ -2250,7 +2250,7 @@
         {
           "label": {
             "ru": "Замена окон и дверей",
-            "en": ""
+            "en": "Window & door replacement"
           },
           "value": 1800,
           "cell": "Расчёты!C365"
@@ -2268,7 +2268,7 @@
         {
           "label": {
             "ru": "Снижение затрат на котельные/ТЭЦ",
-            "en": ""
+            "en": "Reduced boiler/CHP costs"
           },
           "value": -729,
           "cell": "Расчёты!C369"
@@ -2276,7 +2276,7 @@
         {
           "label": {
             "ru": "Снижение потребления угля",
-            "en": ""
+            "en": "Reduced coal consumption"
           },
           "value": -94.26724137931035,
           "cell": "Расчёты!C370"
@@ -2334,7 +2334,7 @@
         {
           "label": {
             "ru": "Снижение теплопотребования в домах",
-            "en": ""
+            "en": "Reduction in household heat demand"
           },
           "value": 0.5,
           "unit": "",
@@ -2364,7 +2364,7 @@
         {
           "label": {
             "ru": "Снижение эффективности работы ТЭЦ",
-            "en": ""
+            "en": "Reduction in CHP efficiency"
           },
           "value": 0.2,
           "unit": "",
@@ -2400,7 +2400,7 @@
         {
           "label": {
             "ru": "Модернизация газопроводов и КС",
-            "en": ""
+            "en": "Gas-pipeline & compressor-station upgrade"
           },
           "value": 600,
           "cell": "Расчёты!C536"
@@ -2408,7 +2408,7 @@
         {
           "label": {
             "ru": "Спутниковый мониторинг",
-            "en": ""
+            "en": "Satellite monitoring"
           },
           "value": 30,
           "cell": "Расчёты!C537"
@@ -2418,7 +2418,7 @@
         {
           "label": {
             "ru": "ТОиР и мониторинг",
-            "en": ""
+            "en": "O&M and monitoring"
           },
           "value": 18.9,
           "cell": "Расчёты!C540"
@@ -2426,7 +2426,7 @@
         {
           "label": {
             "ru": "Экономия газа",
-            "en": ""
+            "en": "Gas savings"
           },
           "value": 335.78181818181815,
           "cell": "Расчёты!C541"
@@ -2486,7 +2486,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX модернизации электросетей",
-            "en": ""
+            "en": "Unit CAPEX of grid upgrade"
           },
           "value": 0.1,
           "unit": "mUSD/км",
@@ -2532,7 +2532,7 @@
         {
           "label": {
             "ru": "Оборудование дозирования",
-            "en": ""
+            "en": "Dosing equipment"
           },
           "value": 38.25,
           "cell": "Расчёты!C614"
@@ -2540,7 +2540,7 @@
         {
           "label": {
             "ru": "Обучение и внедрение",
-            "en": ""
+            "en": "Training & rollout"
           },
           "value": 102,
           "cell": "Расчёты!C615"
@@ -2550,7 +2550,7 @@
         {
           "label": {
             "ru": "Закупка кормовых добавок",
-            "en": ""
+            "en": "Feed-additive procurement"
           },
           "value": 127.5,
           "cell": "Расчёты!C618"
@@ -2558,7 +2558,7 @@
         {
           "label": {
             "ru": "Ветеринарный мониторинг",
-            "en": ""
+            "en": "Veterinary monitoring"
           },
           "value": 25.5,
           "cell": "Расчёты!C619"
@@ -2636,7 +2636,7 @@
         {
           "label": {
             "ru": "Стоимость добавки (3-NOP)",
-            "en": ""
+            "en": "Cost of additive (3-NOP)"
           },
           "value": 50,
           "unit": "$/голову/год",
@@ -2646,7 +2646,7 @@
         {
           "label": {
             "ru": "CAPEX дозирование на голову",
-            "en": ""
+            "en": "CAPEX of dosing per head"
           },
           "value": 15,
           "unit": "$",
@@ -2656,7 +2656,7 @@
         {
           "label": {
             "ru": "CAPEX обучение на хоз-во",
-            "en": ""
+            "en": "CAPEX of training per farm"
           },
           "value": 20,
           "unit": "тыс. $",
@@ -2712,7 +2712,7 @@
         {
           "label": {
             "ru": "Электрокотлы",
-            "en": ""
+            "en": "Electric boilers"
           },
           "value": 1403.0588418430887,
           "cell": "Расчёты!C432"
@@ -2720,7 +2720,7 @@
         {
           "label": {
             "ru": "Расширение электросетей",
-            "en": ""
+            "en": "Grid expansion"
           },
           "value": 561.2235367372355,
           "cell": "Расчёты!C433"
@@ -2728,7 +2728,7 @@
         {
           "label": {
             "ru": "СМР и тепловые сети",
-            "en": ""
+            "en": "Construction works & heat networks"
           },
           "value": 420.9176525529266,
           "cell": "Расчёты!C434"
@@ -2736,7 +2736,7 @@
         {
           "label": {
             "ru": "Экономия: закрытие котельных",
-            "en": ""
+            "en": "Savings: boiler-house closures"
           },
           "value": -2200.8771357975043,
           "cell": "Расчёты!C435"
@@ -2754,7 +2754,7 @@
         {
           "label": {
             "ru": "Электроэнергия ВИЭ",
-            "en": ""
+            "en": "Renewable electricity"
           },
           "value": 1229.0795454545455,
           "cell": "Расчёты!C439"
@@ -2801,7 +2801,7 @@
         {
           "label": {
             "ru": "Технический потенциал",
-            "en": ""
+            "en": "Technical potential"
           },
           "value": 0.5,
           "unit": "",
@@ -2821,7 +2821,7 @@
         {
           "label": {
             "ru": "Затраты: электросети",
-            "en": ""
+            "en": "Costs: power grid"
           },
           "value": 0.4,
           "unit": "от CAPEX котла",
@@ -2831,7 +2831,7 @@
         {
           "label": {
             "ru": "Затраты: тепловые сети (СМР)",
-            "en": ""
+            "en": "Costs: heat networks (construction works)"
           },
           "value": 0.3,
           "unit": "от CAPEX котла",
@@ -2841,7 +2841,7 @@
         {
           "label": {
             "ru": "Экон. CAPEX: закрытие котельных",
-            "en": ""
+            "en": "CAPEX savings: boiler-house closures"
           },
           "value": 30,
           "unit": "$/кВт/год",
@@ -2851,7 +2851,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло",
-            "en": ""
+            "en": "Specific fuel use for heat"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -2927,7 +2927,7 @@
         {
           "label": {
             "ru": "Электрокотлы",
-            "en": ""
+            "en": "Electric boilers"
           },
           "value": 3405.359589041096,
           "cell": "Расчёты!C268"
@@ -2935,7 +2935,7 @@
         {
           "label": {
             "ru": "Расширение электросетей",
-            "en": ""
+            "en": "Grid expansion"
           },
           "value": 1362.1438356164385,
           "cell": "Расчёты!C269"
@@ -2953,7 +2953,7 @@
         {
           "label": {
             "ru": "Электроэнергия",
-            "en": ""
+            "en": "Electricity"
           },
           "value": 2983.095,
           "cell": "Расчёты!C273"
@@ -3000,7 +3000,7 @@
         {
           "label": {
             "ru": "Общий объем проивзодства тепла",
-            "en": ""
+            "en": "Total heat production"
           },
           "value": 95000,
           "unit": "тыс Гкал",
@@ -3010,7 +3010,7 @@
         {
           "label": {
             "ru": "Затраты на сети",
-            "en": ""
+            "en": "Grid costs"
           },
           "value": 0.4,
           "unit": "от CAPEX котла",
@@ -3020,7 +3020,7 @@
         {
           "label": {
             "ru": "УРУТ на тепло",
-            "en": ""
+            "en": "Specific fuel use for heat"
           },
           "value": 180,
           "unit": "кг у.т./Гкал",
@@ -3096,7 +3096,7 @@
         {
           "label": {
             "ru": "Биогазовые установки",
-            "en": ""
+            "en": "Biogas plants"
           },
           "value": 250,
           "cell": "Расчёты!C638"
@@ -3104,7 +3104,7 @@
         {
           "label": {
             "ru": "Покрытие лагун и инфраструктура",
-            "en": ""
+            "en": "Lagoon covers & infrastructure"
           },
           "value": 50,
           "cell": "Расчёты!C639"
@@ -3122,7 +3122,7 @@
         {
           "label": {
             "ru": "Выручка от биогаза",
-            "en": ""
+            "en": "Biogas revenue"
           },
           "value": -25,
           "cell": "Расчёты!C643"
@@ -3153,7 +3153,7 @@
         {
           "label": {
             "ru": "Кол-во биогазовых установок",
-            "en": ""
+            "en": "Number of biogas plants"
           },
           "value": 500,
           "unit": "шт",
@@ -3163,7 +3163,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX биогазовой установки",
-            "en": ""
+            "en": "Unit CAPEX of biogas plant"
           },
           "value": 0.5,
           "unit": "mUSD",
@@ -3173,7 +3173,7 @@
         {
           "label": {
             "ru": "Выручка от биогаза/электричества",
-            "en": ""
+            "en": "Revenue from biogas/electricity"
           },
           "value": 50,
           "unit": "тыс. $/установку/год",
@@ -3219,7 +3219,7 @@
         {
           "label": {
             "ru": "Установки улавливания CO₂",
-            "en": ""
+            "en": "CO₂ capture units"
           },
           "value": 925.7142857142857,
           "cell": "Расчёты!C586"
@@ -3227,7 +3227,7 @@
         {
           "label": {
             "ru": "Транспорт и хранение",
-            "en": ""
+            "en": "Transport & storage"
           },
           "value": 277.71428571428567,
           "cell": "Расчёты!C587"
@@ -3237,7 +3237,7 @@
         {
           "label": {
             "ru": "Операционные затраты CCUS",
-            "en": ""
+            "en": "CCUS operating costs"
           },
           "value": 185.14285714285717,
           "cell": "Расчёты!C590"
@@ -3278,7 +3278,7 @@
         {
           "label": {
             "ru": "Уд. OPEX",
-            "en": ""
+            "en": "Unit OPEX"
           },
           "value": 60,
           "unit": "$/т CO₂",
@@ -3324,7 +3324,7 @@
         {
           "label": {
             "ru": "Магистральные и распред. газопроводы",
-            "en": ""
+            "en": "Trunk & distribution gas pipelines"
           },
           "value": 2500,
           "cell": "Расчёты!C395"
@@ -3332,7 +3332,7 @@
         {
           "label": {
             "ru": "Подключение потребителей",
-            "en": ""
+            "en": "Consumer connections"
           },
           "value": 0.6,
           "cell": "Расчёты!C396"
@@ -3342,7 +3342,7 @@
         {
           "label": {
             "ru": "ТОиР газовой инфраструктуры",
-            "en": ""
+            "en": "Gas-infrastructure O&M"
           },
           "value": 75.018,
           "cell": "Расчёты!C399"
@@ -3350,7 +3350,7 @@
         {
           "label": {
             "ru": "Потребление газа",
-            "en": ""
+            "en": "Gas consumption"
           },
           "value": 900,
           "cell": "Расчёты!C400"
@@ -3426,7 +3426,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX газопровод",
-            "en": ""
+            "en": "Unit CAPEX of gas pipeline"
           },
           "value": 0.5,
           "unit": "mUSD/км",
@@ -3446,7 +3446,7 @@
         {
           "label": {
             "ru": "Уд. CAPEX подключение",
-            "en": ""
+            "en": "Unit CAPEX of connection"
           },
           "value": 2,
           "unit": "тыс. $/шт",
@@ -3466,7 +3466,7 @@
         {
           "label": {
             "ru": "Средний расход газа на точке",
-            "en": ""
+            "en": "Average gas use per point"
           },
           "value": 12,
           "unit": "тыс. м3/в год",
@@ -3502,7 +3502,7 @@
         {
           "label": {
             "ru": "Строительство АЭС",
-            "en": ""
+            "en": "Nuclear plant construction"
           },
           "value": 36036,
           "cell": "Расчёты!C194"
@@ -3512,7 +3512,7 @@
         {
           "label": {
             "ru": "ТОиР АЭС",
-            "en": ""
+            "en": "Nuclear O&M"
           },
           "value": 402.084,
           "cell": "Расчёты!C197"
@@ -3520,7 +3520,7 @@
         {
           "label": {
             "ru": "Ядерное топливо",
-            "en": ""
+            "en": "Nuclear fuel"
           },
           "value": 134.028,
           "cell": "Расчёты!C198"
@@ -3578,7 +3578,7 @@
         {
           "label": {
             "ru": "Уд. ТОиР",
-            "en": ""
+            "en": "Unit O&M"
           },
           "value": 15,
           "unit": "$/МВтч",
@@ -3588,7 +3588,7 @@
         {
           "label": {
             "ru": "Топливные затраты АЭС",
-            "en": ""
+            "en": "Nuclear fuel costs"
           },
           "value": 5,
           "unit": "$/МВтч",
@@ -3644,7 +3644,7 @@
         {
           "label": {
             "ru": "Саженцы, подготовка почвы, посадка",
-            "en": ""
+            "en": "Seedlings, soil prep & planting"
           },
           "value": 2000,
           "cell": "Расчёты!C764"
@@ -3652,7 +3652,7 @@
         {
           "label": {
             "ru": "Питомники и логистика",
-            "en": ""
+            "en": "Nurseries & logistics"
           },
           "value": 200,
           "cell": "Расчёты!C766"
@@ -3662,7 +3662,7 @@
         {
           "label": {
             "ru": "Уход, полив, противопожарная защита",
-            "en": ""
+            "en": "Tending, irrigation & fire protection"
           },
           "value": 100,
           "cell": "Расчёты!C769"
@@ -3670,7 +3670,7 @@
         {
           "label": {
             "ru": "Мониторинг и верификация секвестрации",
-            "en": ""
+            "en": "Sequestration monitoring & verification"
           },
           "value": 11,
           "cell": "Расчёты!C770"
@@ -3720,7 +3720,7 @@
         {
           "label": {
             "ru": "Уд. секвестрация (молодые посадки, 10-30 лет)",
-            "en": ""
+            "en": "Unit sequestration (young plantings, 10–30 yrs)"
           },
           "value": 3,
           "unit": "tCO₂/га/год",
@@ -3730,7 +3730,7 @@
         {
           "label": {
             "ru": "Уд. OPEX: уход, защита, противопожарная",
-            "en": ""
+            "en": "Unit OPEX: tending, protection, fire safety"
           },
           "value": 100,
           "unit": "$/га/год",
@@ -3776,7 +3776,7 @@
         {
           "label": {
             "ru": "Газотурбинное/котельное оборудование",
-            "en": ""
+            "en": "Gas-turbine / boiler equipment"
           },
           "value": 7500,
           "cell": "Расчёты!C45"
@@ -3784,7 +3784,7 @@
         {
           "label": {
             "ru": "Газопроводы и подключение",
-            "en": ""
+            "en": "Gas pipelines & connection"
           },
           "value": 3000,
           "cell": "Расчёты!C46"
@@ -3831,7 +3831,7 @@
         {
           "label": {
             "ru": "Доля затрат: газопровод и подключение",
-            "en": ""
+            "en": "Cost share: pipeline & connection"
           },
           "value": 0.4,
           "unit": "",
@@ -3897,7 +3897,7 @@
         {
           "label": {
             "ru": "Инкрементальная стоимость EV парка",
-            "en": ""
+            "en": "Incremental cost of the EV fleet"
           },
           "value": 7332.251082251083,
           "cell": "Расчёты!C327"
@@ -3905,7 +3905,7 @@
         {
           "label": {
             "ru": "Зарядная инфраструктура",
-            "en": ""
+            "en": "Charging infrastructure"
           },
           "value": 1466.4502164502167,
           "cell": "Расчёты!C328"
@@ -3915,7 +3915,7 @@
         {
           "label": {
             "ru": "Затраты на ЭЭ",
-            "en": ""
+            "en": "Electricity costs"
           },
           "value": 237.56493506493507,
           "cell": "Расчёты!C331"
@@ -3923,7 +3923,7 @@
         {
           "label": {
             "ru": "Экономия бензина",
-            "en": ""
+            "en": "Petrol savings"
           },
           "value": -879.8701298701301,
           "cell": "Расчёты!C332"
@@ -3982,7 +3982,7 @@
         {
           "label": {
             "ru": "Расход ДВС",
-            "en": ""
+            "en": "ICE fuel consumption"
           },
           "value": 8,
           "unit": "л/100км",
@@ -4012,7 +4012,7 @@
         {
           "label": {
             "ru": "расход ээ на пробег",
-            "en": ""
+            "en": "Electricity use per distance"
           },
           "value": 18,
           "unit": "кВтч/100 км",
@@ -4022,7 +4022,7 @@
         {
           "label": {
             "ru": "EF бензина",
-            "en": ""
+            "en": "Petrol emission factor"
           },
           "value": 2.31,
           "unit": "кгCO₂/л",
@@ -4068,7 +4068,7 @@
         {
           "label": {
             "ru": "Модернизация турбин и котлов",
-            "en": ""
+            "en": "Turbine & boiler upgrade"
           },
           "value": 7500,
           "cell": "Расчёты!C16"
