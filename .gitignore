@@ -33,5 +33,9 @@ Thumbs.db
 supabase/.branches/
 supabase/.temp/
 
+# Local scratch / backups (not part of the published model)
+*_backup.xlsx
+*.bmp
+
 # NOTE: data/<country>/*.json ARE committed on purpose — they are the
 # published, third-party-verifiable trust anchor (see CLAUDE.md principle 2).
