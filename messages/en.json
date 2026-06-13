@@ -1,0 +1,71 @@
+{
+  "app": {
+    "title": "Marginal Abatement Cost Curve — Kazakhstan",
+    "subtitle": "Open, interactive scenario explorer",
+    "langName": "EN"
+  },
+  "banner": {
+    "scenario": "This is a scenario explorer, not a forecast.",
+    "caveat": "The final curve does not depend on the order you move the sliders, but each measure's visible contribution depends on ordering, and the curve does not capture cross-effects between measures (e.g. CCUS and clinker reduction may double-count). In addition, some measures require expert review, and each measure maps differently onto concrete projects. Even so, the curve gives a general sense of the carbon-price levels needed to trigger real measures and projects in the economy, and offers benchmarks for the country's effective participation in international cooperation under Article 6 of the Paris Agreement.",
+    "more": "Learn more"
+  },
+  "kpi": {
+    "totalAbatement": "Total abatement",
+    "noRegrets": "No-regrets share",
+    "weightedMac": "Weighted-avg MAC",
+    "projects": "Measures"
+  },
+  "chart": {
+    "title": "MACC curve",
+    "xAxis": "Cumulative abatement, Mt CO₂eq/yr",
+    "yAxis": "MAC, USD/t CO₂",
+    "empty": "No data"
+  },
+  "table": {
+    "title": "Measures list",
+    "colId": "#",
+    "colName": "Measure",
+    "colSector": "Sector",
+    "colMac": "MAC, USD/t",
+    "colAbatement": "Abatement, kt/yr",
+    "colCapex": "CAPEX, mUSD",
+    "colNpv": "NPV, mUSD",
+    "colDuration": "Duration, yr",
+    "noRegretsBadge": "no-regrets"
+  },
+  "drilldown": {
+    "sector": "Sector",
+    "abatement": "Abatement",
+    "shareNational": "% of national emissions",
+    "mac": "MAC",
+    "capex": "CAPEX",
+    "opex": "OPEX",
+    "duration": "Lifetime",
+    "npv": "NPV",
+    "provenance": "MAC = NPV / discounted CO₂ × 1000",
+    "close": "Close"
+  },
+  "howToRead": {
+    "title": "How to read a MACC",
+    "width": "Bar width = the amount of abatement (Mt CO₂/yr).",
+    "height": "Bar height = the unit cost of abatement (USD per tonne CO₂).",
+    "below": "Bars below zero pay for themselves — these are no-regrets measures.",
+    "sorted": "Measures are sorted cheapest-first.",
+    "dismiss": "Got it"
+  },
+  "assumptions": {
+    "title": "Global assumptions",
+    "hint": "Move the sliders — the curve recomputes in your browser and re-sorts on release.",
+    "computing": "Recomputing…",
+    "reset": "Reset to baseline"
+  },
+  "exports": {
+    "label": "Export:",
+    "scenario": "Scenario (JSON)",
+    "measuresCsv": "Measures (CSV)",
+    "curveCsv": "Curve (CSV)",
+    "svg": "Chart (SVG)"
+  },
+  "units": { "mt": "Mt", "usdPerTon": "USD/t" },
+  "version": { "model": "Model", "source": "source" }
+}

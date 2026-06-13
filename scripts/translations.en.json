@@ -1,0 +1,81 @@
+{
+  "_note": "EN overlay for the RU-only workbook. MACHINE-DRAFTED — to be reviewed by the domain expert (see plan 'Open items'). The ETL merges these into model.data.json; any RU key without an EN entry here falls back to RU. Keys: projects by exact RU name; assumptions by stable `key`; sectors by IPCC code; lineItems by exact RU CAPEX/OPEX line label. `assumptionLabelsRu` overrides the RU assumption label from the workbook — used to correct misleading source labels without mutating the verifiable .xlsx.",
+
+  "assumptionLabelsRu": {
+    "electricityPrice": "Цена электроэнергии"
+  },
+
+  "lineItems": {
+    "Проектные и пусконаладочные работы": "Engineering & commissioning",
+    "ТОиР": "O&M",
+    "Экономия топлива": "Fuel savings",
+    "Затраты на газ": "Gas cost",
+    "Экономия угля": "Coal savings",
+    "Выручка от метана": "Methane revenue"
+  },
+
+  "sectors": {
+    "1.A.1": "Energy industries (power & heat generation)",
+    "1.A.2": "Manufacturing industries & construction",
+    "1.A.3": "Transport",
+    "1.A.4": "Other sectors (buildings, residential, commercial)",
+    "1.B": "Fugitive emissions (oil, gas, coal)",
+    "2": "Industrial processes & product use (IPPU)",
+    "3": "Agriculture",
+    "4": "Land use (LULUCF)",
+    "5": "Waste"
+  },
+
+  "assumptions": {
+    "discountRate": "Discount rate (WACC)",
+    "coalPrice": "Coal price",
+    "gasPrice": "Gas price",
+    "electricityPrice": "Electricity price",
+    "efCoalPower": "Emission factor — coal (power)",
+    "efGasPower": "Emission factor — gas (power)",
+    "efCoalHeat": "Emission factor — coal boiler/CHP (heat)",
+    "coalCarbonContent": "Carbon content of coal",
+    "capexCoalChpEfficiency": "Unit CAPEX — coal CHP efficiency upgrade",
+    "capexCoalToGas": "Unit CAPEX — coal-to-gas CHP conversion",
+    "capexSolar": "Unit CAPEX — solar PV",
+    "capexWind": "Unit CAPEX — wind",
+    "capexGasPeaker": "Unit CAPEX — gas peaker (GT)",
+    "capexNuclear": "Unit CAPEX — nuclear (NPP)",
+    "capexHeatPump": "Unit CAPEX — heat pump",
+    "capexElectricBoiler": "Unit CAPEX — electric boiler",
+    "capexWasteHeat": "Unit CAPEX — waste-heat recovery (generator)",
+    "capexEv": "Unit CAPEX — EV (premium vs ICE)",
+    "capexThermalRetrofit": "Unit CAPEX — thermal retrofit (insulation)",
+    "capexCcus": "Unit CAPEX — CCUS capture",
+    "capexAfforestation": "Unit CAPEX — afforestation"
+  },
+
+  "projects": {
+    "Повышение КПД угольных ТЭЦ (модернизация турбин и котлов)": "Coal CHP efficiency improvement (turbine & boiler retrofit)",
+    "Перевод угольных ТЭЦ и котельных на природный газ": "Coal-to-gas conversion of CHP plants and boilers",
+    "ВИЭ: солнечные и ветровые станции": "Renewables: solar and wind power plants",
+    "ВИЭ + газовый пикер + котельная на месте ТЭЦ (закрытие старых угольных ТЭЦ)": "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)",
+    "Атомная энергетика (замещение базовой угольной нагрузки)": "Nuclear power (replacing baseload coal)",
+    "Тепловые насосы для централизованного теплоснабжения": "Heat pumps for district heating",
+    "Электрификация теплоснабжения (электрокотлы + ВИЭ)": "Heat-supply electrification (electric boilers + renewables)",
+    "ВИЭ + газовый пикер + котельная (альтернатива новым ТЭЦ)": "Renewables + gas peaker + boiler (alternative to new CHP)",
+    "Утилизация ВЭР (рекуперация тепла отходящих газов)": "Waste-heat recovery (flue-gas heat recuperation)",
+    "Электрификация легкового транспорта (EV)": "Passenger-vehicle electrification (EVs)",
+    "Термомодернизация зданий (утепление фасадов, окна, кровля)": "Building thermal retrofit (facade insulation, windows, roofing)",
+    "Газификация ЖКХ (переходная мера)": "Residential gasification (transitional measure)",
+    "Электрокотёл + ВИЭ (полная декарбонизация ЖКХ)": "Electric boiler + renewables (full district-heating decarbonization)",
+    "LDAR: обнаружение и устранение утечек метана (нефтегаз)": "LDAR: methane leak detection and repair (oil & gas)",
+    "Утилизация попутного нефтяного газа (ПНГ)": "Associated petroleum gas (APG) utilization",
+    "Дегазация угольных шахт (метан угольных пластов)": "Coal-mine degassing (coalbed methane)",
+    "Снижение утечек в газотранспортной системе": "Leak reduction in the gas transmission system",
+    "Снижение клинкерного фактора в цементном производстве": "Clinker-factor reduction in cement production",
+    "CCS в металлургии и цементе": "CCS in metallurgy and cement",
+    "Кормовые добавки для снижения энтеральной ферментации (CH₄)": "Feed additives to reduce enteric fermentation (CH₄)",
+    "Улучшение управления навозом (биогаз)": "Improved manure management (biogas)",
+    "Точное земледелие (снижение N₂O от удобрений)": "Precision agriculture (N₂O reduction from fertilizers)",
+    "Улучшение управления пастбищами": "Improved pasture management",
+    "Лесонасаждение (афорестация и лесовосстановление)": "Afforestation and reforestation",
+    "Улавливание и утилизация свалочного газа (LFG)": "Landfill-gas (LFG) capture and utilization",
+    "Модернизация очистных сооружений (снижение CH₄)": "Wastewater-treatment upgrade (CH₄ reduction)"
+  }
+}

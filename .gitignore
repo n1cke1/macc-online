@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnp.*
+.yarn/*
+
+# Build output
+dist/
+build/
+out/
+.next/
+.vercel/
+.output/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+*.log
+
+# Local Supabase
+supabase/.branches/
+supabase/.temp/
+
+# NOTE: data/<country>/*.json ARE committed on purpose — they are the
+# published, third-party-verifiable trust anchor (see CLAUDE.md principle 2).

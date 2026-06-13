@@ -1,0 +1,2 @@
+# Cloudflare Pages / Netlify redirect: bare root → default locale (RU).
+/  /ru/  302

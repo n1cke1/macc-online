@@ -1,0 +1,2019 @@
+{
+  "schemaVersion": 1,
+  "country": "kz",
+  "modelVersion": "kz-b19702294886",
+  "meta": {
+    "sourceFile": "MACC_KZ_29052026_rev.xlsx",
+    "sourceDate": "2026-05-29",
+    "discountRate": 0.12,
+    "totalEmissionsMt": 353,
+    "totalEmissionsExclLulucfMt": 348.8,
+    "emissionsSource": "UNFCCC BTR1 Kazakhstan (2024), inventory year 2022, GWP AR5",
+    "enTranslationStatus": "machine-draft-pending-review"
+  },
+  "sectors": {
+    "1.A.1": {
+      "label": {
+        "ru": "Энергетические отрасли",
+        "en": "Energy industries (power & heat generation)"
+      },
+      "color": "#c0392b"
+    },
+    "1.A.2": {
+      "label": {
+        "ru": "Обрабатывающая промышленность",
+        "en": "Manufacturing industries & construction"
+      },
+      "color": "#e67e22"
+    },
+    "1.A.3": {
+      "label": {
+        "ru": "Транспорт",
+        "en": "Transport"
+      },
+      "color": "#f1c40f"
+    },
+    "1.A.4": {
+      "label": {
+        "ru": "Другие секторы (ЖКХ, здания)",
+        "en": "Other sectors (buildings, residential, commercial)"
+      },
+      "color": "#16a085"
+    },
+    "1.B": {
+      "label": {
+        "ru": "Фугитивные выбросы",
+        "en": "Fugitive emissions (oil, gas, coal)"
+      },
+      "color": "#8e44ad"
+    },
+    "2": {
+      "label": {
+        "ru": "Промышленные процессы (IPPU)",
+        "en": "Industrial processes & product use (IPPU)"
+      },
+      "color": "#2980b9"
+    },
+    "3": {
+      "label": {
+        "ru": "Сельское хозяйство",
+        "en": "Agriculture"
+      },
+      "color": "#27ae60"
+    },
+    "4": {
+      "label": {
+        "ru": "Землепользование (LULUCF)",
+        "en": "Land use (LULUCF)"
+      },
+      "color": "#2ecc71"
+    },
+    "5": {
+      "label": {
+        "ru": "Отходы",
+        "en": "Waste"
+      },
+      "color": "#7f8c8d"
+    }
+  },
+  "assumptions": [
+    {
+      "key": "discountRate",
+      "cell": "MACC!C2",
+      "label": {
+        "ru": "Ставка дисконтирования",
+        "en": "Discount rate (WACC)"
+      },
+      "value": 0.12,
+      "unit": "",
+      "group": "lever",
+      "isLever": true,
+      "min": 0.03,
+      "max": 0.2,
+      "step": 0.005
+    },
+    {
+      "key": "coalPrice",
+      "cell": "MACC!E36",
+      "label": {
+        "ru": "Цена угля",
+        "en": "Coal price"
+      },
+      "value": 15,
+      "unit": "$/т",
+      "group": "lever",
+      "isLever": true,
+      "min": 5,
+      "max": 60,
+      "step": 1
+    },
+    {
+      "key": "gasPrice",
+      "cell": "MACC!E37",
+      "label": {
+        "ru": "Цена газа",
+        "en": "Gas price"
+      },
+      "value": 250,
+      "unit": "$/тыс.м³",
+      "group": "lever",
+      "isLever": true,
+      "min": 100,
+      "max": 600,
+      "step": 5
+    },
+    {
+      "key": "electricityPrice",
+      "cell": "MACC!E38",
+      "label": {
+        "ru": "Цена электроэнергии",
+        "en": "Electricity price"
+      },
+      "value": 50,
+      "unit": "$/МВтч",
+      "group": "lever",
+      "isLever": true,
+      "min": 20,
+      "max": 150,
+      "step": 1
+    },
+    {
+      "key": "efCoalPower",
+      "cell": "MACC!E39",
+      "label": {
+        "ru": "EF угля (электрогенерация)",
+        "en": "Emission factor — coal (power)"
+      },
+      "value": 1,
+      "unit": "тCO₂/МВтч",
+      "group": "emission_factor",
+      "isLever": false
+    },
+    {
+      "key": "efGasPower",
+      "cell": "MACC!E40",
+      "label": {
+        "ru": "EF газа (электрогенерация)",
+        "en": "Emission factor — gas (power)"
+      },
+      "value": 0.45,
+      "unit": "тCO₂/МВтч",
+      "group": "emission_factor",
+      "isLever": false
+    },
+    {
+      "key": "efCoalHeat",
+      "cell": "MACC!E41",
+      "label": {
+        "ru": "EF угольной котельной/ТЭЦ",
+        "en": "Emission factor — coal boiler/CHP (heat)"
+      },
+      "value": 0.55,
+      "unit": "тCO₂/Гкал",
+      "group": "emission_factor",
+      "isLever": false
+    },
+    {
+      "key": "coalCarbonContent",
+      "cell": "MACC!E42",
+      "label": {
+        "ru": "Содержание C в угле",
+        "en": "Carbon content of coal"
+      },
+      "value": 0.4,
+      "unit": "доля",
+      "group": "emission_factor",
+      "isLever": false
+    },
+    {
+      "key": "capexCoalChpEfficiency",
+      "cell": "MACC!E45",
+      "label": {
+        "ru": "Модернизация угольной ТЭЦ (КПД)",
+        "en": "Unit CAPEX — coal CHP efficiency upgrade"
+      },
+      "value": 500,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexCoalToGas",
+      "cell": "MACC!E46",
+      "label": {
+        "ru": "Перевод ТЭЦ на газ",
+        "en": "Unit CAPEX — coal-to-gas CHP conversion"
+      },
+      "value": 1500,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexSolar",
+      "cell": "MACC!E47",
+      "label": {
+        "ru": "ВИЭ — солнце",
+        "en": "Unit CAPEX — solar PV"
+      },
+      "value": 500,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexWind",
+      "cell": "MACC!E48",
+      "label": {
+        "ru": "ВИЭ — ветер",
+        "en": "Unit CAPEX — wind"
+      },
+      "value": 900,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexGasPeaker",
+      "cell": "MACC!E49",
+      "label": {
+        "ru": "Газовый пикер (GT)",
+        "en": "Unit CAPEX — gas peaker (GT)"
+      },
+      "value": 1000,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexNuclear",
+      "cell": "MACC!E50",
+      "label": {
+        "ru": "АЭС",
+        "en": "Unit CAPEX — nuclear (NPP)"
+      },
+      "value": 7700,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexHeatPump",
+      "cell": "MACC!E51",
+      "label": {
+        "ru": "Тепловой насос",
+        "en": "Unit CAPEX — heat pump"
+      },
+      "value": 1750,
+      "unit": "$/кВт(э)",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexElectricBoiler",
+      "cell": "MACC!E52",
+      "label": {
+        "ru": "Электрокотёл",
+        "en": "Unit CAPEX — electric boiler"
+      },
+      "value": 150,
+      "unit": "$/кВт",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexWasteHeat",
+      "cell": "MACC!E53",
+      "label": {
+        "ru": "Утилизация ВЭР (генератор)",
+        "en": "Unit CAPEX — waste-heat recovery (generator)"
+      },
+      "value": 2500,
+      "unit": "$/кВт(т)",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexEv",
+      "cell": "MACC!E54",
+      "label": {
+        "ru": "EV (разница к ДВС)",
+        "en": "Unit CAPEX — EV (premium vs ICE)"
+      },
+      "value": 5000,
+      "unit": "$/авто",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexThermalRetrofit",
+      "cell": "MACC!E55",
+      "label": {
+        "ru": "Термомодернизация (утепление)",
+        "en": "Unit CAPEX — thermal retrofit (insulation)"
+      },
+      "value": 100,
+      "unit": "$/м²",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexCcus",
+      "cell": "MACC!E56",
+      "label": {
+        "ru": "Улавливание CCUS",
+        "en": "Unit CAPEX — CCUS capture"
+      },
+      "value": 300,
+      "unit": "$/т CO₂/год",
+      "group": "capex_unit",
+      "isLever": false
+    },
+    {
+      "key": "capexAfforestation",
+      "cell": "MACC!E57",
+      "label": {
+        "ru": "Лесонасаждение",
+        "en": "Unit CAPEX — afforestation"
+      },
+      "value": 2000,
+      "unit": "$/га",
+      "group": "capex_unit",
+      "isLever": false
+    }
+  ],
+  "projects": [
+    {
+      "id": 22,
+      "sector": "3",
+      "variant": 5,
+      "name": {
+        "ru": "Точное земледелие (снижение N₂O от удобрений)",
+        "en": "Precision agriculture (N₂O reduction from fertilizers)"
+      },
+      "capex": 180,
+      "opex": -66,
+      "durationYrs": 10,
+      "abatementKt": 4280,
+      "npv": -192.9147198751172,
+      "discCo2Kt": 24182.954561598515,
+      "mac": -7.977301507296277,
+      "sourceCells": {
+        "capex": "Расчёты!C670",
+        "opex": "Расчёты!C671",
+        "durationYrs": "Расчёты!C672",
+        "abatementKt": "Расчёты!C673"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "GPS-навигация и датчики",
+            "en": ""
+          },
+          "value": 150,
+          "cell": "Расчёты!C662"
+        },
+        {
+          "label": {
+            "ru": "Обучение и агрономическая поддержка",
+            "en": ""
+          },
+          "value": 30,
+          "cell": "Расчёты!C663"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР оборудования",
+            "en": ""
+          },
+          "value": 9,
+          "cell": "Расчёты!C666"
+        },
+        {
+          "label": {
+            "ru": "Экономия удобрений",
+            "en": ""
+          },
+          "value": -75,
+          "cell": "Расчёты!C667"
+        }
+      ],
+      "cumAbatementStartKt": 0.0,
+      "cumAbatementEndKt": 4280.0
+    },
+    {
+      "id": 23,
+      "sector": "3",
+      "variant": 6,
+      "name": {
+        "ru": "Улучшение управления пастбищами",
+        "en": "Improved pasture management"
+      },
+      "capex": 230,
+      "opex": -45.4,
+      "durationYrs": 20,
+      "abatementKt": 2140,
+      "npv": -109.1127405444729,
+      "discCo2Kt": 15984.609356061057,
+      "mac": -6.826112425643949,
+      "sourceCells": {
+        "capex": "Расчёты!C694",
+        "opex": "Расчёты!C695",
+        "durationYrs": "Расчёты!C696",
+        "abatementKt": "Расчёты!C697"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Восстановление пастбищ",
+            "en": ""
+          },
+          "value": 200,
+          "cell": "Расчёты!C686"
+        },
+        {
+          "label": {
+            "ru": "Инфраструктура ротационного выпаса",
+            "en": ""
+          },
+          "value": 30,
+          "cell": "Расчёты!C687"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Поддержание пастбищ",
+            "en": ""
+          },
+          "value": 4.6000000000000005,
+          "cell": "Расчёты!C690"
+        },
+        {
+          "label": {
+            "ru": "Экономия кормов",
+            "en": ""
+          },
+          "value": -50,
+          "cell": "Расчёты!C691"
+        }
+      ],
+      "cumAbatementStartKt": 4280.0,
+      "cumAbatementEndKt": 6420.0
+    },
+    {
+      "id": 15,
+      "sector": "1.B",
+      "variant": 2,
+      "name": {
+        "ru": "Утилизация попутного нефтяного газа (ПНГ)",
+        "en": "Associated petroleum gas (APG) utilization"
+      },
+      "capex": 1875,
+      "opex": -277.08333333333337,
+      "durationYrs": 20,
+      "abatementKt": 6840.000000000001,
+      "npv": -194.6583375741052,
+      "discCo2Kt": 51090.994390400774,
+      "mac": -3.8100322747031625,
+      "sourceCells": {
+        "capex": "Расчёты!C494",
+        "opex": "Расчёты!C495",
+        "durationYrs": "Расчёты!C496",
+        "abatementKt": "Расчёты!C497"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "ГТЭС и компрессорное оборудование",
+            "en": ""
+          },
+          "value": 1500,
+          "cell": "Расчёты!C486"
+        },
+        {
+          "label": {
+            "ru": "Подводящая инфраструктура",
+            "en": ""
+          },
+          "value": 375,
+          "cell": "Расчёты!C487"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 56.25,
+          "cell": "Расчёты!C490"
+        },
+        {
+          "label": {
+            "ru": "Выручка от электроэнергии",
+            "en": ""
+          },
+          "value": -333.33333333333337,
+          "cell": "Расчёты!C491"
+        }
+      ],
+      "cumAbatementStartKt": 6420.0,
+      "cumAbatementEndKt": 13260.0
+    },
+    {
+      "id": 8,
+      "sector": "1.A.1",
+      "variant": 8,
+      "name": {
+        "ru": "ВИЭ + газовый пикер + котельная (альтернатива новым ТЭЦ)",
+        "en": "Renewables + gas peaker + boiler (alternative to new CHP)"
+      },
+      "capex": -695.714285714286,
+      "opex": 76.66758121190053,
+      "durationYrs": 25,
+      "abatementKt": 4029.6,
+      "npv": -94.3997808838435,
+      "discCo2Kt": 31604.713365975324,
+      "mac": -2.9868893221943105,
+      "sourceCells": {
+        "capex": "Расчёты!C130",
+        "opex": "Расчёты!C131",
+        "durationYrs": "Расчёты!C132",
+        "abatementKt": "Расчёты!C133"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "ВИЭ (солнце+ветер)",
+            "en": ""
+          },
+          "value": 1074.285714285714,
+          "cell": "Расчёты!C117"
+        },
+        {
+          "label": {
+            "ru": "Развитие электросетей (на пикеры)",
+            "en": ""
+          },
+          "value": 150,
+          "cell": "Расчёты!C118"
+        },
+        {
+          "label": {
+            "ru": "Отказ от строительства ТЭЦ",
+            "en": ""
+          },
+          "value": -3000,
+          "cell": "Расчёты!C119"
+        },
+        {
+          "label": {
+            "ru": "Газотурбинный пикер",
+            "en": ""
+          },
+          "value": 1000,
+          "cell": "Расчёты!C120"
+        },
+        {
+          "label": {
+            "ru": "Котельная",
+            "en": ""
+          },
+          "value": 80,
+          "cell": "Расчёты!C121"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": -10.43571428571429,
+          "cell": "Расчёты!C124"
+        },
+        {
+          "label": {
+            "ru": "Снижение опекса ТЭЦ",
+            "en": ""
+          },
+          "value": 0,
+          "cell": "Расчёты!C125"
+        },
+        {
+          "label": {
+            "ru": "Потребление газа",
+            "en": ""
+          },
+          "value": 98.0903084846278,
+          "cell": "Расчёты!C126"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -10.987012987012983,
+          "cell": "Расчёты!C127"
+        }
+      ],
+      "cumAbatementStartKt": 13260.0,
+      "cumAbatementEndKt": 17289.6
+    },
+    {
+      "id": 14,
+      "sector": "1.B",
+      "variant": 1,
+      "name": {
+        "ru": "LDAR: обнаружение и устранение утечек метана (нефтегаз)",
+        "en": "LDAR: methane leak detection and repair (oil & gas)"
+      },
+      "capex": 55,
+      "opex": 2.5,
+      "durationYrs": 10,
+      "abatementKt": 8550,
+      "npv": 69.12555757102717,
+      "discCo2Kt": 48309.40689291291,
+      "mac": 1.4308922840691722,
+      "sourceCells": {
+        "capex": "Расчёты!C469",
+        "opex": "Расчёты!C470",
+        "durationYrs": "Расчёты!C471",
+        "abatementKt": "Расчёты!C472"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Обследование и ремонт",
+            "en": ""
+          },
+          "value": 40,
+          "cell": "Расчёты!C461"
+        },
+        {
+          "label": {
+            "ru": "OGI камеры и оборудование",
+            "en": ""
+          },
+          "value": 15,
+          "cell": "Расчёты!C462"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Мониторинг и обследования",
+            "en": ""
+          },
+          "value": 10,
+          "cell": "Расчёты!C465"
+        },
+        {
+          "label": {
+            "ru": "Выручка от газа",
+            "en": ""
+          },
+          "value": -7.5,
+          "cell": "Расчёты!C466"
+        }
+      ],
+      "cumAbatementStartKt": 17289.6,
+      "cumAbatementEndKt": 25839.6
+    },
+    {
+      "id": 21,
+      "sector": "3",
+      "variant": 4,
+      "name": {
+        "ru": "Улучшение управления навозом (биогаз)",
+        "en": "Improved manure management (biogas)"
+      },
+      "capex": 300,
+      "opex": -13,
+      "durationYrs": 15,
+      "abatementKt": 3424,
+      "npv": 211.45876163695493,
+      "discCo2Kt": 23320.40001192818,
+      "mac": 9.067544361537351,
+      "sourceCells": {
+        "capex": "Расчёты!C646",
+        "opex": "Расчёты!C647",
+        "durationYrs": "Расчёты!C648",
+        "abatementKt": "Расчёты!C649"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Биогазовые установки",
+            "en": ""
+          },
+          "value": 250,
+          "cell": "Расчёты!C638"
+        },
+        {
+          "label": {
+            "ru": "Покрытие лагун и инфраструктура",
+            "en": ""
+          },
+          "value": 50,
+          "cell": "Расчёты!C639"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 12,
+          "cell": "Расчёты!C642"
+        },
+        {
+          "label": {
+            "ru": "Выручка от биогаза",
+            "en": ""
+          },
+          "value": -25,
+          "cell": "Расчёты!C643"
+        }
+      ],
+      "cumAbatementStartKt": 25839.6,
+      "cumAbatementEndKt": 29263.6
+    },
+    {
+      "id": 16,
+      "sector": "1.B",
+      "variant": 3,
+      "name": {
+        "ru": "Дегазация угольных шахт (метан угольных пластов)",
+        "en": "Coal-mine degassing (coalbed methane)"
+      },
+      "capex": 300,
+      "opex": 10.531230674087816,
+      "durationYrs": 20,
+      "abatementKt": 1900.0000000000002,
+      "npv": 378.66243381488846,
+      "discCo2Kt": 14191.942886222436,
+      "mac": 26.68150772946632,
+      "sourceCells": {
+        "capex": "Расчёты!C518",
+        "opex": "Расчёты!C519",
+        "durationYrs": "Расчёты!C520",
+        "abatementKt": "Расчёты!C521"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Системы дегазации и утилизации",
+            "en": ""
+          },
+          "value": 300,
+          "cell": "Расчёты!C511"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 12,
+          "cell": "Расчёты!C514"
+        },
+        {
+          "label": {
+            "ru": "Выручка от метана",
+            "en": "Methane revenue"
+          },
+          "value": -1.4687693259121835,
+          "cell": "Расчёты!C515"
+        }
+      ],
+      "cumAbatementStartKt": 29263.6,
+      "cumAbatementEndKt": 31163.6
+    },
+    {
+      "id": 26,
+      "sector": "5",
+      "variant": 1,
+      "name": {
+        "ru": "Модернизация очистных сооружений (снижение CH₄)",
+        "en": "Wastewater-treatment upgrade (CH₄ reduction)"
+      },
+      "capex": 150,
+      "opex": -10.5,
+      "durationYrs": 25,
+      "abatementKt": 320.00000000000006,
+      "npv": 67.64703932332219,
+      "discCo2Kt": 2509.804515860658,
+      "mac": 26.95311084820675,
+      "sourceCells": {
+        "capex": "Расчёты!C745",
+        "opex": "Расчёты!C746",
+        "durationYrs": "Расчёты!C747",
+        "abatementKt": "Расчёты!C748"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Модернизация КОС",
+            "en": ""
+          },
+          "value": 150,
+          "cell": "Расчёты!C738"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 4.5,
+          "cell": "Расчёты!C741"
+        },
+        {
+          "label": {
+            "ru": "Экономия от биогаза",
+            "en": ""
+          },
+          "value": -15,
+          "cell": "Расчёты!C742"
+        }
+      ],
+      "cumAbatementStartKt": 31163.6,
+      "cumAbatementEndKt": 31483.6
+    },
+    {
+      "id": 3,
+      "sector": "1.A.1",
+      "variant": 3,
+      "name": {
+        "ru": "ВИЭ: солнечные и ветровые станции",
+        "en": "Renewables: solar and wind power plants"
+      },
+      "capex": 9200,
+      "opex": -144.21136363636361,
+      "durationYrs": 25,
+      "abatementKt": 27594.000000000004,
+      "npv": 8068.930213459473,
+      "discCo2Kt": 216423.5806583093,
+      "mac": 37.283045539287805,
+      "sourceCells": {
+        "capex": "Расчёты!C85",
+        "opex": "Расчёты!C86",
+        "durationYrs": "Расчёты!C87",
+        "abatementKt": "Расчёты!C88"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "ВИЭ",
+            "en": ""
+          },
+          "value": 8000,
+          "cell": "Расчёты!C76"
+        },
+        {
+          "label": {
+            "ru": "Сети и подключение",
+            "en": ""
+          },
+          "value": 1200,
+          "cell": "Расчёты!C77"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР ВИЭ",
+            "en": ""
+          },
+          "value": 138,
+          "cell": "Расчёты!C80"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -282.2113636363636,
+          "cell": "Расчёты!C81"
+        }
+      ],
+      "cumAbatementStartKt": 31483.6,
+      "cumAbatementEndKt": 59077.600000000006
+    },
+    {
+      "id": 6,
+      "sector": "1.A.1",
+      "variant": 6,
+      "name": {
+        "ru": "Тепловые насосы для централизованного теплоснабжения",
+        "en": "Heat pumps for district heating"
+      },
+      "capex": 1352.6845034246574,
+      "opex": 24.69117857142856,
+      "durationYrs": 20,
+      "abatementKt": 5225,
+      "npv": 1537.1138697821486,
+      "discCo2Kt": 39027.842937111694,
+      "mac": 39.38505830975615,
+      "sourceCells": {
+        "capex": "Расчёты!C240",
+        "opex": "Расчёты!C241",
+        "durationYrs": "Расчёты!C242",
+        "abatementKt": "Расчёты!C243"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Тепловые насосы",
+            "en": ""
+          },
+          "value": 1040.5265410958903,
+          "cell": "Расчёты!C230"
+        },
+        {
+          "label": {
+            "ru": "Модернизация сетей теплоснабжения",
+            "en": ""
+          },
+          "value": 312.15796232876704,
+          "cell": "Расчёты!C231"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 27.053690068493147,
+          "cell": "Расчёты!C234"
+        },
+        {
+          "label": {
+            "ru": "Сокращение OPEX котельных и ТЭЦ",
+            "en": ""
+          },
+          "value": -27.053690068493147,
+          "cell": "Расчёты!C235"
+        },
+        {
+          "label": {
+            "ru": "Электроэнергия",
+            "en": ""
+          },
+          "value": 78.12867857142855,
+          "cell": "Расчёты!C236"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -53.43749999999999,
+          "cell": "Расчёты!C237"
+        }
+      ],
+      "cumAbatementStartKt": 59077.600000000006,
+      "cumAbatementEndKt": 64302.600000000006
+    },
+    {
+      "id": 25,
+      "sector": "5",
+      "variant": 2,
+      "name": {
+        "ru": "Улавливание и утилизация свалочного газа (LFG)",
+        "en": "Landfill-gas (LFG) capture and utilization"
+      },
+      "capex": 140,
+      "opex": -4.411428571428574,
+      "durationYrs": 20,
+      "abatementKt": 360.00000000000006,
+      "npv": 107.04908298296624,
+      "discCo2Kt": 2688.9997047579354,
+      "mac": 39.81000176145532,
+      "sourceCells": {
+        "capex": "Расчёты!C722",
+        "opex": "Расчёты!C723",
+        "durationYrs": "Расчёты!C724",
+        "abatementKt": "Расчёты!C725"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Системы дегазации",
+            "en": ""
+          },
+          "value": 100,
+          "cell": "Расчёты!C714"
+        },
+        {
+          "label": {
+            "ru": "Газопоршневые генераторы",
+            "en": ""
+          },
+          "value": 40,
+          "cell": "Расчёты!C715"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 5.6000000000000005,
+          "cell": "Расчёты!C718"
+        },
+        {
+          "label": {
+            "ru": "Выручка от электроэнергии",
+            "en": ""
+          },
+          "value": -10.011428571428574,
+          "cell": "Расчёты!C719"
+        }
+      ],
+      "cumAbatementStartKt": 64302.600000000006,
+      "cumAbatementEndKt": 64662.600000000006
+    },
+    {
+      "id": 9,
+      "sector": "1.A.2",
+      "variant": 1,
+      "name": {
+        "ru": "Утилизация ВЭР (рекуперация тепла отходящих газов)",
+        "en": "Waste-heat recovery (flue-gas heat recuperation)"
+      },
+      "capex": 6250,
+      "opex": 8.318181818181813,
+      "durationYrs": 20,
+      "abatementKt": 17520,
+      "npv": 6312.132190147816,
+      "discCo2Kt": 130864.65229821952,
+      "mac": 48.23405006084822,
+      "sourceCells": {
+        "capex": "Расчёты!C302",
+        "opex": "Расчёты!C303",
+        "durationYrs": "Расчёты!C304",
+        "abatementKt": "Расчёты!C305"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Генераторы",
+            "en": ""
+          },
+          "value": 6250,
+          "cell": "Расчёты!C294"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 187.5,
+          "cell": "Расчёты!C298"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -179.1818181818182,
+          "cell": "Расчёты!C299"
+        }
+      ],
+      "cumAbatementStartKt": 64662.600000000006,
+      "cumAbatementEndKt": 82182.6
+    },
+    {
+      "id": 18,
+      "sector": "2",
+      "variant": 1,
+      "name": {
+        "ru": "Снижение клинкерного фактора в цементном производстве",
+        "en": "Clinker-factor reduction in cement production"
+      },
+      "capex": 200,
+      "opex": 20,
+      "durationYrs": 30,
+      "abatementKt": 860,
+      "npv": 361.1036793533473,
+      "discCo2Kt": 6927.458212193932,
+      "mac": 52.126431988823995,
+      "sourceCells": {
+        "capex": "Расчёты!C569",
+        "opex": "Расчёты!C570",
+        "durationYrs": "Расчёты!C571",
+        "abatementKt": "Расчёты!C572"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Модернизация заводов",
+            "en": ""
+          },
+          "value": 200,
+          "cell": "Расчёты!C562"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Закупка добавок",
+            "en": ""
+          },
+          "value": 40,
+          "cell": "Расчёты!C565"
+        },
+        {
+          "label": {
+            "ru": "Экономия на клинкере",
+            "en": ""
+          },
+          "value": -20,
+          "cell": "Расчёты!C566"
+        }
+      ],
+      "cumAbatementStartKt": 82182.6,
+      "cumAbatementEndKt": 83042.6
+    },
+    {
+      "id": 4,
+      "sector": "1.A.1",
+      "variant": 4,
+      "name": {
+        "ru": "ВИЭ + газовый пикер + котельная на месте ТЭЦ (закрытие старых угольных ТЭЦ)",
+        "en": "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)"
+      },
+      "capex": 5880,
+      "opex": 781.2280062236052,
+      "durationYrs": 25,
+      "abatementKt": 28207.2,
+      "npv": 12007.27993105257,
+      "discCo2Kt": 221232.9935618273,
+      "mac": 54.274363591689735,
+      "sourceCells": {
+        "capex": "Расчёты!C172",
+        "opex": "Расчёты!C173",
+        "durationYrs": "Расчёты!C174",
+        "abatementKt": "Расчёты!C175"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "ВИЭ (солнце+ветер)",
+            "en": ""
+          },
+          "value": 5600,
+          "cell": "Расчёты!C160"
+        },
+        {
+          "label": {
+            "ru": "Газотурбинный пикер",
+            "en": ""
+          },
+          "value": 7000,
+          "cell": "Расчёты!C161"
+        },
+        {
+          "label": {
+            "ru": "Отказ от модернизации ТЭЦ",
+            "en": ""
+          },
+          "value": -7000,
+          "cell": "Расчёты!C162"
+        },
+        {
+          "label": {
+            "ru": "Котельная",
+            "en": ""
+          },
+          "value": 280.00000000000006,
+          "cell": "Расчёты!C163"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 88.2,
+          "cell": "Расчёты!C166"
+        },
+        {
+          "label": {
+            "ru": "Снижение опекса ТЭЦ",
+            "en": ""
+          },
+          "value": -168,
+          "cell": "Расчёты!C167"
+        },
+        {
+          "label": {
+            "ru": "Потребление газа",
+            "en": ""
+          },
+          "value": 918.3007334963324,
+          "cell": "Расчёты!C168"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -57.272727272727266,
+          "cell": "Расчёты!C169"
+        }
+      ],
+      "cumAbatementStartKt": 83042.6,
+      "cumAbatementEndKt": 111249.8
+    },
+    {
+      "id": 11,
+      "sector": "1.A.4",
+      "variant": 1,
+      "name": {
+        "ru": "Термомодернизация зданий (утепление фасадов, окна, кровля)",
+        "en": "Building thermal retrofit (facade insulation, windows, roofing)"
+      },
+      "capex": 10800,
+      "opex": -769.2672413793103,
+      "durationYrs": 30,
+      "abatementKt": 9217.241379310346,
+      "npv": 4603.4108503896805,
+      "discCo2Kt": 74246.5749847409,
+      "mac": 62.00165935379201,
+      "sourceCells": {
+        "capex": "Расчёты!C373",
+        "opex": "Расчёты!C374",
+        "durationYrs": "Расчёты!C375",
+        "abatementKt": "Расчёты!C376"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Утепление фасадов и кровли",
+            "en": ""
+          },
+          "value": 9000,
+          "cell": "Расчёты!C364"
+        },
+        {
+          "label": {
+            "ru": "Замена окон и дверей",
+            "en": ""
+          },
+          "value": 1800,
+          "cell": "Расчёты!C365"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 54,
+          "cell": "Расчёты!C368"
+        },
+        {
+          "label": {
+            "ru": "Снижение затрат на котельные/ТЭЦ",
+            "en": ""
+          },
+          "value": -729,
+          "cell": "Расчёты!C369"
+        },
+        {
+          "label": {
+            "ru": "Снижение потребления угля",
+            "en": ""
+          },
+          "value": -94.26724137931035,
+          "cell": "Расчёты!C370"
+        }
+      ],
+      "cumAbatementStartKt": 111249.8,
+      "cumAbatementEndKt": 120467.04137931035
+    },
+    {
+      "id": 17,
+      "sector": "1.B",
+      "variant": 4,
+      "name": {
+        "ru": "Снижение утечек в газотранспортной системе",
+        "en": "Leak reduction in the gas transmission system"
+      },
+      "capex": 630,
+      "opex": 354.68181818181813,
+      "durationYrs": 20,
+      "abatementKt": 5130,
+      "npv": 3279.2758454831014,
+      "discCo2Kt": 38318.245792800575,
+      "mac": 85.58000966994237,
+      "sourceCells": {
+        "capex": "Расчёты!C544",
+        "opex": "Расчёты!C545",
+        "durationYrs": "Расчёты!C546",
+        "abatementKt": "Расчёты!C547"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Модернизация газопроводов и КС",
+            "en": ""
+          },
+          "value": 600,
+          "cell": "Расчёты!C536"
+        },
+        {
+          "label": {
+            "ru": "Спутниковый мониторинг",
+            "en": ""
+          },
+          "value": 30,
+          "cell": "Расчёты!C537"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР и мониторинг",
+            "en": ""
+          },
+          "value": 18.9,
+          "cell": "Расчёты!C540"
+        },
+        {
+          "label": {
+            "ru": "Экономия газа",
+            "en": ""
+          },
+          "value": 335.78181818181815,
+          "cell": "Расчёты!C541"
+        }
+      ],
+      "cumAbatementStartKt": 120467.04137931035,
+      "cumAbatementEndKt": 125597.04137931035
+    },
+    {
+      "id": 20,
+      "sector": "3",
+      "variant": 3,
+      "name": {
+        "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)",
+        "en": "Feed additives to reduce enteric fermentation (CH₄)"
+      },
+      "capex": 140.25,
+      "opex": 153,
+      "durationYrs": 10,
+      "abatementKt": 1780.0000000000002,
+      "npv": 1004.7341233468626,
+      "discCo2Kt": 10057.396990571344,
+      "mac": 99.90001630529106,
+      "sourceCells": {
+        "capex": "Расчёты!C622",
+        "opex": "Расчёты!C623",
+        "durationYrs": "Расчёты!C624",
+        "abatementKt": "Расчёты!C625"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Оборудование дозирования",
+            "en": ""
+          },
+          "value": 38.25,
+          "cell": "Расчёты!C614"
+        },
+        {
+          "label": {
+            "ru": "Обучение и внедрение",
+            "en": ""
+          },
+          "value": 102,
+          "cell": "Расчёты!C615"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Закупка кормовых добавок",
+            "en": ""
+          },
+          "value": 127.5,
+          "cell": "Расчёты!C618"
+        },
+        {
+          "label": {
+            "ru": "Ветеринарный мониторинг",
+            "en": ""
+          },
+          "value": 25.5,
+          "cell": "Расчёты!C619"
+        }
+      ],
+      "cumAbatementStartKt": 125597.04137931035,
+      "cumAbatementEndKt": 127377.04137931035
+    },
+    {
+      "id": 13,
+      "sector": "1.A.4",
+      "variant": 3,
+      "name": {
+        "ru": "Электрокотёл + ВИЭ (полная декарбонизация ЖКХ)",
+        "en": "Electric boiler + renewables (full district-heating decarbonization)"
+      },
+      "capex": 184.32289533574658,
+      "opex": 1138.2486768368617,
+      "durationYrs": 25,
+      "abatementKt": 11625,
+      "npv": 9111.765611890663,
+      "discCo2Kt": 91176.49217775044,
+      "mac": 99.93547014428994,
+      "sourceCells": {
+        "capex": "Расчёты!C443",
+        "opex": "Расчёты!C444",
+        "durationYrs": "Расчёты!C445",
+        "abatementKt": "Расчёты!C446"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Электрокотлы",
+            "en": ""
+          },
+          "value": 1403.0588418430887,
+          "cell": "Расчёты!C432"
+        },
+        {
+          "label": {
+            "ru": "Расширение электросетей",
+            "en": ""
+          },
+          "value": 561.2235367372355,
+          "cell": "Расчёты!C433"
+        },
+        {
+          "label": {
+            "ru": "СМР и тепловые сети",
+            "en": ""
+          },
+          "value": 420.9176525529266,
+          "cell": "Расчёты!C434"
+        },
+        {
+          "label": {
+            "ru": "Экономия: закрытие котельных",
+            "en": ""
+          },
+          "value": -2200.8771357975043,
+          "cell": "Расчёты!C435"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 28.061176836861772,
+          "cell": "Расчёты!C438"
+        },
+        {
+          "label": {
+            "ru": "Электроэнергия ВИЭ",
+            "en": ""
+          },
+          "value": 1229.0795454545455,
+          "cell": "Расчёты!C439"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -118.89204545454545,
+          "cell": "Расчёты!C440"
+        }
+      ],
+      "cumAbatementStartKt": 127377.04137931035,
+      "cumAbatementEndKt": 139002.04137931037
+    },
+    {
+      "id": 7,
+      "sector": "1.A.1",
+      "variant": 7,
+      "name": {
+        "ru": "Электрификация теплоснабжения (электрокотлы + ВИЭ)",
+        "en": "Heat-supply electrification (electric boilers + renewables)"
+      },
+      "capex": 4767.503424657534,
+      "opex": 2669.307614155251,
+      "durationYrs": 25,
+      "abatementKt": 28215.000000000004,
+      "npv": 25703.254375370303,
+      "discCo2Kt": 221294.1700469014,
+      "mac": 116.14971316199934,
+      "sourceCells": {
+        "capex": "Расчёты!C277",
+        "opex": "Расчёты!C278",
+        "durationYrs": "Расчёты!C279",
+        "abatementKt": "Расчёты!C280"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Электрокотлы",
+            "en": ""
+          },
+          "value": 3405.359589041096,
+          "cell": "Расчёты!C268"
+        },
+        {
+          "label": {
+            "ru": "Расширение электросетей",
+            "en": ""
+          },
+          "value": 1362.1438356164385,
+          "cell": "Расчёты!C269"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": -25.22488584474886,
+          "cell": "Расчёты!C272"
+        },
+        {
+          "label": {
+            "ru": "Электроэнергия",
+            "en": ""
+          },
+          "value": 2983.095,
+          "cell": "Расчёты!C273"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -288.5625,
+          "cell": "Расчёты!C274"
+        }
+      ],
+      "cumAbatementStartKt": 139002.04137931037,
+      "cumAbatementEndKt": 167217.04137931037
+    },
+    {
+      "id": 19,
+      "sector": "2",
+      "variant": 2,
+      "name": {
+        "ru": "CCS в металлургии и цементе",
+        "en": "CCS in metallurgy and cement"
+      },
+      "capex": 1203.4285714285713,
+      "opex": 185.14285714285717,
+      "durationYrs": 25,
+      "abatementKt": 2160,
+      "npv": 2655.5297556050946,
+      "discCo2Kt": 16941.180482059437,
+      "mac": 156.7499831795829,
+      "sourceCells": {
+        "capex": "Расчёты!C593",
+        "opex": "Расчёты!C594",
+        "durationYrs": "Расчёты!C595",
+        "abatementKt": "Расчёты!C596"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Установки улавливания CO₂",
+            "en": ""
+          },
+          "value": 925.7142857142857,
+          "cell": "Расчёты!C586"
+        },
+        {
+          "label": {
+            "ru": "Транспорт и хранение",
+            "en": ""
+          },
+          "value": 277.71428571428567,
+          "cell": "Расчёты!C587"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Операционные затраты CCUS",
+            "en": ""
+          },
+          "value": 185.14285714285717,
+          "cell": "Расчёты!C590"
+        }
+      ],
+      "cumAbatementStartKt": 167217.04137931037,
+      "cumAbatementEndKt": 169377.04137931037
+    },
+    {
+      "id": 12,
+      "sector": "1.A.4",
+      "variant": 2,
+      "name": {
+        "ru": "Газификация ЖКХ (переходная мера)",
+        "en": "Residential gasification (transitional measure)"
+      },
+      "capex": 2500.6,
+      "opex": 864.588,
+      "durationYrs": 30,
+      "abatementKt": 6975,
+      "npv": 9465.01539623759,
+      "discCo2Kt": 56184.90817447985,
+      "mac": 168.46188244794112,
+      "sourceCells": {
+        "capex": "Расчёты!C404",
+        "opex": "Расчёты!C405",
+        "durationYrs": "Расчёты!C406",
+        "abatementKt": "Расчёты!C407"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Магистральные и распред. газопроводы",
+            "en": ""
+          },
+          "value": 2500,
+          "cell": "Расчёты!C395"
+        },
+        {
+          "label": {
+            "ru": "Подключение потребителей",
+            "en": ""
+          },
+          "value": 0.6,
+          "cell": "Расчёты!C396"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР газовой инфраструктуры",
+            "en": ""
+          },
+          "value": 75.018,
+          "cell": "Расчёты!C399"
+        },
+        {
+          "label": {
+            "ru": "Потребление газа",
+            "en": ""
+          },
+          "value": 900,
+          "cell": "Расчёты!C400"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -110.43,
+          "cell": "Расчёты!C401"
+        }
+      ],
+      "cumAbatementStartKt": 169377.04137931037,
+      "cumAbatementEndKt": 176352.04137931037
+    },
+    {
+      "id": 5,
+      "sector": "1.A.1",
+      "variant": 5,
+      "name": {
+        "ru": "Атомная энергетика (замещение базовой угольной нагрузки)",
+        "en": "Nuclear power (replacing baseload coal)"
+      },
+      "capex": 36036,
+      "opex": 261.9638181818181,
+      "durationYrs": 60,
+      "abatementKt": 26805.600000000002,
+      "npv": 38216.5997334267,
+      "discCo2Kt": 223131.13551343008,
+      "mac": 171.27416864297933,
+      "sourceCells": {
+        "capex": "Расчёты!C202",
+        "opex": "Расчёты!C203",
+        "durationYrs": "Расчёты!C204",
+        "abatementKt": "Расчёты!C205"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Строительство АЭС",
+            "en": ""
+          },
+          "value": 36036,
+          "cell": "Расчёты!C194"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР АЭС",
+            "en": ""
+          },
+          "value": 402.084,
+          "cell": "Расчёты!C197"
+        },
+        {
+          "label": {
+            "ru": "Ядерное топливо",
+            "en": ""
+          },
+          "value": 134.028,
+          "cell": "Расчёты!C198"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -274.14818181818185,
+          "cell": "Расчёты!C199"
+        }
+      ],
+      "cumAbatementStartKt": 176352.04137931037,
+      "cumAbatementEndKt": 203157.64137931037
+    },
+    {
+      "id": 24,
+      "sector": "4",
+      "variant": 1,
+      "name": {
+        "ru": "Лесонасаждение (афорестация и лесовосстановление)",
+        "en": "Afforestation and reforestation"
+      },
+      "capex": 2200,
+      "opex": 111,
+      "durationYrs": 30,
+      "abatementKt": 2100,
+      "npv": 3094.1254204110774,
+      "discCo2Kt": 16915.88633210146,
+      "mac": 182.91240314965475,
+      "sourceCells": {
+        "capex": "Расчёты!C773",
+        "opex": "Расчёты!C774",
+        "durationYrs": "Расчёты!C775",
+        "abatementKt": "Расчёты!C776"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Саженцы, подготовка почвы, посадка",
+            "en": ""
+          },
+          "value": 2000,
+          "cell": "Расчёты!C764"
+        },
+        {
+          "label": {
+            "ru": "Питомники и логистика",
+            "en": ""
+          },
+          "value": 200,
+          "cell": "Расчёты!C766"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Уход, полив, противопожарная защита",
+            "en": ""
+          },
+          "value": 100,
+          "cell": "Расчёты!C769"
+        },
+        {
+          "label": {
+            "ru": "Мониторинг и верификация секвестрации",
+            "en": ""
+          },
+          "value": 11,
+          "cell": "Расчёты!C770"
+        }
+      ],
+      "cumAbatementStartKt": 203157.64137931037,
+      "cumAbatementEndKt": 205257.64137931037
+    },
+    {
+      "id": 2,
+      "sector": "1.A.1",
+      "variant": 2,
+      "name": {
+        "ru": "Перевод угольных ТЭЦ и котельных на природный газ",
+        "en": "Coal-to-gas conversion of CHP plants and boilers"
+      },
+      "capex": 10500,
+      "opex": 928.11445599022,
+      "durationYrs": 20,
+      "abatementKt": 12045.000000000002,
+      "npv": 17432.498605942426,
+      "discCo2Kt": 89969.44845502592,
+      "mac": 193.76020310557547,
+      "sourceCells": {
+        "capex": "Расчёты!C54",
+        "opex": "Расчёты!C55",
+        "durationYrs": "Расчёты!C56",
+        "abatementKt": "Расчёты!C57"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Газотурбинное/котельное оборудование",
+            "en": ""
+          },
+          "value": 7500,
+          "cell": "Расчёты!C45"
+        },
+        {
+          "label": {
+            "ru": "Газопроводы и подключение",
+            "en": ""
+          },
+          "value": 3000,
+          "cell": "Расчёты!C46"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": -120,
+          "cell": "Расчёты!C49"
+        },
+        {
+          "label": {
+            "ru": "Затраты на газ",
+            "en": "Gas cost"
+          },
+          "value": 1171.30195599022,
+          "cell": "Расчёты!C50"
+        },
+        {
+          "label": {
+            "ru": "Экономия угля",
+            "en": "Coal savings"
+          },
+          "value": -123.1875,
+          "cell": "Расчёты!C51"
+        }
+      ],
+      "cumAbatementStartKt": 205257.64137931037,
+      "cumAbatementEndKt": 217302.64137931037
+    },
+    {
+      "id": 10,
+      "sector": "1.A.3",
+      "variant": 1,
+      "name": {
+        "ru": "Электрификация легкового транспорта (EV)",
+        "en": "Passenger-vehicle electrification (EVs)"
+      },
+      "capex": 8798.7012987013,
+      "opex": -642.305194805195,
+      "durationYrs": 15,
+      "abatementKt": 2184.2775974025976,
+      "npv": 4424.047656003695,
+      "discCo2Kt": 14876.818723283292,
+      "mac": 297.3786088473164,
+      "sourceCells": {
+        "capex": "Расчёты!C335",
+        "opex": "Расчёты!C336",
+        "durationYrs": "Расчёты!C337",
+        "abatementKt": "Расчёты!C338"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Инкрементальная стоимость EV парка",
+            "en": ""
+          },
+          "value": 7332.251082251083,
+          "cell": "Расчёты!C327"
+        },
+        {
+          "label": {
+            "ru": "Зарядная инфраструктура",
+            "en": ""
+          },
+          "value": 1466.4502164502167,
+          "cell": "Расчёты!C328"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Затраты на ЭЭ",
+            "en": ""
+          },
+          "value": 237.56493506493507,
+          "cell": "Расчёты!C331"
+        },
+        {
+          "label": {
+            "ru": "Экономия бензина",
+            "en": ""
+          },
+          "value": -879.8701298701301,
+          "cell": "Расчёты!C332"
+        }
+      ],
+      "cumAbatementStartKt": 217302.64137931037,
+      "cumAbatementEndKt": 219486.91897671297
+    },
+    {
+      "id": 1,
+      "sector": "1.A.1",
+      "variant": 1,
+      "name": {
+        "ru": "Повышение КПД угольных ТЭЦ (модернизация турбин и котлов)",
+        "en": "Coal CHP efficiency improvement (turbine & boiler retrofit)"
+      },
+      "capex": 9750,
+      "opex": 69.82499999999999,
+      "durationYrs": 20,
+      "abatementKt": 2706.0000000000005,
+      "npv": 10271.553901068675,
+      "discCo2Kt": 20212.314447430483,
+      "mac": 508.18296577483045,
+      "sourceCells": {
+        "capex": "Расчёты!C24",
+        "opex": "Расчёты!C25",
+        "durationYrs": "Расчёты!C26",
+        "abatementKt": "Расчёты!C27"
+      },
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Модернизация турбин и котлов",
+            "en": ""
+          },
+          "value": 7500,
+          "cell": "Расчёты!C16"
+        },
+        {
+          "label": {
+            "ru": "Проектные и пусконаладочные работы",
+            "en": "Engineering & commissioning"
+          },
+          "value": 2250,
+          "cell": "Расчёты!C17"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "ТОиР",
+            "en": "O&M"
+          },
+          "value": 97.5,
+          "cell": "Расчёты!C20"
+        },
+        {
+          "label": {
+            "ru": "Экономия топлива",
+            "en": "Fuel savings"
+          },
+          "value": -27.675000000000004,
+          "cell": "Расчёты!C21"
+        }
+      ],
+      "cumAbatementStartKt": 219486.91897671297,
+      "cumAbatementEndKt": 222192.91897671297
+    }
+  ],
+  "totals": {
+    "capexMUsd": 112927.77640783353,
+    "abatementKt": 222192.91897671297,
+    "npvMUsd": 157791.22845542282,
+    "discCo2Kt": 1701684.9254739543,
+    "weightedAvgMac": 92.7264654539234,
+    "noRegretsAbatementKt": 17289.6
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force; Start-Sleep -Milliseconds 500; \"remaining node: \" + \\(Get-Process node -ErrorAction SilentlyContinue\\).Count)"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "modelVersion": "kz-b19702294886",
+  "sourceFile": "MACC_KZ_29052026_rev.xlsx",
+  "sourceDate": "2026-05-29",
+  "sourceSha256": "e23f32158e502dd52259b7da61c9d50f29bb301c2c7125b5207522fe7033a523",
+  "etlVersion": "1",
+  "structuralSignature": "MACC:57x11:f188|Выбросы:46x10:f0|Расчёты:776x13:f452",
+  "formulaCount": 640,
+  "display": "Model v.b19702294886 · source MACC_KZ_2026-05-29.xlsx"
+}
