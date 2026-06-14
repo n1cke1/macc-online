@@ -69,16 +69,20 @@ export default function CommentThread({ anchor, title }: { anchor: Anchor; title
     return <p className="text-xs text-muted">{t('loading')}</p>;
   }
 
-  // Group into root comments (pinned first, then newest) + their replies.
+  // Group into root comments (pinned first, then newest) + their replies. A
+  // reply whose parent is no longer visible (e.g. the parent was soft-deleted
+  // and filtered out) is promoted to a root so it never silently vanishes.
+  const ids = new Set(comments.map((c) => c.id));
+  const isRoot = (c: CommentWithAuthor) => c.parent_id === null || !ids.has(c.parent_id);
   const roots = comments
-    .filter((c) => c.parent_id === null)
+    .filter(isRoot)
     .sort((a, b) => {
       if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1;
       return b.created_at.localeCompare(a.created_at);
     });
   const repliesByParent = new Map<string, CommentWithAuthor[]>();
   for (const c of comments) {
-    if (c.parent_id) {
+    if (c.parent_id && ids.has(c.parent_id)) {
       const arr = repliesByParent.get(c.parent_id) ?? [];
       arr.push(c);
       repliesByParent.set(c.parent_id, arr);

@@ -225,11 +225,51 @@ def build_assumptions(macc_f, macc_v, translations) -> list:
 
 
 def extract_source_cell(formula):
-    """'=Расчёты!C670' -> 'Расчёты!C670' (provenance). Returns None if not a ref."""
+    """Legacy plain-ref resolver. '=Расчёты!C670' -> 'Расчёты!C670'.
+
+    Kept for non-OUT formulas elsewhere in the model. After Stage 2 the MACC
+    E/F/G/H formulas are INDEX/MATCH lookups against the OUT_* tags in col D
+    of Расчёты — those provenance refs are resolved by `build_out_cell_map`.
+    """
     if not isinstance(formula, str):
         return None
     m = re.match(r"^=\s*([^\s!]+!\$?[A-Z]+\$?\d+)\s*$", formula)
     return m.group(1).replace("$", "") if m else None
+
+
+# Stable column-letter for the OUT row's value cell — the workbook keeps every
+# OUT row's value in column C and its OUT_* tag in column D (Stage 1).
+_OUT_VALUE_COL = "C"
+_OUT_TAG_COL_IDX = 4  # 1-indexed: D
+_OUT_FIELD_BY_PREFIX = {
+    "OUT_CAPEX": "capex",
+    "OUT_OPEX": "opex",
+    "OUT_DURATION": "durationYrs",
+    "OUT_ABATE": "abatementKt",
+}
+
+
+def build_out_cell_map(calc_v) -> dict[tuple[int, str], str]:
+    """{(project_id, field) -> 'Расчёты!C24'} by scanning col D for OUT_<F>_<id>.
+
+    This is now the canonical resolver for MACC OUT provenance — geometry-free
+    (a row shift in Расчёты updates the map automatically) and identical in
+    spirit to the INDEX/MATCH lookup the MACC formulas perform at calc time.
+    """
+    out = {}
+    for r in range(1, calc_v.max_row + 1):
+        tag = calc_v.cell(r, _OUT_TAG_COL_IDX).value
+        if not isinstance(tag, str) or not tag.startswith("OUT_"):
+            continue
+        m = re.match(r"^(OUT_[A-Z]+)_(\d+)$", tag.strip())
+        if not m:
+            continue
+        prefix, pid = m.group(1), int(m.group(2))
+        field = _OUT_FIELD_BY_PREFIX.get(prefix)
+        if field is None:
+            continue
+        out[(pid, field)] = f"{SHEET_CALC}!{_OUT_VALUE_COL}{r}"
+    return out
 
 
 def calc_block_ranges(calc_v):
@@ -360,11 +400,19 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
     phys_en = translations.get("physicalItems", {})
     li_en = translations.get("localInputs", {})
     ranges = calc_block_ranges(calc_v)
+    # After Stage 2 MACC formulas are INDEX/MATCH over col-D OUT_* tags — read the
+    # provenance straight from those tags, geometry-free.
+    out_map = build_out_cell_map(calc_v)
     rows = []
     for r in PROJECT_ROWS:
         name_ru = macc_v[f"D{r}"].value
         variant = macc_v[f"C{r}"].value
-        capex_src = extract_source_cell(macc_f[f"E{r}"].value)
+        pid = int(macc_v[f"B{r}"].value)
+        source_cells = {
+            field: out_map.get((pid, field))
+            for field in ("capex", "opex", "durationYrs", "abatementKt")
+        }
+        capex_src = source_cells["capex"]
 
         # Locate the Расчёты block via the CAPEX source cell row, then pull breakdowns.
         capex_items = opex_items = physical_items = local_inputs = None
@@ -379,7 +427,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
                 local_inputs = build_local_inputs(calc_v, start, end, li_en)
 
         rows.append({
-            "id": int(macc_v[f"B{r}"].value),
+            "id": pid,
             "sector": str(macc_v[f"A{r}"].value),
             "variant": int(variant) if isinstance(variant, (int, float)) else None,
             "name": {"ru": name_ru, "en": en_map.get(name_ru, "")},
@@ -390,12 +438,7 @@ def build_projects(macc_f, macc_v, calc_v, translations) -> list:
             "npv": macc_v[f"I{r}"].value,
             "discCo2Kt": macc_v[f"J{r}"].value,
             "mac": macc_v[f"K{r}"].value,
-            "sourceCells": {
-                "capex": capex_src,
-                "opex": extract_source_cell(macc_f[f"F{r}"].value),
-                "durationYrs": extract_source_cell(macc_f[f"G{r}"].value),
-                "abatementKt": extract_source_cell(macc_f[f"H{r}"].value),
-            },
+            "sourceCells": source_cells,
             "capexItems": capex_items or [],
             "opexItems": opex_items or [],
             "physicalItems": physical_items or [],
@@ -477,14 +520,16 @@ def verify(macc_v, projects, totals) -> list:
     abate = sum(p["abatementKt"] for p in projects)
     if not approx(abate, totals["abatementKt"]):
         errors.append(f"sum abatement {abate} != totals {totals['abatementKt']}")
-    # Headline sanity anchors. Updated 2026-06-13: the three agriculture measures
-    # (blocks 3-2/3-3/3-4) now reference their sub-category baselines on the Выбросы
-    # sheet (manure C23=3.3, soils C25=11.6) instead of a stale blanket 42.8 Mt that
-    # exceeded the whole sector — a correctness fix that lowers total abatement.
+    # Headline sanity anchors. Updated 2026-06-14: expert v2 review restructured
+    # project 15 (Утилизация ПНГ) — the electricity-output formula now uses
+    # explicit calorific values (350 гут/кВтч, 8180 ккал/м³ ПНГ, 7000 ккал/кг
+    # у.т.) instead of a magic 3600 sec/hour conversion. Same physics, cleaner
+    # decomposition; wavg MAC moves from 95.58 to 95.28. Total abatement is
+    # unchanged (none of the H-column inputs were touched).
     if not approx(totals["abatementKt"], 214352.91897671297, tol=1e-4):
         errors.append(f"total abatement {totals['abatementKt']} != expected 214353")
-    if not approx(totals["weightedAvgMac"], 95.57998085733414, tol=1e-4):
-        errors.append(f"wavg MAC {totals['weightedAvgMac']} != expected 95.58")
+    if not approx(totals["weightedAvgMac"], 95.27539152596736, tol=1e-4):
+        errors.append(f"wavg MAC {totals['weightedAvgMac']} != expected 95.28")
     return errors
 
 

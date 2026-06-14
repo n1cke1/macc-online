@@ -1,6 +1,7 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { dataset, sectorLabel, pick } from '@/lib/data';
+import { dataset, sectorLabel, pick, itemAnchorKey } from '@/lib/data';
 import type { CostItem, PhysicalItem, LocalInput } from '@data/schema';
 import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
 import { useUi, useScenario } from '@/store';
@@ -105,7 +106,7 @@ function CostBreakdown({
         {items.map((it) => (
           <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
             <span className="text-slate-700">{pick(it.label, locale)}</span>
-            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
+            <Commentable id={`project:${projectId}:item:${itemAnchorKey(it.label)}`} label={pick(it.label, locale)}>
               <span className={`tabular-nums ${it.value < 0 ? 'text-green-600' : ''}`}>{num(it.value)}</span>
             </Commentable>
           </li>
@@ -133,32 +134,131 @@ function Assumptions({
   locale: 'ru' | 'en';
   projectId: number;
 }) {
+  const t = useTranslations('drilldown');
+  const overrides = useScenario((s) => s.overrides);
+  const clearOverrides = useScenario((s) => s.clearOverrides);
   if (!items || items.length === 0) return null;
+  const overriddenCells = items.filter((it) => it.cell in overrides).map((it) => it.cell);
+  const anyOverridden = overriddenCells.length > 0;
+  return (
+    <section className="mt-4">
+      <div className="mb-1 flex items-center justify-between gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-muted">{title}</h3>
+        {anyOverridden && (
+          <button
+            onClick={() => clearOverrides(overriddenCells)}
+            className="rounded-md border border-line px-2 py-0.5 text-[11px] text-muted transition hover:bg-slate-50"
+            title={t('resetProjectHint')}
+          >
+            {t('resetProject')}
+          </button>
+        )}
+      </div>
+      <p className="mb-1 text-xs text-muted">{hint}</p>
+      <ul className="divide-y divide-line rounded-md border border-line">
+        {items.map((it) => (
+          <AssumptionRow key={it.cell} it={it} locale={locale} projectId={projectId} />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** One editable IN-L row: number input committed on Enter or blur. */
+function AssumptionRow({
+  it,
+  locale,
+  projectId,
+}: {
+  it: LocalInput;
+  locale: 'ru' | 'en';
+  projectId: number;
+}) {
+  const t = useTranslations('drilldown');
+  const override = useScenario((s) => s.overrides[it.cell]);
+  const setOverride = useScenario((s) => s.setOverride);
+  const clearOverride = useScenario((s) => s.clearOverride);
+
+  const baseline = it.value;
+  const current = override ?? baseline;
+  const isOverridden = override !== undefined;
+
   const num = (v: number) => {
     const a = Math.abs(v);
     return fmt(v, locale, { maximumFractionDigits: a < 1 ? 3 : a < 100 ? 1 : 0 });
   };
+
+  // Local draft lets the user type freely; we only push to the store on commit
+  // (Enter / blur), matching the slider's "release to commit" feel. The effect
+  // resyncs the draft whenever the committed override changes from elsewhere
+  // (per-row ↺, project-wide reset, global reset).
+  const [draft, setDraft] = useState<string>(String(current));
+  useEffect(() => setDraft(String(current)), [current]);
+
+  const commit = () => {
+    const parsed = Number(draft);
+    if (!Number.isFinite(parsed)) {
+      setDraft(String(current));
+      return;
+    }
+    // Snapping back to baseline drops the override entirely so the empty-overrides
+    // baseline contract (pinned by the golden test) holds.
+    if (Math.abs(parsed - baseline) < 1e-12) {
+      if (isOverridden) clearOverride(it.cell);
+      else setDraft(String(baseline));
+      return;
+    }
+    if (!isOverridden || Math.abs(parsed - override!) > 1e-12) {
+      setOverride(it.cell, parsed);
+    }
+  };
+
   return (
-    <section className="mt-4">
-      <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{title}</h3>
-      <p className="mb-1 text-xs text-muted">{hint}</p>
-      <ul className="divide-y divide-line rounded-md border border-line">
-        {items.map((it) => (
-          <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
-            <span className="min-w-0 text-slate-700">
-              {pick(it.label, locale)}
-              {it.source && <span className="block truncate text-xs text-muted">{it.source}</span>}
-            </span>
-            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
-              <span className="shrink-0 tabular-nums">
-                {num(it.value)}
-                {it.unit && <span className="text-muted"> {formatUnit(it.unit, locale)}</span>}
+    <li className="flex items-start justify-between gap-3 px-3 py-1.5 text-sm">
+      <span className="min-w-0 text-slate-700">
+        {pick(it.label, locale)}
+        {it.source && <span className="block truncate text-xs text-muted">{it.source}</span>}
+      </span>
+      <Commentable id={`project:${projectId}:item:${itemAnchorKey(it.label)}`} label={pick(it.label, locale)}>
+        <div className="shrink-0 text-right">
+          <div className="flex items-baseline justify-end gap-1">
+            <input
+              type="number"
+              step="any"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onBlur={commit}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+                else if (e.key === 'Escape') setDraft(String(current));
+              }}
+              aria-label={pick(it.label, locale)}
+              className={`w-20 rounded border px-1.5 py-0.5 text-right tabular-nums focus:outline-none focus:ring-1 focus:ring-sky-400 ${
+                isOverridden
+                  ? 'border-sky-300 bg-sky-50 text-sky-800'
+                  : 'border-line bg-white text-slate-800'
+              }`}
+            />
+            {it.unit && <span className="text-xs text-muted">{formatUnit(it.unit, locale)}</span>}
+          </div>
+          {isOverridden && (
+            <div className="mt-0.5 flex items-center justify-end gap-1 text-[10px] text-muted">
+              <span className="tabular-nums">
+                {t('baselineLabel')} {num(baseline)}
               </span>
-            </Commentable>
-          </li>
-        ))}
-      </ul>
-    </section>
+              <button
+                onClick={() => clearOverride(it.cell)}
+                aria-label={t('resetItem')}
+                title={t('resetItem')}
+                className="rounded px-1 text-sky-600 transition hover:bg-sky-50"
+              >
+                ↺
+              </button>
+            </div>
+          )}
+        </div>
+      </Commentable>
+    </li>
   );
 }
 
@@ -182,7 +282,7 @@ function PhysicalScale({
         {items.map((it) => (
           <li key={it.cell} className="flex justify-between gap-3 px-3 py-1.5 text-sm">
             <span className="text-slate-700">{pick(it.label, locale)}</span>
-            <Commentable id={`project:${projectId}:item:${it.cell}`} label={pick(it.label, locale)}>
+            <Commentable id={`project:${projectId}:item:${itemAnchorKey(it.label)}`} label={pick(it.label, locale)}>
               <span className="shrink-0 tabular-nums">
                 {fmt(it.value, locale, { maximumFractionDigits: Math.abs(it.value) < 100 ? 1 : 0 })}{' '}
                 <span className="text-muted">{formatUnit(it.unit, locale)}</span>

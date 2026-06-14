@@ -10,6 +10,7 @@ import MaccChart from '@/components/macc/MaccChart';
 import MeasuresTable from '@/components/macc/MeasuresTable';
 import ProjectDrilldown from '@/components/drilldown/ProjectDrilldown';
 import AssumptionsPanel from '@/components/assumptions/AssumptionsPanel';
+import GlobalAssumptionsPanel from '@/components/assumptions/GlobalAssumptionsPanel';
 import ExportBar from '@/components/assumptions/ExportBar';
 import ScenarioUrlSync from '@/components/assumptions/ScenarioUrlSync';
 import AuthButtonGate from '@/components/collab/AuthButtonGate';
@@ -44,6 +45,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <MethodologyBanner />
         <KpiStrip />
         <AssumptionsPanel />
+        <GlobalAssumptionsPanel />
         <HowToRead />
 
         <section className="space-y-2">

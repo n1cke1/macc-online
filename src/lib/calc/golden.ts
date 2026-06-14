@@ -50,19 +50,20 @@ const MEASURE_FIELDS: Array<keyof MaccPoint> = [
   'mac',
 ];
 
-export function runGolden(): GoldenReport {
-  const result = recalc(BASELINE_LEVERS);
-  const issues: GoldenIssue[] = [];
-  let maxAbsDiff = 0;
+function checkAgainstBaseline(
+  result: ReturnType<typeof recalc>,
+  scope: string,
+  issues: GoldenIssue[],
+): { checked: number; maxAbsDiff: number } {
   let checked = 0;
-
+  let maxAbsDiff = 0;
   const byId = new Map(result.projects.map((p) => [p.id, p]));
 
   for (const expected of baseline.projects) {
     const actual = byId.get(expected.id);
     if (!actual) {
       issues.push({
-        where: `measure #${expected.id}`,
+        where: `${scope} · measure #${expected.id}`,
         field: '(missing)',
         actual: NaN,
         expected: expected.id,
@@ -77,12 +78,17 @@ export function runGolden(): GoldenReport {
       maxAbsDiff = Math.max(maxAbsDiff, diff);
       checked++;
       if (!close(a, e)) {
-        issues.push({ where: `measure #${expected.id}`, field: f, actual: a, expected: e, diff });
+        issues.push({
+          where: `${scope} · measure #${expected.id}`,
+          field: f,
+          actual: a,
+          expected: e,
+          diff,
+        });
       }
     }
   }
 
-  // Totals
   const totalFields = Object.keys(baseline.totals) as Array<keyof typeof baseline.totals>;
   for (const f of totalFields) {
     const a = result.totals[f];
@@ -91,9 +97,28 @@ export function runGolden(): GoldenReport {
     maxAbsDiff = Math.max(maxAbsDiff, diff);
     checked++;
     if (!close(a, e)) {
-      issues.push({ where: 'totals', field: f, actual: a, expected: e, diff });
+      issues.push({ where: `${scope} · totals`, field: f, actual: a, expected: e, diff });
     }
   }
+  return { checked, maxAbsDiff };
+}
+
+export function runGolden(): GoldenReport {
+  const issues: GoldenIssue[] = [];
+  let checked = 0;
+  let maxAbsDiff = 0;
+
+  // Case 1: pristine baseline — the historic invariant.
+  const r1 = checkAgainstBaseline(recalc(BASELINE_LEVERS), 'levers', issues);
+  checked += r1.checked;
+  maxAbsDiff = Math.max(maxAbsDiff, r1.maxAbsDiff);
+
+  // Case 2: explicit empty overrides — same baseline must hold. Pins the
+  // contract that `recalc(levers, {})` is equivalent to `recalc(levers)`, so
+  // toggling per-measure assumptions on and then back off never drifts.
+  const r2 = checkAgainstBaseline(recalc(BASELINE_LEVERS, {}), 'levers+empty-overrides', issues);
+  checked += r2.checked;
+  maxAbsDiff = Math.max(maxAbsDiff, r2.maxAbsDiff);
 
   return { pass: issues.length === 0, modelVersion, checked, maxAbsDiff, issues };
 }

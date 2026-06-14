@@ -3,7 +3,7 @@
 // for the global comments feed, so every comment shows which element it was left
 // on. Pure client-side: reads the published dataset + i18n catalogs.
 import { useLocale, useTranslations } from 'next-intl';
-import { projects, assumptions, sectorLabel, pick } from '@/lib/data';
+import { projects, assumptions, sectorLabel, pick, itemAnchorKey } from '@/lib/data';
 import type { CommentTarget } from '@/lib/supabase/types';
 
 const KPI_KEYS = ['totalAbatement', 'noRegrets', 'weightedMac', 'projects'];
@@ -19,12 +19,17 @@ export function useAnchorLabel(): (type: CommentTarget, id: string) => string {
     const p = projects.find((x) => String(x.id) === pid);
     return p ? pick(p.name, locale) : `#${pid}`;
   };
-  const itemLabel = (pid: string, cell: string): string => {
+  const itemLabel = (pid: string, key: string): string => {
     const p = projects.find((x) => String(x.id) === pid);
-    if (!p) return cell;
-    const all = [...(p.capexItems ?? []), ...(p.opexItems ?? []), ...(p.physicalItems ?? [])];
-    const it = all.find((x) => x.cell === cell);
-    return it ? pick(it.label, locale) : cell;
+    if (!p) return key;
+    const all = [
+      ...(p.capexItems ?? []),
+      ...(p.opexItems ?? []),
+      ...(p.physicalItems ?? []),
+      ...(p.localInputs ?? []),
+    ];
+    const it = all.find((x) => itemAnchorKey(x.label) === key);
+    return it ? pick(it.label, locale) : key;
   };
 
   return (type, id) => {

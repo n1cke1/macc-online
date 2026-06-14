@@ -42,3 +42,5 @@ docs/excel-restructure-plan_upd.md
 
 # NOTE: data/<country>/*.json ARE committed on purpose — they are the
 # published, third-party-verifiable trust anchor (see CLAUDE.md principle 2).
+*.xlsx.bak
+*.xlsx.tmp

@@ -20,7 +20,7 @@ import type {
   Levers,
   WorkbookEngine,
 } from '@data/schema';
-import type { RecalcResult } from './types';
+import type { ProjectOverrides, RecalcResult } from './types';
 
 const baseline = baselineJson as unknown as Dataset;
 const workbook = engineJson as unknown as WorkbookEngine;
@@ -80,6 +80,14 @@ interface EngineHandle {
   sheetId: number;
   /** Measure id (MACC col B) -> 0-indexed sheet row. */
   rowById: Map<number, number>;
+  /** Sheet name -> sheet id, cached for override-cell address resolution. */
+  sheetIdByName: Map<string, number>;
+  /**
+   * Baselines for every cell that has ever been overridden in this session,
+   * captured before the first write. On each `recalc`, cells absent from the
+   * new override map are restored from here so empty overrides == pristine.
+   */
+  baselineByCell: Map<string, number>;
 }
 
 let handle: EngineHandle | null = null;
@@ -95,13 +103,73 @@ function build(): EngineHandle {
     const id = hf.getCellValue({ sheet: sheetId, col: COL.B, row });
     if (typeof id === 'number') rowById.set(id, row);
   }
-  return { hf, sheetId, rowById };
+  const sheetIdByName = new Map<string, number>();
+  for (const name of hf.getSheetNames()) {
+    const sid = hf.getSheetId(name);
+    if (sid !== undefined) sheetIdByName.set(name, sid);
+  }
+  return { hf, sheetId, rowById, sheetIdByName, baselineByCell: new Map() };
 }
 
 /** Lazily build (and memoize) the HyperFormula instance. */
 function engine(): EngineHandle {
   if (!handle) handle = build();
   return handle;
+}
+
+/** "Расчёты!C8" -> { sheetName, col, row } in 0-indexed coordinates. */
+function parseCellRef(ref: string): { sheetName: string; col: number; row: number } | null {
+  const m = /^([^!]+)!([A-Z]+)(\d+)$/.exec(ref);
+  if (!m) return null;
+  let col = 0;
+  for (const ch of m[2]) col = col * 26 + (ch.charCodeAt(0) - 64);
+  return { sheetName: m[1], col: col - 1, row: Number(m[3]) - 1 };
+}
+
+/**
+ * Capture baseline literals for any override cell we haven't seen yet. Must run
+ * BEFORE `hf.batch`, since HyperFormula suspends `getCellValue` inside batches.
+ * Idempotent — only fills `baselineByCell` for new keys.
+ */
+function captureBaselines(handle: EngineHandle, overrides: ProjectOverrides): void {
+  const { hf, sheetIdByName, baselineByCell } = handle;
+  for (const ref of Object.keys(overrides)) {
+    if (baselineByCell.has(ref)) continue;
+    const a = parseCellRef(ref);
+    if (!a) continue;
+    const sid = sheetIdByName.get(a.sheetName);
+    if (sid === undefined) continue;
+    const v = hf.getCellValue({ sheet: sid, col: a.col, row: a.row });
+    if (typeof v === 'number') baselineByCell.set(ref, v);
+  }
+}
+
+/**
+ * Apply session overrides on top of baseline literals and restore any cell that
+ * was overridden in a previous recalc but isn't in the current map. Capturing
+ * the original literal on first touch (via captureBaselines, pre-batch) means
+ * an empty override map yields the pristine baseline curve — the property the
+ * golden test pins. Safe to call inside `hf.batch`: only writes, no reads.
+ */
+function applyOverrides(handle: EngineHandle, overrides: ProjectOverrides): void {
+  const { hf, sheetIdByName, baselineByCell } = handle;
+  // Restore previously-overridden cells that left the active set.
+  for (const [ref, baseline] of baselineByCell) {
+    if (ref in overrides) continue;
+    const a = parseCellRef(ref);
+    if (!a) continue;
+    const sid = sheetIdByName.get(a.sheetName);
+    if (sid === undefined) continue;
+    hf.setCellContents({ sheet: sid, col: a.col, row: a.row }, [[baseline]]);
+  }
+  // Apply current overrides — baselines were already captured pre-batch.
+  for (const [ref, value] of Object.entries(overrides)) {
+    const a = parseCellRef(ref);
+    if (!a) continue;
+    const sid = sheetIdByName.get(a.sheetName);
+    if (sid === undefined) continue;
+    hf.setCellContents({ sheet: sid, col: a.col, row: a.row }, [[value]]);
+  }
 }
 
 function num(v: unknown): number {
@@ -112,21 +180,35 @@ function num(v: unknown): number {
 }
 
 /**
- * Recompute the full curve for a given set of levers.
+ * Recompute the full curve for a given set of levers and (optional) per-measure
+ * cell overrides.
  *
- * Sets the four lever cells, re-reads every measure's E..K outputs, re-sorts the
- * measures ascending by MAC (curve order), recomputes cumulative abatement spans,
- * and aggregates the totals. Static per-measure metadata (names, sectors, cost
- * breakdowns, provenance cells) is carried over from the baseline dataset.
+ * Sets the four lever cells, then overlays `overrides` (e.g. `{"Расчёты!C8":
+ * 0.6}`) onto the Расчёты sheet so HyperFormula propagates them through every
+ * dependent formula. Re-reads every measure's E..K outputs, re-sorts the
+ * measures ascending by MAC (curve order), recomputes cumulative abatement
+ * spans, and aggregates the totals. Static per-measure metadata (names,
+ * sectors, cost breakdowns, provenance cells) is carried over from the baseline
+ * dataset — including each `localInputs[i].value`, which therefore stays the
+ * immutable baseline anchor the UI displays alongside the user's edits.
  */
-export function recalc(levers: Levers): RecalcResult {
-  const { hf, sheetId, rowById } = engine();
+export function recalc(
+  levers: Levers,
+  overrides: ProjectOverrides = {},
+): RecalcResult {
+  const h = engine();
+  const { hf, sheetId, rowById } = h;
+
+  // Capture baselines for any newly-touched cells BEFORE entering the batch —
+  // HyperFormula suspends `getCellValue` inside `batch()`.
+  captureBaselines(h, overrides);
 
   hf.batch(() => {
     (Object.keys(LEVER_CELLS) as Array<keyof Levers>).forEach((k) => {
       const { col, row } = LEVER_CELLS[k];
       hf.setCellContents({ sheet: sheetId, col, row }, [[levers[k]]]);
     });
+    applyOverrides(h, overrides);
   });
 
   const read = (row: number, col: number) =>

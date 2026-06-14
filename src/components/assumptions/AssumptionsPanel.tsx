@@ -68,16 +68,23 @@ function LeverSlider({ meta }: { meta: LeverMeta }) {
 }
 
 export default function AssumptionsPanel() {
-  const locale = useLocale();
   const t = useTranslations('assumptions');
   const atBaseline = useScenario((s) => s.atBaseline);
   const computing = useScenario((s) => s.computing);
   const reset = useScenario((s) => s.reset);
+  const [open, setOpen] = useState(true);
 
   return (
     <section className="rounded-lg border border-line bg-white p-4">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold">{t('title')}</h2>
+      <div className="flex items-center justify-between gap-2">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="flex items-center gap-2 text-left"
+        >
+          <h2 className="text-sm font-semibold">{t('title')}</h2>
+          <span className="text-xs text-muted">{open ? '▲' : '▼'}</span>
+        </button>
         <div className="flex items-center gap-2">
           {computing && <span className="text-xs text-sky-600">{t('computing')}</span>}
           <button
@@ -89,12 +96,16 @@ export default function AssumptionsPanel() {
           </button>
         </div>
       </div>
-      <p className="mb-3 text-xs text-muted">{t('hint')}</p>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {LEVER_META.map((m: LeverMeta & { key: LeverKey }) => (
-          <LeverSlider key={m.key} meta={m} />
-        ))}
-      </div>
+      {open && (
+        <>
+          <p className="mb-3 mt-3 text-xs text-muted">{t('hint')}</p>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {LEVER_META.map((m: LeverMeta & { key: LeverKey }) => (
+              <LeverSlider key={m.key} meta={m} />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 }

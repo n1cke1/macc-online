@@ -44,7 +44,11 @@
     "npv": "NPV",
     "physicalScale": "Physical scale",
     "assumptions": "Assumptions",
-    "assumptionsHint": "Key input assumptions behind the measure (editable in the model)",
+    "assumptionsHint": "Edit values — Enter or click outside the field commits the change and the curve recomputes. The scenario lives in this session only.",
+    "baselineLabel": "base",
+    "resetItem": "Reset to baseline",
+    "resetProject": "Reset assumptions",
+    "resetProjectHint": "Restore all of this project's assumptions to baseline",
     "provenance": "MAC = NPV / discounted CO₂ × 1000",
     "close": "Close"
   },
@@ -60,7 +64,14 @@
     "title": "Global assumptions",
     "hint": "Move the sliders — the curve recomputes in your browser and re-sorts on release.",
     "computing": "Recomputing…",
-    "reset": "Reset to baseline"
+    "reset": "Reset to baseline",
+    "globalTitle": "Model assumptions",
+    "globalHint": "Emission factors and unit CAPEX — shared across all projects. Editing one shifts every project that uses it.",
+    "groupEmissionFactor": "Emission factors",
+    "groupCapexUnit": "Unit CAPEX",
+    "globalReset": "Reset model assumptions",
+    "baselineLabel": "base",
+    "resetItem": "Reset to baseline"
   },
   "exports": {
     "label": "Export:",

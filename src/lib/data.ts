@@ -29,3 +29,18 @@ export function sectorLabel(code: string, locale: 'ru' | 'en'): string {
 export function pick(label: { ru: string; en: string }, locale: 'ru' | 'en'): string {
   return (locale === 'en' && label.en) || label.ru;
 }
+
+/**
+ * Stable, locale-independent anchor key for a drill-down line item (CAPEX/OPEX/
+ * physical/assumption row). Derived from the RU label — NOT the provenance cell
+ * address, which shifts whenever rows move in the model (the Stage 1–7 restructure
+ * did exactly that). A re-worded label is then the only thing that can detach a
+ * thread; ':' is stripped so the value stays safe inside a `type:id` anchor.
+ */
+export function itemAnchorKey(label: { ru: string }): string {
+  return label.ru
+    .trim()
+    .toLowerCase()
+    .replace(/[^0-9a-zа-яё]+/giu, '-')
+    .replace(/^-+|-+$/g, '');
+}
