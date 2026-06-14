@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { sectorColor, sectorLabel, pick } from '@/lib/data';
 import { fmtMac, fmtInt } from '@/lib/format';
@@ -9,12 +10,24 @@ export default function MeasuresTable() {
   const t = useTranslations('table');
   const { selectedId, select, hiddenSectors } = useUi();
   const projects = useScenario((s) => s.projects);
+  const [open, setOpen] = useState(true);
 
   const visible = projects.filter((p) => !hiddenSectors.has(p.sector));
 
   return (
     <div className="overflow-hidden rounded-lg border border-line bg-white">
-      <table className="w-full text-sm">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left"
+      >
+        <h2 className="text-sm font-semibold">
+          {t('title')} <span className="font-normal text-slate-400">({visible.length})</span>
+        </h2>
+        <span className="text-xs text-muted">{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+      <table className="w-full border-t border-line text-sm">
         <thead className="bg-slate-50 text-left text-xs text-muted">
           <tr>
             <th className="px-3 py-2 font-medium">{t('colName')}</th>
@@ -74,6 +87,7 @@ export default function MeasuresTable() {
           })}
         </tbody>
       </table>
+      )}
     </div>
   );
 }
