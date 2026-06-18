@@ -74,7 +74,9 @@
             "bindings": { "type": "object", "additionalProperties": { "$ref": "#/$defs/formulaBinding" } },
             "derived_share": { "type": "number", "readOnly": true }
           }
-        }
+        },
+        "formula": { "$ref": "#/$defs/ast", "description": "Inline abatement AST over the measure inputs (res:<id> EF / recursive computed leaves). Wins over the stage block; ports the Excel formula directly." },
+        "formula_label": { "$ref": "#/$defs/localized" }
       }
     },
     "created_objects": {

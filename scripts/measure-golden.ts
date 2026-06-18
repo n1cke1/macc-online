@@ -41,15 +41,15 @@ function expect(cond: boolean, where: string, detail: string): void {
   if (!cond) issues.push({ where, detail });
 }
 
-// ── 1. Parity for the two valid measures ──────────────────────────────────────
-for (const [seedId, excelId] of [['kz-20', 20], ['kz-2', 2]] as const) {
-  const m = getSeedMeasure(seedId)!;
+// ── 1. Parity for ALL 26 measures (full migration: every measure reproduces Excel) ─
+for (const m of seedMeasures) {
+  const excelId = Number(m.id.replace('kz-', ''));
   const c = compute(m, library);
   const e = excelById(excelId);
-  near('abatementKt', seedId, c.abatementKt, e.abatementKt);
-  near('mac', seedId, c.mac, e.mac);
-  near('capex', seedId, c.capex, e.capex);
-  near('opex', seedId, c.opex, e.opex);
+  near('abatementKt', m.id, c.abatementKt, e.abatementKt);
+  near('mac', m.id, c.mac, e.mac);
+  near('capex', m.id, c.capex, e.capex);
+  near('opex', m.id, c.opex, e.opex);
 }
 
 // ── 2. Guardrails: A ✓ in corridor & eligible; C ⚠ & stays draft ──────────────

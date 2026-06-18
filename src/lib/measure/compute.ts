@@ -66,6 +66,13 @@ function computeAbatement(
   resolve: RefResolver,
 ): { abatementKt: number; impliedFactor?: number } {
   const a = measure.abatement;
+  // §3/§10 — an inline abatement AST wins over the maturity-stage block. It ports the
+  // Excel «Расчёты» formula directly (physics or share×baseline), evaluated by eval.ts.
+  if (a.formula) {
+    const abatementKt = evalAst(a.formula, resolve);
+    const act = a.back_calc?.activity_scalar.qty;
+    return { abatementKt, impliedFactor: act ? abatementKt / act : undefined };
+  }
   switch (measure.maturity_stage) {
     case 'computed': {
       if (!a.computed) throw new Error(`Measure '${measure.id}': maturity=computed but no computed block`);

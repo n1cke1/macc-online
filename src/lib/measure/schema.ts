@@ -172,6 +172,15 @@ export interface Abatement {
   raw?: AbatementRaw;
   back_calc?: AbatementBackCalc;
   computed?: AbatementComputed;
+  /**
+   * §3/§10 — an inline abatement AST over the measure's own inputs (and `res:<id>`
+   * EFs / recursive `computed` leaves), evaluated directly by `eval.ts`. This is the
+   * general path that ports each Excel «Расчёты» abatement formula faithfully when it
+   * fits neither the `share` nor the `delta_ef` template. When present it WINS over the
+   * maturity-stage block; `label` renders the formula in the UI «?».
+   */
+  formula?: Ast;
+  formula_label?: Localized;
 }
 
 /** Maps a template slot to a measure input key, a resource property, or a const. */

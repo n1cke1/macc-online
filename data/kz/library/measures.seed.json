@@ -4,128 +4,3904 @@
     {
       "id": "kz-20",
       "schema_version": 1,
-      "name": { "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)", "en": "Feed additives reducing enteric fermentation (CH₄)" },
+      "name": {
+        "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)",
+        "en": "Feed additives reducing enteric fermentation (CH₄)"
+      },
       "sector_ref": "3",
-      "sectors": [{ "sector_ref": "3", "subsector_ref": "3.enteric" }],
+      "sectors": [
+        {
+          "sector_ref": "3",
+          "subsector_ref": "3.enteric"
+        }
+      ],
       "technology_ref": "tech_feed_additive",
-      "scope": "draft",
+      "scope": "published",
       "maturity_stage": "back_calc",
-      "comparison": { "is_substitution": true },
+      "comparison": {
+        "is_substitution": true
+      },
       "inputs": {
-        "capex_denominator": { "value": 2550000, "unit": "голов", "provenance": { "source_type": "official_stat", "citation": "Поголовье под программу 2550 тыс. голов", "confidence": "medium" } }
+        "capex_denominator": {
+          "value": 2550000,
+          "unit": "голов",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Поголовье под программу 2550 тыс. голов",
+            "confidence": "medium"
+          }
+        }
       },
       "abatement": {
         "back_calc": {
-          "share": 0.10,
-          "activity_scalar": { "qty": 2550, "unit": "тыс. голов" },
+          "share": 0.1,
+          "activity_scalar": {
+            "qty": 2550,
+            "unit": "тыс. голов"
+          },
           "reference_ref": "ref_enteric_factor"
         }
       },
       "created_objects": [
-        { "object_ref": "tech_feed_dosing", "capacity": 2550000, "unit": "голов" },
-        { "object_ref": "tech_feed_training", "capacity": 5100, "unit": "хозяйств", "opex_musd": 25.5 }
+        {
+          "object_ref": "tech_feed_dosing",
+          "capacity": 2550000,
+          "unit": "голов"
+        },
+        {
+          "object_ref": "tech_feed_training",
+          "capacity": 5100,
+          "unit": "хозяйств",
+          "opex_musd": 25.5
+        }
       ],
       "materials": [
-        { "resource_ref": "feed_additive", "side": "new", "qty": 2550000, "price": 50, "unit": "голов" }
+        {
+          "resource_ref": "feed_additive",
+          "side": "new",
+          "qty": 2550000,
+          "price": 50,
+          "unit": "голов"
+        }
       ],
-      "potential": { "ceiling_dim": "activity", "pool_ref": "pool_enteric" },
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_enteric"
+      },
       "sources": {
-        "created_objects[0].capacity": { "provenance": { "source_type": "official_stat", "citation": "Поголовье под программу, 2550 тыс. голов", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } },
-        "created_objects[1].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Охват ~5100 хозяйств", "confidence": "low" }, "binding": { "mode": "new" } },
-        "created_objects[1].opex_musd": { "provenance": { "source_type": "expert_estimate", "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год", "confidence": "medium" }, "binding": { "mode": "new" } },
-        "materials[0].qty": { "provenance": { "source_type": "expert_estimate", "citation": "1 доза кормовой добавки на голову в год", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } },
-        "materials[0].price": { "provenance": { "source_type": "literature", "citation": "Цена кормовой добавки ~50 $/голову/год", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "res:feed_additive#price" } },
-        "abatement.back_calc.share": { "provenance": { "source_type": "official_stat", "citation": "Лист «Мероприятия», доля охвата подкатегории", "confidence": "medium" }, "binding": { "mode": "new" } },
-        "abatement.back_calc.activity_scalar.qty": { "provenance": { "source_type": "official_stat", "citation": "Поголовье 2550 тыс. голов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } }
+        "created_objects[0].capacity": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Поголовье под программу, 2550 тыс. голов",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "in:capex_denominator"
+          }
+        },
+        "created_objects[1].capacity": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Охват ~5100 хозяйств",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "created_objects[1].opex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "materials[0].qty": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "1 доза кормовой добавки на голову в год",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "in:capex_denominator"
+          }
+        },
+        "materials[0].price": {
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Цена кормовой добавки ~50 $/голову/год",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "res:feed_additive#price"
+          }
+        },
+        "abatement.back_calc.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия», доля охвата подкатегории",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "abatement.back_calc.activity_scalar.qty": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Поголовье 2550 тыс. голов",
+            "confidence": "high"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "in:capex_denominator"
+          }
+        }
       }
     },
     {
       "id": "kz-2",
       "schema_version": 1,
-      "name": { "ru": "Перевод угольных ТЭЦ и котельных на природный газ", "en": "Conversion of coal CHP and boilers to natural gas" },
+      "name": {
+        "ru": "Перевод угольных ТЭЦ и котельных на природный газ",
+        "en": "Conversion of coal CHP and boilers to natural gas"
+      },
       "sector_ref": "1.A.1",
-      "sectors": [{ "sector_ref": "1.A.1", "subsector_ref": "1.A.1.coal_power" }],
+      "sectors": [
+        {
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.coal_power"
+        }
+      ],
       "product_ref": "prod_mwh",
       "technology_ref": "tech_coal_to_gas",
-      "scope": "draft",
+      "scope": "published",
       "maturity_stage": "computed",
-      "comparison": { "is_substitution": false, "service_unit_ref": "prod_mwh" },
+      "comparison": {
+        "is_substitution": false,
+        "service_unit_ref": "prod_mwh"
+      },
       "inputs": {
-        "cap_mw": { "value": 5000, "unit": "МВт", "provenance": { "source_type": "expert_estimate", "citation": "Замещаемая мощность", "confidence": "medium" } },
-        "kium": { "value": 0.5, "unit": "доля", "provenance": { "source_type": "standard", "citation": "КИУМ", "confidence": "high" } },
-        "capex_denominator": { "value": 5000000, "unit": "кВт", "provenance": { "source_type": "expert_estimate", "confidence": "medium" } },
-        "eff_gas": { "value": 0.50, "unit": "доля", "provenance": { "source_type": "placeholder", "citation": "КПД газового блока (нетто) — TODO: подставить стандарт/ГОСТ", "url": "https://example.org/TODO-gas-efficiency", "confidence": "low" } },
-        "q_gas": { "value": 33.6548572, "unit": "ГДж/тыс. м³", "provenance": { "source_type": "placeholder", "citation": "Низшая теплотворность природного газа (LHV) — TODO: подставить ГОСТ 31369/справочник", "url": "https://example.org/TODO-gas-lhv", "confidence": "low" } },
-        "eff_coal": { "value": 0.48, "unit": "доля", "provenance": { "source_type": "placeholder", "citation": "КПД угольного блока (нетто) — TODO: подставить стандарт", "url": "https://example.org/TODO-coal-efficiency", "confidence": "low" } },
-        "q_coal": { "value": 20.0, "unit": "ГДж/т", "provenance": { "source_type": "placeholder", "citation": "Низшая теплотворность угля (LHV) — TODO: подставить справочник по марке", "url": "https://example.org/TODO-coal-lhv", "confidence": "low" } }
+        "cap_mw": {
+          "value": 5000,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность",
+            "confidence": "medium"
+          }
+        },
+        "kium": {
+          "value": 0.5,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "standard",
+            "citation": "КИУМ",
+            "confidence": "high"
+          }
+        },
+        "capex_denominator": {
+          "value": 5000000,
+          "unit": "кВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "confidence": "medium"
+          }
+        },
+        "eff_gas": {
+          "value": 0.5,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "КПД газового блока (нетто) — TODO: подставить стандарт/ГОСТ",
+            "url": "https://example.org/TODO-gas-efficiency",
+            "confidence": "low"
+          }
+        },
+        "q_gas": {
+          "value": 33.6548572,
+          "unit": "ГДж/тыс. м³",
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "Низшая теплотворность природного газа (LHV) — TODO: подставить ГОСТ 31369/справочник",
+            "url": "https://example.org/TODO-gas-lhv",
+            "confidence": "low"
+          }
+        },
+        "eff_coal": {
+          "value": 0.48,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "КПД угольного блока (нетто) — TODO: подставить стандарт",
+            "url": "https://example.org/TODO-coal-efficiency",
+            "confidence": "low"
+          }
+        },
+        "q_coal": {
+          "value": 20.0,
+          "unit": "ГДж/т",
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "Низшая теплотворность угля (LHV) — TODO: подставить справочник по марке",
+            "url": "https://example.org/TODO-coal-lhv",
+            "confidence": "low"
+          }
+        }
       },
       "abatement": {
         "computed": {
           "formula_ref": "delta_ef",
           "bindings": {
-            "capacity": { "ref": "cap_mw" },
-            "cf": { "ref": "kium" },
-            "ef_in": { "ref": "res:coal" },
-            "ef_out": { "ref": "res:gas" }
+            "capacity": {
+              "ref": "cap_mw"
+            },
+            "cf": {
+              "ref": "kium"
+            },
+            "ef_in": {
+              "ref": "res:coal"
+            },
+            "ef_out": {
+              "ref": "res:gas"
+            }
           }
         }
       },
       "created_objects": [
-        { "object_ref": "tech_coal_to_gas", "capacity": 5000, "unit": "МВт", "capex_ud_factor": 1000, "opex_musd": -120 },
-        { "object_ref": "tech_gas_pipeline", "capacity": 5000, "unit": "МВт", "capex_ud_factor": 1000 }
+        {
+          "object_ref": "tech_coal_to_gas",
+          "capacity": 5000,
+          "unit": "МВт",
+          "capex_ud_factor": 1000,
+          "opex_musd": -120
+        },
+        {
+          "object_ref": "tech_gas_pipeline",
+          "capacity": 5000,
+          "unit": "МВт",
+          "capex_ud_factor": 1000
+        }
       ],
       "materials": [
-        { "resource_ref": "gas", "side": "new", "price": 250, "unit": "тыс. м³" },
-        { "resource_ref": "coal", "side": "retired", "price": 15, "unit": "т" }
+        {
+          "resource_ref": "gas",
+          "side": "new",
+          "price": 250,
+          "unit": "тыс. м³"
+        },
+        {
+          "resource_ref": "coal",
+          "side": "retired",
+          "price": 15,
+          "unit": "т"
+        }
       ],
-      "potential": { "ceiling_dim": "n_objects", "pool_ref": "pool_coal_power" },
+      "potential": {
+        "ceiling_dim": "n_objects",
+        "pool_ref": "pool_coal_power"
+      },
       "computed": {
-        "gas_intensity": { "label": { "ru": "Удельный расход газа", "en": "Gas intensity" }, "formula": { "op": "div", "args": [{ "const": 3.6 }, { "op": "mul", "args": [{ "ref": "eff_gas" }, { "ref": "q_gas" }] }] } },
-        "coal_intensity": { "label": { "ru": "Удельный расход угля", "en": "Coal intensity" }, "formula": { "op": "div", "args": [{ "const": 3.6 }, { "op": "mul", "args": [{ "ref": "eff_coal" }, { "ref": "q_coal" }] }] } },
-        "materials[0].qty": { "label": { "ru": "Расход газа", "en": "Gas consumption" }, "formula": { "op": "mul", "args": [{ "ref": "cap_mw" }, { "ref": "kium" }, { "const": 8760 }, { "ref": "gas_intensity" }] } },
-        "materials[1].qty": { "label": { "ru": "Высвобождаемый уголь", "en": "Released coal" }, "formula": { "op": "mul", "args": [{ "ref": "cap_mw" }, { "ref": "kium" }, { "const": 8760 }, { "ref": "coal_intensity" }] } }
+        "gas_intensity": {
+          "label": {
+            "ru": "Удельный расход газа",
+            "en": "Gas intensity"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "const": 3.6
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "eff_gas"
+                  },
+                  {
+                    "ref": "q_gas"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "coal_intensity": {
+          "label": {
+            "ru": "Удельный расход угля",
+            "en": "Coal intensity"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "const": 3.6
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "eff_coal"
+                  },
+                  {
+                    "ref": "q_coal"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "materials[0].qty": {
+          "label": {
+            "ru": "Расход газа",
+            "en": "Gas consumption"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "cap_mw"
+              },
+              {
+                "ref": "kium"
+              },
+              {
+                "const": 8760
+              },
+              {
+                "ref": "gas_intensity"
+              }
+            ]
+          }
+        },
+        "materials[1].qty": {
+          "label": {
+            "ru": "Высвобождаемый уголь",
+            "en": "Released coal"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "cap_mw"
+              },
+              {
+                "ref": "kium"
+              },
+              {
+                "const": 8760
+              },
+              {
+                "ref": "coal_intensity"
+              }
+            ]
+          }
+        }
       },
       "sources": {
-        "created_objects[0].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Замещаемая мощность угольных ТЭЦ, 5000 МВт", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:cap_mw" } },
-        "created_objects[0].opex_musd": { "provenance": { "source_type": "expert_estimate", "citation": "Экономия OPEX при переходе на газ", "confidence": "medium" }, "binding": { "mode": "new" } },
-        "created_objects[1].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Газопровод под мощность станции", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:cap_mw" } },
-        "materials[0].price": { "provenance": { "source_type": "standard", "citation": "Цена газа 250 $/тыс. м³ — реестр ресурсов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "res:gas#price" } },
-        "materials[1].price": { "provenance": { "source_type": "standard", "citation": "Цена угля 15 $/т — реестр ресурсов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "res:coal#price" } }
+        "created_objects[0].capacity": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность угольных ТЭЦ, 5000 МВт",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "in:cap_mw"
+          }
+        },
+        "created_objects[0].opex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия OPEX при переходе на газ",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "created_objects[1].capacity": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Газопровод под мощность станции",
+            "confidence": "medium"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "in:cap_mw"
+          }
+        },
+        "materials[0].price": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Цена газа 250 $/тыс. м³ — реестр ресурсов",
+            "confidence": "high"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "res:gas#price"
+          }
+        },
+        "materials[1].price": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Цена угля 15 $/т — реестр ресурсов",
+            "confidence": "high"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "res:coal#price"
+          }
+        }
       }
     },
     {
       "id": "kz-16",
       "schema_version": 1,
-      "name": { "ru": "Дегазация угольных шахт (метан угольных пластов)", "en": "Coal-mine methane degassing (coalbed methane)" },
+      "name": {
+        "ru": "Дегазация угольных шахт (метан угольных пластов)",
+        "en": "Coal-mine methane degassing (coalbed methane)"
+      },
       "sector_ref": "1.B",
-      "sectors": [{ "sector_ref": "1.B", "subsector_ref": "1.B.coal_methane" }],
+      "sectors": [
+        {
+          "sector_ref": "1.B",
+          "subsector_ref": "1.B.coal_methane"
+        }
+      ],
       "technology_ref": "tech_mine_degas",
-      "scope": "draft",
+      "scope": "published",
       "maturity_stage": "back_calc",
-      "comparison": { "is_substitution": true },
+      "comparison": {
+        "is_substitution": true
+      },
       "inputs": {},
       "abatement": {
         "back_calc": {
           "share": 0.2,
-          "activity_scalar": { "qty": 9.791795506081222, "unit": "млн м³" },
+          "activity_scalar": {
+            "qty": 9.791795506081222,
+            "unit": "млн м³"
+          },
           "reference_ref": "ref_degas_factor"
         }
       },
       "created_objects": [
-        { "object_ref": "tech_mine_degas", "capacity": 9.791795506081222, "unit": "млн м³", "capex_musd": 300, "opex_musd": 12 }
+        {
+          "object_ref": "tech_mine_degas",
+          "capacity": 9.791795506081222,
+          "unit": "млн м³",
+          "capex_musd": 300,
+          "opex_musd": 12
+        }
       ],
       "materials": [
-        { "resource_ref": "methane", "side": "retired", "qty": 9791.795506081223, "price": 150, "unit": "тыс. м³" }
+        {
+          "resource_ref": "methane",
+          "side": "retired",
+          "qty": 9791.795506081224,
+          "price": 150,
+          "unit": "тыс. м³"
+        }
       ],
-      "potential": { "ceiling_dim": "cut_resource", "pool_ref": "pool_coal_methane" },
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_coal_methane"
+      },
       "sources": {
-        "created_objects[0].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Объём метана к дегазации, ~9.8 млн м³", "confidence": "low" }, "binding": { "mode": "new" } },
-        "created_objects[0].capex_musd": { "provenance": { "source_type": "placeholder", "citation": "Оценка CAPEX установки дегазации — требует проверки", "confidence": "low" }, "binding": { "mode": "new" } },
-        "created_objects[0].opex_musd": { "provenance": { "source_type": "placeholder", "citation": "Оценка OPEX — требует проверки", "confidence": "low" }, "binding": { "mode": "new" } },
-        "materials[0].qty": { "provenance": { "source_type": "expert_estimate", "citation": "Высвобождаемый метан", "confidence": "low" }, "binding": { "mode": "reuse", "ref": "created_objects[0].capacity" } },
-        "materials[0].price": { "provenance": { "source_type": "expert_estimate", "citation": "Цена метана 150 $/тыс. м³", "confidence": "low" }, "binding": { "mode": "new" } },
-        "abatement.back_calc.share": { "provenance": { "source_type": "assumption", "citation": "Доля охвата 0.2 — постулирована", "confidence": "low" }, "binding": { "mode": "new" } },
-        "abatement.back_calc.activity_scalar.qty": { "provenance": { "source_type": "expert_estimate", "citation": "Активность ~9.8 млн м³", "confidence": "low" }, "binding": { "mode": "reuse", "ref": "created_objects[0].capacity" } }
+        "created_objects[0].capacity": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Объём метана к дегазации, ~9.8 млн м³",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "Оценка CAPEX установки дегазации — требует проверки",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "created_objects[0].opex_musd": {
+          "provenance": {
+            "source_type": "placeholder",
+            "citation": "Оценка OPEX — требует проверки",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "materials[0].qty": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Высвобождаемый метан",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "created_objects[0].capacity"
+          }
+        },
+        "materials[0].price": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Цена метана 150 $/тыс. м³",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "abatement.back_calc.share": {
+          "provenance": {
+            "source_type": "assumption",
+            "citation": "Доля охвата 0.2 — постулирована",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "new"
+          }
+        },
+        "abatement.back_calc.activity_scalar.qty": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Активность ~9.8 млн м³",
+            "confidence": "low"
+          },
+          "binding": {
+            "mode": "reuse",
+            "ref": "created_objects[0].capacity"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-1",
+      "schema_version": 1,
+      "name": {
+        "ru": "Повышение КПД угольных ТЭЦ (модернизация турбин и котлов)",
+        "en": "Coal CHP efficiency improvement (turbine & boiler retrofit)"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 135.3,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "eff_gain": {
+          "value": 0.02,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "eff_gain"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × прирост КПД × 1000",
+          "en": "sector baseline × efficiency gain × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz1_0",
+          "capex_musd": 7500
+        },
+        {
+          "object_ref": "obj_kz1_1",
+          "capex_musd": 2250
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz1_0",
+          "side": "new",
+          "cost_musd": 97.5
+        },
+        {
+          "resource_ref": "res_kz1_1",
+          "side": "new",
+          "cost_musd": -27.675000000000004
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация турбин и котлов",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Проектные и пусконаладочные работы",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия топлива",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.eff_gain": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-3",
+      "schema_version": 1,
+      "name": {
+        "ru": "ВИЭ: солнечные и ветровые станции",
+        "en": "Renewables: solar and wind power plants"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "cap_mw": {
+          "value": 10000,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "cf": {
+          "value": 0.35,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "curtailment": {
+          "value": 0.1,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_coal": {
+          "value": 1,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "cap_mw"
+            },
+            8760,
+            {
+              "ref": "cf"
+            },
+            {
+              "op": "sub",
+              "args": [
+                1,
+                {
+                  "ref": "curtailment"
+                }
+              ]
+            },
+            {
+              "ref": "ef_coal"
+            },
+            0.001
+          ]
+        },
+        "formula_label": {
+          "ru": "мощность × 8760 × КИУМ × (1−curtailment) × EF_угля × 10⁻³",
+          "en": "capacity × 8760 × CF × (1−curtailment) × EF_coal × 10⁻³"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz3_0",
+          "capex_musd": 8000
+        },
+        {
+          "object_ref": "obj_kz3_1",
+          "capex_musd": 1200
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz3_0",
+          "side": "new",
+          "cost_musd": 138
+        },
+        {
+          "resource_ref": "res_kz3_1",
+          "side": "new",
+          "cost_musd": -282.2113636363636
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ВИЭ",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Сети и подключение",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР ВИЭ",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.curtailment": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-4",
+      "schema_version": 1,
+      "name": {
+        "ru": "ВИЭ + газовый пикер + котельная на месте ТЭЦ (закрытие старых угольных ТЭЦ)",
+        "en": "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "gen_displaced_gwh": {
+          "value": 33726,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_coal": {
+          "value": 1,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "gen_gas_gwh": {
+          "value": 12264,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_gas": {
+          "value": 0.45,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "sub",
+          "args": [
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "gen_displaced_gwh"
+                },
+                {
+                  "ref": "ef_coal"
+                }
+              ]
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "gen_gas_gwh"
+                },
+                {
+                  "ref": "ef_gas"
+                }
+              ]
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "вытесненная угольная выработка × EF_угля − газовая выработка × EF_газа",
+          "en": "displaced coal generation × EF_coal − gas generation × EF_gas"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz4_0",
+          "capex_musd": 5600
+        },
+        {
+          "object_ref": "obj_kz4_1",
+          "capex_musd": 7000
+        },
+        {
+          "object_ref": "obj_kz4_3",
+          "capex_musd": 280.00000000000006
+        }
+      ],
+      "retired_objects": [
+        {
+          "object_ref": "obj_kz4_2",
+          "maintenance_capex_musd": 7000
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz4_0",
+          "side": "new",
+          "cost_musd": 88.2
+        },
+        {
+          "resource_ref": "res_kz4_1",
+          "side": "new",
+          "cost_musd": -168
+        },
+        {
+          "resource_ref": "res_kz4_2",
+          "side": "new",
+          "cost_musd": 918.3007334963324
+        },
+        {
+          "resource_ref": "res_kz4_3",
+          "side": "new",
+          "cost_musd": -57.272727272727266
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ВИЭ (солнце+ветер)",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Газотурбинный пикер",
+            "confidence": "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Отказ от модернизации ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Котельная",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение опекса ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потребление газа",
+            "confidence": "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.gen_displaced_gwh": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "inputs.gen_gas_gwh": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_gas": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-5",
+      "schema_version": 1,
+      "name": {
+        "ru": "Атомная энергетика (замещение базовой угольной нагрузки)",
+        "en": "Nuclear power (replacing baseload coal)"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 60,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "gen_mwh": {
+          "value": 26805600,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_coal": {
+          "value": 1,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "gen_mwh"
+            },
+            {
+              "ref": "ef_coal"
+            },
+            0.001
+          ]
+        },
+        "formula_label": {
+          "ru": "выработка АЭС × EF_угля × 10⁻³",
+          "en": "nuclear generation × EF_coal × 10⁻³"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz5_0",
+          "capex_musd": 36036
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz5_0",
+          "side": "new",
+          "cost_musd": 402.084
+        },
+        {
+          "resource_ref": "res_kz5_1",
+          "side": "new",
+          "cost_musd": 134.028
+        },
+        {
+          "resource_ref": "res_kz5_2",
+          "side": "new",
+          "cost_musd": -274.14818181818185
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Строительство АЭС",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР АЭС",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Ядерное топливо",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.gen_mwh": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-6",
+      "schema_version": 1,
+      "name": {
+        "ru": "Тепловые насосы для централизованного теплоснабжения",
+        "en": "Heat pumps for district heating"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "heat_kgcal": {
+          "value": 9500,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_boiler": {
+          "value": 0.55,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "heat_kgcal"
+            },
+            {
+              "ref": "ef_boiler"
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "замещённое тепло × EF_угольной_котельной",
+          "en": "displaced heat × EF_coal_boiler"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz6_0",
+          "capex_musd": 1040.5265410958903
+        },
+        {
+          "object_ref": "obj_kz6_1",
+          "capex_musd": 312.15796232876704
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz6_0",
+          "side": "new",
+          "cost_musd": 27.053690068493147
+        },
+        {
+          "resource_ref": "res_kz6_1",
+          "side": "new",
+          "cost_musd": -27.053690068493147
+        },
+        {
+          "resource_ref": "res_kz6_2",
+          "side": "new",
+          "cost_musd": 78.12867857142855
+        },
+        {
+          "resource_ref": "res_kz6_3",
+          "side": "new",
+          "cost_musd": -53.43749999999999
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Тепловые насосы",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация сетей теплоснабжения",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Сокращение OPEX котельных и ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Электроэнергия",
+            "confidence": "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-7",
+      "schema_version": 1,
+      "name": {
+        "ru": "Электрификация теплоснабжения (электрокотлы + ВИЭ)",
+        "en": "Heat-supply electrification (electric boilers + renewables)"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "heat_kgcal": {
+          "value": 51300,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_boiler": {
+          "value": 0.55,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "heat_kgcal"
+            },
+            {
+              "ref": "ef_boiler"
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "замещённое тепло × EF_угольной_котельной",
+          "en": "displaced heat × EF_coal_boiler"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz7_0",
+          "capex_musd": 3405.359589041096
+        },
+        {
+          "object_ref": "obj_kz7_1",
+          "capex_musd": 1362.1438356164385
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz7_0",
+          "side": "new",
+          "cost_musd": -25.22488584474886
+        },
+        {
+          "resource_ref": "res_kz7_1",
+          "side": "new",
+          "cost_musd": 2983.095
+        },
+        {
+          "resource_ref": "res_kz7_2",
+          "side": "new",
+          "cost_musd": -288.5625
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Электрокотлы",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Расширение электросетей",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Электроэнергия",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-8",
+      "schema_version": 1,
+      "name": {
+        "ru": "ВИЭ + газовый пикер + котельная (альтернатива новым ТЭЦ)",
+        "en": "Renewables + gas peaker + boiler (alternative to new CHP)"
+      },
+      "sector_ref": "1.A.1",
+      "sectors": [
+        {
+          "sector_ref": "1.A.1"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "gen_displaced_gwh": {
+          "value": 4818,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_coal": {
+          "value": 1,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "gen_gas_gwh": {
+          "value": 1752,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_gas": {
+          "value": 0.45,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "sub",
+          "args": [
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "gen_displaced_gwh"
+                },
+                {
+                  "ref": "ef_coal"
+                }
+              ]
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "gen_gas_gwh"
+                },
+                {
+                  "ref": "ef_gas"
+                }
+              ]
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "вытесненная угольная выработка × EF_угля − газовая выработка × EF_газа",
+          "en": "displaced coal generation × EF_coal − gas generation × EF_gas"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz8_0",
+          "capex_musd": 1074.285714285714
+        },
+        {
+          "object_ref": "obj_kz8_1",
+          "capex_musd": 150
+        },
+        {
+          "object_ref": "obj_kz8_3",
+          "capex_musd": 1000
+        },
+        {
+          "object_ref": "obj_kz8_4",
+          "capex_musd": 80
+        }
+      ],
+      "retired_objects": [
+        {
+          "object_ref": "obj_kz8_2",
+          "maintenance_capex_musd": 3000
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz8_0",
+          "side": "new",
+          "cost_musd": -10.43571428571429
+        },
+        {
+          "resource_ref": "res_kz8_1",
+          "side": "new",
+          "cost_musd": 0
+        },
+        {
+          "resource_ref": "res_kz8_2",
+          "side": "new",
+          "cost_musd": 98.0903084846278
+        },
+        {
+          "resource_ref": "res_kz8_3",
+          "side": "new",
+          "cost_musd": -10.987012987012983
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ВИЭ (солнце+ветер)",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Развитие электросетей (на пикеры)",
+            "confidence": "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Отказ от строительства ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Газотурбинный пикер",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[3].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Котельная",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение опекса ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потребление газа",
+            "confidence": "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.gen_displaced_gwh": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "inputs.gen_gas_gwh": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_gas": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-9",
+      "schema_version": 1,
+      "name": {
+        "ru": "Утилизация ВЭР (рекуперация тепла отходящих газов)",
+        "en": "Waste-heat recovery (flue-gas heat recuperation)"
+      },
+      "sector_ref": "1.A.2",
+      "sectors": [
+        {
+          "sector_ref": "1.A.2"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "cap_mw": {
+          "value": 2500,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "cf": {
+          "value": 0.8,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_coal": {
+          "value": 1,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "cap_mw"
+            },
+            8760,
+            {
+              "ref": "cf"
+            },
+            {
+              "ref": "ef_coal"
+            },
+            0.001
+          ]
+        },
+        "formula_label": {
+          "ru": "мощность × 8760 × КИУМ × EF_угля × 10⁻³",
+          "en": "capacity × 8760 × CF × EF_coal × 10⁻³"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz9_0",
+          "capex_musd": 6250
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz9_0",
+          "side": "new",
+          "cost_musd": 187.5
+        },
+        {
+          "resource_ref": "res_kz9_1",
+          "side": "new",
+          "cost_musd": -179.1818181818182
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Генераторы",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-10",
+      "schema_version": 1,
+      "name": {
+        "ru": "Электрификация легкового транспорта (EV)",
+        "en": "Passenger-vehicle electrification (EVs)"
+      },
+      "sector_ref": "1.A.3",
+      "sectors": [
+        {
+          "sector_ref": "1.A.3"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 15,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 27.1,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.15,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        },
+        "grid_growth_kt": {
+          "value": 1880.7224025974,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "sub",
+          "args": [
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "ref": "base_emissions"
+                },
+                {
+                  "ref": "share"
+                },
+                1000
+              ]
+            },
+            {
+              "ref": "grid_growth_kt"
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000 − рост выбросов энергосистемы",
+          "en": "sector baseline × share × 1000 − grid-emissions growth"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz10_0",
+          "capex_musd": 7332.251082251083
+        },
+        {
+          "object_ref": "obj_kz10_1",
+          "capex_musd": 1466.4502164502167
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz10_0",
+          "side": "new",
+          "cost_musd": 237.56493506493507
+        },
+        {
+          "resource_ref": "res_kz10_1",
+          "side": "new",
+          "cost_musd": -879.8701298701301
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Инкрементальная стоимость EV парка",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Зарядная инфраструктура",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Затраты на ЭЭ",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия бензина",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        },
+        "inputs.grid_growth_kt": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-11",
+      "schema_version": 1,
+      "name": {
+        "ru": "Термомодернизация зданий (утепление фасадов, окна, кровля)",
+        "en": "Building thermal retrofit (facade insulation, windows, roofing)"
+      },
+      "sector_ref": "1.A.4",
+      "sectors": [
+        {
+          "sector_ref": "1.A.4"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 30,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "heat_before_kgcal": {
+          "value": 41896.5517241379,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "heat_after_kgcal": {
+          "value": 20948.275862069,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "ef_boiler": {
+          "value": 0.55,
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "derating": {
+          "value": 0.2,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "op": "sub",
+              "args": [
+                {
+                  "ref": "heat_before_kgcal"
+                },
+                {
+                  "ref": "heat_after_kgcal"
+                }
+              ]
+            },
+            {
+              "ref": "ef_boiler"
+            },
+            {
+              "op": "sub",
+              "args": [
+                1,
+                {
+                  "ref": "derating"
+                }
+              ]
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "(тепло_до − тепло_после) × EF_котельной × (1−просадка КПД ТЭЦ)",
+          "en": "(heat_before − heat_after) × EF_coal_boiler × (1−derating)"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz11_0",
+          "capex_musd": 9000
+        },
+        {
+          "object_ref": "obj_kz11_1",
+          "capex_musd": 1800
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz11_0",
+          "side": "new",
+          "cost_musd": 54
+        },
+        {
+          "resource_ref": "res_kz11_1",
+          "side": "new",
+          "cost_musd": -729
+        },
+        {
+          "resource_ref": "res_kz11_2",
+          "side": "new",
+          "cost_musd": -94.26724137931035
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Утепление фасадов и кровли",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замена окон и дверей",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение затрат на котельные/ТЭЦ",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение потребления угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.heat_before_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.heat_after_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "confidence": "high"
+          }
+        },
+        "inputs.derating": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-12",
+      "schema_version": 1,
+      "name": {
+        "ru": "Газификация ЖКХ (переходная мера)",
+        "en": "Residential gasification (transitional measure)"
+      },
+      "sector_ref": "1.A.4",
+      "sectors": [
+        {
+          "sector_ref": "1.A.4"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 30,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 46.5,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.15,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz12_0",
+          "capex_musd": 2500
+        },
+        {
+          "object_ref": "obj_kz12_1",
+          "capex_musd": 0.6
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz12_0",
+          "side": "new",
+          "cost_musd": 75.018
+        },
+        {
+          "resource_ref": "res_kz12_1",
+          "side": "new",
+          "cost_musd": 900
+        },
+        {
+          "resource_ref": "res_kz12_2",
+          "side": "new",
+          "cost_musd": -110.43
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Магистральные и распред. газопроводы",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Подключение потребителей",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР газовой инфраструктуры",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потребление газа",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-13",
+      "schema_version": 1,
+      "name": {
+        "ru": "Электрокотёл + ВИЭ (полная декарбонизация ЖКХ)",
+        "en": "Electric boiler + renewables (full district-heating decarbonization)"
+      },
+      "sector_ref": "1.A.4",
+      "sectors": [
+        {
+          "sector_ref": "1.A.4"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 46.5,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "tech_potential": {
+          "value": 0.5,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        },
+        "share": {
+          "value": 0.5,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "tech_potential"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × тех. потенциал × доля × 1000",
+          "en": "sector baseline × technical potential × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz13_0",
+          "capex_musd": 1403.0588418430887
+        },
+        {
+          "object_ref": "obj_kz13_1",
+          "capex_musd": 561.2235367372355
+        },
+        {
+          "object_ref": "obj_kz13_2",
+          "capex_musd": 420.9176525529266
+        }
+      ],
+      "retired_objects": [
+        {
+          "object_ref": "obj_kz13_3",
+          "maintenance_capex_musd": 2200.8771357975043
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz13_0",
+          "side": "new",
+          "cost_musd": 28.061176836861772
+        },
+        {
+          "resource_ref": "res_kz13_1",
+          "side": "new",
+          "cost_musd": 1229.0795454545455
+        },
+        {
+          "resource_ref": "res_kz13_2",
+          "side": "new",
+          "cost_musd": -118.89204545454545
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Электрокотлы",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Расширение электросетей",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "СМР и тепловые сети",
+            "confidence": "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия: закрытие котельных",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Электроэнергия ВИЭ",
+            "confidence": "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия угля",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.tech_potential": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-14",
+      "schema_version": 1,
+      "name": {
+        "ru": "LDAR: обнаружение и устранение утечек метана (нефтегаз)",
+        "en": "LDAR: methane leak detection and repair (oil & gas)"
+      },
+      "sector_ref": "1.B",
+      "sectors": [
+        {
+          "sector_ref": "1.B"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 10,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 34.2,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.25,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz14_0",
+          "capex_musd": 40
+        },
+        {
+          "object_ref": "obj_kz14_1",
+          "capex_musd": 15
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz14_0",
+          "side": "new",
+          "cost_musd": 10
+        },
+        {
+          "resource_ref": "res_kz14_1",
+          "side": "new",
+          "cost_musd": -7.5
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Обследование и ремонт",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "OGI камеры и оборудование",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мониторинг и обследования",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Выручка от газа",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-15",
+      "schema_version": 1,
+      "name": {
+        "ru": "Утилизация попутного нефтяного газа (ПНГ)",
+        "en": "Associated petroleum gas (APG) utilization"
+      },
+      "sector_ref": "1.B",
+      "sectors": [
+        {
+          "sector_ref": "1.B"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 34.2,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.2,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz15_0",
+          "capex_musd": 1500
+        },
+        {
+          "object_ref": "obj_kz15_1",
+          "capex_musd": 375
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz15_0",
+          "side": "new",
+          "cost_musd": 56.25
+        },
+        {
+          "resource_ref": "res_kz15_1",
+          "side": "new",
+          "cost_musd": -400.6530612244898
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ГТЭС и компрессорное оборудование",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Подводящая инфраструктура",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Выручка от электроэнергии",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-17",
+      "schema_version": 1,
+      "name": {
+        "ru": "Снижение утечек в газотранспортной системе",
+        "en": "Leak reduction in the gas transmission system"
+      },
+      "sector_ref": "1.B",
+      "sectors": [
+        {
+          "sector_ref": "1.B"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 34.2,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.15,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz17_0",
+          "capex_musd": 600
+        },
+        {
+          "object_ref": "obj_kz17_1",
+          "capex_musd": 30
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz17_0",
+          "side": "new",
+          "cost_musd": 18.9
+        },
+        {
+          "resource_ref": "res_kz17_1",
+          "side": "new",
+          "cost_musd": 335.78181818181815
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация газопроводов и КС",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Спутниковый мониторинг",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР и мониторинг",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия газа",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-18",
+      "schema_version": 1,
+      "name": {
+        "ru": "Снижение клинкерного фактора в цементном производстве",
+        "en": "Clinker-factor reduction in cement production"
+      },
+      "sector_ref": "2",
+      "sectors": [
+        {
+          "sector_ref": "2"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 30,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 8.6,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.1,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz18_0",
+          "capex_musd": 200
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz18_0",
+          "side": "new",
+          "cost_musd": 40
+        },
+        {
+          "resource_ref": "res_kz18_1",
+          "side": "new",
+          "cost_musd": -20
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация заводов",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Закупка добавок",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия на клинкере",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-19",
+      "schema_version": 1,
+      "name": {
+        "ru": "CCS в металлургии и цементе",
+        "en": "CCS in metallurgy and cement"
+      },
+      "sector_ref": "2",
+      "sectors": [
+        {
+          "sector_ref": "2"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 27.0,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.08,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz19_0",
+          "capex_musd": 925.7142857142857
+        },
+        {
+          "object_ref": "obj_kz19_1",
+          "capex_musd": 277.71428571428567
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz19_0",
+          "side": "new",
+          "cost_musd": 185.14285714285717
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Установки улавливания CO₂",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Транспорт и хранение",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Операционные затраты CCUS",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-21",
+      "schema_version": 1,
+      "name": {
+        "ru": "Улучшение управления навозом (биогаз)",
+        "en": "Improved manure management (biogas)"
+      },
+      "sector_ref": "3",
+      "sectors": [
+        {
+          "sector_ref": "3"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 15,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 3.3,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.08,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz21_0",
+          "capex_musd": 250
+        },
+        {
+          "object_ref": "obj_kz21_1",
+          "capex_musd": 50
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz21_0",
+          "side": "new",
+          "cost_musd": 12
+        },
+        {
+          "resource_ref": "res_kz21_1",
+          "side": "new",
+          "cost_musd": -25
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Биогазовые установки",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Покрытие лагун и инфраструктура",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Выручка от биогаза",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-22",
+      "schema_version": 1,
+      "name": {
+        "ru": "Точное земледелие (снижение N₂O от удобрений)",
+        "en": "Precision agriculture (N₂O reduction from fertilizers)"
+      },
+      "sector_ref": "3",
+      "sectors": [
+        {
+          "sector_ref": "3"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 10,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 11.6,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.1,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz22_0",
+          "capex_musd": 150
+        },
+        {
+          "object_ref": "obj_kz22_1",
+          "capex_musd": 30
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz22_0",
+          "side": "new",
+          "cost_musd": 9
+        },
+        {
+          "resource_ref": "res_kz22_1",
+          "side": "new",
+          "cost_musd": -75
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "GPS-навигация и датчики",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Обучение и агрономическая поддержка",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР оборудования",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия удобрений",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-23",
+      "schema_version": 1,
+      "name": {
+        "ru": "Улучшение управления пастбищами",
+        "en": "Improved pasture management"
+      },
+      "sector_ref": "3",
+      "sectors": [
+        {
+          "sector_ref": "3"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 11.6,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.05,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz23_0",
+          "capex_musd": 200
+        },
+        {
+          "object_ref": "obj_kz23_1",
+          "capex_musd": 30
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz23_0",
+          "side": "new",
+          "cost_musd": 4.6000000000000005
+        },
+        {
+          "resource_ref": "res_kz23_1",
+          "side": "new",
+          "cost_musd": -50
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Восстановление пастбищ",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Инфраструктура ротационного выпаса",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Поддержание пастбищ",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия кормов",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-24",
+      "schema_version": 1,
+      "name": {
+        "ru": "Лесонасаждение (афорестация и лесовосстановление)",
+        "en": "Afforestation and reforestation"
+      },
+      "sector_ref": "4",
+      "sectors": [
+        {
+          "sector_ref": "4"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 30,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "area_kha": {
+          "value": 1000,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "survival": {
+          "value": 0.7,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "seq_rate": {
+          "value": 3,
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "area_kha"
+            },
+            {
+              "ref": "survival"
+            },
+            {
+              "ref": "seq_rate"
+            }
+          ]
+        },
+        "formula_label": {
+          "ru": "целевая площадь × доля выживаемости × уд. секвестрация",
+          "en": "target area × survival rate × sequestration rate"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz24_0",
+          "capex_musd": 2000
+        },
+        {
+          "object_ref": "obj_kz24_1",
+          "capex_musd": 200
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz24_0",
+          "side": "new",
+          "cost_musd": 100
+        },
+        {
+          "resource_ref": "res_kz24_1",
+          "side": "new",
+          "cost_musd": 11
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Саженцы, подготовка почвы, посадка",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Питомники и логистика",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Уход, полив, противопожарная защита",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мониторинг и верификация секвестрации",
+            "confidence": "medium"
+          }
+        },
+        "inputs.area_kha": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.survival": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.seq_rate": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Engineering premise (workbook «Расчёты»)",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-25",
+      "schema_version": 1,
+      "name": {
+        "ru": "Улавливание и утилизация свалочного газа (LFG)",
+        "en": "Landfill-gas (LFG) capture and utilization"
+      },
+      "sector_ref": "5",
+      "sectors": [
+        {
+          "sector_ref": "5"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 20,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 3.6,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.1,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz25_0",
+          "capex_musd": 100
+        },
+        {
+          "object_ref": "obj_kz25_1",
+          "capex_musd": 40
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz25_0",
+          "side": "new",
+          "cost_musd": 5.6000000000000005
+        },
+        {
+          "resource_ref": "res_kz25_1",
+          "side": "new",
+          "cost_musd": -10.011428571428574
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Системы дегазации",
+            "confidence": "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Газопоршневые генераторы",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Выручка от электроэнергии",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      }
+    },
+    {
+      "id": "kz-26",
+      "schema_version": 1,
+      "name": {
+        "ru": "Модернизация очистных сооружений (снижение CH₄)",
+        "en": "Wastewater-treatment upgrade (CH₄ reduction)"
+      },
+      "sector_ref": "5",
+      "sectors": [
+        {
+          "sector_ref": "5"
+        }
+      ],
+      "scope": "published",
+      "maturity_stage": "computed",
+      "inputs": {
+        "lifetime": {
+          "value": 25,
+          "unit": "лет",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Срок службы / срок проекта",
+            "confidence": "high"
+          }
+        },
+        "base_emissions": {
+          "value": 3.2,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "share": {
+          "value": 0.1,
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "base_emissions"
+            },
+            {
+              "ref": "share"
+            },
+            1000
+          ]
+        },
+        "formula_label": {
+          "ru": "выбросы сектора × доля × 1000",
+          "en": "sector baseline × share × 1000"
+        }
+      },
+      "created_objects": [
+        {
+          "object_ref": "obj_kz26_0",
+          "capex_musd": 150
+        }
+      ],
+      "materials": [
+        {
+          "resource_ref": "res_kz26_0",
+          "side": "new",
+          "cost_musd": 4.5
+        },
+        {
+          "resource_ref": "res_kz26_1",
+          "side": "new",
+          "cost_musd": -15
+        }
+      ],
+      "sources": {
+        "created_objects[0].capex_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация КОС",
+            "confidence": "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР",
+            "confidence": "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Экономия от биогаза",
+            "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Лист «Мероприятия» — coverage share",
+            "confidence": "medium"
+          }
+        }
       }
     }
   ]

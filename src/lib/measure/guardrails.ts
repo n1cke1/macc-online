@@ -49,6 +49,8 @@ function makeResolver(measure: Measure, library: Library): Resolver {
 export function abatementJs(measure: Measure, library: Library): number {
   const resolve = makeResolver(measure, library);
   const a = measure.abatement;
+  // §3/§10 — inline abatement AST wins (pure-TS mirror of compute.ts).
+  if (a.formula) return evalJs(a.formula, resolve);
   if (measure.maturity_stage === 'computed' && a.computed) {
     const tmpl = getTemplate(a.computed.formula_ref);
     if (!tmpl) throw new Error(`Unknown template '${a.computed.formula_ref}'`);
