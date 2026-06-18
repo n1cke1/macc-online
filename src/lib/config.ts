@@ -24,6 +24,10 @@ export const collabEnabled = Boolean(supabaseUrl && supabaseAnonKey);
  */
 export const authoringEnabled = process.env.NEXT_PUBLIC_AUTHORING === '1';
 
+/** Public URL of the hosted OAuth MCP (the Cloudflare Worker) for the «connect» helper.
+ * Empty → the helper hides. Not a secret: it's the connector address users add to Claude. */
+export const mcpConnectorUrl = process.env.NEXT_PUBLIC_MCP_URL ?? '';
+
 /** OAuth providers offered for sign-in (email magic-link is always available). */
 export const authProviders = ['linkedin_oidc', 'google'] as const;
 export type OAuthProvider = (typeof authProviders)[number];
