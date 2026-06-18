@@ -18,6 +18,10 @@ out/
 !.env.example
 !.env.production
 
+# Cloudflare Worker local state / secrets
+.wrangler/
+**/.dev.vars
+
 # Python
 __pycache__/
 *.pyc

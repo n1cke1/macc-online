@@ -15,7 +15,7 @@ import { compute } from '../src/lib/measure/compute';
 import { validate } from '../src/lib/measure/validate';
 import measureSchema from '../data/measure.schema.json';
 import type { Library, Measure } from '../src/lib/measure/schema';
-import { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './supabase';
+import { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './db';
 
 /** Everything a server instance needs — supplied per transport (and, in C, per request). */
 export interface ServerDeps {

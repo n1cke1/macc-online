@@ -1,0 +1,22 @@
+# OAuth remote MCP — Cloudflare Worker (docs/oauth-mcp-cloudflare.md).
+# Hosts the OAuth 2.1 + DCR layer (via @cloudflare/workers-oauth-provider) in front of
+# the measure-authoring MCP, so the Claude apps can add it as a custom connector.
+#
+# Deploy:  npx wrangler deploy --config workers/mcp/wrangler.toml
+# Local:   npx wrangler dev    --config workers/mcp/wrangler.toml
+name = "macc-mcp"
+main = "src/index.ts"
+compatibility_date = "2026-06-18"
+compatibility_flags = ["nodejs_compat"]
+
+# OAuth provider storage (registered clients, grants, access/refresh tokens).
+# Create once, then paste the id:  npx wrangler kv namespace create OAUTH_KV
+[[kv_namespaces]]
+binding = "OAUTH_KV"
+id = "e5a31d02af0d409bb6f8e4b8a37aeb7c"
+
+# Non-secret config. Secrets are set with `wrangler secret put <NAME>`:
+#   SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_JWT_SECRET
+[vars]
+# The web app that performs the actual Supabase sign-in for the /authorize bridge.
+WEB_APP_URL = "https://macc-online.pages.dev"

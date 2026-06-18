@@ -8,7 +8,10 @@
 // uses the service_role admin client AFTER the server-side validate() passes.
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { readFileSync } from 'node:fs';
-import type { Measure } from '../src/lib/measure/schema';
+import type { AuthedUser } from './db';
+
+// Re-export the env-agnostic data layer so existing importers keep using `./supabase`.
+export { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './db';
 
 // Cross-runtime so the same module loads under Node (stdio / local HTTP host) AND Deno
 // (Supabase Edge). Node reads creds from process.env (seeded from the .env files below);
@@ -44,8 +47,6 @@ const serviceKey = getEnv('SUPABASE_SERVICE_ROLE_KEY');
 /** Service-role client — used ONLY for the server-authoritative promotion to published. */
 export const admin: SupabaseClient | null =
   url && serviceKey && !serviceKey.startsWith('<') ? createClient(url, serviceKey, { auth: { persistSession: false } }) : null;
-
-export interface AuthedUser { userId: string; email?: string; client: SupabaseClient }
 
 /**
  * Token → user-scoped client (RLS applies as that user). The single identity primitive
@@ -85,40 +86,4 @@ export async function authedUser(): Promise<AuthedUser | null> {
 export async function authedUserFromHeader(authHeader: string | null): Promise<AuthedUser | null> {
   const m = authHeader?.match(/^Bearer\s+(.+)$/i);
   return m ? userFromToken(m[1].trim()) : null;
-}
-
-export async function dbListMeasures(client: SupabaseClient): Promise<Array<{ id: string; scope: string; data: Measure }>> {
-  const { data, error } = await client.from('measures').select('id,scope,data');
-  if (error) throw new Error(`list: ${error.message}`);
-  return (data ?? []).map((r) => ({ id: r.id as string, scope: r.scope as string, data: r.data as Measure }));
-}
-
-export async function dbGetMeasure(client: SupabaseClient, id: string): Promise<Measure | null> {
-  const { data, error } = await client.from('measures').select('data').eq('id', id).maybeSingle();
-  if (error) throw new Error(`get: ${error.message}`);
-  return (data?.data as Measure) ?? null;
-}
-
-/**
- * Direct publish (owner decision: no server-side review). Any logged-in user creates
- * or corrects a measure via the measure_publish RPC: merge → published → version+1 →
- * append a history row attributed to the author (auth.uid()). Returns the new version
- * and the co-authors (distinct authors across the history).
- */
-export async function dbUpsertMeasure(user: AuthedUser, measure: Measure, note?: string): Promise<{
-  finalScope: string; version: number | null; ownerId: string | null; contributors: string[];
-}> {
-  const { data, error } = await user.client.rpc('measure_publish', { p_id: measure.id, p_patch: measure, p_note: note ?? null });
-  if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
-  const row = data as { version?: number; owner_id?: string; scope?: string } | null;
-  const { data: vers } = await user.client.from('measure_versions').select('author_id').eq('measure_id', measure.id);
-  const contributors = [...new Set((vers ?? []).map((r) => r.author_id as string).filter(Boolean))];
-  return { finalScope: row?.scope ?? 'published', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors };
-}
-
-/** Version history of a measure (append-only): version, author, note, time. */
-export async function dbMeasureHistory(client: SupabaseClient, id: string): Promise<Array<{ version: number; author_id: string | null; note: string | null; created_at: string }>> {
-  const { data, error } = await client.from('measure_versions').select('version,author_id,note,created_at').eq('measure_id', id).order('version');
-  if (error) throw new Error(`history: ${error.message}`);
-  return (data ?? []) as never;
 }
