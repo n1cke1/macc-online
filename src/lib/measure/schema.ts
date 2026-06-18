@@ -324,24 +324,33 @@ export interface Subsector {
 }
 
 /**
- * The measure-notation framework (bilingual): the single runtime source for the
- * UI tooltips / «?» help, the MCP `schema://measure` descriptions and the agent
- * prompt — `data/kz/library/measure-notation.json`. Design rationale stays in
- * `macc-ui-concept.md`; structural validation in `data/measure.schema.json`; this
- * is the operational how-to-fill guidance (the only place the instruction text lives).
+ * The measure-notation framework — the single runtime source for the UI tooltips /
+ * «?» help, the MCP `schema://measure` resource and the agent prompt
+ * (`data/kz/library/measure-notation.json`). ENGLISH-BASE (iteration 3): one language
+ * inline; RU returns later via a separate `translations` layer. Design rationale stays
+ * in `macc-ui-concept.md`; structural validation in `data/measure.schema.json`.
  */
-export interface NotationEntry { help: Localized }
+export interface NotationEntry { help: string }
 export interface MeasureNotation {
-  /** Per-panel «what this panel is for / what to fill». */
+  /** Per-panel «what this panel is for / what to fill» (UI tooltips). */
   panels: Record<string, NotationEntry>;
-  /** Per-field «how to fill it / what reference to attach». Covers EVERY authored field. */
+  /** Per-field «how to fill it / what reference to attach» (UI tooltips). */
   fields: Record<string, NotationEntry>;
-  /** Per-enum-value meaning (maturity/type/scope/techKind/sourceType/confidence/bindingMode/ceilingDim/materialSide). */
+  /** Per-enum-value meaning (UI tooltips). */
   enums: Record<string, Record<string, NotationEntry>>;
-  /** «What references to accompany numbers with» — the §6 provenance/binding/reference discipline. */
+  /** §6 provenance/binding/reference discipline (UI «?» + agent). */
   sourcing: Record<string, NotationEntry>;
-  /** «Requirements for writing formulas» — the §3 AST notation (operators, leaves, example). */
+  /** §3 AST notation: operators, signatures, namespaces, example (UI «?» + agent). */
   formulas: Record<string, NotationEntry>;
+  // ── Agent/MCP-facing blocks (not rendered as UI tooltips; served whole over MCP) ──
+  /** How to fill a measure in order: classify → data → sources; maturity ladder; publish. */
+  procedure?: Record<string, unknown>;
+  /** What each field requires, by type / maturity / scope (cumulative). */
+  requirements?: Record<string, unknown>;
+  /** Shared conventions: units, signs, time, the MAC definition. */
+  conventions?: Record<string, unknown>;
+  /** The automatic checks (advisory) as predicates + their meaning. */
+  checks?: Record<string, unknown>;
 }
 
 /** §3 — a stored formula template: AST over named slots, compiled to HyperFormula. */

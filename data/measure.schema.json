@@ -2,33 +2,40 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://macc.kz/schema/measure.json",
   "title": "Measure",
-  "description": "The authoring input object (§2 of macc-ui-concept.md). One JSON Schema is the single source for the accordion UI form, the MCP `schema://measure` contract and validate(). Mirrors src/lib/measure/schema.ts.",
+  "description": "Authoring input object — the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_objects + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
   "type": "object",
-  "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "abatement", "economics"],
+  "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "abatement"],
   "additionalProperties": false,
   "properties": {
-    "id": { "type": "string" },
+    "id": { "type": "string", "description": "Measure id, e.g. 'kz-2'." },
     "schema_version": { "type": "integer", "const": 1 },
     "name": { "$ref": "#/$defs/localized" },
-    "sector_ref": { "$ref": "#/$defs/sectorCode" },
-    "technology_ref": { "type": "string" },
+    "sector_ref": { "$ref": "#/$defs/sectorCode", "description": "Primary sector (curve color/filter)." },
+    "sectors": {
+      "type": "array",
+      "description": "Multi-sector span (CCS/CCUS). Each: sector + optional subsector.",
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["sector_ref"],
+        "properties": { "sector_ref": { "$ref": "#/$defs/sectorCode" }, "subsector_ref": { "type": "string" } }
+      }
+    },
+    "product_ref": { "type": "string", "description": "Product produced (displaces conventional production); optional for practices/capture." },
+    "technology_ref": { "type": "string", "description": "Primary object (kept for the economics guardrail)." },
     "scope": { "enum": ["published", "draft", "scenario"] },
-    "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); required to persist." },
+    "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); the creator. Set by the server." },
     "maturity_stage": { "enum": ["raw", "back_calc", "computed"] },
     "review_status": { "enum": ["open", "accepted", "rejected", "wontfix"] },
     "comparison": {
-      "type": "object",
-      "required": ["is_substitution"],
-      "additionalProperties": false,
+      "type": "object", "required": ["is_substitution"], "additionalProperties": false,
+      "description": "A/B axis. comparison ⇒ is_substitution=false + service_unit_ref; substitution ⇒ true.",
       "properties": {
         "service_unit_ref": { "type": "string" },
         "is_substitution": { "type": "boolean" }
       }
     },
     "flows": {
-      "type": "object",
-      "required": ["baseline", "project"],
-      "additionalProperties": false,
+      "type": "object", "required": ["baseline", "project"], "additionalProperties": false,
+      "description": "Resource flows per service unit (comparison measures). Empty at raw.",
       "properties": {
         "baseline": { "type": "array", "items": { "$ref": "#/$defs/flow" } },
         "project": { "type": "array", "items": { "$ref": "#/$defs/flow" } }
@@ -36,53 +43,65 @@
     },
     "inputs": {
       "type": "object",
+      "description": "Local engineering premises (cap, capacity factor, intensities…) referenced by formulas via ref:<key>. Each carries provenance.",
       "additionalProperties": { "$ref": "#/$defs/valueWithSource" }
     },
     "abatement": {
       "type": "object",
-      "description": "Exactly one stage block, keyed by maturity_stage (§5).",
+      "description": "Exactly one stage block, keyed by maturity_stage.",
       "additionalProperties": false,
       "properties": {
         "raw": {
-          "type": "object",
-          "required": ["share"],
-          "additionalProperties": false,
+          "type": "object", "required": ["share"], "additionalProperties": false,
           "properties": { "share": { "type": "number" }, "justification": { "type": "string" } }
         },
         "back_calc": {
-          "type": "object",
-          "required": ["share", "activity_scalar", "reference_ref"],
-          "additionalProperties": false,
+          "type": "object", "required": ["share", "activity_scalar", "reference_ref"], "additionalProperties": false,
           "properties": {
             "share": { "type": "number" },
             "activity_scalar": {
-              "type": "object",
-              "required": ["qty", "unit"],
+              "type": "object", "required": ["qty", "unit"], "additionalProperties": false,
               "properties": { "qty": { "type": "number" }, "unit": { "type": "string" } }
             },
             "implied_factor": { "type": "number", "readOnly": true },
-            "reference_ref": { "type": "string" }
+            "reference_ref": { "type": "string", "description": "refs entry the implied factor is checked against." }
           }
         },
         "computed": {
-          "type": "object",
-          "required": ["formula_ref", "bindings"],
-          "additionalProperties": false,
+          "type": "object", "required": ["formula_ref", "bindings"], "additionalProperties": false,
           "properties": {
             "formula_ref": { "type": "string" },
-            "bindings": {
-              "type": "object",
-              "additionalProperties": { "$ref": "#/$defs/formulaBinding" }
-            },
+            "bindings": { "type": "object", "additionalProperties": { "$ref": "#/$defs/formulaBinding" } },
             "derived_share": { "type": "number", "readOnly": true }
           }
         }
       }
     },
-    "economics": {
+    "created_objects": {
+      "type": "array", "description": "Objects the measure CREATES (build). Economics derives from these.",
+      "items": { "$ref": "#/$defs/builtObject" }
+    },
+    "retired_objects": {
+      "type": "array", "description": "Objects the measure CLOSES; their CAPEX/OPEX are avoided (subtracted).",
+      "items": { "$ref": "#/$defs/retiredObject" }
+    },
+    "materials": {
+      "type": "array", "description": "Key material/fuel flows (OPEX). cost = qty × price / 1e6, signed by side.",
+      "items": { "$ref": "#/$defs/material" }
+    },
+    "sources": {
       "type": "object",
-      "required": ["capex", "opex", "revenue"],
-      "additionalProperties": false,
+      "description": "§6 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_objects[0].capacity', 'materials[1].price', 'abatement.back_calc.share'). A path is in `sources` (input) XOR `computed` (derived).",
+      "additionalProperties": { "$ref": "#/$defs/valueSource" }
+    },
+    "computed": {
+      "type": "object",
+      "description": "§3 formulas for the measure's COMPUTED bare numbers, keyed by the same value paths (or a named intermediate like 'gas_intensity'). compute() evaluates these; never enter such a number by hand.",
+      "additionalProperties": { "$ref": "#/$defs/computedValue" }
+    },
+    "economics": {
+      "type": "object", "additionalProperties": false,
+      "description": "LEGACY free-form CAPEX/OPEX line items — fallback for un-migrated measures only. Prefer created_objects + materials.",
       "properties": {
         "capex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
         "opex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
@@ -90,9 +109,7 @@
       }
     },
     "potential": {
-      "type": "object",
-      "required": ["ceiling_dim", "pool_ref"],
-      "additionalProperties": false,
+      "type": "object", "required": ["ceiling_dim", "pool_ref"], "additionalProperties": false,
       "properties": {
         "ceiling_dim": { "enum": ["cut_resource", "output_product", "n_objects", "activity"] },
         "pool_ref": { "type": "string" },
@@ -103,59 +120,95 @@
   },
   "$defs": {
     "localized": {
-      "type": "object",
-      "required": ["ru"],
+      "type": "object", "required": ["ru"], "additionalProperties": false,
       "properties": { "ru": { "type": "string" }, "en": { "type": "string" } }
     },
     "sectorCode": { "enum": ["1.A.1", "1.A.2", "1.A.3", "1.A.4", "1.B", "2", "3", "4", "5"] },
     "flow": {
-      "type": "object",
-      "required": ["resource_ref", "qty_per_unit"],
-      "additionalProperties": false,
+      "type": "object", "required": ["resource_ref", "qty_per_unit"], "additionalProperties": false,
+      "properties": { "resource_ref": { "type": "string" }, "qty_per_unit": { "type": "number" }, "unit": { "type": "string" } }
+    },
+    "builtObject": {
+      "type": "object", "required": ["object_ref"], "additionalProperties": false,
+      "description": "CAPEX = capex_musd ?? capacity × tech.capex_ud × (capex_ud_factor ?? 1) / 1e6.",
+      "properties": {
+        "object_ref": { "type": "string", "description": "library object id" },
+        "capacity": { "type": "number" }, "unit": { "type": "string" },
+        "capex_ud_factor": { "type": "number", "description": "capacity unit → capex_ud denominator (e.g. MW→kW = 1000)" },
+        "capex_musd": { "type": "number", "description": "explicit CAPEX when not capacity-driven" },
+        "opex_musd": { "type": "number", "description": "annual OPEX line, signed" }
+      }
+    },
+    "retiredObject": {
+      "type": "object", "required": ["object_ref"], "additionalProperties": false,
+      "properties": {
+        "object_ref": { "type": "string" }, "capacity": { "type": "number" }, "unit": { "type": "string" },
+        "capex_ud_factor": { "type": "number" },
+        "maintenance_capex_musd": { "type": "number", "description": "avoided maintenance CAPEX (subtracted)" },
+        "opex_musd": { "type": "number", "description": "avoided OPEX (signed)" }
+      }
+    },
+    "material": {
+      "type": "object", "required": ["resource_ref", "side"], "additionalProperties": false,
       "properties": {
         "resource_ref": { "type": "string" },
-        "qty_per_unit": { "type": "number" },
+        "side": { "enum": ["new", "retired"], "description": "new = consumed (cost +); retired = freed (saving −)" },
+        "qty": { "type": "number" }, "price": { "type": "number" },
+        "cost_musd": { "type": "number", "description": "explicit cost when qty/price aren't both known" },
         "unit": { "type": "string" }
       }
     },
     "provenance": {
-      "type": "object",
-      "required": ["source_type", "confidence"],
-      "additionalProperties": false,
+      "type": "object", "required": ["source_type", "confidence"], "additionalProperties": false,
       "properties": {
         "source_type": { "enum": ["official_stat", "literature", "standard", "expert_estimate", "assumption", "placeholder"] },
-        "citation": { "type": "string" },
-        "url": { "type": "string" },
-        "date": { "type": "string" },
+        "citation": { "type": "string" }, "url": { "type": "string" }, "date": { "type": "string" },
         "confidence": { "enum": ["high", "medium", "low"] }
       }
     },
     "binding": {
-      "type": "object",
-      "required": ["mode"],
-      "additionalProperties": false,
+      "type": "object", "required": ["mode"], "additionalProperties": false,
       "properties": {
         "mode": { "enum": ["reuse", "alt", "new"] },
-        "ref": { "type": "string" },
-        "value": { "type": "number" },
-        "divergence_reason": { "type": "string" }
+        "ref": { "type": "string" }, "value": { "type": "number" },
+        "divergence_reason": { "type": "string", "description": "required for mode=alt" }
       }
     },
     "valueWithSource": {
-      "type": "object",
-      "required": ["value", "provenance"],
-      "additionalProperties": false,
+      "type": "object", "required": ["value", "provenance"], "additionalProperties": false,
       "properties": {
-        "value": { "type": "number" },
-        "unit": { "type": "string" },
-        "provenance": { "$ref": "#/$defs/provenance" },
-        "binding": { "$ref": "#/$defs/binding" }
+        "value": { "type": "number" }, "unit": { "type": "string" },
+        "provenance": { "$ref": "#/$defs/provenance" }, "binding": { "$ref": "#/$defs/binding" }
       }
+    },
+    "valueSource": {
+      "type": "object", "required": ["provenance"], "additionalProperties": false,
+      "properties": { "provenance": { "$ref": "#/$defs/provenance" }, "binding": { "$ref": "#/$defs/binding" } }
+    },
+    "computedValue": {
+      "type": "object", "required": ["formula"], "additionalProperties": false,
+      "properties": { "formula": { "$ref": "#/$defs/ast" }, "label": { "$ref": "#/$defs/localized" } }
     },
     "formulaBinding": {
       "oneOf": [
         { "type": "object", "required": ["ref"], "additionalProperties": false, "properties": { "ref": { "type": "string" } } },
         { "type": "object", "required": ["const"], "additionalProperties": false, "properties": { "const": { "type": "number" } } }
+      ]
+    },
+    "ast": {
+      "description": "Formula AST. A leaf is a bare number, {ref:key}, {slot:name} or {const:n}; a node is {op, args[]}. ref resolves: res:<id>→EF, a key with its own computed entry→its formula (recursive), else a measure input. ops: add/sub/mul/div/sum/pv/lookup + predicates lte/gte/between.",
+      "oneOf": [
+        { "type": "number" },
+        { "type": "object", "required": ["ref"], "additionalProperties": false, "properties": { "ref": { "type": "string" } } },
+        { "type": "object", "required": ["slot"], "additionalProperties": false, "properties": { "slot": { "type": "string" } } },
+        { "type": "object", "required": ["const"], "additionalProperties": false, "properties": { "const": { "type": "number" } } },
+        {
+          "type": "object", "required": ["op", "args"], "additionalProperties": false,
+          "properties": {
+            "op": { "enum": ["add", "sub", "mul", "div", "sum", "pv", "lookup", "lte", "gte", "between"] },
+            "args": { "type": "array", "items": { "$ref": "#/$defs/ast" } }
+          }
+        }
       ]
     }
   }

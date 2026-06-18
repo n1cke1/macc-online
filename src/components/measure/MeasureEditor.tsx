@@ -109,7 +109,7 @@ function ProvText({ p }: { p?: Provenance }) {
  * provenance line + the binding discipline (reuse/alt/new + ref / divergence reason).
  * This is the «sourcing» half of the measure-notation surfaced at each value's "?".
  */
-function SourceText({ s, nt, locale }: { s?: ValueSource; nt: MeasureNotation; locale: 'ru' | 'en' }) {
+function SourceText({ s, nt }: { s?: ValueSource; nt: MeasureNotation }) {
   if (!s) return <span className="text-slate-400">—</span>;
   const b = s.binding;
   const e = b ? nt.enums.bindingMode[b.mode] : undefined;
@@ -118,7 +118,7 @@ function SourceText({ s, nt, locale }: { s?: ValueSource; nt: MeasureNotation; l
       <div>{s.provenance.source_type} · {s.provenance.confidence}{s.provenance.citation ? ` — ${s.provenance.citation}` : ''}<ProvLink url={s.provenance.url} /></div>
       {b && (
         <div className="mt-1">
-          <span className="rounded bg-slate-100 px-1 font-medium" title={e ? pick(e.help, locale) : undefined}>binding: {b.mode}</span>
+          <span className="rounded bg-slate-100 px-1 font-medium" title={e?.help}>binding: {b.mode}</span>
           {b.ref ? ` → ${b.ref}` : ''}{b.divergence_reason ? ` — ${b.divergence_reason}` : ''}
         </div>
       )}
@@ -156,9 +156,9 @@ export default function MeasureEditor() {
   const tech = (ref: string) => library.technologies[ref];
   // Single instruction source (measure-notation.json) → tooltips / «?» help.
   const nt = library.notation;
-  const gh = (e?: { help: Localized }) => (e ? pick(e.help, locale) : undefined);
+  const gh = (e?: { help: string }) => e?.help; // notation is English-base (single string)
   // §6 source (provenance + binding) for a bare number, by its path key in measure.sources.
-  const srcNode = (path: string) => (measure!.sources?.[path] ? <div className="mt-1">{t('help.source')}: <SourceText s={measure!.sources![path]} nt={nt} locale={locale} /></div> : null);
+  const srcNode = (path: string) => (measure!.sources?.[path] ? <div className="mt-1">{t('help.source')}: <SourceText s={measure!.sources![path]} nt={nt} /></div> : null);
   // §3 computed value: evaluate its stored formula live (parity-equal to the engine).
   const resolve = makeResolver(measure, library);
   const cval = (path: string): number | undefined => {

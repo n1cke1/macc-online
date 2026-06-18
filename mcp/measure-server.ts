@@ -20,6 +20,20 @@ import measureSchema from '../data/measure.schema.json';
 import type { Measure } from '../src/lib/measure/schema';
 import { authedUser, dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './supabase';
 
+/** Strip `description` keys from a JSON Schema (the prose lives in `notation`; keeps the MCP payload compact). */
+function structureOnly(node: unknown): unknown {
+  if (Array.isArray(node)) return node.map(structureOnly);
+  if (node && typeof node === 'object') {
+    return Object.fromEntries(
+      Object.entries(node as Record<string, unknown>)
+        .filter(([k]) => k !== 'description')
+        .map(([k, v]) => [k, structureOnly(v)]),
+    );
+  }
+  return node;
+}
+const compactSchema = structureOnly(measureSchema);
+
 const peersOf = (id: string): Measure[] => seedMeasures.filter((m) => m.id !== id);
 const ok = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }] });
 const err = (msg: string) => ({ isError: true, content: [{ type: 'text' as const, text: msg }] });
@@ -45,7 +59,7 @@ server.registerResource(
     contents: [{
       uri: uri.href,
       mimeType: 'application/json',
-      text: JSON.stringify({ notation: library.notation, jsonSchema: measureSchema }, null, 2),
+      text: JSON.stringify({ notation: library.notation, jsonSchema: compactSchema }),
     }],
   }),
 );

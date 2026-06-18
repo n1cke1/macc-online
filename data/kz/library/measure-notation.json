@@ -1,102 +1,152 @@
 {
-  "_comment": "THE measure-notation framework: the single runtime source of the measure-authoring instruction (bilingual RU/EN). It is BOTH the UI tooltip/«?» help AND the LLM instruction served by the MCP schema://measure resource and the agent prompt. Structure mirrors the editor (panels → fields → enums) and adds two cross-cutting blocks: `sourcing` (what references to accompany every number with) and `formulas` (how measure formulas are written as AST). Design rationale lives in macc-ui-concept.md; structural validation lives in data/measure.schema.json; this is the only place the operational how-to-fill text lives. Keep numbers OUT of here — only instruction text.",
+  "_comment": "THE measure-notation framework — the single runtime source of the measure-authoring instruction. ENGLISH-BASE (iteration 3): one language inline; RU returns later via a separate translations layer. It is BOTH the UI tooltip/«?» help (panels/fields/enums/sourcing/formulas) AND the LLM instruction served by the MCP schema://measure resource (all blocks). Agent-facing blocks (procedure/requirements/conventions/checks) are not rendered as UI tooltips. Design rationale lives in macc-ui-concept.md; structural validation in data/measure.schema.json. Instruction text only — no model numbers.",
   "panels": {
-    "overview": { "help": { "ru": "Название и сектор меры. Тип, зрелость и scope не задаются вручную — выводятся и показаны бейджами. Сводно: MAC и потенциал.", "en": "Measure name and sector. Type, maturity and scope are inferred (shown as badges), not entered. Summary: MAC and potential." } },
-    "build": { "help": { "ru": "Объекты, которые мера СОЗДАЁТ (из библиотеки), с размером и удельными показателями. Здесь возникает CAPEX стройки.", "en": "Objects the measure CREATES (from the library), with size and unit metrics. Build CAPEX arises here." } },
-    "baseline": { "help": { "ru": "Отрасль/подотрасль и производимый продукт (с углеродным следом) — что мы замещаем. Для CCS/CCUS — несколько отраслей; для практик — только отрасль.", "en": "Sector/subsector and the product produced (with its carbon footprint) — what we displace. CCS/CCUS may list several sectors; practices use a sector only." } },
-    "project": { "help": { "ru": "Объекты, которые мера ЗАКРЫВАЕТ (становятся не нужны). Их удельный CAPEX в поддержание и OPEX идут в минус — избегаемые затраты.", "en": "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative — avoided cost." } },
-    "reduction": { "help": { "ru": "Как считается снижение выбросов по стадии зрелости (постулировано → обратный счёт → посчитано) и сверка обратно-считанного фактора с коридором референса.", "en": "How the CO₂e reduction is computed by maturity stage (postulated → back-calc → computed) and the back-calculated factor vs the reference corridor." } },
-    "economics": { "help": { "ru": "CAPEX и OPEX, собранные из объектов и ключевого сырья → NPV и MAC. Строки выводятся из объектов/потоков, не вводятся вручную.", "en": "CAPEX and OPEX rolled up from objects and key materials → NPV and MAC. Lines are derived from objects/flows, not hand-entered." } },
-    "potential": { "help": { "ru": "Годовой потолок, ресурсный пул и сочетание мер (общий пул клипается по порядку MAC) плюс грубый секторный backstop.", "en": "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop." } }
+    "overview": { "help": "Measure name and sector. Type, maturity and scope are inferred (shown as badges), not entered. Summary: MAC and potential." },
+    "build": { "help": "Objects the measure CREATES (from the library), with size and unit metrics. Build CAPEX arises here." },
+    "baseline": { "help": "Sector/subsector and the product produced (with its carbon footprint) — what we displace. CCS/CCUS may list several sectors; practices use a sector only." },
+    "project": { "help": "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative — avoided cost." },
+    "reduction": { "help": "How the CO₂e reduction is computed by maturity stage (postulated → back-calc → computed) and the back-calculated factor vs the reference corridor." },
+    "economics": { "help": "CAPEX and OPEX rolled up from objects and key materials → NPV and MAC. Lines are derived from objects/flows, not hand-entered." },
+    "potential": { "help": "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop." }
   },
   "fields": {
-    "name": { "help": { "ru": "Короткое понятное название меры.", "en": "A short, clear measure name." } },
-    "sector": { "help": { "ru": "Отрасль IPCC, к которой отнесена мера (задаёт цвет/фильтр кривой). Для CCS/CCUS можно выбрать несколько.", "en": "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several." } },
-    "subsector": { "help": { "ru": "Подотрасль внутри отрасли (напр. Энергетика → угольная генерация). База — из листа «Выбросы», расширяема.", "en": "Subsector within the sector (e.g. Energy → coal power). Base from the «Выбросы» sheet, extendable." } },
-    "produce": { "help": { "ru": "Продукт, который мы производим, замещая традиционное производство. Для практик и захвата (CCS) можно не задавать.", "en": "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)." } },
-    "carbonFootprint": { "help": { "ru": "Углеродный след традиционного производства того же продукта (что мы замещаем). Сопровождать источником.", "en": "Carbon footprint of the conventional production of the same product we displace. Accompany with a source." } },
-    "objectRef": { "help": { "ru": "Объект из библиотеки, который мера создаёт или закрывает. Нет нужного — создать его в библиотеке (kind, удельный CAPEX, источник). CAPEX строки = размер × удельный CAPEX.", "en": "A library object the measure creates or closes. If missing, create it in the library (kind, unit CAPEX, source). Line CAPEX = size × unit CAPEX." } },
-    "capacity": { "help": { "ru": "Мощность/размер объекта в его единицах. CAPEX объекта = размер × удельный CAPEX.", "en": "Object capacity/size in its unit. Object CAPEX = size × unit CAPEX." } },
-    "capexUd": { "help": { "ru": "Удельная капитальная стоимость объекта (из библиотеки), напр. $/кВт или $/гол. Сверяется с референсом capex_ud (см. проверка экономики).", "en": "Object unit capital cost (from the library), e.g. $/kW or $/head. Checked vs the capex_ud reference (see the economics check)." } },
-    "capexUdFactor": { "help": { "ru": "Множитель перевода единицы мощности в знаменатель удельного CAPEX (напр. МВт→кВт = 1000). По умолчанию 1.", "en": "Factor converting the capacity unit to the unit-CAPEX denominator (e.g. MW→kW = 1000). Default 1." } },
-    "capexMusd": { "help": { "ru": "Явный CAPEX объекта (млн $), когда он не выводится из мощности × удельного. Обязательно сопровождать источником.", "en": "Explicit object CAPEX (m$) when it isn't capacity-driven. Must carry a source." } },
-    "opexMusd": { "help": { "ru": "Годовой OPEX строки объекта (млн $/год), знаковый: затрата +, избегаемая (у закрываемого) −.", "en": "Annual OPEX line for this object (m$/yr), signed: cost +, avoided (for a retired object) −." } },
-    "maintenanceCapex": { "help": { "ru": "Удельный CAPEX в поддержание закрываемого объекта; вычитается как избегаемые затраты.", "en": "Maintenance unit CAPEX of a retired object; subtracted as avoided cost." } },
-    "share": { "help": { "ru": "Доля охвата подкатегории (0–1). Снижение = базовые выбросы подкатегории × доля. Источник — лист «Мероприятия».", "en": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Мероприятия» sheet." } },
-    "activity": { "help": { "ru": "Масштаб активности (голов, млн м³ …), к которому привязан обратный счёт фактора: implied = снижение / активность.", "en": "Activity scale (head, million m³ …) the back-calc anchors to: implied = reduction / activity." } },
-    "materialResource": { "help": { "ru": "Ключевое сырьё/топливо потока из реестра ресурсов (несёт свой EF и цену).", "en": "Key material/fuel flow from the resource registry (carries its own EF and price)." } },
-    "materialSide": { "help": { "ru": "Сторона потока: new — потребление новых объектов (затрата +); retired — высвобождается у закрываемых (экономия/выручка −).", "en": "Flow side: new — consumed by the new objects (cost +); retired — freed by the closed ones (saving/revenue −)." } },
-    "qty": { "help": { "ru": "Количество ключевого сырья за год. Стоимость = количество × цена / 10⁶.", "en": "Annual quantity of the key material. Cost = quantity × price / 10⁶." } },
-    "price": { "help": { "ru": "Цена сырья (для угля/газа — из реестра ресурсов).", "en": "Material price (for coal/gas — from the resource registry)." } },
-    "serviceUnit": { "help": { "ru": "Сервис-единица сравнения A/B (напр. МВт·ч): продукты базы и проекта должны совпадать по ней. Только для type=comparison.", "en": "A/B comparison service unit (e.g. MWh): baseline and project products must match on it. Only for type=comparison." } },
-    "flows": { "help": { "ru": "Потоки ресурсов на сервис-единицу: baseline (как было) и project (как стало). Δflow × цена → OPEX, Δflow × EF → снижение. Пусто на стадии raw.", "en": "Resource flows per service unit: baseline (as-was) and project (as-is). Δflow × price → OPEX, Δflow × EF → reduction. Empty at the raw stage." } },
-    "inputs": { "help": { "ru": "Локальные инженерные премисы меры (установленная мощность, КИУМ, доли…), на которые ссылаются формулы (ref:<ключ>) и строки экономики. Каждая несёт источник; премиса без аналога в библиотеке (binding=new) держит меру в draft.", "en": "Local engineering premises of the measure (installed capacity, capacity factor, shares…) referenced by formulas (ref:<key>) and economics lines. Each carries a source; a premise with no library analogue (binding=new) keeps the measure draft." } },
-    "pool": { "help": { "ru": "Ресурсный пул: его годовой потолок мера делит с другими мерами того же пула (сочетание).", "en": "Resource pool: its annual ceiling is shared with other measures on the same pool (combination)." } },
-    "ceilingDim": { "help": { "ru": "Измерение, по которому ограничен годовой потенциал меры (ресурс / продукт / число объектов / активность).", "en": "The dimension that caps the measure's annual potential (resource / product / object count / activity)." } },
-    "combinationGroup": { "help": { "ru": "Группа «сочетание мер»: меры одной группы делят общий пул; при превышении дешёвые (меньший MAC) берут первыми, остальные клипаются.", "en": "«Combination» group: measures in one group share a pool; on oversubscription the cheaper (lower-MAC) ones claim it first, the rest are clipped." } }
+    "name": { "help": "A short, clear measure name." },
+    "sector": { "help": "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several." },
+    "subsector": { "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Выбросы» sheet, extendable." },
+    "produce": { "help": "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)." },
+    "carbonFootprint": { "help": "Carbon footprint of the conventional production of the same product we displace. Accompany with a source." },
+    "objectRef": { "help": "A library object the measure creates or closes. If missing, create it in the library (kind, unit CAPEX, source). Line CAPEX = size × unit CAPEX." },
+    "capacity": { "help": "Object capacity/size in its unit. Object CAPEX = size × unit CAPEX." },
+    "capexUd": { "help": "Object unit capital cost (from the library), e.g. $/kW or $/head. Checked vs the capex_ud reference (see the economics check)." },
+    "capexUdFactor": { "help": "Factor converting the capacity unit to the unit-CAPEX denominator (e.g. MW→kW = 1000). Default 1." },
+    "capexMusd": { "help": "Explicit object CAPEX (m$) when it isn't capacity-driven. Must carry a source." },
+    "opexMusd": { "help": "Annual OPEX line for this object (m$/yr), signed: cost +, avoided (for a retired object) −." },
+    "maintenanceCapex": { "help": "Maintenance unit CAPEX of a retired object; subtracted as avoided cost." },
+    "share": { "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Мероприятия» sheet." },
+    "activity": { "help": "Activity scale (head, million m³ …) the back-calc anchors to: implied = reduction / activity." },
+    "materialResource": { "help": "Key material/fuel flow from the resource registry (carries its own EF and price)." },
+    "materialSide": { "help": "Flow side: new — consumed by the new objects (cost +); retired — freed by the closed ones (saving/revenue −)." },
+    "qty": { "help": "Annual quantity of the key material. Cost = quantity × price / 10⁶." },
+    "price": { "help": "Material price (for coal/gas — from the resource registry)." },
+    "serviceUnit": { "help": "A/B comparison service unit (e.g. MWh): baseline and project products must match on it. Only for type=comparison." },
+    "flows": { "help": "Resource flows per service unit: baseline (as-was) and project (as-is). Δflow × price → OPEX, Δflow × EF → reduction. Empty at the raw stage." },
+    "inputs": { "help": "Local engineering premises of the measure (installed capacity, capacity factor, shares…) referenced by formulas (ref:<key>) and economics lines. Each carries a source; a premise with no library analogue (binding=new) is flagged for review." },
+    "pool": { "help": "Resource pool: its annual ceiling is shared with other measures on the same pool (combination)." },
+    "ceilingDim": { "help": "The dimension that caps the measure's annual potential (resource / product / object count / activity)." },
+    "combinationGroup": { "help": "«Combination» group: measures in one group share a pool; on oversubscription the cheaper (lower-MAC) ones claim it first, the rest are clipped." }
   },
   "enums": {
     "maturity": {
-      "raw": { "help": { "ru": "Постулировано: снижение = базовые выбросы × доля; якоря и проверки нет. Начальная стадия — дальше обратный счёт.", "en": "Postulated: reduction = baseline × share; no anchor or check. The first stage — next is back-calc." } },
-      "back_calc": { "help": { "ru": "Обратный счёт: implied-фактор = снижение / активность сверяется с коридором референса (✓/⚠). В коридоре и с источником → можно «посчитано».", "en": "Back-calc: implied factor = reduction / activity checked vs the reference corridor (✓/⚠). In-corridor and sourced → eligible for «computed»." } },
-      "computed": { "help": { "ru": "Посчитано: снижение развёрнуто формулой (активность × фактор), доля становится контролем. Высшая стадия зрелости.", "en": "Computed: reduction expanded by a formula (activity × factor); the share becomes a control. The highest maturity stage." } }
+      "raw": { "help": "Postulated: reduction = baseline × share; no anchor or check. The first stage — next is back-calc." },
+      "back_calc": { "help": "Back-calc: implied factor = reduction / activity checked vs the reference corridor (✓/⚠). In-corridor and sourced → eligible for «computed»." },
+      "computed": { "help": "Computed: reduction expanded by a formula (activity × factor); the share becomes a control. The highest maturity stage." }
     },
     "type": {
-      "substitution": { "help": { "ru": "Замещение (CCS/CCUS, агро): продукт не сравнивается, проверка совпадения сервис-единицы не нужна.", "en": "Substitution (CCS/CCUS, agro): no product comparison, no service-unit match check." } },
-      "comparison": { "help": { "ru": "Сравнение A/B: продукт базы и проекта должны совпадать по сервис-единице (напр. МВт·ч).", "en": "A/B comparison: baseline and project products must match on the service unit (e.g. MWh)." } }
+      "substitution": { "help": "Substitution (CCS/CCUS, agro): no product comparison, no service-unit match check." },
+      "comparison": { "help": "A/B comparison: baseline and project products must match on the service unit (e.g. MWh)." }
     },
     "scope": {
-      "published": { "help": { "ru": "Прошла все авто-проверки и входит в доверенную кривую модели. Ставится сервером, не вручную.", "en": "Passed every automatic check and is part of the trusted model curve. Set server-side, not by hand." } },
-      "draft": { "help": { "ru": "Личный черновик. Публикуема, но в кривую не входит, пока не пройдёт проверки.", "en": "A personal draft. Publishable, but stays out of the curve until it passes the checks." } },
-      "scenario": { "help": { "ru": "Гипотетический сценарий («что если»).", "en": "A hypothetical what-if scenario." } }
+      "published": { "help": "In the trusted model curve. Published directly by any signed-in author — no server-side review — and every change is versioned and attributed." },
+      "draft": { "help": "A personal work-in-progress; stays out of the trusted curve." },
+      "scenario": { "help": "A what-if; stays out of the trusted curve." }
     },
     "techKind": {
-      "capital_asset": { "help": { "ru": "Капиталоёмкий объект (станция/установка): ожидается удельный CAPEX и физический размер.", "en": "Capital-intensive object (plant/installation): expects a unit CAPEX and a physical size." } },
-      "modernization": { "help": { "ru": "Модернизация/переоборудование существующего объекта.", "en": "Upgrade/conversion of an existing asset." } },
-      "practice": { "help": { "ru": "Эксплуатационная/организационная практика: CAPEX мал, основное — OPEX.", "en": "Operational/organizational practice: low CAPEX, mostly OPEX." } },
-      "infrastructure": { "help": { "ru": "Сети, трубопроводы, системы сбора/хранения.", "en": "Networks, pipelines, capture/storage systems." } }
+      "capital_asset": { "help": "Capital-intensive object (plant/installation): expects a unit CAPEX and a physical size." },
+      "modernization": { "help": "Upgrade/conversion of an existing asset." },
+      "practice": { "help": "Operational/organizational practice: low CAPEX, mostly OPEX." },
+      "infrastructure": { "help": "Networks, pipelines, capture/storage systems." }
     },
     "sourceType": {
-      "official_stat": { "help": { "ru": "Официальная статистика/отчётность (UNFCCC BTR, госстат). Высшая надёжность.", "en": "Official statistics/reporting (UNFCCC BTR, national stats). Highest reliability." } },
-      "literature": { "help": { "ru": "Научная/отраслевая литература, рецензируемые источники.", "en": "Scientific/industry literature, peer-reviewed sources." } },
-      "standard": { "help": { "ru": "Стандарт/методология (IPCC Guidelines, ГОСТ, ISO).", "en": "A standard/methodology (IPCC Guidelines, GOST, ISO)." } },
-      "expert_estimate": { "help": { "ru": "Экспертная оценка специалиста; указать, кто и на чём основано.", "en": "A specialist's expert estimate; state who and on what basis." } },
-      "assumption": { "help": { "ru": "Рабочее допущение автора; должно сопровождаться привязкой (binding) и обоснованием.", "en": "An author's working assumption; must carry a binding and a rationale." } },
-      "placeholder": { "help": { "ru": "Заглушка без источника — мера остаётся draft, пока не заменена.", "en": "A placeholder with no source — the measure stays draft until replaced." } }
+      "official_stat": { "help": "Official statistics/reporting (UNFCCC BTR, national stats). Highest reliability." },
+      "literature": { "help": "Scientific/industry literature, peer-reviewed sources." },
+      "standard": { "help": "A standard/methodology (IPCC Guidelines, GOST, ISO)." },
+      "expert_estimate": { "help": "A specialist's expert estimate; state who and on what basis." },
+      "assumption": { "help": "An author's working assumption; must carry a binding and a rationale." },
+      "placeholder": { "help": "A stand-in with no source — low confidence; replace with a real source before relying on the measure." }
     },
     "confidence": {
-      "high": { "help": { "ru": "Высокая: подтверждено официальным/стандартным источником.", "en": "High: backed by an official/standard source." } },
-      "medium": { "help": { "ru": "Средняя: литература/экспертная оценка с оговорками.", "en": "Medium: literature/expert estimate with caveats." } },
-      "low": { "help": { "ru": "Низкая: допущение/заглушка; требует проверки.", "en": "Low: assumption/placeholder; needs verification." } }
+      "high": { "help": "High: backed by an official/standard source." },
+      "medium": { "help": "Medium: literature/expert estimate with caveats." },
+      "low": { "help": "Low: assumption/placeholder; needs verification." }
     },
     "bindingMode": {
-      "reuse": { "help": { "ru": "Переиспользовать значение из библиотеки по ключу ref — предпочтительный режим.", "en": "Reuse the library value by its ref key — the preferred mode." } },
-      "alt": { "help": { "ru": "Своё значение, отличное от библиотечного ref; обязателен divergence_reason (почему отличается).", "en": "A custom value differing from the library ref; divergence_reason is required (why it differs)." } },
-      "new": { "help": { "ru": "Локальное значение без аналога в библиотеке; держит меру в draft, пока не появится референс.", "en": "A local value with no library analogue; keeps the measure draft until a reference exists." } }
+      "reuse": { "help": "Reuse the library value by its ref key — the preferred mode." },
+      "alt": { "help": "A custom value differing from the library ref; divergence_reason is required (why it differs)." },
+      "new": { "help": "A local value with no library analogue — flagged for review; add a reference when one exists." }
     },
     "ceilingDim": {
-      "cut_resource": { "help": { "ru": "Потолок по сокращаемому ресурсу (напр. объём угля/метана).", "en": "Capped by the cut resource (e.g. coal/methane volume)." } },
-      "output_product": { "help": { "ru": "Потолок по выпуску продукта.", "en": "Capped by product output." } },
-      "n_objects": { "help": { "ru": "Потолок по числу объектов.", "en": "Capped by the object count." } },
-      "activity": { "help": { "ru": "Потолок по масштабу активности (голов, площадь…).", "en": "Capped by activity scale (head, area…)." } }
+      "cut_resource": { "help": "Capped by the cut resource (e.g. coal/methane volume)." },
+      "output_product": { "help": "Capped by product output." },
+      "n_objects": { "help": "Capped by the object count." },
+      "activity": { "help": "Capped by activity scale (head, area…)." }
     },
     "materialSide": {
-      "new": { "help": { "ru": "Потребление новых объектов — затрата (+).", "en": "Consumed by the new objects — a cost (+)." } },
-      "retired": { "help": { "ru": "Высвобождается у закрываемых — экономия или выручка (−).", "en": "Freed by the closed objects — a saving or revenue (−)." } }
+      "new": { "help": "Consumed by the new objects — a cost (+)." },
+      "retired": { "help": "Freed by the closed objects — a saving or revenue (−)." }
     }
   },
   "sourcing": {
-    "principle": { "help": { "ru": "Каждое число меры несёт источник (provenance) и, если это допущение, привязку к библиотеке (binding). Правило для LLM: не выдумывать числа — переиспользовать библиотеку, объяснять расхождение или признавать локальность.", "en": "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library, explain divergence, or admit it is local." } },
-    "provenance": { "help": { "ru": "Источник числа: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. Без источника число трактуется как placeholder и держит меру в draft.", "en": "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. With no source it is treated as a placeholder and keeps the measure draft." } },
-    "binding": { "help": { "ru": "Дисциплина допущений: reuse (взять из библиотеки по ref), alt (своё значение + обязательный divergence_reason), new (локальное, аналога нет — draft). Цель — переиспользование и объяснимость.", "en": "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue — draft). The goal is reuse and explainability." } },
-    "divergenceReason": { "help": { "ru": "Обязательное пояснение для binding=alt: почему значение отличается от библиотечного референса.", "en": "Mandatory note for binding=alt: why the value diverges from the library reference." } },
-    "reference": { "help": { "ru": "Коридор [min, max] с единицей, к которому привязывается проверка: factor — фактор снижения, capex_ud — удельный CAPEX объекта. Указывать reference_ref у обратного счёта и у объекта; источник коридора — в его source.", "en": "A [min, max] corridor with a unit a check anchors to: factor — the reduction factor, capex_ud — the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field." } }
+    "principle": { "help": "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_objects[0].capacity', 'materials[1].price', 'abatement.back_calc.share'); a DERIVED number instead goes in measure.computed at the same path (a formula) — a path is in sources XOR computed, never both, never a bare pasted number." },
+    "provenance": { "help": "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. With no source it is treated as a placeholder (low confidence, flagged)." },
+    "binding": { "help": "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue — flagged for review). The goal is reuse and explainability." },
+    "divergenceReason": { "help": "Mandatory note for binding=alt: why the value diverges from the library reference." },
+    "reference": { "help": "A [min, max] corridor with a unit a check anchors to: factor — the reduction factor, capex_ud — the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field." }
   },
   "formulas": {
-    "principle": { "help": { "ru": "Формула — это данные, не код: хранится как AST над именованными ключами (ref), а не как ссылки на ячейки. Ключи устойчивы к вставке строк; AST компилируется в HyperFormula, поэтому parity с Excel сохраняется бит-в-бит.", "en": "A formula is data, not code: stored as an AST over named keys (ref), not cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel parity is bit-for-bit." } },
-    "operators": { "help": { "ru": "Разрешённые арифметические операторы: add, sub, mul, div, sum, pv (приведённая стоимость), lookup. Список закрыт ради проверяемости — других функций нет.", "en": "Allowed arithmetic operators: add, sub, mul, div, sum, pv (present value), lookup. The set is closed for auditability — no other functions." } },
-    "predicates": { "help": { "ru": "Операторы-предикаты для guardrail'ов (возвращают истину/ложь): lte (≤), gte (≥), between (в коридоре). Применяются в проверках factor/economics/pool/sector.", "en": "Predicate operators for guardrails (return true/false): lte (≤), gte (≥), between (in corridor). Used by the factor/economics/pool/sector checks." } },
-    "leaves": { "help": { "ru": "Листья дерева: {ref:<ключ>} — значение из inputs меры, свойства ресурса (resource.ef) или библиотеки; {slot:<имя>} — слот шаблона, привязывается per-measure через bindings; {const:<число>} — литерал.", "en": "Tree leaves: {ref:<key>} — a value from measure inputs, a resource property (resource.ef) or the library; {slot:<name>} — a template slot bound per-measure via bindings; {const:<number>} — a literal." } },
-    "example": { "help": { "ru": "Пример (перевод угля на газ): mul(ref:in_2_4, 8760, ref:in_2_2, sub(ref:ef_coal, ref:ef_gas), 1e-3) = установленная мощность × часы/год × КИУМ × (EF угля − EF газа) × 10⁻³.", "en": "Example (coal→gas conversion): mul(ref:in_2_4, 8760, ref:in_2_2, sub(ref:ef_coal, ref:ef_gas), 1e-3) = installed capacity × hours/yr × capacity factor × (EF coal − EF gas) × 10⁻³." } }
+    "principle": { "help": "A formula is data, not code: stored as an AST over named keys (ref), not cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel parity is bit-for-bit." },
+    "operators": { "help": "Allowed arithmetic operators: add, sub, mul, div, sum, pv (present value), lookup. The set is closed for auditability — no other functions." },
+    "predicates": { "help": "Predicate operators for the checks (return true/false): lte (≤), gte (≥), between (in corridor). Used by the factor/economics/pool/sector checks." },
+    "signatures": { "help": "Operator arity: add/sub/mul/div are variadic (≥2 args, folded left-to-right; sub/div as a running difference/quotient); sum(…) sums its args; pv(rate, nper, payment) is the Excel present value of a constant stream; lookup(table, key) selects from a table (reserved, unused in the prototype). Predicates: lte(a,b)/gte(a,b) binary; between(x,min,max) ternary." },
+    "leaves": { "help": "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation." },
+    "namespace": { "help": "How a {ref:<key>} resolves: `res:<id>` → that resource's emission factor (EF); a key that has its own `computed` entry on the measure → that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number — both allowed. No other namespaces." },
+    "example": { "help": "Example (coal→gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity × capacity factor × hours/yr × (EF coal − EF gas) × 10⁻³. EF leaves use the res: namespace; 8760 and 1e-3 are literals." }
+  },
+  "procedure": {
+    "principle": { "help": "Fill in order: classify first (this decides which panels apply), then data, then sources. Do not hand-enter inferred fields (the type badge from composition, scope). Every number carries a source; every object/resource comes from a registry, not invented." },
+    "classifyType": { "help": "Pick type first. comparison — the measure delivers the same product a different way, comparable on a service unit (power, transport): needs serviceUnit + flows base/project. substitution — displacement/capture/practice with no comparable product (CCS/CCUS, agro): no comparison and no serviceUnit check." },
+    "chooseMaturity": { "help": "Start at raw (reduction = baseline × share). Advance to back_calc by adding activity → the implied factor is checked vs the reference corridor. Advance to computed only when reduction is expanded by a formula and the implied factor is in-corridor and sourced. The maturity ladder is an authoring-quality discipline (the factor check is advisory, not enforced at publish)." },
+    "order": { "help": "Recommended panel order: overview (name, sector) → baseline (what we displace) → build (created objects) → project (closed objects) → reduction (reduction by maturity) → economics (CAPEX/OPEX → NPV/MAC, derived) → potential (ceiling, pool, combination)." },
+    "publish": { "help": "Publishing is DIRECT: any signed-in user creates or corrects a measure and it goes straight to the trusted curve (scope=published) — there is no server-side review gate. Every change is versioned and attributed to its author; co-authors = the distinct authors of the version history. validate() still runs but is ADVISORY (shown, never blocking). Use draft for personal work-in-progress and scenario for what-ifs to keep them out of the curve." }
+  },
+  "requirements": {
+    "principle": { "help": "A field's necessity depends on three axes: type, maturity, scope. Below is what each axis value requires; requirements are cumulative (a measure should satisfy all that apply). Under direct publish these are quality expectations, surfaced by validate(), not hard gates." },
+    "byType": {
+      "comparison": { "help": "Requires: serviceUnit; flows.baseline and flows.project per the same service unit; baseline and project products matching on that unit. carbonFootprint not required (emissions from Δflow × EF)." },
+      "substitution": { "help": "Requires: sector(s); for product displacement — produce + carbonFootprint with a source. serviceUnit and flows not needed. CCS/CCUS may list several sectors." }
+    },
+    "byMaturity": {
+      "raw": { "help": "Minimum: sector, subsector, share. activity, a formula and the factor check are not required." },
+      "back_calc": { "help": "Additionally: activity and the factor corridor's reference_ref. The implied factor must be computable (reduction / activity)." },
+      "computed": { "help": "Additionally: a reduction formula (AST) with every ref leaf resolvable; the implied factor in-corridor and sourced." }
+    },
+    "byScope": {
+      "draft": { "help": "Minimum to save: name, sector, type. Allows placeholders and binding=new." },
+      "published": { "help": "In the trusted curve. Quality bar (advisory, surfaced by validate(), not enforced): every number sourced (no placeholders); every assumption binding=reuse or alt (with divergence_reason); the advisory checks ✓. Publishing is direct and versioned." },
+      "scenario": { "help": "Same fields as a measure of its maturity, but checks may be ⚠ — a scenario stays out of the trusted curve." }
+    },
+    "conditional": {
+      "explicitCapex": { "help": "capexMusd (explicit CAPEX) should carry a source; otherwise treated as a placeholder (low confidence)." },
+      "altBinding": { "help": "binding=alt requires divergence_reason. binding=new is flagged for review (no library analogue yet)." },
+      "objectResolves": { "help": "objectRef and materialResource must resolve to an existing registry entry. If missing, create it in the library/resource registry first — do not type a name into the measure." }
+    }
+  },
+  "conventions": {
+    "principle": { "help": "Shared conventions for units, signs, time and the MAC definition. The numbers themselves live elsewhere — here are the rules for reading them. All unit conversions are explicit (like capexUdFactor); no implicit multipliers." },
+    "units": { "help": "Canonical units: reduction — kt CO₂e/yr; MAC — USD/t CO₂e; CAPEX — m USD; OPEX — m USD/yr (signed); material price — USD per resource unit; emission factor — t CO₂e per resource unit; unit CAPEX — in the library's own unit ($/kW, $/head…). A field in another unit is converted by an explicit factor (e.g. capexUdFactor)." },
+    "signs": { "help": "One sign rule: cost +, avoided cost / saving / revenue −. By panel: build — CAPEX/OPEX +; project (closed) — maintenance CAPEX and OPEX −. By flow: materialSide new +, retired −. Emissions reduction is always positive." },
+    "time": { "help": "Lifetime and the discount rate are model parameters, not measure fields: the discount rate is a global (library.globals.discountRate); lifetime comes from the object's technology.lifetimeYrs (or measure inputs.lifetime). CAPEX is incurred in year 0; OPEX and reduction are annual streams over the lifetime; pv discounts a stream to year 0 at the rate." },
+    "mac": { "help": "MAC (USD/t CO₂e) = NPV / discounted-reduction × 1000, where NPV = CAPEX − PV(rate, lifetime, OPEX) and discounted-reduction = −PV(rate, lifetime, annual reduction), in kt (×1000 converts kt→t). Evaluated by the same HyperFormula PV as the Excel model, so the result is parity-exact." },
+    "footprintUnit": { "help": "carbonFootprint — t CO₂e per unit of the produce product (the same unit as the service unit for comparison). Keep consistent with the produce unit." },
+    "language": { "help": "The notation is English-base (single language); a separate translations layer adds other locales later. Free-text measure fields (name, citation, divergence_reason) may be in any language. Numeric format: dot as the decimal separator; dates ISO 8601 (YYYY-MM-DD)." }
+  },
+  "checks": {
+    "principle": { "help": "Automatic checks on predicates (lte/gte/between), surfaced by validate(): ✓ pass, ⚠ warn. They are ADVISORY — they do NOT block publishing (publishing is direct). They inform the author and drive `eligibleForModel` (= all checks ✓ and panels complete), shown as a badge. IMPLEMENTED checks: factor, economics, pool, sector. The rest below are rules the author follows but are NOT yet automated." },
+    "factor": { "help": "[implemented] between(implied_factor, reference.min, reference.max); implied = reduction / activity. The quality signal for the raw→back_calc→computed ladder; ⚠ when out of corridor." },
+    "economics": { "help": "[implemented] between(implied unit CAPEX, capex_ud.min, capex_ud.max) per object. ⚠ out of corridor (add a divergence_reason if binding=alt)." },
+    "pool": { "help": "[implemented] lte(sum of pool annual allocations, pool.ceiling). On oversubscription the cheaper (lower-MAC) claim first, the rest are clipped; a ⚠ on any measure whose share is clipped." },
+    "sector": { "help": "[implemented] lte(sum of sector reductions, the sector backstop). A coarse double-count check for the sector; a ⚠." },
+    "serviceUnitMatch": { "help": "[rule, not yet automated] type=comparison only: flows.baseline and flows.project products should match on serviceUnit; a mismatch should be a ⚠." },
+    "provenance": { "help": "[rule, not yet automated] every number should have source_type ≠ placeholder and (for an assumption) binding ≠ new; surfaced as the §3/§6 notation gap (untagged / no-formula), not yet a predicate check." },
+    "doubleCountReduction": { "help": "[rule, not yet automated] reduction is set by exactly one method per maturity: raw — baseline × share; back_calc/computed — activity × factor; comparison — Δflow × EF. Mixing methods on one measure should be a ⚠." }
   }
 }

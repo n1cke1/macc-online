@@ -32,9 +32,18 @@ export const admin: SupabaseClient | null =
 
 export interface AuthedUser { userId: string; email?: string; client: SupabaseClient }
 
-/** Resolve the caller from MCP_USER_TOKEN → a user-scoped client (RLS applies). null = not logged in. */
+/**
+ * Resolve the caller → a user-scoped client (RLS applies). Identity comes from either
+ * MCP_USER_TOKEN (a user access token), or a service-account auto-login via
+ * MCP_EMAIL + MCP_PASSWORD (fresh token each start — no hourly expiry). null = not logged in.
+ */
 export async function authedUser(): Promise<AuthedUser | null> {
-  const token = process.env.MCP_USER_TOKEN;
+  let token = process.env.MCP_USER_TOKEN;
+  if (!token && process.env.MCP_EMAIL && process.env.MCP_PASSWORD && url && anonKey) {
+    const signer = createClient(url, anonKey, { auth: { persistSession: false } });
+    const { data, error } = await signer.auth.signInWithPassword({ email: process.env.MCP_EMAIL, password: process.env.MCP_PASSWORD });
+    if (!error && data.session) token = data.session.access_token;
+  }
   if (!token || !url || !anonKey) return null;
   const client = createClient(url, anonKey, {
     global: { headers: { Authorization: `Bearer ${token}` } },
