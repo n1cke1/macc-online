@@ -66,6 +66,9 @@ function computeAbatement(
   resolve: RefResolver,
 ): { abatementKt: number; impliedFactor?: number } {
   const a = measure.abatement;
+  // Guard a malformed by-document doc: no abatement block at all → clear error, never a
+  // `Cannot read 'formula' of undefined` TypeError (the tools surface this as advisory).
+  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed, .back_calc or .raw)`);
   // §3/§10 — an inline abatement AST wins over the maturity-stage block. It ports the
   // Excel «Расчёты» formula directly (physics or share×baseline), evaluated by eval.ts.
   if (a.formula) {

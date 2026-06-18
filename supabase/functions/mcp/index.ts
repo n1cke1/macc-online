@@ -5448,6 +5448,7 @@ function poolBaselineKt(measure, library2) {
 }
 function computeAbatement(measure, library2, resolve) {
   const a = measure.abatement;
+  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed, .back_calc or .raw)`);
   if (a.formula) {
     const abatementKt = evalAst(a.formula, resolve);
     const act = a.back_calc?.activity_scalar.qty;
@@ -5618,7 +5619,7 @@ function notationGaps(m) {
   return { untagged, computedNoFormula };
 }
 function buildPanels(measure, checks, missing) {
-  const stageBlock = measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
+  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
   const req = (cond, label) => {
     if (cond) return "ok";
     missing.push(label);

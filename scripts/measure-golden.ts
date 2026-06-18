@@ -61,6 +61,20 @@ for (const m of seedMeasures) {
   try { compute(broken, library); } catch (e) { msg = (e as Error).message; }
   expect(/cannot derive abatement/i.test(msg) && !/destructure/i.test(msg), 'robustness',
     `malformed measure → descriptive error, not a destructure crash (got: ${msg || 'no throw'})`);
+
+  // No `abatement` block at all → clear error, not "Cannot read 'formula' of undefined".
+  const noAbate = { id: 'noabate', schema_version: 1, name: { ru: '', en: '' }, sector_ref: '1.A.1',
+    scope: 'draft', maturity_stage: 'computed' } as unknown as Measure;
+  let msg2 = '';
+  try { compute(noAbate, library); } catch (e) { msg2 = (e as Error).message; }
+  expect(/no 'abatement' block/i.test(msg2) && !/reading 'formula'/i.test(msg2), 'robustness',
+    `missing abatement → descriptive error, not a read-of-undefined crash (got: ${msg2 || 'no throw'})`);
+
+  // A formula-based measure (the migrated 26) is a complete reduction — validate must NOT
+  // report 'abatement' missing nor mark the reduction panel incomplete.
+  const vFormula = validate(getSeedMeasure('kz-1')!, library, seedMeasures.filter((m) => m.id !== 'kz-1'));
+  expect(!vFormula.missing.includes('abatement') && vFormula.panels.reduction !== 'incomplete', 'robustness',
+    `kz-1 (inline formula) → reduction recognized (missing=${JSON.stringify(vFormula.missing)} reduction=${vFormula.panels.reduction})`);
 }
 
 // ── 2. Guardrails: A ✓ in corridor & eligible; C ⚠ & stays draft ──────────────

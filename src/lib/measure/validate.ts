@@ -200,7 +200,9 @@ function buildPanels(
   checks: Record<CheckId, CheckStatus>,
   missing: string[],
 ): Record<PanelKey, PanelStatus> {
-  const stageBlock = measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
+  // An inline `abatement.formula` is a valid reduction definition too (the 26 migrated
+  // measures use it) — recognize it so the panel isn't falsely flagged incomplete.
+  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
 
   const req = (cond: boolean, label: string): PanelStatus => {
     if (cond) return 'ok';
