@@ -1,8 +1,7 @@
 # Cloudflare Pages / Netlify redirect: bare root → default locale (RU).
 /  /ru/  302
 
-# Clean public entry for the OAuth MCP connector → the Cloudflare Worker that hosts it.
-# 307 preserves the method + body (the MCP endpoint is POST). The OAuth flow itself still
-# runs on the worker's own domain (it bakes its URLs into the metadata); this only makes
-# the address users add to Claude live on the project domain.
-/mcp  https://macc-mcp.nposypanko.workers.dev/mcp  307
+# NOTE: the MCP connector URL is the Worker directly (macc-mcp.…workers.dev/mcp), NOT a
+# /mcp redirect here — an OAuth client discovers the auth-server metadata at the URL's own
+# origin, and a static domain can't serve it. A clean URL needs a custom domain on the
+# Worker, not a redirect.
