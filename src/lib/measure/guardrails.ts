@@ -31,15 +31,15 @@ function makeResolver(measure: Measure, library: Library): Resolver {
   const resolve: Resolver = (key) => {
     if (key.startsWith('res:')) {
       const r = library.resources[key.slice(4)];
-      if (!r) throw new Error(`Unknown resource '${key}'`);
+      if (!r) throw new Error(`unresolved ref '${key}': resource not in the library (registry not hydrated?)`);
       const ef = typeof r.ef === 'number' ? r.ef : r.ef[library.globals.year ?? ''];
-      if (typeof ef !== 'number') throw new Error(`Resource '${key}' has no scalar EF`);
+      if (typeof ef !== 'number') throw new Error(`unresolved ref '${key}': resource has no scalar EF`);
       return ef;
     }
     const c = measure.computed?.[key];
     if (c) return evalJs(c.formula, resolve);
     const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`Measure '${measure.id}' has no input '${key}'`);
+    if (!inp) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no such input`);
     return inp.value;
   };
   return resolve;

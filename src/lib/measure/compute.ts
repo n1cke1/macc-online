@@ -36,15 +36,15 @@ export function makeResolver(measure: Measure, library: Library): RefResolver {
   const resolve: RefResolver = (key: string): number => {
     if (key.startsWith('res:')) {
       const r = library.resources[key.slice(4)];
-      if (!r) throw new Error(`Unknown resource '${key}'`);
+      if (!r) throw new Error(`unresolved ref '${key}': resource not in the library (registry not hydrated?)`);
       const ef = typeof r.ef === 'number' ? r.ef : r.ef[library.globals.year ?? ''];
-      if (typeof ef !== 'number') throw new Error(`Resource '${key}' has no EF for the active year`);
+      if (typeof ef !== 'number') throw new Error(`unresolved ref '${key}': resource has no EF for the active year`);
       return ef;
     }
     const c = measure.computed?.[key];
     if (c) return evalAst(c.formula, resolve);
     const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`Measure '${measure.id}' has no input '${key}'`);
+    if (!inp) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no such input`);
     return inp.value;
   };
   return resolve;
@@ -91,6 +91,13 @@ function computeAbatement(
       if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
       return { abatementKt: poolBaselineKt(measure, library) * a.raw.share };
     }
+    // Total by construction: an unknown/absent maturity_stage with no inline formula
+    // gets a descriptive error (never `undefined`), so the caller's destructure can't
+    // crash — the tools surface this as an advisory message, not a hard failure.
+    default:
+      throw new Error(
+        `Measure '${measure.id}': cannot derive abatement — provide an inline 'abatement.formula' or a valid stage block (maturity_stage='${String(measure.maturity_stage)}')`,
+      );
   }
 }
 

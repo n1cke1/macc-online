@@ -11,59 +11,968 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 var graph_seed_default = {
   _comment: "Normalized library graph (English base; translation is a separate layer, added later). The Indicator is the hub: every library number lives in `indicators` with owner_kind+owner_ref and an optional reference_ref. Objects/resources/products hold only metadata. This seed is the source of truth for the Supabase tables (migration 0007) AND the measure-golden fixture. Numbers equal the prior inline values \u2192 parity holds.",
   subsectors: [
-    { id: "1.A.1.coal_power", sector_ref: "1.A.1", name: "Coal power generation" },
-    { id: "1.A.1.gas_power", sector_ref: "1.A.1", name: "Gas power generation" },
-    { id: "1.B.coal_methane", sector_ref: "1.B", name: "Coal-mine methane (coalbed)" },
-    { id: "2.cement", sector_ref: "2", name: "Cement production" },
-    { id: "2.metallurgy", sector_ref: "2", name: "Metallurgy" },
-    { id: "2.eor", sector_ref: "2", name: "Enhanced oil recovery (CCUS)" },
-    { id: "2.ammonia", sector_ref: "2", name: "Green ammonia" },
-    { id: "3.enteric", sector_ref: "3", name: "Cattle enteric fermentation" },
-    { id: "3.orchards", sector_ref: "3", name: "Orchard cultivation" }
+    {
+      id: "1.A.1.coal_power",
+      sector_ref: "1.A.1",
+      name: "Coal power generation"
+    },
+    {
+      id: "1.A.1.gas_power",
+      sector_ref: "1.A.1",
+      name: "Gas power generation"
+    },
+    {
+      id: "1.B.coal_methane",
+      sector_ref: "1.B",
+      name: "Coal-mine methane (coalbed)"
+    },
+    {
+      id: "2.cement",
+      sector_ref: "2",
+      name: "Cement production"
+    },
+    {
+      id: "2.metallurgy",
+      sector_ref: "2",
+      name: "Metallurgy"
+    },
+    {
+      id: "2.eor",
+      sector_ref: "2",
+      name: "Enhanced oil recovery (CCUS)"
+    },
+    {
+      id: "2.ammonia",
+      sector_ref: "2",
+      name: "Green ammonia"
+    },
+    {
+      id: "3.enteric",
+      sector_ref: "3",
+      name: "Cattle enteric fermentation"
+    },
+    {
+      id: "3.orchards",
+      sector_ref: "3",
+      name: "Orchard cultivation"
+    }
   ],
   objects: [
-    { id: "tech_coal_to_gas", name: "Gas turbine / boiler equipment", kind: "modernization", description: "Converting existing coal CHP/boilers to natural gas.", rules: "Upgrade of an existing asset: expects a unit CAPEX ($/kW) and installed capacity as denominator.", lifetimeYrs: 20 },
-    { id: "tech_gas_pipeline", name: "Gas pipelines & connection", kind: "infrastructure", description: "Supply pipelines and grid connection.", rules: "Gas-supply infrastructure: CAPEX as a share of the generating object.", lifetimeYrs: 20 },
-    { id: "tech_feed_dosing", name: "Dosing equipment", kind: "capital_asset", description: "Per-head feed-additive dosing systems.", rules: "Per-head capital asset: CAPEX = head \xD7 unit CAPEX.", lifetimeYrs: 10 },
-    { id: "tech_feed_training", name: "Training & rollout", kind: "practice", description: "Farm training and programme rollout.", rules: "Operational practice: CAPEX = farms \xD7 unit rollout cost.", lifetimeYrs: 10 },
-    { id: "tech_feed_additive", name: "Feed additives (3-NOP)", kind: "practice", description: "Cattle feed additives reducing enteric methane.", rules: "Operational practice: low CAPEX (dosing/training); the main cost is additive OPEX.", lifetimeYrs: 10 },
-    { id: "tech_mine_degas", name: "Degassing & utilization systems", kind: "infrastructure", description: "Coal-mine methane capture and utilization systems.", rules: "Capture infrastructure: CAPEX for degassing systems; methane-utilization revenue offsets OPEX.", lifetimeYrs: 20 }
+    {
+      id: "tech_coal_to_gas",
+      name: "Gas turbine / boiler equipment",
+      kind: "modernization",
+      description: "Converting existing coal CHP/boilers to natural gas.",
+      rules: "Upgrade of an existing asset: expects a unit CAPEX ($/kW) and installed capacity as denominator.",
+      lifetimeYrs: 20
+    },
+    {
+      id: "tech_gas_pipeline",
+      name: "Gas pipelines & connection",
+      kind: "infrastructure",
+      description: "Supply pipelines and grid connection.",
+      rules: "Gas-supply infrastructure: CAPEX as a share of the generating object.",
+      lifetimeYrs: 20
+    },
+    {
+      id: "tech_feed_dosing",
+      name: "Dosing equipment",
+      kind: "capital_asset",
+      description: "Per-head feed-additive dosing systems.",
+      rules: "Per-head capital asset: CAPEX = head \xD7 unit CAPEX.",
+      lifetimeYrs: 10
+    },
+    {
+      id: "tech_feed_training",
+      name: "Training & rollout",
+      kind: "practice",
+      description: "Farm training and programme rollout.",
+      rules: "Operational practice: CAPEX = farms \xD7 unit rollout cost.",
+      lifetimeYrs: 10
+    },
+    {
+      id: "tech_feed_additive",
+      name: "Feed additives (3-NOP)",
+      kind: "practice",
+      description: "Cattle feed additives reducing enteric methane.",
+      rules: "Operational practice: low CAPEX (dosing/training); the main cost is additive OPEX.",
+      lifetimeYrs: 10
+    },
+    {
+      id: "tech_mine_degas",
+      name: "Degassing & utilization systems",
+      kind: "infrastructure",
+      description: "Coal-mine methane capture and utilization systems.",
+      rules: "Capture infrastructure: CAPEX for degassing systems; methane-utilization revenue offsets OPEX.",
+      lifetimeYrs: 20
+    },
+    {
+      id: "obj_kz1_0",
+      name: "Turbine & boiler upgrade",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz1_1",
+      name: "Engineering & commissioning",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz3_0",
+      name: "Renewables",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz3_1",
+      name: "Grid & connection",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz4_0",
+      name: "Renewables (solar + wind)",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz4_1",
+      name: "Gas-turbine peaker",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz4_2",
+      name: "Avoided CHP upgrade",
+      kind: "modernization"
+    },
+    {
+      id: "obj_kz4_3",
+      name: "Boiler house",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz5_0",
+      name: "Nuclear plant construction",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz6_0",
+      name: "Heat pumps",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz6_1",
+      name: "Heat-network upgrade",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz7_0",
+      name: "Electric boilers",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz7_1",
+      name: "Grid expansion",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz8_0",
+      name: "Renewables (solar + wind)",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz8_1",
+      name: "Grid expansion (for peakers)",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz8_2",
+      name: "Avoided CHP construction",
+      kind: "modernization"
+    },
+    {
+      id: "obj_kz8_3",
+      name: "Gas-turbine peaker",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz8_4",
+      name: "Boiler house",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz9_0",
+      name: "Generators",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz10_0",
+      name: "Incremental cost of the EV fleet",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz10_1",
+      name: "Charging infrastructure",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz11_0",
+      name: "Facade & roof insulation",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz11_1",
+      name: "Window & door replacement",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz12_0",
+      name: "Trunk & distribution gas pipelines",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz12_1",
+      name: "Consumer connections",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz13_0",
+      name: "Electric boilers",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz13_1",
+      name: "Grid expansion",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz13_2",
+      name: "Construction works & heat networks",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz13_3",
+      name: "Savings: boiler-house closures",
+      kind: "modernization"
+    },
+    {
+      id: "obj_kz14_0",
+      name: "Survey & repair",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz14_1",
+      name: "OGI cameras & equipment",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz15_0",
+      name: "Gas-turbine plant & compressor equipment",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz15_1",
+      name: "Feeder infrastructure",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz17_0",
+      name: "Gas-pipeline & compressor-station upgrade",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz17_1",
+      name: "Satellite monitoring",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz18_0",
+      name: "Plant upgrade",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz19_0",
+      name: "CO\u2082 capture units",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz19_1",
+      name: "Transport & storage",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz21_0",
+      name: "Biogas plants",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz21_1",
+      name: "Lagoon covers & infrastructure",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz22_0",
+      name: "GPS navigation & sensors",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz22_1",
+      name: "Training & agronomic support",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz23_0",
+      name: "Pasture restoration",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz23_1",
+      name: "Rotational-grazing infrastructure",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz24_0",
+      name: "Seedlings, soil prep & planting",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz24_1",
+      name: "Nurseries & logistics",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz25_0",
+      name: "Degassing systems",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz25_1",
+      name: "Reciprocating gas-engine generators",
+      kind: "capital_asset"
+    },
+    {
+      id: "obj_kz26_0",
+      name: "Wastewater-treatment-plant upgrade",
+      kind: "capital_asset"
+    }
   ],
   resources: [
-    { id: "coal", name: "Coal", unit: "tCO\u2082/MWh" },
-    { id: "gas", name: "Natural gas", unit: "tCO\u2082/MWh" },
-    { id: "feed_additive", name: "Feed additive (3-NOP)", unit: "$/head\xB7yr" },
-    { id: "methane", name: "Methane (utilized)", unit: "$/thousand m\xB3" }
+    {
+      id: "coal",
+      name: "Coal",
+      unit: "tCO\u2082/MWh"
+    },
+    {
+      id: "gas",
+      name: "Natural gas",
+      unit: "tCO\u2082/MWh"
+    },
+    {
+      id: "feed_additive",
+      name: "Feed additive (3-NOP)",
+      unit: "$/head\xB7yr"
+    },
+    {
+      id: "methane",
+      name: "Methane (utilized)",
+      unit: "$/thousand m\xB3"
+    },
+    {
+      id: "res_kz1_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz1_1",
+      name: "Fuel savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz3_0",
+      name: "Renewables O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz3_1",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz4_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz4_1",
+      name: "CHP OPEX reduction",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz4_2",
+      name: "Gas consumption",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz4_3",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz5_0",
+      name: "Nuclear O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz5_1",
+      name: "Nuclear fuel",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz5_2",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz6_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz6_1",
+      name: "OPEX reduction of boilers & CHP",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz6_2",
+      name: "Electricity",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz6_3",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz7_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz7_1",
+      name: "Electricity",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz7_2",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz8_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz8_1",
+      name: "CHP OPEX reduction",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz8_2",
+      name: "Gas consumption",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz8_3",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz9_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz9_1",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz10_0",
+      name: "Electricity costs",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz10_1",
+      name: "Petrol savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz11_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz11_1",
+      name: "Reduced boiler/CHP costs",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz11_2",
+      name: "Reduced coal consumption",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz12_0",
+      name: "Gas-infrastructure O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz12_1",
+      name: "Gas consumption",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz12_2",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz13_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz13_1",
+      name: "Renewable electricity",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz13_2",
+      name: "Coal savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz14_0",
+      name: "Monitoring & surveys",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz14_1",
+      name: "Gas revenue",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz15_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz15_1",
+      name: "Electricity revenue",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz17_0",
+      name: "O&M and monitoring",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz17_1",
+      name: "Gas savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz18_0",
+      name: "Additive procurement",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz18_1",
+      name: "Clinker savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz19_0",
+      name: "CCS operating costs",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz21_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz21_1",
+      name: "Biogas revenue",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz22_0",
+      name: "Equipment O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz22_1",
+      name: "Fertilizer savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz23_0",
+      name: "Pasture maintenance",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz23_1",
+      name: "Feed savings",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz24_0",
+      name: "Tending, irrigation & fire protection",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz24_1",
+      name: "Sequestration monitoring & verification",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz25_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz25_1",
+      name: "Electricity revenue",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz26_0",
+      name: "O&M",
+      unit: "mUSD/yr",
+      ef: 0
+    },
+    {
+      id: "res_kz26_1",
+      name: "Biogas savings",
+      unit: "mUSD/yr",
+      ef: 0
+    }
   ],
   products: [
-    { id: "prod_mwh", name: "Electricity", unit: "MWh", service_unit: "MWh", sector_ref: "1.A.1", object_ref: "tech_coal_to_gas" }
+    {
+      id: "prod_mwh",
+      name: "Electricity",
+      unit: "MWh",
+      service_unit: "MWh",
+      sector_ref: "1.A.1",
+      object_ref: "tech_coal_to_gas"
+    }
   ],
   references: [
-    { id: "ref_enteric_factor", type: "factor:enteric_CH4_per_head", range: [0.6, 0.84], unit: "kt CO\u2082eq/(thousand head\xB7yr)", source: { source_type: "literature", citation: "\xA711 corridor 600\u2013840 kg CO\u2082eq/head/yr (\u221230%)", confidence: "medium" } },
-    { id: "ref_degas_factor", type: "factor:coal_mine_CH4_per_volume", range: [17, 21], unit: "kt CO\u2082eq/(million m\xB3)", source: { source_type: "standard", citation: "Credible CH\u2084\u2192CO\u2082eq per captured volume (block physics \u2248184 kt)", confidence: "high" } },
-    { id: "ref_capex_coal_to_gas", type: "capex_ud:coal_to_gas", range: [1200, 2400], unit: "$/kW", source: { source_type: "literature", confidence: "medium" } },
-    { id: "ref_capex_feed_additive", type: "capex_ud:feed_additive", range: [30, 90], unit: "$/head", source: { source_type: "literature", confidence: "medium" } }
+    {
+      id: "ref_enteric_factor",
+      type: "factor:enteric_CH4_per_head",
+      range: [
+        0.6,
+        0.84
+      ],
+      unit: "kt CO\u2082eq/(thousand head\xB7yr)",
+      source: {
+        source_type: "literature",
+        citation: "\xA711 corridor 600\u2013840 kg CO\u2082eq/head/yr (\u221230%)",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ref_degas_factor",
+      type: "factor:coal_mine_CH4_per_volume",
+      range: [
+        17,
+        21
+      ],
+      unit: "kt CO\u2082eq/(million m\xB3)",
+      source: {
+        source_type: "standard",
+        citation: "Credible CH\u2084\u2192CO\u2082eq per captured volume (block physics \u2248184 kt)",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ref_capex_coal_to_gas",
+      type: "capex_ud:coal_to_gas",
+      range: [
+        1200,
+        2400
+      ],
+      unit: "$/kW",
+      source: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ref_capex_feed_additive",
+      type: "capex_ud:feed_additive",
+      range: [
+        30,
+        90
+      ],
+      unit: "$/head",
+      source: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    }
   ],
   indicators: [
-    { id: "ind_gt_capex", key: "capex_ud", owner_kind: "object", owner_ref: "tech_coal_to_gas", value: 1500, unit: "$/kW", reference_ref: "ref_capex_coal_to_gas", provenance: { source_type: "literature", confidence: "medium" } },
-    { id: "ind_gt_maint", key: "maintenance_capex_ud", owner_kind: "object", owner_ref: "tech_coal_to_gas", value: 50, unit: "$/kW", provenance: { source_type: "expert_estimate", confidence: "low" } },
-    { id: "ind_gt_eff", key: "eff", owner_kind: "object", owner_ref: "tech_coal_to_gas", value: 0.5, unit: "fraction", provenance: { source_type: "standard", confidence: "high" } },
-    { id: "ind_pipe_capex", key: "capex_ud", owner_kind: "object", owner_ref: "tech_gas_pipeline", value: 600, unit: "$/kW", provenance: { source_type: "expert_estimate", confidence: "low" } },
-    { id: "ind_dosing_capex", key: "capex_ud", owner_kind: "object", owner_ref: "tech_feed_dosing", value: 15, unit: "$/head", provenance: { source_type: "literature", confidence: "medium" } },
-    { id: "ind_training_capex", key: "capex_ud", owner_kind: "object", owner_ref: "tech_feed_training", value: 2e4, unit: "$/farm", provenance: { source_type: "expert_estimate", confidence: "low" } },
-    { id: "ind_additive_capex", key: "capex_ud", owner_kind: "object", owner_ref: "tech_feed_additive", value: 55, unit: "$/head", reference_ref: "ref_capex_feed_additive", provenance: { source_type: "literature", confidence: "medium" } },
-    { id: "ind_coal_ef", key: "ef", owner_kind: "resource", owner_ref: "coal", value: 1, unit: "tCO\u2082/MWh", provenance: { source_type: "standard", confidence: "high" } },
-    { id: "ind_coal_price", key: "price", owner_kind: "resource", owner_ref: "coal", value: 15, unit: "$/t", provenance: { source_type: "standard", confidence: "high" } },
-    { id: "ind_gas_ef", key: "ef", owner_kind: "resource", owner_ref: "gas", value: 0.45, unit: "tCO\u2082/MWh", provenance: { source_type: "standard", confidence: "high" } },
-    { id: "ind_gas_price", key: "price", owner_kind: "resource", owner_ref: "gas", value: 250, unit: "$/thousand m\xB3", provenance: { source_type: "standard", confidence: "high" } },
-    { id: "ind_additive_price", key: "price", owner_kind: "resource", owner_ref: "feed_additive", value: 50, unit: "$/head\xB7yr", provenance: { source_type: "literature", confidence: "medium" } },
-    { id: "ind_methane_price", key: "price", owner_kind: "resource", owner_ref: "methane", value: 150, unit: "$/thousand m\xB3", provenance: { source_type: "expert_estimate", confidence: "low" } },
-    { id: "ind_mwh_cf", key: "carbon_footprint", owner_kind: "product", owner_ref: "prod_mwh", value: 1, unit: "tCO\u2082/MWh (coal baseline)", provenance: { source_type: "standard", confidence: "high" } }
+    {
+      id: "ind_gt_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_coal_to_gas",
+      value: 1500,
+      unit: "$/kW",
+      reference_ref: "ref_capex_coal_to_gas",
+      provenance: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_gt_maint",
+      key: "maintenance_capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_coal_to_gas",
+      value: 50,
+      unit: "$/kW",
+      provenance: {
+        source_type: "expert_estimate",
+        confidence: "low"
+      }
+    },
+    {
+      id: "ind_gt_eff",
+      key: "eff",
+      owner_kind: "object",
+      owner_ref: "tech_coal_to_gas",
+      value: 0.5,
+      unit: "fraction",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ind_pipe_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_gas_pipeline",
+      value: 600,
+      unit: "$/kW",
+      provenance: {
+        source_type: "expert_estimate",
+        confidence: "low"
+      }
+    },
+    {
+      id: "ind_dosing_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_feed_dosing",
+      value: 15,
+      unit: "$/head",
+      provenance: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_training_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_feed_training",
+      value: 2e4,
+      unit: "$/farm",
+      provenance: {
+        source_type: "expert_estimate",
+        confidence: "low"
+      }
+    },
+    {
+      id: "ind_additive_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "tech_feed_additive",
+      value: 55,
+      unit: "$/head",
+      reference_ref: "ref_capex_feed_additive",
+      provenance: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_coal_ef",
+      key: "ef",
+      owner_kind: "resource",
+      owner_ref: "coal",
+      value: 1,
+      unit: "tCO\u2082/MWh",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ind_coal_price",
+      key: "price",
+      owner_kind: "resource",
+      owner_ref: "coal",
+      value: 15,
+      unit: "$/t",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ind_gas_ef",
+      key: "ef",
+      owner_kind: "resource",
+      owner_ref: "gas",
+      value: 0.45,
+      unit: "tCO\u2082/MWh",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ind_gas_price",
+      key: "price",
+      owner_kind: "resource",
+      owner_ref: "gas",
+      value: 250,
+      unit: "$/thousand m\xB3",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    },
+    {
+      id: "ind_additive_price",
+      key: "price",
+      owner_kind: "resource",
+      owner_ref: "feed_additive",
+      value: 50,
+      unit: "$/head\xB7yr",
+      provenance: {
+        source_type: "literature",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_methane_price",
+      key: "price",
+      owner_kind: "resource",
+      owner_ref: "methane",
+      value: 150,
+      unit: "$/thousand m\xB3",
+      provenance: {
+        source_type: "expert_estimate",
+        confidence: "low"
+      }
+    },
+    {
+      id: "ind_mwh_cf",
+      key: "carbon_footprint",
+      owner_kind: "product",
+      owner_ref: "prod_mwh",
+      value: 1,
+      unit: "tCO\u2082/MWh (coal baseline)",
+      provenance: {
+        source_type: "standard",
+        confidence: "high"
+      }
+    }
   ],
   pools: [
-    { id: "pool_enteric", caps_ref: "activity:cattle_enteric", annual_flow: 5e3, unit: "kt CO\u2082eq/yr", sector_ref: "3", baselineEmissionsKt: 17800 },
-    { id: "pool_coal_power", caps_ref: "resource:coal_power", annual_flow: 6e4, unit: "kt CO\u2082eq/yr", sector_ref: "1.A.1", baselineEmissionsKt: 13e4 },
-    { id: "pool_coal_methane", caps_ref: "resource:coal_mine_ch4", annual_flow: 3e3, unit: "kt CO\u2082eq/yr", sector_ref: "1.B", baselineEmissionsKt: 9500 }
+    {
+      id: "pool_enteric",
+      caps_ref: "activity:cattle_enteric",
+      annual_flow: 5e3,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "3",
+      baselineEmissionsKt: 17800
+    },
+    {
+      id: "pool_coal_power",
+      caps_ref: "resource:coal_power",
+      annual_flow: 6e4,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.1",
+      baselineEmissionsKt: 13e4
+    },
+    {
+      id: "pool_coal_methane",
+      caps_ref: "resource:coal_mine_ch4",
+      annual_flow: 3e3,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.B",
+      baselineEmissionsKt: 9500
+    }
   ]
 };
 
@@ -262,128 +1171,3904 @@ var measures_seed_default = {
     {
       id: "kz-20",
       schema_version: 1,
-      name: { ru: "\u041A\u043E\u0440\u043C\u043E\u0432\u044B\u0435 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 \u0434\u043B\u044F \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u044F \u044D\u043D\u0442\u0435\u0440\u0430\u043B\u044C\u043D\u043E\u0439 \u0444\u0435\u0440\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u0438 (CH\u2084)", en: "Feed additives reducing enteric fermentation (CH\u2084)" },
+      name: {
+        ru: "\u041A\u043E\u0440\u043C\u043E\u0432\u044B\u0435 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 \u0434\u043B\u044F \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u044F \u044D\u043D\u0442\u0435\u0440\u0430\u043B\u044C\u043D\u043E\u0439 \u0444\u0435\u0440\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u0438 (CH\u2084)",
+        en: "Feed additives reducing enteric fermentation (CH\u2084)"
+      },
       sector_ref: "3",
-      sectors: [{ sector_ref: "3", subsector_ref: "3.enteric" }],
+      sectors: [
+        {
+          sector_ref: "3",
+          subsector_ref: "3.enteric"
+        }
+      ],
       technology_ref: "tech_feed_additive",
-      scope: "draft",
+      scope: "published",
       maturity_stage: "back_calc",
-      comparison: { is_substitution: true },
+      comparison: {
+        is_substitution: true
+      },
       inputs: {
-        capex_denominator: { value: 255e4, unit: "\u0433\u043E\u043B\u043E\u0432", provenance: { source_type: "official_stat", citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432", confidence: "medium" } }
+        capex_denominator: {
+          value: 255e4,
+          unit: "\u0433\u043E\u043B\u043E\u0432",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+            confidence: "medium"
+          }
+        }
       },
       abatement: {
         back_calc: {
           share: 0.1,
-          activity_scalar: { qty: 2550, unit: "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432" },
+          activity_scalar: {
+            qty: 2550,
+            unit: "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432"
+          },
           reference_ref: "ref_enteric_factor"
         }
       },
       created_objects: [
-        { object_ref: "tech_feed_dosing", capacity: 255e4, unit: "\u0433\u043E\u043B\u043E\u0432" },
-        { object_ref: "tech_feed_training", capacity: 5100, unit: "\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432", opex_musd: 25.5 }
+        {
+          object_ref: "tech_feed_dosing",
+          capacity: 255e4,
+          unit: "\u0433\u043E\u043B\u043E\u0432"
+        },
+        {
+          object_ref: "tech_feed_training",
+          capacity: 5100,
+          unit: "\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432",
+          opex_musd: 25.5
+        }
       ],
       materials: [
-        { resource_ref: "feed_additive", side: "new", qty: 255e4, price: 50, unit: "\u0433\u043E\u043B\u043E\u0432" }
+        {
+          resource_ref: "feed_additive",
+          side: "new",
+          qty: 255e4,
+          price: 50,
+          unit: "\u0433\u043E\u043B\u043E\u0432"
+        }
       ],
-      potential: { ceiling_dim: "activity", pool_ref: "pool_enteric" },
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_enteric"
+      },
       sources: {
-        "created_objects[0].capacity": { provenance: { source_type: "official_stat", citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432", confidence: "medium" }, binding: { mode: "reuse", ref: "in:capex_denominator" } },
-        "created_objects[1].capacity": { provenance: { source_type: "expert_estimate", citation: "\u041E\u0445\u0432\u0430\u0442 ~5100 \u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432", confidence: "low" }, binding: { mode: "new" } },
-        "created_objects[1].opex_musd": { provenance: { source_type: "expert_estimate", citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435, ~5 \u0442\u044B\u0441.$/\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u043E/\u0433\u043E\u0434", confidence: "medium" }, binding: { mode: "new" } },
-        "materials[0].qty": { provenance: { source_type: "expert_estimate", citation: "1 \u0434\u043E\u0437\u0430 \u043A\u043E\u0440\u043C\u043E\u0432\u043E\u0439 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 \u043D\u0430 \u0433\u043E\u043B\u043E\u0432\u0443 \u0432 \u0433\u043E\u0434", confidence: "medium" }, binding: { mode: "reuse", ref: "in:capex_denominator" } },
-        "materials[0].price": { provenance: { source_type: "literature", citation: "\u0426\u0435\u043D\u0430 \u043A\u043E\u0440\u043C\u043E\u0432\u043E\u0439 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 ~50 $/\u0433\u043E\u043B\u043E\u0432\u0443/\u0433\u043E\u0434", confidence: "medium" }, binding: { mode: "reuse", ref: "res:feed_additive#price" } },
-        "abatement.back_calc.share": { provenance: { source_type: "official_stat", citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB, \u0434\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 \u043F\u043E\u0434\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438", confidence: "medium" }, binding: { mode: "new" } },
-        "abatement.back_calc.activity_scalar.qty": { provenance: { source_type: "official_stat", citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432", confidence: "high" }, binding: { mode: "reuse", ref: "in:capex_denominator" } }
+        "created_objects[0].capacity": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "in:capex_denominator"
+          }
+        },
+        "created_objects[1].capacity": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0445\u0432\u0430\u0442 ~5100 \u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "created_objects[1].opex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435, ~5 \u0442\u044B\u0441.$/\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u043E/\u0433\u043E\u0434",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "materials[0].qty": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "1 \u0434\u043E\u0437\u0430 \u043A\u043E\u0440\u043C\u043E\u0432\u043E\u0439 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 \u043D\u0430 \u0433\u043E\u043B\u043E\u0432\u0443 \u0432 \u0433\u043E\u0434",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "in:capex_denominator"
+          }
+        },
+        "materials[0].price": {
+          provenance: {
+            source_type: "literature",
+            citation: "\u0426\u0435\u043D\u0430 \u043A\u043E\u0440\u043C\u043E\u0432\u043E\u0439 \u0434\u043E\u0431\u0430\u0432\u043A\u0438 ~50 $/\u0433\u043E\u043B\u043E\u0432\u0443/\u0433\u043E\u0434",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "res:feed_additive#price"
+          }
+        },
+        "abatement.back_calc.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB, \u0434\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 \u043F\u043E\u0434\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "abatement.back_calc.activity_scalar.qty": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+            confidence: "high"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "in:capex_denominator"
+          }
+        }
       }
     },
     {
       id: "kz-2",
       schema_version: 1,
-      name: { ru: "\u041F\u0435\u0440\u0435\u0432\u043E\u0434 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426 \u0438 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u043D\u0430 \u043F\u0440\u0438\u0440\u043E\u0434\u043D\u044B\u0439 \u0433\u0430\u0437", en: "Conversion of coal CHP and boilers to natural gas" },
+      name: {
+        ru: "\u041F\u0435\u0440\u0435\u0432\u043E\u0434 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426 \u0438 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u043D\u0430 \u043F\u0440\u0438\u0440\u043E\u0434\u043D\u044B\u0439 \u0433\u0430\u0437",
+        en: "Conversion of coal CHP and boilers to natural gas"
+      },
       sector_ref: "1.A.1",
-      sectors: [{ sector_ref: "1.A.1", subsector_ref: "1.A.1.coal_power" }],
+      sectors: [
+        {
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.coal_power"
+        }
+      ],
       product_ref: "prod_mwh",
       technology_ref: "tech_coal_to_gas",
-      scope: "draft",
+      scope: "published",
       maturity_stage: "computed",
-      comparison: { is_substitution: false, service_unit_ref: "prod_mwh" },
+      comparison: {
+        is_substitution: false,
+        service_unit_ref: "prod_mwh"
+      },
       inputs: {
-        cap_mw: { value: 5e3, unit: "\u041C\u0412\u0442", provenance: { source_type: "expert_estimate", citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C", confidence: "medium" } },
-        kium: { value: 0.5, unit: "\u0434\u043E\u043B\u044F", provenance: { source_type: "standard", citation: "\u041A\u0418\u0423\u041C", confidence: "high" } },
-        capex_denominator: { value: 5e6, unit: "\u043A\u0412\u0442", provenance: { source_type: "expert_estimate", confidence: "medium" } },
-        eff_gas: { value: 0.5, unit: "\u0434\u043E\u043B\u044F", provenance: { source_type: "placeholder", citation: "\u041A\u041F\u0414 \u0433\u0430\u0437\u043E\u0432\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442/\u0413\u041E\u0421\u0422", url: "https://example.org/TODO-gas-efficiency", confidence: "low" } },
-        q_gas: { value: 33.6548572, unit: "\u0413\u0414\u0436/\u0442\u044B\u0441. \u043C\xB3", provenance: { source_type: "placeholder", citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u0438\u0440\u043E\u0434\u043D\u043E\u0433\u043E \u0433\u0430\u0437\u0430 (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0413\u041E\u0421\u0422 31369/\u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A", url: "https://example.org/TODO-gas-lhv", confidence: "low" } },
-        eff_coal: { value: 0.48, unit: "\u0434\u043E\u043B\u044F", provenance: { source_type: "placeholder", citation: "\u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442", url: "https://example.org/TODO-coal-efficiency", confidence: "low" } },
-        q_coal: { value: 20, unit: "\u0413\u0414\u0436/\u0442", provenance: { source_type: "placeholder", citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043B\u044F (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u043F\u043E \u043C\u0430\u0440\u043A\u0435", url: "https://example.org/TODO-coal-lhv", confidence: "low" } }
+        cap_mw: {
+          value: 5e3,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
+            confidence: "medium"
+          }
+        },
+        kium: {
+          value: 0.5,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "standard",
+            citation: "\u041A\u0418\u0423\u041C",
+            confidence: "high"
+          }
+        },
+        capex_denominator: {
+          value: 5e6,
+          unit: "\u043A\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            confidence: "medium"
+          }
+        },
+        eff_gas: {
+          value: 0.5,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041A\u041F\u0414 \u0433\u0430\u0437\u043E\u0432\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442/\u0413\u041E\u0421\u0422",
+            url: "https://example.org/TODO-gas-efficiency",
+            confidence: "low"
+          }
+        },
+        q_gas: {
+          value: 33.6548572,
+          unit: "\u0413\u0414\u0436/\u0442\u044B\u0441. \u043C\xB3",
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u0438\u0440\u043E\u0434\u043D\u043E\u0433\u043E \u0433\u0430\u0437\u0430 (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0413\u041E\u0421\u0422 31369/\u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A",
+            url: "https://example.org/TODO-gas-lhv",
+            confidence: "low"
+          }
+        },
+        eff_coal: {
+          value: 0.48,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442",
+            url: "https://example.org/TODO-coal-efficiency",
+            confidence: "low"
+          }
+        },
+        q_coal: {
+          value: 20,
+          unit: "\u0413\u0414\u0436/\u0442",
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043B\u044F (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u043F\u043E \u043C\u0430\u0440\u043A\u0435",
+            url: "https://example.org/TODO-coal-lhv",
+            confidence: "low"
+          }
+        }
       },
       abatement: {
         computed: {
           formula_ref: "delta_ef",
           bindings: {
-            capacity: { ref: "cap_mw" },
-            cf: { ref: "kium" },
-            ef_in: { ref: "res:coal" },
-            ef_out: { ref: "res:gas" }
+            capacity: {
+              ref: "cap_mw"
+            },
+            cf: {
+              ref: "kium"
+            },
+            ef_in: {
+              ref: "res:coal"
+            },
+            ef_out: {
+              ref: "res:gas"
+            }
           }
         }
       },
       created_objects: [
-        { object_ref: "tech_coal_to_gas", capacity: 5e3, unit: "\u041C\u0412\u0442", capex_ud_factor: 1e3, opex_musd: -120 },
-        { object_ref: "tech_gas_pipeline", capacity: 5e3, unit: "\u041C\u0412\u0442", capex_ud_factor: 1e3 }
+        {
+          object_ref: "tech_coal_to_gas",
+          capacity: 5e3,
+          unit: "\u041C\u0412\u0442",
+          capex_ud_factor: 1e3,
+          opex_musd: -120
+        },
+        {
+          object_ref: "tech_gas_pipeline",
+          capacity: 5e3,
+          unit: "\u041C\u0412\u0442",
+          capex_ud_factor: 1e3
+        }
       ],
       materials: [
-        { resource_ref: "gas", side: "new", price: 250, unit: "\u0442\u044B\u0441. \u043C\xB3" },
-        { resource_ref: "coal", side: "retired", price: 15, unit: "\u0442" }
+        {
+          resource_ref: "gas",
+          side: "new",
+          price: 250,
+          unit: "\u0442\u044B\u0441. \u043C\xB3"
+        },
+        {
+          resource_ref: "coal",
+          side: "retired",
+          price: 15,
+          unit: "\u0442"
+        }
       ],
-      potential: { ceiling_dim: "n_objects", pool_ref: "pool_coal_power" },
+      potential: {
+        ceiling_dim: "n_objects",
+        pool_ref: "pool_coal_power"
+      },
       computed: {
-        gas_intensity: { label: { ru: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u0430\u0441\u0445\u043E\u0434 \u0433\u0430\u0437\u0430", en: "Gas intensity" }, formula: { op: "div", args: [{ const: 3.6 }, { op: "mul", args: [{ ref: "eff_gas" }, { ref: "q_gas" }] }] } },
-        coal_intensity: { label: { ru: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u0430\u0441\u0445\u043E\u0434 \u0443\u0433\u043B\u044F", en: "Coal intensity" }, formula: { op: "div", args: [{ const: 3.6 }, { op: "mul", args: [{ ref: "eff_coal" }, { ref: "q_coal" }] }] } },
-        "materials[0].qty": { label: { ru: "\u0420\u0430\u0441\u0445\u043E\u0434 \u0433\u0430\u0437\u0430", en: "Gas consumption" }, formula: { op: "mul", args: [{ ref: "cap_mw" }, { ref: "kium" }, { const: 8760 }, { ref: "gas_intensity" }] } },
-        "materials[1].qty": { label: { ru: "\u0412\u044B\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u043C\u044B\u0439 \u0443\u0433\u043E\u043B\u044C", en: "Released coal" }, formula: { op: "mul", args: [{ ref: "cap_mw" }, { ref: "kium" }, { const: 8760 }, { ref: "coal_intensity" }] } }
+        gas_intensity: {
+          label: {
+            ru: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u0430\u0441\u0445\u043E\u0434 \u0433\u0430\u0437\u0430",
+            en: "Gas intensity"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                const: 3.6
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "eff_gas"
+                  },
+                  {
+                    ref: "q_gas"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        coal_intensity: {
+          label: {
+            ru: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0440\u0430\u0441\u0445\u043E\u0434 \u0443\u0433\u043B\u044F",
+            en: "Coal intensity"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                const: 3.6
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "eff_coal"
+                  },
+                  {
+                    ref: "q_coal"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "materials[0].qty": {
+          label: {
+            ru: "\u0420\u0430\u0441\u0445\u043E\u0434 \u0433\u0430\u0437\u0430",
+            en: "Gas consumption"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "cap_mw"
+              },
+              {
+                ref: "kium"
+              },
+              {
+                const: 8760
+              },
+              {
+                ref: "gas_intensity"
+              }
+            ]
+          }
+        },
+        "materials[1].qty": {
+          label: {
+            ru: "\u0412\u044B\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u043C\u044B\u0439 \u0443\u0433\u043E\u043B\u044C",
+            en: "Released coal"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "cap_mw"
+              },
+              {
+                ref: "kium"
+              },
+              {
+                const: 8760
+              },
+              {
+                ref: "coal_intensity"
+              }
+            ]
+          }
+        }
       },
       sources: {
-        "created_objects[0].capacity": { provenance: { source_type: "expert_estimate", citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426, 5000 \u041C\u0412\u0442", confidence: "medium" }, binding: { mode: "reuse", ref: "in:cap_mw" } },
-        "created_objects[0].opex_musd": { provenance: { source_type: "expert_estimate", citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F OPEX \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 \u043D\u0430 \u0433\u0430\u0437", confidence: "medium" }, binding: { mode: "new" } },
-        "created_objects[1].capacity": { provenance: { source_type: "expert_estimate", citation: "\u0413\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434 \u043F\u043E\u0434 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0441\u0442\u0430\u043D\u0446\u0438\u0438", confidence: "medium" }, binding: { mode: "reuse", ref: "in:cap_mw" } },
-        "materials[0].price": { provenance: { source_type: "standard", citation: "\u0426\u0435\u043D\u0430 \u0433\u0430\u0437\u0430 250 $/\u0442\u044B\u0441. \u043C\xB3 \u2014 \u0440\u0435\u0435\u0441\u0442\u0440 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432", confidence: "high" }, binding: { mode: "reuse", ref: "res:gas#price" } },
-        "materials[1].price": { provenance: { source_type: "standard", citation: "\u0426\u0435\u043D\u0430 \u0443\u0433\u043B\u044F 15 $/\u0442 \u2014 \u0440\u0435\u0435\u0441\u0442\u0440 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432", confidence: "high" }, binding: { mode: "reuse", ref: "res:coal#price" } }
+        "created_objects[0].capacity": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426, 5000 \u041C\u0412\u0442",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "in:cap_mw"
+          }
+        },
+        "created_objects[0].opex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F OPEX \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 \u043D\u0430 \u0433\u0430\u0437",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "created_objects[1].capacity": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434 \u043F\u043E\u0434 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0441\u0442\u0430\u043D\u0446\u0438\u0438",
+            confidence: "medium"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "in:cap_mw"
+          }
+        },
+        "materials[0].price": {
+          provenance: {
+            source_type: "standard",
+            citation: "\u0426\u0435\u043D\u0430 \u0433\u0430\u0437\u0430 250 $/\u0442\u044B\u0441. \u043C\xB3 \u2014 \u0440\u0435\u0435\u0441\u0442\u0440 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432",
+            confidence: "high"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "res:gas#price"
+          }
+        },
+        "materials[1].price": {
+          provenance: {
+            source_type: "standard",
+            citation: "\u0426\u0435\u043D\u0430 \u0443\u0433\u043B\u044F 15 $/\u0442 \u2014 \u0440\u0435\u0435\u0441\u0442\u0440 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432",
+            confidence: "high"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "res:coal#price"
+          }
+        }
       }
     },
     {
       id: "kz-16",
       schema_version: 1,
-      name: { ru: "\u0414\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u044F \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0448\u0430\u0445\u0442 (\u043C\u0435\u0442\u0430\u043D \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u043F\u043B\u0430\u0441\u0442\u043E\u0432)", en: "Coal-mine methane degassing (coalbed methane)" },
+      name: {
+        ru: "\u0414\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u044F \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0448\u0430\u0445\u0442 (\u043C\u0435\u0442\u0430\u043D \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u043F\u043B\u0430\u0441\u0442\u043E\u0432)",
+        en: "Coal-mine methane degassing (coalbed methane)"
+      },
       sector_ref: "1.B",
-      sectors: [{ sector_ref: "1.B", subsector_ref: "1.B.coal_methane" }],
+      sectors: [
+        {
+          sector_ref: "1.B",
+          subsector_ref: "1.B.coal_methane"
+        }
+      ],
       technology_ref: "tech_mine_degas",
-      scope: "draft",
+      scope: "published",
       maturity_stage: "back_calc",
-      comparison: { is_substitution: true },
+      comparison: {
+        is_substitution: true
+      },
       inputs: {},
       abatement: {
         back_calc: {
           share: 0.2,
-          activity_scalar: { qty: 9.791795506081222, unit: "\u043C\u043B\u043D \u043C\xB3" },
+          activity_scalar: {
+            qty: 9.791795506081222,
+            unit: "\u043C\u043B\u043D \u043C\xB3"
+          },
           reference_ref: "ref_degas_factor"
         }
       },
       created_objects: [
-        { object_ref: "tech_mine_degas", capacity: 9.791795506081222, unit: "\u043C\u043B\u043D \u043C\xB3", capex_musd: 300, opex_musd: 12 }
+        {
+          object_ref: "tech_mine_degas",
+          capacity: 9.791795506081222,
+          unit: "\u043C\u043B\u043D \u043C\xB3",
+          capex_musd: 300,
+          opex_musd: 12
+        }
       ],
       materials: [
-        { resource_ref: "methane", side: "retired", qty: 9791.795506081224, price: 150, unit: "\u0442\u044B\u0441. \u043C\xB3" }
+        {
+          resource_ref: "methane",
+          side: "retired",
+          qty: 9791.795506081224,
+          price: 150,
+          unit: "\u0442\u044B\u0441. \u043C\xB3"
+        }
       ],
-      potential: { ceiling_dim: "cut_resource", pool_ref: "pool_coal_methane" },
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_coal_methane"
+      },
       sources: {
-        "created_objects[0].capacity": { provenance: { source_type: "expert_estimate", citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \u043A \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438, ~9.8 \u043C\u043B\u043D \u043C\xB3", confidence: "low" }, binding: { mode: "new" } },
-        "created_objects[0].capex_musd": { provenance: { source_type: "placeholder", citation: "\u041E\u0446\u0435\u043D\u043A\u0430 CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438", confidence: "low" }, binding: { mode: "new" } },
-        "created_objects[0].opex_musd": { provenance: { source_type: "placeholder", citation: "\u041E\u0446\u0435\u043D\u043A\u0430 OPEX \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438", confidence: "low" }, binding: { mode: "new" } },
-        "materials[0].qty": { provenance: { source_type: "expert_estimate", citation: "\u0412\u044B\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u043C\u044B\u0439 \u043C\u0435\u0442\u0430\u043D", confidence: "low" }, binding: { mode: "reuse", ref: "created_objects[0].capacity" } },
-        "materials[0].price": { provenance: { source_type: "expert_estimate", citation: "\u0426\u0435\u043D\u0430 \u043C\u0435\u0442\u0430\u043D\u0430 150 $/\u0442\u044B\u0441. \u043C\xB3", confidence: "low" }, binding: { mode: "new" } },
-        "abatement.back_calc.share": { provenance: { source_type: "assumption", citation: "\u0414\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 0.2 \u2014 \u043F\u043E\u0441\u0442\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u0430", confidence: "low" }, binding: { mode: "new" } },
-        "abatement.back_calc.activity_scalar.qty": { provenance: { source_type: "expert_estimate", citation: "\u0410\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C ~9.8 \u043C\u043B\u043D \u043C\xB3", confidence: "low" }, binding: { mode: "reuse", ref: "created_objects[0].capacity" } }
+        "created_objects[0].capacity": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \u043A \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438, ~9.8 \u043C\u043B\u043D \u043C\xB3",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041E\u0446\u0435\u043D\u043A\u0430 CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "created_objects[0].opex_musd": {
+          provenance: {
+            source_type: "placeholder",
+            citation: "\u041E\u0446\u0435\u043D\u043A\u0430 OPEX \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "materials[0].qty": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u043C\u044B\u0439 \u043C\u0435\u0442\u0430\u043D",
+            confidence: "low"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "created_objects[0].capacity"
+          }
+        },
+        "materials[0].price": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0426\u0435\u043D\u0430 \u043C\u0435\u0442\u0430\u043D\u0430 150 $/\u0442\u044B\u0441. \u043C\xB3",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "abatement.back_calc.share": {
+          provenance: {
+            source_type: "assumption",
+            citation: "\u0414\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 0.2 \u2014 \u043F\u043E\u0441\u0442\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u0430",
+            confidence: "low"
+          },
+          binding: {
+            mode: "new"
+          }
+        },
+        "abatement.back_calc.activity_scalar.qty": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0410\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C ~9.8 \u043C\u043B\u043D \u043C\xB3",
+            confidence: "low"
+          },
+          binding: {
+            mode: "reuse",
+            ref: "created_objects[0].capacity"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-1",
+      schema_version: 1,
+      name: {
+        ru: "\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u0438\u0435 \u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426 (\u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0443\u0440\u0431\u0438\u043D \u0438 \u043A\u043E\u0442\u043B\u043E\u0432)",
+        en: "Coal CHP efficiency improvement (turbine & boiler retrofit)"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 135.3,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        eff_gain: {
+          value: 0.02,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "eff_gain"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u043F\u0440\u0438\u0440\u043E\u0441\u0442 \u041A\u041F\u0414 \xD7 1000",
+          en: "sector baseline \xD7 efficiency gain \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz1_0",
+          capex_musd: 7500
+        },
+        {
+          object_ref: "obj_kz1_1",
+          capex_musd: 2250
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz1_0",
+          side: "new",
+          cost_musd: 97.5
+        },
+        {
+          resource_ref: "res_kz1_1",
+          side: "new",
+          cost_musd: -27.675000000000004
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0443\u0440\u0431\u0438\u043D \u0438 \u043A\u043E\u0442\u043B\u043E\u0432",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u043E\u0435\u043A\u0442\u043D\u044B\u0435 \u0438 \u043F\u0443\u0441\u043A\u043E\u043D\u0430\u043B\u0430\u0434\u043E\u0447\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u044B",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0442\u043E\u043F\u043B\u0438\u0432\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.eff_gain": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-3",
+      schema_version: 1,
+      name: {
+        ru: "\u0412\u0418\u042D: \u0441\u043E\u043B\u043D\u0435\u0447\u043D\u044B\u0435 \u0438 \u0432\u0435\u0442\u0440\u043E\u0432\u044B\u0435 \u0441\u0442\u0430\u043D\u0446\u0438\u0438",
+        en: "Renewables: solar and wind power plants"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        cap_mw: {
+          value: 1e4,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        cf: {
+          value: 0.35,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        curtailment: {
+          value: 0.1,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_coal: {
+          value: 1,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "cap_mw"
+            },
+            8760,
+            {
+              ref: "cf"
+            },
+            {
+              op: "sub",
+              args: [
+                1,
+                {
+                  ref: "curtailment"
+                }
+              ]
+            },
+            {
+              ref: "ef_coal"
+            },
+            1e-3
+          ]
+        },
+        formula_label: {
+          ru: "\u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 8760 \xD7 \u041A\u0418\u0423\u041C \xD7 (1\u2212curtailment) \xD7 EF_\u0443\u0433\u043B\u044F \xD7 10\u207B\xB3",
+          en: "capacity \xD7 8760 \xD7 CF \xD7 (1\u2212curtailment) \xD7 EF_coal \xD7 10\u207B\xB3"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz3_0",
+          capex_musd: 8e3
+        },
+        {
+          object_ref: "obj_kz3_1",
+          capex_musd: 1200
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz3_0",
+          side: "new",
+          cost_musd: 138
+        },
+        {
+          resource_ref: "res_kz3_1",
+          side: "new",
+          cost_musd: -282.2113636363636
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u0418\u042D",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0435\u0442\u0438 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 \u0412\u0418\u042D",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.curtailment": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-4",
+      schema_version: 1,
+      name: {
+        ru: "\u0412\u0418\u042D + \u0433\u0430\u0437\u043E\u0432\u044B\u0439 \u043F\u0438\u043A\u0435\u0440 + \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F \u043D\u0430 \u043C\u0435\u0441\u0442\u0435 \u0422\u042D\u0426 (\u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u0441\u0442\u0430\u0440\u044B\u0445 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426)",
+        en: "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        gen_displaced_gwh: {
+          value: 33726,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_coal: {
+          value: 1,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        gen_gas_gwh: {
+          value: 12264,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_gas: {
+          value: 0.45,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "sub",
+          args: [
+            {
+              op: "mul",
+              args: [
+                {
+                  ref: "gen_displaced_gwh"
+                },
+                {
+                  ref: "ef_coal"
+                }
+              ]
+            },
+            {
+              op: "mul",
+              args: [
+                {
+                  ref: "gen_gas_gwh"
+                },
+                {
+                  ref: "ef_gas"
+                }
+              ]
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u043D\u0430\u044F \u0443\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \xD7 EF_\u0443\u0433\u043B\u044F \u2212 \u0433\u0430\u0437\u043E\u0432\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \xD7 EF_\u0433\u0430\u0437\u0430",
+          en: "displaced coal generation \xD7 EF_coal \u2212 gas generation \xD7 EF_gas"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz4_0",
+          capex_musd: 5600
+        },
+        {
+          object_ref: "obj_kz4_1",
+          capex_musd: 7e3
+        },
+        {
+          object_ref: "obj_kz4_3",
+          capex_musd: 280.00000000000006
+        }
+      ],
+      retired_objects: [
+        {
+          object_ref: "obj_kz4_2",
+          maintenance_capex_musd: 7e3
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz4_0",
+          side: "new",
+          cost_musd: 88.2
+        },
+        {
+          resource_ref: "res_kz4_1",
+          side: "new",
+          cost_musd: -168
+        },
+        {
+          resource_ref: "res_kz4_2",
+          side: "new",
+          cost_musd: 918.3007334963324
+        },
+        {
+          resource_ref: "res_kz4_3",
+          side: "new",
+          cost_musd: -57.272727272727266
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
+            confidence: "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043E\u043F\u0435\u043A\u0441\u0430 \u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.gen_displaced_gwh": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        "inputs.gen_gas_gwh": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_gas": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-5",
+      schema_version: 1,
+      name: {
+        ru: "\u0410\u0442\u043E\u043C\u043D\u0430\u044F \u044D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u043A\u0430 (\u0437\u0430\u043C\u0435\u0449\u0435\u043D\u0438\u0435 \u0431\u0430\u0437\u043E\u0432\u043E\u0439 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043D\u0430\u0433\u0440\u0443\u0437\u043A\u0438)",
+        en: "Nuclear power (replacing baseload coal)"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 60,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        gen_mwh: {
+          value: 26805600,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_coal: {
+          value: 1,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "gen_mwh"
+            },
+            {
+              ref: "ef_coal"
+            },
+            1e-3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u0410\u042D\u0421 \xD7 EF_\u0443\u0433\u043B\u044F \xD7 10\u207B\xB3",
+          en: "nuclear generation \xD7 EF_coal \xD7 10\u207B\xB3"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz5_0",
+          capex_musd: 36036
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz5_0",
+          side: "new",
+          cost_musd: 402.084
+        },
+        {
+          resource_ref: "res_kz5_1",
+          side: "new",
+          cost_musd: 134.028
+        },
+        {
+          resource_ref: "res_kz5_2",
+          side: "new",
+          cost_musd: -274.14818181818185
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E \u0410\u042D\u0421",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 \u0410\u042D\u0421",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042F\u0434\u0435\u0440\u043D\u043E\u0435 \u0442\u043E\u043F\u043B\u0438\u0432\u043E",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.gen_mwh": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-6",
+      schema_version: 1,
+      name: {
+        ru: "\u0422\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043D\u0430\u0441\u043E\u0441\u044B \u0434\u043B\u044F \u0446\u0435\u043D\u0442\u0440\u0430\u043B\u0438\u0437\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F",
+        en: "Heat pumps for district heating"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        heat_kgcal: {
+          value: 9500,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_boiler: {
+          value: 0.55,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "heat_kgcal"
+            },
+            {
+              ref: "ef_boiler"
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0437\u0430\u043C\u0435\u0449\u0451\u043D\u043D\u043E\u0435 \u0442\u0435\u043F\u043B\u043E \xD7 EF_\u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439_\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
+          en: "displaced heat \xD7 EF_coal_boiler"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz6_0",
+          capex_musd: 1040.5265410958903
+        },
+        {
+          object_ref: "obj_kz6_1",
+          capex_musd: 312.15796232876704
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz6_0",
+          side: "new",
+          cost_musd: 27.053690068493147
+        },
+        {
+          resource_ref: "res_kz6_1",
+          side: "new",
+          cost_musd: -27.053690068493147
+        },
+        {
+          resource_ref: "res_kz6_2",
+          side: "new",
+          cost_musd: 78.12867857142855
+        },
+        {
+          resource_ref: "res_kz6_3",
+          side: "new",
+          cost_musd: -53.43749999999999
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043D\u0430\u0441\u043E\u0441\u044B",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0441\u0435\u0442\u0435\u0439 \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043E\u043A\u0440\u0430\u0449\u0435\u043D\u0438\u0435 OPEX \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445 \u0438 \u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u044D\u043D\u0435\u0440\u0433\u0438\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-7",
+      schema_version: 1,
+      name: {
+        ru: "\u042D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F (\u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B + \u0412\u0418\u042D)",
+        en: "Heat-supply electrification (electric boilers + renewables)"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        heat_kgcal: {
+          value: 51300,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_boiler: {
+          value: 0.55,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "heat_kgcal"
+            },
+            {
+              ref: "ef_boiler"
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0437\u0430\u043C\u0435\u0449\u0451\u043D\u043D\u043E\u0435 \u0442\u0435\u043F\u043B\u043E \xD7 EF_\u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439_\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
+          en: "displaced heat \xD7 EF_coal_boiler"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz7_0",
+          capex_musd: 3405.359589041096
+        },
+        {
+          object_ref: "obj_kz7_1",
+          capex_musd: 1362.1438356164385
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz7_0",
+          side: "new",
+          cost_musd: -25.22488584474886
+        },
+        {
+          resource_ref: "res_kz7_1",
+          side: "new",
+          cost_musd: 2983.095
+        },
+        {
+          resource_ref: "res_kz7_2",
+          side: "new",
+          cost_musd: -288.5625
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u044D\u043D\u0435\u0440\u0433\u0438\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-8",
+      schema_version: 1,
+      name: {
+        ru: "\u0412\u0418\u042D + \u0433\u0430\u0437\u043E\u0432\u044B\u0439 \u043F\u0438\u043A\u0435\u0440 + \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F (\u0430\u043B\u044C\u0442\u0435\u0440\u043D\u0430\u0442\u0438\u0432\u0430 \u043D\u043E\u0432\u044B\u043C \u0422\u042D\u0426)",
+        en: "Renewables + gas peaker + boiler (alternative to new CHP)"
+      },
+      sector_ref: "1.A.1",
+      sectors: [
+        {
+          sector_ref: "1.A.1"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        gen_displaced_gwh: {
+          value: 4818,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_coal: {
+          value: 1,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        gen_gas_gwh: {
+          value: 1752,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_gas: {
+          value: 0.45,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "sub",
+          args: [
+            {
+              op: "mul",
+              args: [
+                {
+                  ref: "gen_displaced_gwh"
+                },
+                {
+                  ref: "ef_coal"
+                }
+              ]
+            },
+            {
+              op: "mul",
+              args: [
+                {
+                  ref: "gen_gas_gwh"
+                },
+                {
+                  ref: "ef_gas"
+                }
+              ]
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u043D\u0430\u044F \u0443\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \xD7 EF_\u0443\u0433\u043B\u044F \u2212 \u0433\u0430\u0437\u043E\u0432\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \xD7 EF_\u0433\u0430\u0437\u0430",
+          en: "displaced coal generation \xD7 EF_coal \u2212 gas generation \xD7 EF_gas"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz8_0",
+          capex_musd: 1074.285714285714
+        },
+        {
+          object_ref: "obj_kz8_1",
+          capex_musd: 150
+        },
+        {
+          object_ref: "obj_kz8_3",
+          capex_musd: 1e3
+        },
+        {
+          object_ref: "obj_kz8_4",
+          capex_musd: 80
+        }
+      ],
+      retired_objects: [
+        {
+          object_ref: "obj_kz8_2",
+          maintenance_capex_musd: 3e3
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz8_0",
+          side: "new",
+          cost_musd: -10.43571428571429
+        },
+        {
+          resource_ref: "res_kz8_1",
+          side: "new",
+          cost_musd: 0
+        },
+        {
+          resource_ref: "res_kz8_2",
+          side: "new",
+          cost_musd: 98.0903084846278
+        },
+        {
+          resource_ref: "res_kz8_3",
+          side: "new",
+          cost_musd: -10.987012987012983
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u0430\u0437\u0432\u0438\u0442\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439 (\u043D\u0430 \u043F\u0438\u043A\u0435\u0440\u044B)",
+            confidence: "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
+            confidence: "medium"
+          }
+        },
+        "created_objects[3].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043E\u043F\u0435\u043A\u0441\u0430 \u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[3].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.gen_displaced_gwh": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        "inputs.gen_gas_gwh": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_gas": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-9",
+      schema_version: 1,
+      name: {
+        ru: "\u0423\u0442\u0438\u043B\u0438\u0437\u0430\u0446\u0438\u044F \u0412\u042D\u0420 (\u0440\u0435\u043A\u0443\u043F\u0435\u0440\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u0430 \u043E\u0442\u0445\u043E\u0434\u044F\u0449\u0438\u0445 \u0433\u0430\u0437\u043E\u0432)",
+        en: "Waste-heat recovery (flue-gas heat recuperation)"
+      },
+      sector_ref: "1.A.2",
+      sectors: [
+        {
+          sector_ref: "1.A.2"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        cap_mw: {
+          value: 2500,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        cf: {
+          value: 0.8,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_coal: {
+          value: 1,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "cap_mw"
+            },
+            8760,
+            {
+              ref: "cf"
+            },
+            {
+              ref: "ef_coal"
+            },
+            1e-3
+          ]
+        },
+        formula_label: {
+          ru: "\u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 8760 \xD7 \u041A\u0418\u0423\u041C \xD7 EF_\u0443\u0433\u043B\u044F \xD7 10\u207B\xB3",
+          en: "capacity \xD7 8760 \xD7 CF \xD7 EF_coal \xD7 10\u207B\xB3"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz9_0",
+          capex_musd: 6250
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz9_0",
+          side: "new",
+          cost_musd: 187.5
+        },
+        {
+          resource_ref: "res_kz9_1",
+          side: "new",
+          cost_musd: -179.1818181818182
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_coal": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-10",
+      schema_version: 1,
+      name: {
+        ru: "\u042D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u043B\u0435\u0433\u043A\u043E\u0432\u043E\u0433\u043E \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 (EV)",
+        en: "Passenger-vehicle electrification (EVs)"
+      },
+      sector_ref: "1.A.3",
+      sectors: [
+        {
+          sector_ref: "1.A.3"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 15,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 27.1,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.15,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        },
+        grid_growth_kt: {
+          value: 1880.7224025974,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "sub",
+          args: [
+            {
+              op: "mul",
+              args: [
+                {
+                  ref: "base_emissions"
+                },
+                {
+                  ref: "share"
+                },
+                1e3
+              ]
+            },
+            {
+              ref: "grid_growth_kt"
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000 \u2212 \u0440\u043E\u0441\u0442 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432 \u044D\u043D\u0435\u0440\u0433\u043E\u0441\u0438\u0441\u0442\u0435\u043C\u044B",
+          en: "sector baseline \xD7 share \xD7 1000 \u2212 grid-emissions growth"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz10_0",
+          capex_musd: 7332.251082251083
+        },
+        {
+          object_ref: "obj_kz10_1",
+          capex_musd: 1466.4502164502167
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz10_0",
+          side: "new",
+          cost_musd: 237.56493506493507
+        },
+        {
+          resource_ref: "res_kz10_1",
+          side: "new",
+          cost_musd: -879.8701298701301
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u043D\u043A\u0440\u0435\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C EV \u043F\u0430\u0440\u043A\u0430",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0440\u044F\u0434\u043D\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u042D\u042D",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0431\u0435\u043D\u0437\u0438\u043D\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        },
+        "inputs.grid_growth_kt": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-11",
+      schema_version: 1,
+      name: {
+        ru: "\u0422\u0435\u0440\u043C\u043E\u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0437\u0434\u0430\u043D\u0438\u0439 (\u0443\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0441\u0430\u0434\u043E\u0432, \u043E\u043A\u043D\u0430, \u043A\u0440\u043E\u0432\u043B\u044F)",
+        en: "Building thermal retrofit (facade insulation, windows, roofing)"
+      },
+      sector_ref: "1.A.4",
+      sectors: [
+        {
+          sector_ref: "1.A.4"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 30,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        heat_before_kgcal: {
+          value: 41896.5517241379,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        heat_after_kgcal: {
+          value: 20948.275862069,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        ef_boiler: {
+          value: 0.55,
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        derating: {
+          value: 0.2,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              op: "sub",
+              args: [
+                {
+                  ref: "heat_before_kgcal"
+                },
+                {
+                  ref: "heat_after_kgcal"
+                }
+              ]
+            },
+            {
+              ref: "ef_boiler"
+            },
+            {
+              op: "sub",
+              args: [
+                1,
+                {
+                  ref: "derating"
+                }
+              ]
+            }
+          ]
+        },
+        formula_label: {
+          ru: "(\u0442\u0435\u043F\u043B\u043E_\u0434\u043E \u2212 \u0442\u0435\u043F\u043B\u043E_\u043F\u043E\u0441\u043B\u0435) \xD7 EF_\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \xD7 (1\u2212\u043F\u0440\u043E\u0441\u0430\u0434\u043A\u0430 \u041A\u041F\u0414 \u0422\u042D\u0426)",
+          en: "(heat_before \u2212 heat_after) \xD7 EF_coal_boiler \xD7 (1\u2212derating)"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz11_0",
+          capex_musd: 9e3
+        },
+        {
+          object_ref: "obj_kz11_1",
+          capex_musd: 1800
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz11_0",
+          side: "new",
+          cost_musd: 54
+        },
+        {
+          resource_ref: "res_kz11_1",
+          side: "new",
+          cost_musd: -729
+        },
+        {
+          resource_ref: "res_kz11_2",
+          side: "new",
+          cost_musd: -94.26724137931035
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0441\u0430\u0434\u043E\u0432 \u0438 \u043A\u0440\u043E\u0432\u043B\u0438",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u043D\u0430 \u043E\u043A\u043E\u043D \u0438 \u0434\u0432\u0435\u0440\u0435\u0439",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0437\u0430\u0442\u0440\u0430\u0442 \u043D\u0430 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0435/\u0422\u042D\u0426",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.heat_before_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.heat_after_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "Emission factor (workbook globals, MACC sheet)",
+            confidence: "high"
+          }
+        },
+        "inputs.derating": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-12",
+      schema_version: 1,
+      name: {
+        ru: "\u0413\u0430\u0437\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u0416\u041A\u0425 (\u043F\u0435\u0440\u0435\u0445\u043E\u0434\u043D\u0430\u044F \u043C\u0435\u0440\u0430)",
+        en: "Residential gasification (transitional measure)"
+      },
+      sector_ref: "1.A.4",
+      sectors: [
+        {
+          sector_ref: "1.A.4"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 30,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 46.5,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.15,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz12_0",
+          capex_musd: 2500
+        },
+        {
+          object_ref: "obj_kz12_1",
+          capex_musd: 0.6
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz12_0",
+          side: "new",
+          cost_musd: 75.018
+        },
+        {
+          resource_ref: "res_kz12_1",
+          side: "new",
+          cost_musd: 900
+        },
+        {
+          resource_ref: "res_kz12_2",
+          side: "new",
+          cost_musd: -110.43
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u0430\u0433\u0438\u0441\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0435 \u0438 \u0440\u0430\u0441\u043F\u0440\u0435\u0434. \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u044B",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043B\u0435\u0439",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 \u0433\u0430\u0437\u043E\u0432\u043E\u0439 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-13",
+      schema_version: 1,
+      name: {
+        ru: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u0451\u043B + \u0412\u0418\u042D (\u043F\u043E\u043B\u043D\u0430\u044F \u0434\u0435\u043A\u0430\u0440\u0431\u043E\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0416\u041A\u0425)",
+        en: "Electric boiler + renewables (full district-heating decarbonization)"
+      },
+      sector_ref: "1.A.4",
+      sectors: [
+        {
+          sector_ref: "1.A.4"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 46.5,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        tech_potential: {
+          value: 0.5,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        },
+        share: {
+          value: 0.5,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "tech_potential"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0442\u0435\u0445. \u043F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 technical potential \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz13_0",
+          capex_musd: 1403.0588418430887
+        },
+        {
+          object_ref: "obj_kz13_1",
+          capex_musd: 561.2235367372355
+        },
+        {
+          object_ref: "obj_kz13_2",
+          capex_musd: 420.9176525529266
+        }
+      ],
+      retired_objects: [
+        {
+          object_ref: "obj_kz13_3",
+          maintenance_capex_musd: 2200.8771357975043
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz13_0",
+          side: "new",
+          cost_musd: 28.061176836861772
+        },
+        {
+          resource_ref: "res_kz13_1",
+          side: "new",
+          cost_musd: 1229.0795454545455
+        },
+        {
+          resource_ref: "res_kz13_2",
+          side: "new",
+          cost_musd: -118.89204545454545
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            confidence: "medium"
+          }
+        },
+        "created_objects[2].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u041C\u0420 \u0438 \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u0441\u0435\u0442\u0438",
+            confidence: "medium"
+          }
+        },
+        "retired_objects[0].maintenance_capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F: \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u044D\u043D\u0435\u0440\u0433\u0438\u044F \u0412\u0418\u042D",
+            confidence: "medium"
+          }
+        },
+        "materials[2].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.tech_potential": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-14",
+      schema_version: 1,
+      name: {
+        ru: "LDAR: \u043E\u0431\u043D\u0430\u0440\u0443\u0436\u0435\u043D\u0438\u0435 \u0438 \u0443\u0441\u0442\u0440\u0430\u043D\u0435\u043D\u0438\u0435 \u0443\u0442\u0435\u0447\u0435\u043A \u043C\u0435\u0442\u0430\u043D\u0430 (\u043D\u0435\u0444\u0442\u0435\u0433\u0430\u0437)",
+        en: "LDAR: methane leak detection and repair (oil & gas)"
+      },
+      sector_ref: "1.B",
+      sectors: [
+        {
+          sector_ref: "1.B"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 10,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 34.2,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.25,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz14_0",
+          capex_musd: 40
+        },
+        {
+          object_ref: "obj_kz14_1",
+          capex_musd: 15
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz14_0",
+          side: "new",
+          cost_musd: 10
+        },
+        {
+          resource_ref: "res_kz14_1",
+          side: "new",
+          cost_musd: -7.5
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435 \u0438 \u0440\u0435\u043C\u043E\u043D\u0442",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "OGI \u043A\u0430\u043C\u0435\u0440\u044B \u0438 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 \u0438 \u043E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 \u043E\u0442 \u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-15",
+      schema_version: 1,
+      name: {
+        ru: "\u0423\u0442\u0438\u043B\u0438\u0437\u0430\u0446\u0438\u044F \u043F\u043E\u043F\u0443\u0442\u043D\u043E\u0433\u043E \u043D\u0435\u0444\u0442\u044F\u043D\u043E\u0433\u043E \u0433\u0430\u0437\u0430 (\u041F\u041D\u0413)",
+        en: "Associated petroleum gas (APG) utilization"
+      },
+      sector_ref: "1.B",
+      sectors: [
+        {
+          sector_ref: "1.B"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 34.2,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.2,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz15_0",
+          capex_musd: 1500
+        },
+        {
+          object_ref: "obj_kz15_1",
+          capex_musd: 375
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz15_0",
+          side: "new",
+          cost_musd: 56.25
+        },
+        {
+          resource_ref: "res_kz15_1",
+          side: "new",
+          cost_musd: -400.6530612244898
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0422\u042D\u0421 \u0438 \u043A\u043E\u043C\u043F\u0440\u0435\u0441\u0441\u043E\u0440\u043D\u043E\u0435 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0434\u0432\u043E\u0434\u044F\u0449\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 \u043E\u0442 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u044D\u043D\u0435\u0440\u0433\u0438\u0438",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-17",
+      schema_version: 1,
+      name: {
+        ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0443\u0442\u0435\u0447\u0435\u043A \u0432 \u0433\u0430\u0437\u043E\u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u043D\u043E\u0439 \u0441\u0438\u0441\u0442\u0435\u043C\u0435",
+        en: "Leak reduction in the gas transmission system"
+      },
+      sector_ref: "1.B",
+      sectors: [
+        {
+          sector_ref: "1.B"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 34.2,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.15,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz17_0",
+          capex_musd: 600
+        },
+        {
+          object_ref: "obj_kz17_1",
+          capex_musd: 30
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz17_0",
+          side: "new",
+          cost_musd: 18.9
+        },
+        {
+          resource_ref: "res_kz17_1",
+          side: "new",
+          cost_musd: 335.78181818181815
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 \u0438 \u041A\u0421",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 \u0438 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-18",
+      schema_version: 1,
+      name: {
+        ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043A\u043B\u0438\u043D\u043A\u0435\u0440\u043D\u043E\u0433\u043E \u0444\u0430\u043A\u0442\u043E\u0440\u0430 \u0432 \u0446\u0435\u043C\u0435\u043D\u0442\u043D\u043E\u043C \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u0435",
+        en: "Clinker-factor reduction in cement production"
+      },
+      sector_ref: "2",
+      sectors: [
+        {
+          sector_ref: "2"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 30,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 8.6,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.1,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz18_0",
+          capex_musd: 200
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz18_0",
+          side: "new",
+          cost_musd: 40
+        },
+        {
+          resource_ref: "res_kz18_1",
+          side: "new",
+          cost_musd: -20
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0437\u0430\u0432\u043E\u0434\u043E\u0432",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043A\u0443\u043F\u043A\u0430 \u0434\u043E\u0431\u0430\u0432\u043E\u043A",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043D\u0430 \u043A\u043B\u0438\u043D\u043A\u0435\u0440\u0435",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-19",
+      schema_version: 1,
+      name: {
+        ru: "CCS \u0432 \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u0438 \u0438 \u0446\u0435\u043C\u0435\u043D\u0442\u0435",
+        en: "CCS in metallurgy and cement"
+      },
+      sector_ref: "2",
+      sectors: [
+        {
+          sector_ref: "2"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 27,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.08,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz19_0",
+          capex_musd: 925.7142857142857
+        },
+        {
+          object_ref: "obj_kz19_1",
+          capex_musd: 277.71428571428567
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz19_0",
+          side: "new",
+          cost_musd: 185.14285714285717
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F CO\u2082",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442 \u0438 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u043F\u0435\u0440\u0430\u0446\u0438\u043E\u043D\u043D\u044B\u0435 \u0437\u0430\u0442\u0440\u0430\u0442\u044B CCUS",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-21",
+      schema_version: 1,
+      name: {
+        ru: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0435 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0430\u0432\u043E\u0437\u043E\u043C (\u0431\u0438\u043E\u0433\u0430\u0437)",
+        en: "Improved manure management (biogas)"
+      },
+      sector_ref: "3",
+      sectors: [
+        {
+          sector_ref: "3"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 15,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 3.3,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.08,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz21_0",
+          capex_musd: 250
+        },
+        {
+          object_ref: "obj_kz21_1",
+          capex_musd: 50
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz21_0",
+          side: "new",
+          cost_musd: 12
+        },
+        {
+          resource_ref: "res_kz21_1",
+          side: "new",
+          cost_musd: -25
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0411\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043B\u0430\u0433\u0443\u043D \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 \u043E\u0442 \u0431\u0438\u043E\u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-22",
+      schema_version: 1,
+      name: {
+        ru: "\u0422\u043E\u0447\u043D\u043E\u0435 \u0437\u0435\u043C\u043B\u0435\u0434\u0435\u043B\u0438\u0435 (\u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 N\u2082O \u043E\u0442 \u0443\u0434\u043E\u0431\u0440\u0435\u043D\u0438\u0439)",
+        en: "Precision agriculture (N\u2082O reduction from fertilizers)"
+      },
+      sector_ref: "3",
+      sectors: [
+        {
+          sector_ref: "3"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 10,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 11.6,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.1,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz22_0",
+          capex_musd: 150
+        },
+        {
+          object_ref: "obj_kz22_1",
+          capex_musd: 30
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz22_0",
+          side: "new",
+          cost_musd: 9
+        },
+        {
+          resource_ref: "res_kz22_1",
+          side: "new",
+          cost_musd: -75
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "GPS-\u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F \u0438 \u0434\u0430\u0442\u0447\u0438\u043A\u0438",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0430\u0433\u0440\u043E\u043D\u043E\u043C\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0434\u043E\u0431\u0440\u0435\u043D\u0438\u0439",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-23",
+      schema_version: 1,
+      name: {
+        ru: "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u0435 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0441\u0442\u0431\u0438\u0449\u0430\u043C\u0438",
+        en: "Improved pasture management"
+      },
+      sector_ref: "3",
+      sectors: [
+        {
+          sector_ref: "3"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 11.6,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.05,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz23_0",
+          capex_musd: 200
+        },
+        {
+          object_ref: "obj_kz23_1",
+          capex_musd: 30
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz23_0",
+          side: "new",
+          cost_musd: 4.6000000000000005
+        },
+        {
+          resource_ref: "res_kz23_1",
+          side: "new",
+          cost_musd: -50
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0430\u0441\u0442\u0431\u0438\u0449",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u0440\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u043F\u0430\u0441\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0434\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435 \u043F\u0430\u0441\u0442\u0431\u0438\u0449",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043A\u043E\u0440\u043C\u043E\u0432",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-24",
+      schema_version: 1,
+      name: {
+        ru: "\u041B\u0435\u0441\u043E\u043D\u0430\u0441\u0430\u0436\u0434\u0435\u043D\u0438\u0435 (\u0430\u0444\u043E\u0440\u0435\u0441\u0442\u0430\u0446\u0438\u044F \u0438 \u043B\u0435\u0441\u043E\u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435)",
+        en: "Afforestation and reforestation"
+      },
+      sector_ref: "4",
+      sectors: [
+        {
+          sector_ref: "4"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 30,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        area_kha: {
+          value: 1e3,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        survival: {
+          value: 0.7,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        seq_rate: {
+          value: 3,
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "area_kha"
+            },
+            {
+              ref: "survival"
+            },
+            {
+              ref: "seq_rate"
+            }
+          ]
+        },
+        formula_label: {
+          ru: "\u0446\u0435\u043B\u0435\u0432\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C \xD7 \u0434\u043E\u043B\u044F \u0432\u044B\u0436\u0438\u0432\u0430\u0435\u043C\u043E\u0441\u0442\u0438 \xD7 \u0443\u0434. \u0441\u0435\u043A\u0432\u0435\u0441\u0442\u0440\u0430\u0446\u0438\u044F",
+          en: "target area \xD7 survival rate \xD7 sequestration rate"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz24_0",
+          capex_musd: 2e3
+        },
+        {
+          object_ref: "obj_kz24_1",
+          capex_musd: 200
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz24_0",
+          side: "new",
+          cost_musd: 100
+        },
+        {
+          resource_ref: "res_kz24_1",
+          side: "new",
+          cost_musd: 11
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0430\u0436\u0435\u043D\u0446\u044B, \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u043F\u043E\u0447\u0432\u044B, \u043F\u043E\u0441\u0430\u0434\u043A\u0430",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u0438 \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0445\u043E\u0434, \u043F\u043E\u043B\u0438\u0432, \u043F\u0440\u043E\u0442\u0438\u0432\u043E\u043F\u043E\u0436\u0430\u0440\u043D\u0430\u044F \u0437\u0430\u0449\u0438\u0442\u0430",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 \u0438 \u0432\u0435\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u044F \u0441\u0435\u043A\u0432\u0435\u0441\u0442\u0440\u0430\u0446\u0438\u0438",
+            confidence: "medium"
+          }
+        },
+        "inputs.area_kha": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.survival": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        },
+        "inputs.seq_rate": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-25",
+      schema_version: 1,
+      name: {
+        ru: "\u0423\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u0435 \u0438 \u0443\u0442\u0438\u043B\u0438\u0437\u0430\u0446\u0438\u044F \u0441\u0432\u0430\u043B\u043E\u0447\u043D\u043E\u0433\u043E \u0433\u0430\u0437\u0430 (LFG)",
+        en: "Landfill-gas (LFG) capture and utilization"
+      },
+      sector_ref: "5",
+      sectors: [
+        {
+          sector_ref: "5"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 20,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 3.6,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.1,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz25_0",
+          capex_musd: 100
+        },
+        {
+          object_ref: "obj_kz25_1",
+          capex_musd: 40
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz25_0",
+          side: "new",
+          cost_musd: 5.6000000000000005
+        },
+        {
+          resource_ref: "res_kz25_1",
+          side: "new",
+          cost_musd: -10.011428571428574
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+            confidence: "medium"
+          }
+        },
+        "created_objects[1].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0430\u0437\u043E\u043F\u043E\u0440\u0448\u043D\u0435\u0432\u044B\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0440\u0443\u0447\u043A\u0430 \u043E\u0442 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u044D\u043D\u0435\u0440\u0433\u0438\u0438",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      }
+    },
+    {
+      id: "kz-26",
+      schema_version: 1,
+      name: {
+        ru: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u043E\u0447\u0438\u0441\u0442\u043D\u044B\u0445 \u0441\u043E\u043E\u0440\u0443\u0436\u0435\u043D\u0438\u0439 (\u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 CH\u2084)",
+        en: "Wastewater-treatment upgrade (CH\u2084 reduction)"
+      },
+      sector_ref: "5",
+      sectors: [
+        {
+          sector_ref: "5"
+        }
+      ],
+      scope: "published",
+      maturity_stage: "computed",
+      inputs: {
+        lifetime: {
+          value: 25,
+          unit: "\u043B\u0435\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
+            confidence: "high"
+          }
+        },
+        base_emissions: {
+          value: 3.2,
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        share: {
+          value: 0.1,
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
+      },
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            {
+              ref: "base_emissions"
+            },
+            {
+              ref: "share"
+            },
+            1e3
+          ]
+        },
+        formula_label: {
+          ru: "\u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0441\u0435\u043A\u0442\u043E\u0440\u0430 \xD7 \u0434\u043E\u043B\u044F \xD7 1000",
+          en: "sector baseline \xD7 share \xD7 1000"
+        }
+      },
+      created_objects: [
+        {
+          object_ref: "obj_kz26_0",
+          capex_musd: 150
+        }
+      ],
+      materials: [
+        {
+          resource_ref: "res_kz26_0",
+          side: "new",
+          cost_musd: 4.5
+        },
+        {
+          resource_ref: "res_kz26_1",
+          side: "new",
+          cost_musd: -15
+        }
+      ],
+      sources: {
+        "created_objects[0].capex_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u041A\u041E\u0421",
+            confidence: "medium"
+          }
+        },
+        "materials[0].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420",
+            confidence: "medium"
+          }
+        },
+        "materials[1].cost_musd": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043E\u0442 \u0431\u0438\u043E\u0433\u0430\u0437\u0430",
+            confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
+            confidence: "medium"
+          }
+        }
       }
     }
   ]
@@ -537,6 +5222,35 @@ var seedMeasures = measures_seed_default.measures;
 // mcp/supabase.ts
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "node:fs";
+
+// mcp/db.ts
+var visibleTo = (userId) => `scope.eq.published,owner_id.eq.${userId}`;
+async function dbListMeasures(user) {
+  const { data, error } = await user.client.from("measures").select("id,scope,data").or(visibleTo(user.userId));
+  if (error) throw new Error(`list: ${error.message}`);
+  return (data ?? []).map((r) => ({ id: r.id, scope: r.scope, data: r.data }));
+}
+async function dbGetMeasure(user, id) {
+  const { data, error } = await user.client.from("measures").select("data").eq("id", id).or(visibleTo(user.userId)).maybeSingle();
+  if (error) throw new Error(`get: ${error.message}`);
+  return data?.data ?? null;
+}
+async function dbUpsertMeasure(user, measure, note) {
+  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: measure.id, p_patch: measure, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("measure_publish", { p_id: measure.id, p_patch: measure, p_note: note ?? null });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
+  const row = data;
+  const { data: vers } = await user.client.from("measure_versions").select("author_id").eq("measure_id", measure.id);
+  const contributors = [...new Set((vers ?? []).map((r) => r.author_id).filter(Boolean))];
+  return { finalScope: row?.scope ?? "published", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors };
+}
+async function dbMeasureHistory(user, id) {
+  const { data, error } = await user.client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
+  if (error) throw new Error(`history: ${error.message}`);
+  return data ?? [];
+}
+
+// mcp/supabase.ts
 var isNode2 = typeof process !== "undefined" && !!process.versions?.node;
 function getEnv(key) {
   if (typeof Deno !== "undefined" && Deno?.env) return Deno.env.get(key);
@@ -574,29 +5288,6 @@ async function userFromToken(token) {
 async function authedUserFromHeader(authHeader) {
   const m = authHeader?.match(/^Bearer\s+(.+)$/i);
   return m ? userFromToken(m[1].trim()) : null;
-}
-async function dbListMeasures(client) {
-  const { data, error } = await client.from("measures").select("id,scope,data");
-  if (error) throw new Error(`list: ${error.message}`);
-  return (data ?? []).map((r) => ({ id: r.id, scope: r.scope, data: r.data }));
-}
-async function dbGetMeasure(client, id) {
-  const { data, error } = await client.from("measures").select("data").eq("id", id).maybeSingle();
-  if (error) throw new Error(`get: ${error.message}`);
-  return data?.data ?? null;
-}
-async function dbUpsertMeasure(user, measure, note) {
-  const { data, error } = await user.client.rpc("measure_publish", { p_id: measure.id, p_patch: measure, p_note: note ?? null });
-  if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
-  const row = data;
-  const { data: vers } = await user.client.from("measure_versions").select("author_id").eq("measure_id", measure.id);
-  const contributors = [...new Set((vers ?? []).map((r) => r.author_id).filter(Boolean))];
-  return { finalScope: row?.scope ?? "published", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors };
-}
-async function dbMeasureHistory(client, id) {
-  const { data, error } = await client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
-  if (error) throw new Error(`history: ${error.message}`);
-  return data ?? [];
 }
 
 // mcp/server.ts
@@ -656,15 +5347,15 @@ function makeResolver(measure, library2) {
   const resolve = (key) => {
     if (key.startsWith("res:")) {
       const r = library2.resources[key.slice(4)];
-      if (!r) throw new Error(`Unknown resource '${key}'`);
+      if (!r) throw new Error(`unresolved ref '${key}': resource not in the library (registry not hydrated?)`);
       const ef = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
-      if (typeof ef !== "number") throw new Error(`Resource '${key}' has no scalar EF`);
+      if (typeof ef !== "number") throw new Error(`unresolved ref '${key}': resource has no scalar EF`);
       return ef;
     }
     const c = measure.computed?.[key];
     if (c) return evalAst(c.formula, resolve);
     const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`Measure '${measure.id}' has no input '${key}'`);
+    if (!inp) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no such input`);
     return inp.value;
   };
   return resolve;
@@ -699,15 +5390,15 @@ function makeResolver2(measure, library2) {
   const resolve = (key) => {
     if (key.startsWith("res:")) {
       const r = library2.resources[key.slice(4)];
-      if (!r) throw new Error(`Unknown resource '${key}'`);
+      if (!r) throw new Error(`unresolved ref '${key}': resource not in the library (registry not hydrated?)`);
       const ef = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
-      if (typeof ef !== "number") throw new Error(`Resource '${key}' has no EF for the active year`);
+      if (typeof ef !== "number") throw new Error(`unresolved ref '${key}': resource has no EF for the active year`);
       return ef;
     }
     const c = measure.computed?.[key];
     if (c) return evalAst(c.formula, resolve);
     const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`Measure '${measure.id}' has no input '${key}'`);
+    if (!inp) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no such input`);
     return inp.value;
   };
   return resolve;
@@ -722,6 +5413,11 @@ function poolBaselineKt(measure, library2) {
 }
 function computeAbatement(measure, library2, resolve) {
   const a = measure.abatement;
+  if (a.formula) {
+    const abatementKt = evalAst(a.formula, resolve);
+    const act = a.back_calc?.activity_scalar.qty;
+    return { abatementKt, impliedFactor: act ? abatementKt / act : void 0 };
+  }
   switch (measure.maturity_stage) {
     case "computed": {
       if (!a.computed) throw new Error(`Measure '${measure.id}': maturity=computed but no computed block`);
@@ -740,6 +5436,13 @@ function computeAbatement(measure, library2, resolve) {
       if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
       return { abatementKt: poolBaselineKt(measure, library2) * a.raw.share };
     }
+    // Total by construction: an unknown/absent maturity_stage with no inline formula
+    // gets a descriptive error (never `undefined`), so the caller's destructure can't
+    // crash — the tools surface this as an advisory message, not a hard failure.
+    default:
+      throw new Error(
+        `Measure '${measure.id}': cannot derive abatement \u2014 provide an inline 'abatement.formula' or a valid stage block (maturity_stage='${String(measure.maturity_stage)}')`
+      );
   }
 }
 function resolveDuration(measure, library2) {
@@ -1027,7 +5730,9 @@ var measure_schema_default = {
             bindings: { type: "object", additionalProperties: { $ref: "#/$defs/formulaBinding" } },
             derived_share: { type: "number", readOnly: true }
           }
-        }
+        },
+        formula: { $ref: "#/$defs/ast", description: "Inline abatement AST over the measure inputs (res:<id> EF / recursive computed leaves). Wins over the stage block; ports the Excel formula directly." },
+        formula_label: { $ref: "#/$defs/localized" }
       }
     },
     created_objects: {
@@ -1243,7 +5948,7 @@ function buildServer(deps) {
     { title: "List measures", description: "List the measures visible to the signed-in user (their drafts + published), with headline outputs and model-eligibility.", inputSchema: {} },
     async () => {
       if (!user) return err(AUTH_ERR);
-      const rows = await dbListMeasures(user.client);
+      const rows = await dbListMeasures(user);
       return ok({ user: user.email ?? user.userId, measures: rows.map(({ data: m, scope: storedScope }) => {
         const c = compute(m, library2);
         const v = validate(m, library2, peersOf(m.id));
@@ -1256,7 +5961,7 @@ function buildServer(deps) {
     { title: "Get measure", description: "Return the full measure document by id.", inputSchema: { id: z.string().describe('measure id, e.g. "kz-2"') } },
     async ({ id }) => {
       if (!user) return err(AUTH_ERR);
-      const m = await dbGetMeasure(user.client, id) ?? getSeedMeasure(id);
+      const m = await dbGetMeasure(user, id) ?? getSeedMeasure(id);
       return m ? ok(m) : err(`Unknown measure '${id}'`);
     }
   );
@@ -1316,7 +6021,7 @@ function buildServer(deps) {
     async ({ id }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const versions = await dbMeasureHistory(user.client, id);
+        const versions = await dbMeasureHistory(user, id);
         return ok({ id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
       } catch (e) {
         return err(`history failed: ${e.message}`);

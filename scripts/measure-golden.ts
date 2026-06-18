@@ -52,6 +52,17 @@ for (const m of seedMeasures) {
   near('opex', m.id, c.opex, e.opex);
 }
 
+// ── 1b. computeAbatement is TOTAL — a doc with no formula and no valid stage gives a
+// descriptive error (naming the gap), never a `Cannot destructure 'abatementKt'` crash.
+{
+  const broken = { id: 'broken', schema_version: 1, name: { ru: '', en: '' }, sector_ref: '1.A.1',
+    scope: 'draft', maturity_stage: 'bogus', abatement: {} } as unknown as Measure;
+  let msg = '';
+  try { compute(broken, library); } catch (e) { msg = (e as Error).message; }
+  expect(/cannot derive abatement/i.test(msg) && !/destructure/i.test(msg), 'robustness',
+    `malformed measure → descriptive error, not a destructure crash (got: ${msg || 'no throw'})`);
+}
+
 // ── 2. Guardrails: A ✓ in corridor & eligible; C ⚠ & stays draft ──────────────
 const vA = validate(getSeedMeasure('kz-20')!, library, seedMeasures.filter((m) => m.id !== 'kz-20'));
 expect(vA.checks.factor === 'ok', 'kz-20', `factor check ok (implied in corridor) — got ${vA.checks.factor}`);
