@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "macc-measure": {
+      "command": "npx",
+      "args": ["tsx", "mcp/measure-server.ts"]
+    }
+  }
+}

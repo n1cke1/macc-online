@@ -10,6 +10,17 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { readFileSync } from 'node:fs';
 import type { Measure } from '../src/lib/measure/schema';
 
+// Cross-runtime so the same module loads under Node (stdio / local HTTP host) AND Deno
+// (Supabase Edge). Node reads creds from process.env (seeded from the .env files below);
+// Edge reads them from Deno.env (SUPABASE_URL / SUPABASE_ANON_KEY auto-injected).
+declare const Deno: { env: { get(k: string): string | undefined } } | undefined;
+const isNode = typeof process !== 'undefined' && !!process.versions?.node;
+function getEnv(key: string): string | undefined {
+  if (typeof Deno !== 'undefined' && Deno?.env) return Deno.env.get(key);
+  if (typeof process !== 'undefined' && process.env) return process.env[key];
+  return undefined;
+}
+
 function readEnvFile(rel: string) {
   try {
     const raw = readFileSync(new URL(rel, import.meta.url), 'utf8');
@@ -19,12 +30,16 @@ function readEnvFile(rel: string) {
     }
   } catch { /* file may be absent */ }
 }
-readEnvFile('../.env.supabase.local');
-readEnvFile('../.env.local');
+// Node only: seed process.env from the local env files (Edge has no such files — and
+// MCP_SKIP_ENV_FILE lets a test run the genuinely-token-less path — see mcp/smoke.ts).
+if (isNode && !process.env.MCP_SKIP_ENV_FILE) {
+  readEnvFile('../.env.supabase.local');
+  readEnvFile('../.env.local');
+}
 
-const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const url = getEnv('SUPABASE_URL') || getEnv('NEXT_PUBLIC_SUPABASE_URL');
+const anonKey = getEnv('NEXT_PUBLIC_SUPABASE_ANON_KEY') || getEnv('SUPABASE_ANON_KEY');
+const serviceKey = getEnv('SUPABASE_SERVICE_ROLE_KEY');
 
 /** Service-role client — used ONLY for the server-authoritative promotion to published. */
 export const admin: SupabaseClient | null =
@@ -33,7 +48,23 @@ export const admin: SupabaseClient | null =
 export interface AuthedUser { userId: string; email?: string; client: SupabaseClient }
 
 /**
- * Resolve the caller → a user-scoped client (RLS applies). Identity comes from either
+ * Token → user-scoped client (RLS applies as that user). The single identity primitive
+ * behind both transports: stdio resolves the token from env, hosted HTTP from the
+ * `Authorization` header. null = invalid/expired token (caller refuses).
+ */
+export async function userFromToken(token: string): Promise<AuthedUser | null> {
+  if (!token || !url || !anonKey) return null;
+  const client = createClient(url, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  const { data, error } = await client.auth.getUser(token);
+  if (error || !data.user) return null;
+  return { userId: data.user.id, email: data.user.email ?? undefined, client };
+}
+
+/**
+ * Resolve the stdio caller → a user-scoped client. Identity comes from either
  * MCP_USER_TOKEN (a user access token), or a service-account auto-login via
  * MCP_EMAIL + MCP_PASSWORD (fresh token each start — no hourly expiry). null = not logged in.
  */
@@ -44,14 +75,16 @@ export async function authedUser(): Promise<AuthedUser | null> {
     const { data, error } = await signer.auth.signInWithPassword({ email: process.env.MCP_EMAIL, password: process.env.MCP_PASSWORD });
     if (!error && data.session) token = data.session.access_token;
   }
-  if (!token || !url || !anonKey) return null;
-  const client = createClient(url, anonKey, {
-    global: { headers: { Authorization: `Bearer ${token}` } },
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  const { data, error } = await client.auth.getUser(token);
-  if (error || !data.user) return null;
-  return { userId: data.user.id, email: data.user.email ?? undefined, client };
+  return token ? userFromToken(token) : null;
+}
+
+/**
+ * Resolve the hosted caller from a request's `Authorization: Bearer <jwt>` header
+ * (a Supabase access token from signing in to the web app). null = missing/invalid.
+ */
+export async function authedUserFromHeader(authHeader: string | null): Promise<AuthedUser | null> {
+  const m = authHeader?.match(/^Bearer\s+(.+)$/i);
+  return m ? userFromToken(m[1].trim()) : null;
 }
 
 export async function dbListMeasures(client: SupabaseClient): Promise<Array<{ id: string; scope: string; data: Measure }>> {

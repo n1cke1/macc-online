@@ -13,7 +13,10 @@
     "measure-golden": "tsx scripts/measure-golden.ts",
     "seed-library": "tsx scripts/seed-library.ts",
     "supabase-apply": "tsx scripts/supabase-apply.ts",
-    "mcp": "tsx mcp/measure-server.ts"
+    "mcp": "tsx mcp/measure-server.ts",
+    "mcp-http": "tsx mcp/http-server.ts",
+    "mcp-token": "tsx mcp/mint-token.ts",
+    "build-edge": "node scripts/build-edge-mcp.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -31,6 +34,7 @@
     "next-intl": "^3.26.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "zod": "^4.4.3",
     "zustand": "^5.0.3"
   },
   "devDependencies": {

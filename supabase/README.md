@@ -131,6 +131,65 @@ Contract:
 > bundle. If the CLI's bundler trips on the cross-dir imports, vendor those few
 > files into `functions/_shared/` and adjust the import paths.
 
+## 7. Hosted MCP server (Phase 4 / §9)
+
+The measure-authoring MCP can run remotely as an Edge Function so LLM agents reach the
+tools over HTTP (the local stdio server, `npm run mcp`, stays for development). The
+server definition (`mcp/server.ts`), tool set and transport are shared across stdio,
+the local Node host (`npm run mcp-http`) and the Edge Function — only the runtime and
+the library/measures source differ.
+
+```bash
+# 1. Pre-bundle for Deno (esbuild inlines the Node-style shared graph + JSON, leaving
+#    only npm externals for the import map). Regenerate after changing any module the
+#    function pulls in. Output: supabase/functions/mcp/index.ts (committed, generated).
+npm run build-edge
+# 2. Deploy. --use-api bundles server-side (no Docker); --no-verify-jwt because the
+#    handler does its own header auth and schema://measure is public, so the gateway
+#    must NOT pre-reject token-less requests. SUPABASE_URL / SUPABASE_ANON_KEY auto-inject.
+supabase functions deploy mcp --project-ref <ref> --no-verify-jwt --use-api
+# Endpoint: https://<ref>.supabase.co/functions/v1/mcp
+```
+
+- **Transport** — Web-standard Streamable-HTTP (`WebStandardStreamableHTTPServerTransport`,
+  SDK ≥ 1.29), stateless JSON mode: each POST is a self-contained JSON-RPC call, so the
+  serverless instance keeps no session. `server-entry.ts` is a thin
+  `Deno.serve(createMcpHandler(...))` over the shared `mcp/http-handler.ts`; it is
+  esbuild-bundled to `index.ts` (the deployed file) so the Deno bundler never sees the
+  Node-style extensionless / `@data`-alias / attribute-less-JSON imports.
+- **Identity** — `Authorization: Bearer <Supabase access token>` (a web-session JWT).
+  No token → tools refuse; the `schema://measure` notation resource stays public. There
+  is **no** service-account fallback on the hosted path (that is a local-stdio dev aid).
+- **Library/measures** — loaded from the 0007 authority tables via `load-supabase.ts`
+  (runtime = Supabase), not the file seed. Calc is HyperFormula-free (`eval.ts`), so the
+  Deno bundle stays light; `npm run measure-golden` pins the pure-TS core to the HF oracle.
+- **Imports** — `supabase/functions/mcp/deno.json` maps the npm specifiers
+  (`@modelcontextprotocol/sdk/`, `@supabase/supabase-js`, `zod`); the SDK modules on this
+  path import no `node:` built-ins.
+- **Register a remote client** (e.g. Claude Code) — an `http` server entry pointing at the
+  endpoint, the JWT in the `Authorization` header from an env var:
+  ```jsonc
+  // .mcp.json (or ~/.claude.json) — for clients OFF this machine. In-repo, the local
+  // stdio server (`macc-measure`, auto-login) stays the dev default.
+  {
+    "mcpServers": {
+      "macc-measure-remote": {
+        "type": "http",
+        "url": "https://<ref>.supabase.co/functions/v1/mcp",
+        "headers": { "Authorization": "Bearer ${MACC_MCP_TOKEN}" }
+      }
+    }
+  }
+  ```
+  Get a token: real users from the web sign-in; for dev, `export MACC_MCP_TOKEN="$(npm run
+  -s mcp-token)"` (mints a fresh service-account JWT). Tokens expire ~1h → re-run to
+  refresh; auto-refresh / OAuth 2.1 is a later §9 step.
+- **Smoke the deployed endpoint:** `MCP_URL=https://<ref>.supabase.co/functions/v1/mcp
+  npx tsx mcp/live-smoke.ts` (mints a throwaway user; checks the no-token gate, the public
+  resource, and an authenticated compute over the internet). Local pre-deploy variants:
+  `mcp/edge-smoke.ts` (Supabase-loaded library under Node) and `mcp/http-smoke.ts`
+  (file-backed).
+
 ## Security model (summary)
 
 - **Read:** anyone (anon) reads non-deleted comments and public/unlisted scenarios.
