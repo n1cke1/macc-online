@@ -9,7 +9,7 @@ import { buildServer } from '../../../mcp/server';
 import { loadLibrary, loadMeasures } from '../../../src/lib/measure/load-supabase';
 import type { AuthedUser } from '../../../mcp/db';
 import type { Library, Measure } from '../../../src/lib/measure/schema';
-import { mintUserJwt, anonClient, userClient } from './supabase';
+import { anonClient, serviceClient } from './supabase';
 import type { Env, UserProps } from './index';
 
 // The authority graph is static → load once per warm isolate.
@@ -26,12 +26,13 @@ export const mcpApiHandler = {
     }
 
     const anon = anonClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY);
-    const token = await mintUserJwt(props.userId, env.SUPABASE_JWT_SECRET);
-    const client = userClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY, token);
-    const user: AuthedUser = { userId: props.userId, email: props.email, client };
+    // ES256 user tokens can't be minted server-side → act as the user via service_role,
+    // scoped by user id in the data layer (mcp/db.ts).
+    const client = serviceClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
+    const user: AuthedUser = { userId: props.userId, email: props.email, client, serviceRole: true };
 
     const library = (libraryCache ??= await loadLibrary(anon));
-    const measures = await loadMeasures(client);
+    const measures = await loadMeasures(anon); // published peers + get-fallback seed
     const server = buildServer({
       user,
       library,

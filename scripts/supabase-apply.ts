@@ -20,7 +20,7 @@ function loadDbUrl(): string {
   return line.slice('SUPABASE_DB_URL='.length).trim();
 }
 
-const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql'];
+const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql'];
 const mode = process.argv[2] ?? '--check';
 
 interface Graph {
@@ -43,12 +43,14 @@ async function listTables(c: Client): Promise<string[]> {
 async function migrate(c: Client) {
   const have = await listTables(c);
   const policies = (await c.query(`select policyname from pg_policies where schemaname='public'`)).rows.map((r) => r.policyname as string);
+  const funcs = (await c.query(`select proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'`)).rows.map((r) => r.proname as string);
   // Per-migration "already applied" hallmark (idempotent re-runs).
   const applied = (f: string): boolean =>
     f.includes('0005') ? have.includes('measures')
     : f.includes('0006') ? policies.includes('measures_read')
     : f.includes('0007') ? have.includes('objects')
     : f.includes('0008') ? have.includes('measure_versions')
+    : f.includes('0009') ? funcs.includes('measure_publish_admin')
     : false;
   for (const f of MIGRATIONS) {
     if (applied(f)) { console.log(`  ⤳ ${f}: skip (already applied)`); continue; }

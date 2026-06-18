@@ -77,7 +77,7 @@ export function buildServer(deps: ServerDeps): McpServer {
     { title: 'List measures', description: 'List the measures visible to the signed-in user (their drafts + published), with headline outputs and model-eligibility.', inputSchema: {} },
     async () => {
       if (!user) return err(AUTH_ERR);
-      const rows = await dbListMeasures(user.client);
+      const rows = await dbListMeasures(user);
       return ok({ user: user.email ?? user.userId, measures: rows.map(({ data: m, scope: storedScope }) => {
         const c = compute(m, library);
         const v = validate(m, library, peersOf(m.id));
@@ -92,7 +92,7 @@ export function buildServer(deps: ServerDeps): McpServer {
     { title: 'Get measure', description: 'Return the full measure document by id.', inputSchema: { id: z.string().describe('measure id, e.g. "kz-2"') } },
     async ({ id }) => {
       if (!user) return err(AUTH_ERR);
-      const m = (await dbGetMeasure(user.client, id)) ?? getSeedMeasure(id);
+      const m = (await dbGetMeasure(user, id)) ?? getSeedMeasure(id);
       return m ? ok(m) : err(`Unknown measure '${id}'`);
     },
   );
@@ -153,7 +153,7 @@ export function buildServer(deps: ServerDeps): McpServer {
     async ({ id }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const versions = await dbMeasureHistory(user.client, id);
+        const versions = await dbMeasureHistory(user, id);
         return ok({ id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
       } catch (e) { return err(`history failed: ${(e as Error).message}`); }
     },
