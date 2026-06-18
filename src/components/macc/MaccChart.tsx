@@ -29,8 +29,11 @@ function ChartInner({ width, height }: { width: number; height: number }) {
   const t = useTranslations('chart');
   const { selectedId, select, hiddenSectors } = useUi();
   const projects = useScenario((s) => s.projects);
-  // Lightweight overlay bridge — null unless the authoring layer pushed a draft.
-  const draft = useDraftOverlay((s) => s.bar);
+  // Lightweight overlay bridge — null unless the authoring layer pushed a draft AND
+  // the editor is expanded (a collapsed editor leaves the curve untouched).
+  const draftBar = useDraftOverlay((s) => s.bar);
+  const editorOpen = useDraftOverlay((s) => s.editorOpen);
+  const draft = editorOpen ? draftBar : null;
   const tip = useTooltip<MaccPoint>();
 
   const bars = useMemo<Bar[]>(() => {

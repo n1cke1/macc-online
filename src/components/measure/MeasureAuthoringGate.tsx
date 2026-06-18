@@ -12,8 +12,15 @@ import dynamic from 'next/dynamic';
 import { authoringEnabled } from '@/lib/config';
 
 const MeasureEditor = dynamic(() => import('./MeasureEditor'), { ssr: false });
+// «Connect the MCP to your chat» helper — also logged-in-gated, in the lazy chunk.
+const McpConnectPanel = dynamic(() => import('./McpConnectPanel'), { ssr: false });
 
 export default function MeasureAuthoringGate() {
   if (!authoringEnabled) return null;
-  return <MeasureEditor />;
+  return (
+    <div className="space-y-4">
+      <MeasureEditor />
+      <McpConnectPanel />
+    </div>
+  );
 }

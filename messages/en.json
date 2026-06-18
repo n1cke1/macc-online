@@ -84,7 +84,7 @@
   "units": { "mt": "Mt", "usdPerTon": "USD/t" },
   "version": { "model": "Model", "source": "source" },
   "measure": {
-    "title": "Measure authoring (prototype §11)",
+    "title": "Create a measure",
     "panel": {
       "overview": "Overview",
       "build": "What we create",

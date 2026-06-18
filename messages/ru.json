@@ -84,7 +84,7 @@
   "units": { "mt": "Mt", "usdPerTon": "USD/т" },
   "version": { "model": "Модель", "source": "источник" },
   "measure": {
-    "title": "Авторинг меры (прототип §11)",
+    "title": "Создание меры",
     "panel": {
       "overview": "Обзор",
       "build": "Что создаём",

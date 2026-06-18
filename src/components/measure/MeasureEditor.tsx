@@ -131,6 +131,8 @@ export default function MeasureEditor() {
   const locale = useLocale() as 'ru' | 'en';
   const { ready, source, initError, library: libraryMaybe, activeId, measure, computed, validation, error, init, reloadMeasures, load, update, clear } = useMeasureDraft();
   const { session, loading: authLoading } = useAuth();
+  // Collapsible section (collapsed by default, like the global-assumptions panel).
+  const [open, setOpen] = useState(false);
   // Inline drill-down: which computed nodes are expanded (keyed by node path in the tree).
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggle = (id: string) => setExpanded((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
@@ -141,6 +143,11 @@ export default function MeasureEditor() {
   // Auth: when the session changes (sign in/out), re-fetch measures so the user's own drafts appear.
   const uid = session?.user?.id;
   useEffect(() => { if (ready) void reloadMeasures(); }, [uid, ready, reloadMeasures]);
+  // Show the draft bar on the chart only while the section is expanded.
+  useEffect(() => {
+    useDraftOverlay.getState().setEditorOpen(open);
+    return () => useDraftOverlay.getState().setEditorOpen(false);
+  }, [open]);
 
   // «Visible to logged-in users only» — the editor is hidden for anonymous visitors
   // (writes are auth+RLS-gated anyway; this hides the UI too). Wait out the initial
@@ -334,16 +341,22 @@ export default function MeasureEditor() {
   }
 
   return (
-    <section className="space-y-3 rounded-lg border border-sky-200 bg-sky-50/40 p-4">
+    <section className="rounded-lg border border-sky-200 bg-sky-50/40 p-4">
+      <div className="flex items-center gap-1">
+        <button onClick={() => setOpen((v) => !v)} aria-expanded={open} className="flex flex-1 items-center gap-1 text-left text-sm font-bold">
+          {t('title')}
+          <span className="text-xs font-normal text-muted">{open ? '▲' : '▼'}</span>
+        </button>
+        <QHelp>{gh(nt.sourcing.principle)}</QHelp>
+      </div>
+      {open && (
+      <div className="mt-3 space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="flex items-center gap-1 text-sm font-bold">{t('title')}<QHelp>{gh(nt.sourcing.principle)}</QHelp></h2>
-        <div className="flex items-center gap-2">
-          <Badge tone={source === 'supabase' ? 'green' : 'amber'} title={initError ?? undefined}>{source === 'supabase' ? 'Supabase' : (locale === 'en' ? 'local fallback' : 'локальный фоллбэк')}</Badge>
-          <div className="flex gap-1">
-            {SEEDS.map((id) => (
-              <button key={id} onClick={() => load(id)} className={`rounded-md border px-2 py-1 text-xs ${id === activeId ? 'border-sky-500 bg-sky-50 text-sky-700' : 'border-line text-muted hover:bg-slate-50'}`}>{id}</button>
-            ))}
-          </div>
+        <Badge tone={source === 'supabase' ? 'green' : 'amber'} title={initError ?? undefined}>{source === 'supabase' ? 'Supabase' : (locale === 'en' ? 'local fallback' : 'локальный фоллбэк')}</Badge>
+        <div className="flex gap-1">
+          {SEEDS.map((id) => (
+            <button key={id} onClick={() => load(id)} className={`rounded-md border px-2 py-1 text-xs ${id === activeId ? 'border-sky-500 bg-sky-50 text-sky-700' : 'border-line text-muted hover:bg-slate-50'}`}>{id}</button>
+          ))}
         </div>
       </div>
       {error && <p className="rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">{error}</p>}
@@ -500,6 +513,8 @@ export default function MeasureEditor() {
         <Badge tone={v?.eligibleForModel ? 'green' : 'amber'}>{v?.eligibleForModel ? `✓ ${t('eligible')}` : `⚠ ${t('notEligible')}`}</Badge>
       </div>
       <button onClick={clear} className="text-xs text-muted underline hover:text-slate-700">{t('clear')}</button>
+      </div>
+      )}
     </section>
   );
 }

@@ -43,10 +43,16 @@ export interface DraftBar {
 interface DraftOverlayState {
   bar: DraftBar | null;
   setBar: (bar: DraftBar | null) => void;
+  /** Whether the authoring editor is expanded — the chart shows the draft bar only then
+   * (so a collapsed editor has no side-effect on the curve). */
+  editorOpen: boolean;
+  setEditorOpen: (open: boolean) => void;
 }
 export const useDraftOverlay = create<DraftOverlayState>((set) => ({
   bar: null,
   setBar: (bar) => set({ bar }),
+  editorOpen: false,
+  setEditorOpen: (editorOpen) => set({ editorOpen }),
 }));
 
 // ── Scenario state (live levers + per-measure overrides + recomputed curve) ──
