@@ -5249,6 +5249,41 @@ async function dbMeasureHistory(user, id) {
   if (error) throw new Error(`history: ${error.message}`);
   return data ?? [];
 }
+var LIBRARY_TABLES = {
+  object: "objects",
+  resource: "resources",
+  product: "products",
+  indicator: "indicators",
+  ref: "refs",
+  pool: "pools",
+  subsector: "subsectors"
+};
+async function dbListLibrary(user) {
+  const out = {};
+  for (const t of Object.values(LIBRARY_TABLES)) {
+    const { data, error } = await user.client.from(t).select("*");
+    if (error) throw new Error(`list ${t}: ${error.message}`);
+    out[t] = data ?? [];
+  }
+  return out;
+}
+async function dbUpsertLibraryEntity(user, kind, entity) {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
+  if (!entity || typeof entity.id !== "string") throw new Error(`library ${kind}: 'id' (string) is required`);
+  const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
+  const { error } = await user.client.from(table).upsert(row);
+  if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
+  const { data: vers } = await user.client.from("library_versions").select("version").eq("entity", table).eq("entity_id", entity.id).order("version", { ascending: false }).limit(1);
+  return { table, id: entity.id, version: vers?.[0]?.version ?? null };
+}
+async function dbLibraryHistory(user, kind, id) {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}'`);
+  const { data, error } = await user.client.from("library_versions").select("version,author_id,created_at").eq("entity", table).eq("entity_id", id).order("version");
+  if (error) throw new Error(`library history: ${error.message}`);
+  return data ?? [];
+}
 
 // mcp/supabase.ts
 var isNode2 = typeof process !== "undefined" && !!process.versions?.node;
@@ -6025,6 +6060,51 @@ function buildServer(deps) {
         return ok({ id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
       } catch (e) {
         return err(`history failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "list_library",
+    { title: "List library", description: "Read the whole shared registry \u2014 objects, resources, products, indicators, refs, pools, subsectors \u2014 as raw rows. Use it to reuse existing ids/shapes before authoring a measure or adding a new entity. The library is open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).", inputSchema: {} },
+    async () => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        return ok(await dbListLibrary(user));
+      } catch (e) {
+        return err(`list_library failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "upsert_library_entity",
+    {
+      title: "Upsert library entity",
+      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,object_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}.",
+      inputSchema: {
+        kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | pool | subsector"),
+        entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)")
+      }
+    },
+    async ({ kind, entity }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const res = await dbUpsertLibraryEntity(user, kind, entity);
+        return ok({ ...res, author: user.email ?? user.userId });
+      } catch (e) {
+        return err(`upsert_library_entity failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "library_history",
+    { title: "Library entity history", description: "Append-only version history of one library entity: each version with its author. Co-authors = the distinct authors.", inputSchema: { kind: z.enum(Object.keys(LIBRARY_TABLES)), id: z.string() } },
+    async ({ kind, id }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const versions = await dbLibraryHistory(user, kind, id);
+        return ok({ kind, id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
+      } catch (e) {
+        return err(`library_history failed: ${e.message}`);
       }
     }
   );

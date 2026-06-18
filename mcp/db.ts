@@ -58,3 +58,53 @@ export async function dbMeasureHistory(user: AuthedUser, id: string): Promise<Ar
   if (error) throw new Error(`history: ${error.message}`);
   return (data ?? []) as never;
 }
+
+// ── Library (the registry): fully open to logged-in collaboration (migration 0010) ──
+
+/** Library entity kind → its table. The whole library is now world-read + any-authenticated-write. */
+export const LIBRARY_TABLES: Record<string, string> = {
+  object: 'objects', resource: 'resources', product: 'products',
+  indicator: 'indicators', ref: 'refs', pool: 'pools', subsector: 'subsectors',
+};
+
+/** Read the whole registry (raw rows per table) — what an author needs to reuse ids/shapes. */
+export async function dbListLibrary(user: AuthedUser): Promise<Record<string, unknown[]>> {
+  const out: Record<string, unknown[]> = {};
+  for (const t of Object.values(LIBRARY_TABLES)) {
+    const { data, error } = await user.client.from(t).select('*');
+    if (error) throw new Error(`list ${t}: ${error.message}`);
+    out[t] = data ?? [];
+  }
+  return out;
+}
+
+/**
+ * Create or correct one library entity (open collaboration; versioned + attributed by
+ * the 0010 triggers). The user-scoped path writes as the user (auth.uid() attributes it);
+ * the service-role path (OAuth Worker — RLS bypassed) stamps `last_author_id` explicitly.
+ */
+export async function dbUpsertLibraryEntity(
+  user: AuthedUser, kind: string, entity: Record<string, unknown>,
+): Promise<{ table: string; id: string; version: number | null }> {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(', ')})`);
+  if (!entity || typeof entity.id !== 'string') throw new Error(`library ${kind}: 'id' (string) is required`);
+  const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
+  const { error } = await user.client.from(table).upsert(row);
+  if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
+  const { data: vers } = await user.client.from('library_versions')
+    .select('version').eq('entity', table).eq('entity_id', entity.id).order('version', { ascending: false }).limit(1);
+  return { table, id: entity.id as string, version: (vers?.[0] as { version?: number })?.version ?? null };
+}
+
+/** Append-only version history of one library entity. */
+export async function dbLibraryHistory(
+  user: AuthedUser, kind: string, id: string,
+): Promise<Array<{ version: number; author_id: string | null; created_at: string }>> {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}'`);
+  const { data, error } = await user.client.from('library_versions')
+    .select('version,author_id,created_at').eq('entity', table).eq('entity_id', id).order('version');
+  if (error) throw new Error(`library history: ${error.message}`);
+  return (data ?? []) as never;
+}

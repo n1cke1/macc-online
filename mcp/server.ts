@@ -15,7 +15,7 @@ import { compute } from '../src/lib/measure/compute';
 import { validate } from '../src/lib/measure/validate';
 import measureSchema from '../data/measure.schema.json';
 import type { Library, Measure } from '../src/lib/measure/schema';
-import { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './db';
+import { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, dbListLibrary, dbUpsertLibraryEntity, dbLibraryHistory, LIBRARY_TABLES, type AuthedUser } from './db';
 
 /** Everything a server instance needs — supplied per transport (and, in C, per request). */
 export interface ServerDeps {
@@ -156,6 +156,50 @@ export function buildServer(deps: ServerDeps): McpServer {
         const versions = await dbMeasureHistory(user, id);
         return ok({ id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
       } catch (e) { return err(`history failed: ${(e as Error).message}`); }
+    },
+  );
+
+  // ── Tool: read the whole library/registry (objects/resources/products/indicators/refs/pools/subsectors) ──
+  server.registerTool(
+    'list_library',
+    { title: 'List library', description: 'Read the whole shared registry — objects, resources, products, indicators, refs, pools, subsectors — as raw rows. Use it to reuse existing ids/shapes before authoring a measure or adding a new entity. The library is open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).', inputSchema: {} },
+    async () => {
+      if (!user) return err(AUTH_ERR);
+      try { return ok(await dbListLibrary(user)); }
+      catch (e) { return err(`list_library failed: ${(e as Error).message}`); }
+    },
+  );
+
+  // ── Tool: create/correct a library entity (open collaboration; versioned + attributed) ──
+  server.registerTool(
+    'upsert_library_entity',
+    {
+      title: 'Upsert library entity',
+      description: 'Create or correct one library entity and save it to the shared registry (open collaboration — any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,object_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}.',
+      inputSchema: {
+        kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]).describe('object | resource | product | indicator | ref | pool | subsector'),
+        entity: z.record(z.string(), z.any()).describe('the entity row (snake_case columns; must include id)'),
+      },
+    },
+    async ({ kind, entity }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const res = await dbUpsertLibraryEntity(user, kind, entity as Record<string, unknown>);
+        return ok({ ...res, author: user.email ?? user.userId });
+      } catch (e) { return err(`upsert_library_entity failed: ${(e as Error).message}`); }
+    },
+  );
+
+  // ── Tool: a library entity's version history ───────────────────────────────────
+  server.registerTool(
+    'library_history',
+    { title: 'Library entity history', description: 'Append-only version history of one library entity: each version with its author. Co-authors = the distinct authors.', inputSchema: { kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]), id: z.string() } },
+    async ({ kind, id }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const versions = await dbLibraryHistory(user, kind, id);
+        return ok({ kind, id, versions, contributors: [...new Set(versions.map((v) => v.author_id).filter(Boolean))] });
+      } catch (e) { return err(`library_history failed: ${(e as Error).message}`); }
     },
   );
 
