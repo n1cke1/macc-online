@@ -1,0 +1,132 @@
+{
+  "_comment": "§11 acceptance slice in the iteration-2 structure: economics derives from created_objects + materials (parity with Excel preserved). A (kz-20) and B (kz-2) reproduce the Excel MAC/abatement; C (kz-16) stays draft (factor ~10× the corridor). Every bare number is accompanied by provenance + binding via `sources` (keyed by value path) per the measure-notation `sourcing` discipline — metadata only, it does NOT feed compute().",
+  "measures": [
+    {
+      "id": "kz-20",
+      "schema_version": 1,
+      "name": { "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)", "en": "Feed additives reducing enteric fermentation (CH₄)" },
+      "sector_ref": "3",
+      "sectors": [{ "sector_ref": "3", "subsector_ref": "3.enteric" }],
+      "technology_ref": "tech_feed_additive",
+      "scope": "draft",
+      "maturity_stage": "back_calc",
+      "comparison": { "is_substitution": true },
+      "inputs": {
+        "capex_denominator": { "value": 2550000, "unit": "голов", "provenance": { "source_type": "official_stat", "citation": "Поголовье под программу 2550 тыс. голов", "confidence": "medium" } }
+      },
+      "abatement": {
+        "back_calc": {
+          "share": 0.10,
+          "activity_scalar": { "qty": 2550, "unit": "тыс. голов" },
+          "reference_ref": "ref_enteric_factor"
+        }
+      },
+      "created_objects": [
+        { "object_ref": "tech_feed_dosing", "capacity": 2550000, "unit": "голов" },
+        { "object_ref": "tech_feed_training", "capacity": 5100, "unit": "хозяйств", "opex_musd": 25.5 }
+      ],
+      "materials": [
+        { "resource_ref": "feed_additive", "side": "new", "qty": 2550000, "price": 50, "unit": "голов" }
+      ],
+      "potential": { "ceiling_dim": "activity", "pool_ref": "pool_enteric" },
+      "sources": {
+        "created_objects[0].capacity": { "provenance": { "source_type": "official_stat", "citation": "Поголовье под программу, 2550 тыс. голов", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } },
+        "created_objects[1].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Охват ~5100 хозяйств", "confidence": "low" }, "binding": { "mode": "new" } },
+        "created_objects[1].opex_musd": { "provenance": { "source_type": "expert_estimate", "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год", "confidence": "medium" }, "binding": { "mode": "new" } },
+        "materials[0].qty": { "provenance": { "source_type": "expert_estimate", "citation": "1 доза кормовой добавки на голову в год", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } },
+        "materials[0].price": { "provenance": { "source_type": "literature", "citation": "Цена кормовой добавки ~50 $/голову/год", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "res:feed_additive#price" } },
+        "abatement.back_calc.share": { "provenance": { "source_type": "official_stat", "citation": "Лист «Мероприятия», доля охвата подкатегории", "confidence": "medium" }, "binding": { "mode": "new" } },
+        "abatement.back_calc.activity_scalar.qty": { "provenance": { "source_type": "official_stat", "citation": "Поголовье 2550 тыс. голов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "in:capex_denominator" } }
+      }
+    },
+    {
+      "id": "kz-2",
+      "schema_version": 1,
+      "name": { "ru": "Перевод угольных ТЭЦ и котельных на природный газ", "en": "Conversion of coal CHP and boilers to natural gas" },
+      "sector_ref": "1.A.1",
+      "sectors": [{ "sector_ref": "1.A.1", "subsector_ref": "1.A.1.coal_power" }],
+      "product_ref": "prod_mwh",
+      "technology_ref": "tech_coal_to_gas",
+      "scope": "draft",
+      "maturity_stage": "computed",
+      "comparison": { "is_substitution": false, "service_unit_ref": "prod_mwh" },
+      "inputs": {
+        "cap_mw": { "value": 5000, "unit": "МВт", "provenance": { "source_type": "expert_estimate", "citation": "Замещаемая мощность", "confidence": "medium" } },
+        "kium": { "value": 0.5, "unit": "доля", "provenance": { "source_type": "standard", "citation": "КИУМ", "confidence": "high" } },
+        "capex_denominator": { "value": 5000000, "unit": "кВт", "provenance": { "source_type": "expert_estimate", "confidence": "medium" } },
+        "eff_gas": { "value": 0.50, "unit": "доля", "provenance": { "source_type": "placeholder", "citation": "КПД газового блока (нетто) — TODO: подставить стандарт/ГОСТ", "url": "https://example.org/TODO-gas-efficiency", "confidence": "low" } },
+        "q_gas": { "value": 33.6548572, "unit": "ГДж/тыс. м³", "provenance": { "source_type": "placeholder", "citation": "Низшая теплотворность природного газа (LHV) — TODO: подставить ГОСТ 31369/справочник", "url": "https://example.org/TODO-gas-lhv", "confidence": "low" } },
+        "eff_coal": { "value": 0.48, "unit": "доля", "provenance": { "source_type": "placeholder", "citation": "КПД угольного блока (нетто) — TODO: подставить стандарт", "url": "https://example.org/TODO-coal-efficiency", "confidence": "low" } },
+        "q_coal": { "value": 20.0, "unit": "ГДж/т", "provenance": { "source_type": "placeholder", "citation": "Низшая теплотворность угля (LHV) — TODO: подставить справочник по марке", "url": "https://example.org/TODO-coal-lhv", "confidence": "low" } }
+      },
+      "abatement": {
+        "computed": {
+          "formula_ref": "delta_ef",
+          "bindings": {
+            "capacity": { "ref": "cap_mw" },
+            "cf": { "ref": "kium" },
+            "ef_in": { "ref": "res:coal" },
+            "ef_out": { "ref": "res:gas" }
+          }
+        }
+      },
+      "created_objects": [
+        { "object_ref": "tech_coal_to_gas", "capacity": 5000, "unit": "МВт", "capex_ud_factor": 1000, "opex_musd": -120 },
+        { "object_ref": "tech_gas_pipeline", "capacity": 5000, "unit": "МВт", "capex_ud_factor": 1000 }
+      ],
+      "materials": [
+        { "resource_ref": "gas", "side": "new", "price": 250, "unit": "тыс. м³" },
+        { "resource_ref": "coal", "side": "retired", "price": 15, "unit": "т" }
+      ],
+      "potential": { "ceiling_dim": "n_objects", "pool_ref": "pool_coal_power" },
+      "computed": {
+        "gas_intensity": { "label": { "ru": "Удельный расход газа", "en": "Gas intensity" }, "formula": { "op": "div", "args": [{ "const": 3.6 }, { "op": "mul", "args": [{ "ref": "eff_gas" }, { "ref": "q_gas" }] }] } },
+        "coal_intensity": { "label": { "ru": "Удельный расход угля", "en": "Coal intensity" }, "formula": { "op": "div", "args": [{ "const": 3.6 }, { "op": "mul", "args": [{ "ref": "eff_coal" }, { "ref": "q_coal" }] }] } },
+        "materials[0].qty": { "label": { "ru": "Расход газа", "en": "Gas consumption" }, "formula": { "op": "mul", "args": [{ "ref": "cap_mw" }, { "ref": "kium" }, { "const": 8760 }, { "ref": "gas_intensity" }] } },
+        "materials[1].qty": { "label": { "ru": "Высвобождаемый уголь", "en": "Released coal" }, "formula": { "op": "mul", "args": [{ "ref": "cap_mw" }, { "ref": "kium" }, { "const": 8760 }, { "ref": "coal_intensity" }] } }
+      },
+      "sources": {
+        "created_objects[0].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Замещаемая мощность угольных ТЭЦ, 5000 МВт", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:cap_mw" } },
+        "created_objects[0].opex_musd": { "provenance": { "source_type": "expert_estimate", "citation": "Экономия OPEX при переходе на газ", "confidence": "medium" }, "binding": { "mode": "new" } },
+        "created_objects[1].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Газопровод под мощность станции", "confidence": "medium" }, "binding": { "mode": "reuse", "ref": "in:cap_mw" } },
+        "materials[0].price": { "provenance": { "source_type": "standard", "citation": "Цена газа 250 $/тыс. м³ — реестр ресурсов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "res:gas#price" } },
+        "materials[1].price": { "provenance": { "source_type": "standard", "citation": "Цена угля 15 $/т — реестр ресурсов", "confidence": "high" }, "binding": { "mode": "reuse", "ref": "res:coal#price" } }
+      }
+    },
+    {
+      "id": "kz-16",
+      "schema_version": 1,
+      "name": { "ru": "Дегазация угольных шахт (метан угольных пластов)", "en": "Coal-mine methane degassing (coalbed methane)" },
+      "sector_ref": "1.B",
+      "sectors": [{ "sector_ref": "1.B", "subsector_ref": "1.B.coal_methane" }],
+      "technology_ref": "tech_mine_degas",
+      "scope": "draft",
+      "maturity_stage": "back_calc",
+      "comparison": { "is_substitution": true },
+      "inputs": {},
+      "abatement": {
+        "back_calc": {
+          "share": 0.2,
+          "activity_scalar": { "qty": 9.791795506081222, "unit": "млн м³" },
+          "reference_ref": "ref_degas_factor"
+        }
+      },
+      "created_objects": [
+        { "object_ref": "tech_mine_degas", "capacity": 9.791795506081222, "unit": "млн м³", "capex_musd": 300, "opex_musd": 12 }
+      ],
+      "materials": [
+        { "resource_ref": "methane", "side": "retired", "qty": 9791.795506081223, "price": 150, "unit": "тыс. м³" }
+      ],
+      "potential": { "ceiling_dim": "cut_resource", "pool_ref": "pool_coal_methane" },
+      "sources": {
+        "created_objects[0].capacity": { "provenance": { "source_type": "expert_estimate", "citation": "Объём метана к дегазации, ~9.8 млн м³", "confidence": "low" }, "binding": { "mode": "new" } },
+        "created_objects[0].capex_musd": { "provenance": { "source_type": "placeholder", "citation": "Оценка CAPEX установки дегазации — требует проверки", "confidence": "low" }, "binding": { "mode": "new" } },
+        "created_objects[0].opex_musd": { "provenance": { "source_type": "placeholder", "citation": "Оценка OPEX — требует проверки", "confidence": "low" }, "binding": { "mode": "new" } },
+        "materials[0].qty": { "provenance": { "source_type": "expert_estimate", "citation": "Высвобождаемый метан", "confidence": "low" }, "binding": { "mode": "reuse", "ref": "created_objects[0].capacity" } },
+        "materials[0].price": { "provenance": { "source_type": "expert_estimate", "citation": "Цена метана 150 $/тыс. м³", "confidence": "low" }, "binding": { "mode": "new" } },
+        "abatement.back_calc.share": { "provenance": { "source_type": "assumption", "citation": "Доля охвата 0.2 — постулирована", "confidence": "low" }, "binding": { "mode": "new" } },
+        "abatement.back_calc.activity_scalar.qty": { "provenance": { "source_type": "expert_estimate", "citation": "Активность ~9.8 млн м³", "confidence": "low" }, "binding": { "mode": "reuse", "ref": "created_objects[0].capacity" } }
+      }
+    }
+  ]
+}

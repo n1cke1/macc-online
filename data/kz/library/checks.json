@@ -1,0 +1,27 @@
+{
+  "_comment": "§7 guardrails stored as AST notation (not hardcoded in validate()). Each check defines the formula that computes the checked quantity (slots bound at validation time) and the predicate it must satisfy. validate() binds slots, evaluates both via HyperFormula, and renders them for the UI.",
+  "factor": {
+    "id": "factor",
+    "label": { "ru": "Физика: обратно-считанный фактор vs коридор", "en": "Physics: back-calculated factor vs corridor" },
+    "quantity": { "op": "div", "args": [ { "slot": "abatement" }, { "slot": "activity" } ] },
+    "predicate": { "op": "between", "args": [ { "slot": "value" }, { "slot": "min" }, { "slot": "max" } ] }
+  },
+  "economics": {
+    "id": "economics",
+    "label": { "ru": "Экономика: удельный CAPEX vs диапазон технологии", "en": "Economics: implied unit CAPEX vs technology band" },
+    "quantity": { "op": "div", "args": [ { "op": "mul", "args": [ { "slot": "capex" }, 1000000 ] }, { "slot": "denominator" } ] },
+    "predicate": { "op": "between", "args": [ { "slot": "value" }, { "slot": "min" }, { "slot": "max" } ] }
+  },
+  "pool": {
+    "id": "pool",
+    "label": { "ru": "Пул: сумма снижений ≤ потолок пула", "en": "Pool: summed reductions ≤ pool ceiling" },
+    "quantity": { "slot": "sum_pool" },
+    "predicate": { "op": "lte", "args": [ { "slot": "value" }, { "slot": "ceiling" } ] }
+  },
+  "sector": {
+    "id": "sector",
+    "label": { "ru": "Сектор: снижение ≤ базовые выбросы подкатегории", "en": "Sector: reduction ≤ sub-category baseline" },
+    "quantity": { "slot": "abatement" },
+    "predicate": { "op": "lte", "args": [ { "slot": "value" }, { "slot": "baseline" } ] }
+  }
+}

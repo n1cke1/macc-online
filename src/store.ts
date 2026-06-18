@@ -25,6 +25,30 @@ export const useUi = create<UiState>((set) => ({
     }),
 }));
 
+// ── Draft-overlay bridge (lightweight; safe to import in the static core) ────
+// The authoring layer (a lazy chunk that pulls in HyperFormula) computes the
+// draft measure and pushes ONLY its plottable result here. The chart reads it to
+// splice a draft bar into the curve. Kept free of any calc import so importing it
+// from MaccChart never bundles HyperFormula into the core (bundle hygiene).
+export interface DraftBar {
+  /** Curve id of the measure this draft edits, so the chart can de-dupe it. */
+  linkedId: number | null;
+  sector: string;
+  name: { ru: string; en: string };
+  mac: number;
+  abatementKt: number;
+  /** From validate(): true while a guardrail flags the draft (styled as ⚠). */
+  warn: boolean;
+}
+interface DraftOverlayState {
+  bar: DraftBar | null;
+  setBar: (bar: DraftBar | null) => void;
+}
+export const useDraftOverlay = create<DraftOverlayState>((set) => ({
+  bar: null,
+  setBar: (bar) => set({ bar }),
+}));
+
 // ── Scenario state (live levers + per-measure overrides + recomputed curve) ──
 // The curve starts as the bundled baseline (golden) data — no engine needed for
 // the first paint. Moving a lever OR editing a per-measure assumption in the

@@ -168,7 +168,7 @@ export interface Fingerprint {
 }
 
 // Sector palette + EN labels are overridden by the ETL's translation overlay,
-// but this map is the canonical default used across the app.
+// but this map is the default used across the app.
 export const SECTORS: Record<SectorCode, SectorMeta> = {
   '1.A.1': { color: '#c0392b', label: { ru: 'Энергетические отрасли', en: 'Energy industries (power & heat generation)' } },
   '1.A.2': { color: '#e67e22', label: { ru: 'Обрабатывающая промышленность', en: 'Manufacturing industries & construction' } },

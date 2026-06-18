@@ -9,9 +9,14 @@
     "start": "next start",
     "lint": "next lint",
     "etl": "py scripts/etl.py",
-    "golden": "tsx scripts/golden.ts"
+    "golden": "tsx scripts/golden.ts",
+    "measure-golden": "tsx scripts/measure-golden.ts",
+    "seed-library": "tsx scripts/seed-library.ts",
+    "supabase-apply": "tsx scripts/supabase-apply.ts",
+    "mcp": "tsx mcp/measure-server.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@supabase/supabase-js": "^2.108.1",
     "@visx/axis": "^3.12.0",
     "@visx/event": "^3.12.0",
@@ -30,10 +35,13 @@
   },
   "devDependencies": {
     "@types/node": "^20.17.12",
+    "@types/pg": "^8.20.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "autoprefixer": "^10.4.20",
+    "pg": "^8.21.0",
     "postcss": "^8.5.1",
+    "supabase": "^2.107.0",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.22.4",
     "typescript": "^5.7.3"

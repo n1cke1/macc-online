@@ -14,6 +14,16 @@ export const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '';
 /** True only when a Supabase backend is configured. Gates the entire collab layer. */
 export const collabEnabled = Boolean(supabaseUrl && supabaseAnonKey);
 
+/**
+ * Gates the measure-authoring layer (accordion editor + draft overlay). Off by
+ * default so the anonymous static core never bundles the authoring chunk — which
+ * pulls in the §2 schema, the AST→HF calc core and HyperFormula. Bundle hygiene
+ * only: the feature itself is in scope (see docs/measure-authoring-prototype.md).
+ * Build-time constant (NEXT_PUBLIC_* is inlined), so the chunk tree-shakes away
+ * entirely when disabled.
+ */
+export const authoringEnabled = process.env.NEXT_PUBLIC_AUTHORING === '1';
+
 /** OAuth providers offered for sign-in (email magic-link is always available). */
 export const authProviders = ['linkedin_oidc', 'google'] as const;
 export type OAuthProvider = (typeof authProviders)[number];

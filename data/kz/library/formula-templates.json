@@ -1,0 +1,24 @@
+{
+  "_comment": "Published mirror of src/lib/measure/templates.ts BUILTIN_TEMPLATES (trust anchor). The engine uses the code definitions; keep these in sync.",
+  "delta_ef": {
+    "id": "delta_ef",
+    "output": "abatement",
+    "expr": { "op": "mul", "args": [ { "slot": "capacity" }, 8760, { "slot": "cf" }, { "op": "sub", "args": [ { "slot": "ef_in" }, { "slot": "ef_out" } ] }, 0.001 ] },
+    "slots": [
+      { "name": "capacity", "accepts": "input" },
+      { "name": "cf", "accepts": "input" },
+      { "name": "ef_in", "accepts": "resource.ef" },
+      { "name": "ef_out", "accepts": "resource.ef" }
+    ],
+    "provenance": { "source_type": "standard", "confidence": "high" }
+  },
+  "share": {
+    "id": "share",
+    "output": "abatement",
+    "expr": { "op": "mul", "args": [ { "slot": "baseline" }, { "slot": "share" } ] },
+    "slots": [
+      { "name": "baseline", "accepts": "input" },
+      { "name": "share", "accepts": "input" }
+    ]
+  }
+}

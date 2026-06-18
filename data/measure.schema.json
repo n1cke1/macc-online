@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://macc.kz/schema/measure.json",
+  "title": "Measure",
+  "description": "The authoring input object (§2 of macc-ui-concept.md). One JSON Schema is the single source for the accordion UI form, the MCP `schema://measure` contract and validate(). Mirrors src/lib/measure/schema.ts.",
+  "type": "object",
+  "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "abatement", "economics"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string" },
+    "schema_version": { "type": "integer", "const": 1 },
+    "name": { "$ref": "#/$defs/localized" },
+    "sector_ref": { "$ref": "#/$defs/sectorCode" },
+    "technology_ref": { "type": "string" },
+    "scope": { "enum": ["published", "draft", "scenario"] },
+    "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); required to persist." },
+    "maturity_stage": { "enum": ["raw", "back_calc", "computed"] },
+    "review_status": { "enum": ["open", "accepted", "rejected", "wontfix"] },
+    "comparison": {
+      "type": "object",
+      "required": ["is_substitution"],
+      "additionalProperties": false,
+      "properties": {
+        "service_unit_ref": { "type": "string" },
+        "is_substitution": { "type": "boolean" }
+      }
+    },
+    "flows": {
+      "type": "object",
+      "required": ["baseline", "project"],
+      "additionalProperties": false,
+      "properties": {
+        "baseline": { "type": "array", "items": { "$ref": "#/$defs/flow" } },
+        "project": { "type": "array", "items": { "$ref": "#/$defs/flow" } }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/valueWithSource" }
+    },
+    "abatement": {
+      "type": "object",
+      "description": "Exactly one stage block, keyed by maturity_stage (§5).",
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "type": "object",
+          "required": ["share"],
+          "additionalProperties": false,
+          "properties": { "share": { "type": "number" }, "justification": { "type": "string" } }
+        },
+        "back_calc": {
+          "type": "object",
+          "required": ["share", "activity_scalar", "reference_ref"],
+          "additionalProperties": false,
+          "properties": {
+            "share": { "type": "number" },
+            "activity_scalar": {
+              "type": "object",
+              "required": ["qty", "unit"],
+              "properties": { "qty": { "type": "number" }, "unit": { "type": "string" } }
+            },
+            "implied_factor": { "type": "number", "readOnly": true },
+            "reference_ref": { "type": "string" }
+          }
+        },
+        "computed": {
+          "type": "object",
+          "required": ["formula_ref", "bindings"],
+          "additionalProperties": false,
+          "properties": {
+            "formula_ref": { "type": "string" },
+            "bindings": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/formulaBinding" }
+            },
+            "derived_share": { "type": "number", "readOnly": true }
+          }
+        }
+      }
+    },
+    "economics": {
+      "type": "object",
+      "required": ["capex", "opex", "revenue"],
+      "additionalProperties": false,
+      "properties": {
+        "capex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
+        "opex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
+        "revenue": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } }
+      }
+    },
+    "potential": {
+      "type": "object",
+      "required": ["ceiling_dim", "pool_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "ceiling_dim": { "enum": ["cut_resource", "output_product", "n_objects", "activity"] },
+        "pool_ref": { "type": "string" },
+        "combination_group": { "type": "string" }
+      }
+    },
+    "provenance_rollup": { "enum": ["high", "medium", "low"], "readOnly": true }
+  },
+  "$defs": {
+    "localized": {
+      "type": "object",
+      "required": ["ru"],
+      "properties": { "ru": { "type": "string" }, "en": { "type": "string" } }
+    },
+    "sectorCode": { "enum": ["1.A.1", "1.A.2", "1.A.3", "1.A.4", "1.B", "2", "3", "4", "5"] },
+    "flow": {
+      "type": "object",
+      "required": ["resource_ref", "qty_per_unit"],
+      "additionalProperties": false,
+      "properties": {
+        "resource_ref": { "type": "string" },
+        "qty_per_unit": { "type": "number" },
+        "unit": { "type": "string" }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source_type", "confidence"],
+      "additionalProperties": false,
+      "properties": {
+        "source_type": { "enum": ["official_stat", "literature", "standard", "expert_estimate", "assumption", "placeholder"] },
+        "citation": { "type": "string" },
+        "url": { "type": "string" },
+        "date": { "type": "string" },
+        "confidence": { "enum": ["high", "medium", "low"] }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "required": ["mode"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "enum": ["reuse", "alt", "new"] },
+        "ref": { "type": "string" },
+        "value": { "type": "number" },
+        "divergence_reason": { "type": "string" }
+      }
+    },
+    "valueWithSource": {
+      "type": "object",
+      "required": ["value", "provenance"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string" },
+        "provenance": { "$ref": "#/$defs/provenance" },
+        "binding": { "$ref": "#/$defs/binding" }
+      }
+    },
+    "formulaBinding": {
+      "oneOf": [
+        { "type": "object", "required": ["ref"], "additionalProperties": false, "properties": { "ref": { "type": "string" } } },
+        { "type": "object", "required": ["const"], "additionalProperties": false, "properties": { "const": { "type": "number" } } }
+      ]
+    }
+  }
+}

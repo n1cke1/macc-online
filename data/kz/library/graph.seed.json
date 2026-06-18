@@ -1,0 +1,58 @@
+{
+  "_comment": "Normalized library graph (English base; translation is a separate layer, added later). The Indicator is the hub: every library number lives in `indicators` with owner_kind+owner_ref and an optional reference_ref. Objects/resources/products hold only metadata. This seed is the source of truth for the Supabase tables (migration 0007) AND the measure-golden fixture. Numbers equal the prior inline values → parity holds.",
+  "subsectors": [
+    { "id": "1.A.1.coal_power", "sector_ref": "1.A.1", "name": "Coal power generation" },
+    { "id": "1.A.1.gas_power", "sector_ref": "1.A.1", "name": "Gas power generation" },
+    { "id": "1.B.coal_methane", "sector_ref": "1.B", "name": "Coal-mine methane (coalbed)" },
+    { "id": "2.cement", "sector_ref": "2", "name": "Cement production" },
+    { "id": "2.metallurgy", "sector_ref": "2", "name": "Metallurgy" },
+    { "id": "2.eor", "sector_ref": "2", "name": "Enhanced oil recovery (CCUS)" },
+    { "id": "2.ammonia", "sector_ref": "2", "name": "Green ammonia" },
+    { "id": "3.enteric", "sector_ref": "3", "name": "Cattle enteric fermentation" },
+    { "id": "3.orchards", "sector_ref": "3", "name": "Orchard cultivation" }
+  ],
+  "objects": [
+    { "id": "tech_coal_to_gas", "name": "Gas turbine / boiler equipment", "kind": "modernization", "description": "Converting existing coal CHP/boilers to natural gas.", "rules": "Upgrade of an existing asset: expects a unit CAPEX ($/kW) and installed capacity as denominator.", "lifetimeYrs": 20 },
+    { "id": "tech_gas_pipeline", "name": "Gas pipelines & connection", "kind": "infrastructure", "description": "Supply pipelines and grid connection.", "rules": "Gas-supply infrastructure: CAPEX as a share of the generating object.", "lifetimeYrs": 20 },
+    { "id": "tech_feed_dosing", "name": "Dosing equipment", "kind": "capital_asset", "description": "Per-head feed-additive dosing systems.", "rules": "Per-head capital asset: CAPEX = head × unit CAPEX.", "lifetimeYrs": 10 },
+    { "id": "tech_feed_training", "name": "Training & rollout", "kind": "practice", "description": "Farm training and programme rollout.", "rules": "Operational practice: CAPEX = farms × unit rollout cost.", "lifetimeYrs": 10 },
+    { "id": "tech_feed_additive", "name": "Feed additives (3-NOP)", "kind": "practice", "description": "Cattle feed additives reducing enteric methane.", "rules": "Operational practice: low CAPEX (dosing/training); the main cost is additive OPEX.", "lifetimeYrs": 10 },
+    { "id": "tech_mine_degas", "name": "Degassing & utilization systems", "kind": "infrastructure", "description": "Coal-mine methane capture and utilization systems.", "rules": "Capture infrastructure: CAPEX for degassing systems; methane-utilization revenue offsets OPEX.", "lifetimeYrs": 20 }
+  ],
+  "resources": [
+    { "id": "coal", "name": "Coal", "unit": "tCO₂/MWh" },
+    { "id": "gas", "name": "Natural gas", "unit": "tCO₂/MWh" },
+    { "id": "feed_additive", "name": "Feed additive (3-NOP)", "unit": "$/head·yr" },
+    { "id": "methane", "name": "Methane (utilized)", "unit": "$/thousand m³" }
+  ],
+  "products": [
+    { "id": "prod_mwh", "name": "Electricity", "unit": "MWh", "service_unit": "MWh", "sector_ref": "1.A.1", "object_ref": "tech_coal_to_gas" }
+  ],
+  "references": [
+    { "id": "ref_enteric_factor", "type": "factor:enteric_CH4_per_head", "range": [0.6, 0.84], "unit": "kt CO₂eq/(thousand head·yr)", "source": { "source_type": "literature", "citation": "§11 corridor 600–840 kg CO₂eq/head/yr (−30%)", "confidence": "medium" } },
+    { "id": "ref_degas_factor", "type": "factor:coal_mine_CH4_per_volume", "range": [17, 21], "unit": "kt CO₂eq/(million m³)", "source": { "source_type": "standard", "citation": "Credible CH₄→CO₂eq per captured volume (block physics ≈184 kt)", "confidence": "high" } },
+    { "id": "ref_capex_coal_to_gas", "type": "capex_ud:coal_to_gas", "range": [1200, 2400], "unit": "$/kW", "source": { "source_type": "literature", "confidence": "medium" } },
+    { "id": "ref_capex_feed_additive", "type": "capex_ud:feed_additive", "range": [30, 90], "unit": "$/head", "source": { "source_type": "literature", "confidence": "medium" } }
+  ],
+  "indicators": [
+    { "id": "ind_gt_capex", "key": "capex_ud", "owner_kind": "object", "owner_ref": "tech_coal_to_gas", "value": 1500, "unit": "$/kW", "reference_ref": "ref_capex_coal_to_gas", "provenance": { "source_type": "literature", "confidence": "medium" } },
+    { "id": "ind_gt_maint", "key": "maintenance_capex_ud", "owner_kind": "object", "owner_ref": "tech_coal_to_gas", "value": 50, "unit": "$/kW", "provenance": { "source_type": "expert_estimate", "confidence": "low" } },
+    { "id": "ind_gt_eff", "key": "eff", "owner_kind": "object", "owner_ref": "tech_coal_to_gas", "value": 0.5, "unit": "fraction", "provenance": { "source_type": "standard", "confidence": "high" } },
+    { "id": "ind_pipe_capex", "key": "capex_ud", "owner_kind": "object", "owner_ref": "tech_gas_pipeline", "value": 600, "unit": "$/kW", "provenance": { "source_type": "expert_estimate", "confidence": "low" } },
+    { "id": "ind_dosing_capex", "key": "capex_ud", "owner_kind": "object", "owner_ref": "tech_feed_dosing", "value": 15, "unit": "$/head", "provenance": { "source_type": "literature", "confidence": "medium" } },
+    { "id": "ind_training_capex", "key": "capex_ud", "owner_kind": "object", "owner_ref": "tech_feed_training", "value": 20000, "unit": "$/farm", "provenance": { "source_type": "expert_estimate", "confidence": "low" } },
+    { "id": "ind_additive_capex", "key": "capex_ud", "owner_kind": "object", "owner_ref": "tech_feed_additive", "value": 55, "unit": "$/head", "reference_ref": "ref_capex_feed_additive", "provenance": { "source_type": "literature", "confidence": "medium" } },
+    { "id": "ind_coal_ef", "key": "ef", "owner_kind": "resource", "owner_ref": "coal", "value": 1.0, "unit": "tCO₂/MWh", "provenance": { "source_type": "standard", "confidence": "high" } },
+    { "id": "ind_coal_price", "key": "price", "owner_kind": "resource", "owner_ref": "coal", "value": 15, "unit": "$/t", "provenance": { "source_type": "standard", "confidence": "high" } },
+    { "id": "ind_gas_ef", "key": "ef", "owner_kind": "resource", "owner_ref": "gas", "value": 0.45, "unit": "tCO₂/MWh", "provenance": { "source_type": "standard", "confidence": "high" } },
+    { "id": "ind_gas_price", "key": "price", "owner_kind": "resource", "owner_ref": "gas", "value": 250, "unit": "$/thousand m³", "provenance": { "source_type": "standard", "confidence": "high" } },
+    { "id": "ind_additive_price", "key": "price", "owner_kind": "resource", "owner_ref": "feed_additive", "value": 50, "unit": "$/head·yr", "provenance": { "source_type": "literature", "confidence": "medium" } },
+    { "id": "ind_methane_price", "key": "price", "owner_kind": "resource", "owner_ref": "methane", "value": 150, "unit": "$/thousand m³", "provenance": { "source_type": "expert_estimate", "confidence": "low" } },
+    { "id": "ind_mwh_cf", "key": "carbon_footprint", "owner_kind": "product", "owner_ref": "prod_mwh", "value": 1.0, "unit": "tCO₂/MWh (coal baseline)", "provenance": { "source_type": "standard", "confidence": "high" } }
+  ],
+  "pools": [
+    { "id": "pool_enteric", "caps_ref": "activity:cattle_enteric", "annual_flow": 5000, "unit": "kt CO₂eq/yr", "sector_ref": "3", "baselineEmissionsKt": 17800 },
+    { "id": "pool_coal_power", "caps_ref": "resource:coal_power", "annual_flow": 60000, "unit": "kt CO₂eq/yr", "sector_ref": "1.A.1", "baselineEmissionsKt": 130000 },
+    { "id": "pool_coal_methane", "caps_ref": "resource:coal_mine_ch4", "annual_flow": 3000, "unit": "kt CO₂eq/yr", "sector_ref": "1.B", "baselineEmissionsKt": 9500 }
+  ]
+}
