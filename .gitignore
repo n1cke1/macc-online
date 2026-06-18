@@ -16,6 +16,7 @@ out/
 .env
 .env.*
 !.env.example
+!.env.production
 
 # Python
 __pycache__/

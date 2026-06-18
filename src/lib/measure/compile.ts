@@ -1,12 +1,13 @@
-// §3 — compile an AST to a HyperFormula formula string, evaluate it, and render it
-// in human-readable form.
+// §3 — the HyperFormula PARITY ORACLE for the measure AST.
 //
-// We reuse HyperFormula (already in the stack via `src/lib/calc/engine.ts`) rather
-// than writing a bespoke interpreter: every measure formula — the §0 economic core
-// (PV-based NPV/MAC) AND the stored guardrail predicates (validate()) — is
-// evaluated by the same engine that reproduces the Excel cached values, so
-// `etl.py --check` parity is a proof the AST translation lost nothing (§10).
-// Constants are inlined, so each eval is a self-contained single-cell workbook.
+// This module is no longer on the runtime/served path — `compute()`/`validate()` and
+// the UI evaluate measures through the pure-TS interpreter in `eval.ts`, so
+// HyperFormula stays OUT of the app bundle and the Deno/Edge hosted MCP (§9). What
+// remains here is the original HF-backed evaluation, kept as the oracle that
+// `measure-golden` pins the pure-TS path against: HF reproduces the Excel cached
+// values bit-for-bit (`etl.py --check`), so pure-TS == HF == Excel is a proof the AST
+// translation lost nothing (§10). Constants are inlined → each eval is a
+// self-contained single-cell workbook. Imported only by the golden test.
 import { HyperFormula } from 'hyperformula';
 import {
   type Ast,
@@ -16,9 +17,7 @@ import {
   isLeafSlot,
   isNode,
 } from './ast';
-
-/** Resolves a named `{ref}` leaf to a number (measure input / resource property). */
-export type RefResolver = (key: string) => number;
+import type { RefResolver } from './eval';
 
 const BINARY: Partial<Record<AstOp, string>> = {
   add: '+', sub: '-', mul: '*', div: '/', lte: '<=', gte: '>=',
@@ -98,42 +97,4 @@ export function economicCore(args: {
   const discCo2Kt = evalFormula(`-PV(${fmt(r)},${fmt(n)},${fmt(abatementKt)})`);
   const mac = discCo2Kt === 0 ? 0 : (npv / discCo2Kt) * 1000;
   return { npv, discCo2Kt, mac };
-}
-
-// ── human-readable rendering ──────────────────────────────────────────────────
-
-const SYMBOL: Partial<Record<AstOp, string>> = {
-  add: ' + ', sub: ' − ', mul: ' × ', div: ' / ', lte: ' ≤ ', gte: ' ≥ ',
-};
-
-/**
- * Render an AST as a human formula. `label(key)` names a `{ref}`/`{slot}` leaf —
- * e.g. it can return "мощность" or "мощность (5000)" to inline values. This is how
- * the UI shows the reduction formula and the guardrail checks in plain language
- * (the formula itself lives as data — the AST — per §3).
- */
-export function renderAst(ast: Ast, label: (key: string) => string): string {
-  const walk = (a: Ast): string => {
-    if (typeof a === 'number') return numStr(a);
-    if (isLeafConst(a)) return numStr(a.const);
-    if (isLeafRef(a)) return label(a.ref);
-    if (isLeafSlot(a)) return label(a.slot);
-    if (isNode(a)) {
-      const p = a.args.map(walk);
-      if (a.op in SYMBOL) return `(${p.join(SYMBOL[a.op])})`;
-      if (a.op === 'sum') return `Σ(${p.join(', ')})`;
-      if (a.op === 'pv') return `PV(${p.join(', ')})`;
-      if (a.op === 'between') return `${p[0]} ∈ [${p[1]}, ${p[2]}]`;
-      return `${a.op}(${p.join(', ')})`;
-    }
-    return '?';
-  };
-  // Strip the outermost redundant parentheses for readability.
-  return walk(ast).replace(/^\((.*)\)$/, '$1');
-}
-
-function numStr(n: number): string {
-  if (n === 1e-3) return '10⁻³';
-  if (Number.isInteger(n)) return String(n);
-  return String(Number(n.toPrecision(6)));
 }

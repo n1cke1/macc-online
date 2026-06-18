@@ -1,42 +1,15 @@
-// Server-authoritative guardrail re-evaluation — a pure-TS path with NO
-// HyperFormula. Promotion to `published` must be independent of the client, and
-// it runs in Deno (the validate-and-promote Edge Function), where bundling
-// HyperFormula + JSON-import assertions is friction. The guardrails (§7) only use
-// + − × ÷ and comparisons — no PV — so a tiny evaluator suffices; the heavy
-// PV-based economic core (MAC) lives in the HF path (compile.ts) and is NOT needed
-// to decide promotion.
+// Server-authoritative guardrail re-evaluation — a pure-TS path that runs in Deno
+// (the Edge Function), where bundling HyperFormula + JSON-import assertions is
+// friction. It shares the single pure-TS AST evaluator (`eval.ts`) the whole calc
+// path now uses; the guardrails (§7) only need + − × ÷ and comparisons (no PV).
 //
 // This module takes the library as a parameter (no JSON imports) so it is Deno-clean.
-// `measure-golden` pins it against the HF `validate()`/`compute()` so the two agree.
-import { type Ast, isLeafConst, isLeafRef, isLeafSlot, isNode } from './ast';
+// `measure-golden` pins it against `validate()`/`compute()` so the two agree.
+import { type Ast, isLeafSlot, isNode } from './ast';
+import { type RefResolver as Resolver, evalAst as evalJs } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import type { Library, Measure } from './schema';
 import type { CheckId, CheckStatus } from './validate';
-
-type Resolver = (key: string) => number;
-
-/** Pure-TS AST evaluator. Comparisons return 1/0. PV/LOOKUP are unsupported here. */
-function evalJs(ast: Ast, resolve: Resolver): number {
-  if (typeof ast === 'number') return ast;
-  if (isLeafConst(ast)) return ast.const;
-  if (isLeafRef(ast)) return resolve(ast.ref);
-  if (isLeafSlot(ast)) throw new Error(`Unbound slot '${ast.slot}'`);
-  if (isNode(ast)) {
-    const a = ast.args.map((x) => evalJs(x, resolve));
-    switch (ast.op) {
-      case 'add': return a.reduce((s, x) => s + x, 0);
-      case 'sub': return a.slice(1).reduce((s, x) => s - x, a[0]);
-      case 'mul': return a.reduce((s, x) => s * x, 1);
-      case 'div': return a.slice(1).reduce((s, x) => s / x, a[0]);
-      case 'sum': return a.reduce((s, x) => s + x, 0);
-      case 'lte': return a[0] <= a[1] ? 1 : 0;
-      case 'gte': return a[0] >= a[1] ? 1 : 0;
-      case 'between': return a[0] >= a[1] && a[0] <= a[2] ? 1 : 0;
-      default: throw new Error(`Operator '${ast.op}' unsupported in the pure-TS guardrail evaluator`);
-    }
-  }
-  throw new Error(`Unrecognized AST node: ${JSON.stringify(ast)}`);
-}
 
 function bindSlots(ast: Ast, slots: Record<string, number>): Ast {
   if (isLeafSlot(ast)) {

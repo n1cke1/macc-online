@@ -5,7 +5,7 @@
 import { library, seedMeasures } from '../src/lib/measure/library';
 import { compute, makeResolver } from '../src/lib/measure/compute';
 import { validate } from '../src/lib/measure/validate';
-import { renderAst, evalAst } from '../src/lib/measure/compile';
+import { renderAst, evalAst } from '../src/lib/measure/eval';
 
 const glyph = (s: string) => (s === 'ok' ? '✓' : s === 'warn' ? '⚠' : s === 'incomplete' ? '○' : '–');
 

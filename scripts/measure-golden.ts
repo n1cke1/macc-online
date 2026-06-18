@@ -13,6 +13,8 @@ import { library, getSeedMeasure, seedMeasures } from '../src/lib/measure/librar
 import { compute, type ComputedMeasure } from '../src/lib/measure/compute';
 import { validate, stackPools } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
+// HyperFormula twins — the parity oracle the shipped pure-TS core is pinned against.
+import { economicCore as economicCoreHF } from '../src/lib/measure/compile';
 import type { Measure } from '../src/lib/measure/schema';
 
 interface ExcelRow { id: number; mac: number; abatementKt: number; capex: number; opex: number; durationYrs: number }
@@ -106,6 +108,28 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
     expect(g.checks[k] === vv.checks[k], id, `guardrail ${k}: JS ${g.checks[k]} == HF ${vv.checks[k]}`);
   }
   expect(g.eligible === vv.eligibleForModel, id, `eligibility: JS ${g.eligible} == HF ${vv.eligibleForModel}`);
+}
+
+// ── 5. Pure-TS economic core == HyperFormula oracle ───────────────────────────
+// The shipped path computes NPV/MAC with a closed-form PV (eval.ts), no HF. HF stays
+// the oracle: pure-TS must equal it to far tighter than the Excel tolerance, proving
+// the PV port lost nothing. (Section 1 already pins pure-TS to the Excel cached values.)
+const ORACLE_TOL = 1e-9;
+function nearOracle(label: string, where: string, actual: number, expected: number): void {
+  const rel = Math.abs(actual - expected) / Math.max(Math.abs(expected), 1e-9);
+  const ok = rel <= ORACLE_TOL;
+  log.push(`  ${ok ? '✓' : '✗'} ${where} · ${label}: pure ${actual.toFixed(9)} vs HF ${expected.toFixed(9)} (rel ${rel.toExponential(2)})`);
+  if (!ok) issues.push({ where, detail: `${label}: pure ${actual} vs HF ${expected} (rel ${rel.toExponential(3)})` });
+}
+for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
+  const c = compute(getSeedMeasure(id)!, library); // pure-TS economic core
+  const hf = economicCoreHF({
+    capex: c.capex, opex: c.opex, abatementKt: c.abatementKt,
+    durationYrs: c.durationYrs, discountRate: library.globals.discountRate,
+  });
+  nearOracle('npv', id, c.npv, hf.npv);
+  nearOracle('discCo2', id, c.discCo2Kt, hf.discCo2Kt);
+  nearOracle('mac', id, c.mac, hf.mac);
 }
 
 // ── report ────────────────────────────────────────────────────────────────────

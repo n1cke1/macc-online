@@ -13,7 +13,7 @@
 // Publication is never blocked; only promotion to `published` is — and that is
 // server-authoritative (Edge Function). This pure function only reports.
 import { type Ast, isNode, isLeafSlot } from './ast';
-import { evalAst, evalPredicate } from './compile';
+import { evalAst, evalPredicate } from './eval';
 import { compute, type ComputedMeasure } from './compute';
 import type { Library, CheckDef, Measure, Scope } from './schema';
 

@@ -5,7 +5,7 @@
 // evaluated through HyperFormula (§3). The output mirrors `MaccPoint` field names
 // (`data/schema.ts`) so the chart/drilldown can render a measure as one more bar.
 import type { Localized, SectorCode } from '@data/schema';
-import { economicCore, evalAst, type RefResolver } from './compile';
+import { economicCore, evalAst, type RefResolver } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import { economicsRollup } from './guardrails';
 import type { Library, Measure } from './schema';

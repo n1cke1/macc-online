@@ -7,7 +7,7 @@
 // values so `compileAst` sees a slot-free tree.
 import { type Ast, isLeafSlot, isNode } from './ast';
 import type { FormulaBinding, FormulaTemplate } from './schema';
-import type { RefResolver } from './compile';
+import type { RefResolver } from './eval';
 
 /** Built-in templates. Real deployments would load these from the library. */
 export const BUILTIN_TEMPLATES: Record<string, FormulaTemplate> = {

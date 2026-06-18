@@ -8,7 +8,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick } from '@/lib/data';
 import { fmt, fmtMac, fmtInt } from '@/lib/format';
-import { renderAst, evalAst } from '@/lib/measure/compile';
+import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
 import type { BuiltObject, Library, Localized, MeasureNotation, Provenance, RetiredObject, ValueSource } from '@/lib/measure/schema';
@@ -130,7 +130,7 @@ export default function MeasureEditor() {
   const t = useTranslations('measure');
   const locale = useLocale() as 'ru' | 'en';
   const { ready, source, initError, library: libraryMaybe, activeId, measure, computed, validation, error, init, reloadMeasures, load, update, clear } = useMeasureDraft();
-  const { session } = useAuth();
+  const { session, loading: authLoading } = useAuth();
   // Inline drill-down: which computed nodes are expanded (keyed by node path in the tree).
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggle = (id: string) => setExpanded((s) => { const n = new Set(s); if (n.has(id)) n.delete(id); else n.add(id); return n; });
@@ -142,6 +142,10 @@ export default function MeasureEditor() {
   const uid = session?.user?.id;
   useEffect(() => { if (ready) void reloadMeasures(); }, [uid, ready, reloadMeasures]);
 
+  // «Visible to logged-in users only» — the editor is hidden for anonymous visitors
+  // (writes are auth+RLS-gated anyway; this hides the UI too). Wait out the initial
+  // auth probe to avoid a flash, then require a session.
+  if (authLoading || !session) return null;
   if (!ready || !libraryMaybe) {
     return <p className="text-sm text-muted">{locale === 'en' ? 'Loading library…' : 'Загрузка библиотеки…'}</p>;
   }
@@ -330,7 +334,7 @@ export default function MeasureEditor() {
   }
 
   return (
-    <section className="space-y-3">
+    <section className="space-y-3 rounded-lg border border-sky-200 bg-sky-50/40 p-4">
       <div className="flex items-center justify-between gap-2">
         <h2 className="flex items-center gap-1 text-sm font-bold">{t('title')}<QHelp>{gh(nt.sourcing.principle)}</QHelp></h2>
         <div className="flex items-center gap-2">
