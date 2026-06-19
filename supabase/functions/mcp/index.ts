@@ -5958,6 +5958,15 @@ function structureOnly(node) {
 var compactSchema = structureOnly(measure_schema_default);
 var ok = (data) => ({ content: [{ type: "text", text: JSON.stringify(data, null, 2) }] });
 var err = (msg) => ({ isError: true, content: [{ type: "text", text: msg }] });
+var asObject = (v) => {
+  if (typeof v !== "string") return v;
+  try {
+    return JSON.parse(v);
+  } catch {
+    return v;
+  }
+};
+var measureArg = z.preprocess(asObject, z.record(z.string(), z.any()));
 var AUTH_ERR = "Authentication required \u2014 sign in to the web app and supply a Supabase access token (Bearer header for the hosted server, MCP_USER_TOKEN for stdio). The MCP tools are restricted to logged-in users.";
 function buildServer(deps) {
   const { user, library: library2, seedMeasures: seedMeasures2, getSeedMeasure } = deps;
@@ -6003,7 +6012,7 @@ function buildServer(deps) {
   );
   server.registerTool(
     "compute_measure",
-    { title: "Compute measure", description: "Compute MAC / abatement / CAPEX / OPEX / NPV for a measure document (the same engine as the UI).", inputSchema: { measure: z.any().describe("a measure document (see schema://measure)") } },
+    { title: "Compute measure", description: "Compute MAC / abatement / CAPEX / OPEX / NPV for a measure document (the same engine as the UI).", inputSchema: { measure: measureArg.describe("a measure document \u2014 an OBJECT (see schema://measure); a JSON string is also accepted") } },
     async ({ measure }) => {
       if (!user) return err(AUTH_ERR);
       try {
@@ -6015,7 +6024,7 @@ function buildServer(deps) {
   );
   server.registerTool(
     "validate_measure",
-    { title: "Validate measure", description: "Run the \xA77 guardrails + \xA73/\xA76 notation rule (every number input-or-computed). Returns panel statuses, checks, untagged numbers and model-eligibility.", inputSchema: { measure: z.any().describe("a measure document"), peers: z.array(z.any()).optional().describe("other measures sharing a pool (defaults to the seed set)") } },
+    { title: "Validate measure", description: "Run the \xA77 guardrails + \xA73/\xA76 notation rule (every number input-or-computed). Returns panel statuses, checks, untagged numbers and model-eligibility.", inputSchema: { measure: measureArg.describe("a measure document \u2014 an OBJECT (a JSON string is also accepted)"), peers: z.array(measureArg).optional().describe("other measures sharing a pool (defaults to the seed set)") } },
     async ({ measure, peers }) => {
       if (!user) return err(AUTH_ERR);
       try {
@@ -6028,7 +6037,7 @@ function buildServer(deps) {
   );
   server.registerTool(
     "upsert_measure",
-    { title: "Publish measure", description: "Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).", inputSchema: { measure: z.any().describe("a measure document"), note: z.string().optional().describe("optional change note for the version history") } },
+    { title: "Publish measure", description: "Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).", inputSchema: { measure: measureArg.describe("a measure document \u2014 an OBJECT (a JSON string is also accepted)"), note: z.string().optional().describe("optional change note for the version history") } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
       const m = measure;

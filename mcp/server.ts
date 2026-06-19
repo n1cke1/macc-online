@@ -44,6 +44,16 @@ const compactSchema = structureOnly(measureSchema);
 
 const ok = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }] });
 const err = (msg: string) => ({ isError: true, content: [{ type: 'text' as const, text: msg }] });
+
+// Some MCP clients serialize an object-typed argument as a JSON STRING. Declare the
+// measure as an object (so well-behaved clients send an object) AND tolerate a
+// stringified document by parsing it before validation — otherwise a string slips
+// through as the "measure" and every field reads back undefined.
+const asObject = (v: unknown): unknown => {
+  if (typeof v !== 'string') return v;
+  try { return JSON.parse(v); } catch { return v; }
+};
+const measureArg = z.preprocess(asObject, z.record(z.string(), z.any()));
 const AUTH_ERR = 'Authentication required — sign in to the web app and supply a Supabase access token (Bearer header for the hosted server, MCP_USER_TOKEN for stdio). The MCP tools are restricted to logged-in users.';
 
 /** Build a configured measure-authoring MCP server for one caller + library. */
@@ -100,7 +110,7 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: compute a measure → MaccPoint-compatible outputs ──────────────────────
   server.registerTool(
     'compute_measure',
-    { title: 'Compute measure', description: 'Compute MAC / abatement / CAPEX / OPEX / NPV for a measure document (the same engine as the UI).', inputSchema: { measure: z.any().describe('a measure document (see schema://measure)') } },
+    { title: 'Compute measure', description: 'Compute MAC / abatement / CAPEX / OPEX / NPV for a measure document (the same engine as the UI).', inputSchema: { measure: measureArg.describe('a measure document — an OBJECT (see schema://measure); a JSON string is also accepted') } },
     async ({ measure }) => {
       if (!user) return err(AUTH_ERR);
       try { return ok(compute(measure as Measure, library)); }
@@ -111,7 +121,7 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: validate a measure → guardrails + notation completeness ────────────────
   server.registerTool(
     'validate_measure',
-    { title: 'Validate measure', description: 'Run the §7 guardrails + §3/§6 notation rule (every number input-or-computed). Returns panel statuses, checks, untagged numbers and model-eligibility.', inputSchema: { measure: z.any().describe('a measure document'), peers: z.array(z.any()).optional().describe('other measures sharing a pool (defaults to the seed set)') } },
+    { title: 'Validate measure', description: 'Run the §7 guardrails + §3/§6 notation rule (every number input-or-computed). Returns panel statuses, checks, untagged numbers and model-eligibility.', inputSchema: { measure: measureArg.describe('a measure document — an OBJECT (a JSON string is also accepted)'), peers: z.array(measureArg).optional().describe('other measures sharing a pool (defaults to the seed set)') } },
     async ({ measure, peers }) => {
       if (!user) return err(AUTH_ERR);
       try {
@@ -124,7 +134,7 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: upsert (direct publish; validate() is advisory only) ──────────────────
   server.registerTool(
     'upsert_measure',
-    { title: 'Publish measure', description: 'Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).', inputSchema: { measure: z.any().describe('a measure document'), note: z.string().optional().describe('optional change note for the version history') } },
+    { title: 'Publish measure', description: 'Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).', inputSchema: { measure: measureArg.describe('a measure document — an OBJECT (a JSON string is also accepted)'), note: z.string().optional().describe('optional change note for the version history') } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
       const m = measure as Measure;
