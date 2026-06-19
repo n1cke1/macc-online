@@ -1,0 +1,250 @@
+{
+  "_comment": "UI help strings for the measure editor — panel/field/enum «?» tooltips PLUS the dual-use sourcing & formulas «?» help. Slimmed from the former measure-notation.json (notation/skill split, step 2): the agent-only blocks (procedure/requirements/conventions/checks) moved to the macc-measure-authoring skill (served to LLMs via the MCP guide://measure resource, step 4); sourcing/formulas stay here for tooltips and are mirrored in the skill for the agent. Read by src/components/measure/MeasureEditor.tsx via library.uiHelp. Structural validation lives in data/measure.schema.json.",
+  "panels": {
+    "overview": {
+      "help": "Measure name and sector. Type, maturity and scope are inferred (shown as badges), not entered. Summary: MAC and potential."
+    },
+    "build": {
+      "help": "Objects the measure CREATES (from the library), with size and unit metrics. Build CAPEX arises here."
+    },
+    "baseline": {
+      "help": "Sector/subsector and the product produced (with its carbon footprint) — what we displace. CCS/CCUS may list several sectors; practices use a sector only."
+    },
+    "project": {
+      "help": "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative — avoided cost."
+    },
+    "reduction": {
+      "help": "How the CO₂e reduction is computed by maturity stage (postulated → back-calc → computed) and the back-calculated factor vs the reference corridor."
+    },
+    "economics": {
+      "help": "CAPEX and OPEX rolled up from objects and key materials → NPV and MAC. Lines are derived from objects/flows, not hand-entered."
+    },
+    "potential": {
+      "help": "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop."
+    }
+  },
+  "fields": {
+    "name": {
+      "help": "A short, clear measure name."
+    },
+    "sector": {
+      "help": "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several."
+    },
+    "subsector": {
+      "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Выбросы» sheet, extendable."
+    },
+    "produce": {
+      "help": "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)."
+    },
+    "carbonFootprint": {
+      "help": "Carbon footprint of the conventional production of the same product we displace. Accompany with a source."
+    },
+    "objectRef": {
+      "help": "A library object the measure creates or closes. If missing, create it in the library (kind, unit CAPEX, source). Line CAPEX = size × unit CAPEX."
+    },
+    "capacity": {
+      "help": "Object capacity/size in its unit. Object CAPEX = size × unit CAPEX."
+    },
+    "capexUd": {
+      "help": "Object unit capital cost (from the library), e.g. $/kW or $/head. Checked vs the capex_ud reference (see the economics check)."
+    },
+    "capexUdFactor": {
+      "help": "Factor converting the capacity unit to the unit-CAPEX denominator (e.g. MW→kW = 1000). Default 1."
+    },
+    "capexMusd": {
+      "help": "Explicit object CAPEX (m$) when it isn't capacity-driven. Must carry a source."
+    },
+    "opexMusd": {
+      "help": "Annual OPEX line for this object (m$/yr), signed: cost +, avoided (for a retired object) −."
+    },
+    "maintenanceCapex": {
+      "help": "Maintenance unit CAPEX of a retired object; subtracted as avoided cost."
+    },
+    "share": {
+      "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Мероприятия» sheet."
+    },
+    "activity": {
+      "help": "Activity scale (head, million m³ …) the back-calc anchors to: implied = reduction / activity."
+    },
+    "materialResource": {
+      "help": "Key material/fuel flow from the resource registry (carries its own EF and price)."
+    },
+    "materialSide": {
+      "help": "Flow side: new — consumed by the new objects (cost +); retired — freed by the closed ones (saving/revenue −)."
+    },
+    "qty": {
+      "help": "Annual quantity of the key material. Cost = quantity × price / 10⁶."
+    },
+    "price": {
+      "help": "Material price (for coal/gas — from the resource registry)."
+    },
+    "serviceUnit": {
+      "help": "A/B comparison service unit (e.g. MWh): baseline and project products must match on it. Only for type=comparison."
+    },
+    "flows": {
+      "help": "Resource flows per service unit: baseline (as-was) and project (as-is). Δflow × price → OPEX, Δflow × EF → reduction. Empty at the raw stage."
+    },
+    "inputs": {
+      "help": "Local engineering premises of the measure (installed capacity, capacity factor, shares…) referenced by formulas (ref:<key>) and economics lines. Each carries a source; a premise with no library analogue (binding=new) is flagged for review."
+    },
+    "pool": {
+      "help": "Resource pool: its annual ceiling is shared with other measures on the same pool (combination)."
+    },
+    "ceilingDim": {
+      "help": "The dimension that caps the measure's annual potential (resource / product / object count / activity)."
+    },
+    "combinationGroup": {
+      "help": "«Combination» group: measures in one group share a pool; on oversubscription the cheaper (lower-MAC) ones claim it first, the rest are clipped."
+    }
+  },
+  "enums": {
+    "maturity": {
+      "raw": {
+        "help": "Postulated: reduction = baseline × share; no anchor or check. The first stage — next is back-calc."
+      },
+      "back_calc": {
+        "help": "Back-calc: implied factor = reduction / activity checked vs the reference corridor (✓/⚠). In-corridor and sourced → eligible for «computed»."
+      },
+      "computed": {
+        "help": "Computed: reduction expanded by a formula (activity × factor); the share becomes a control. The highest maturity stage."
+      }
+    },
+    "type": {
+      "substitution": {
+        "help": "Substitution (CCS/CCUS, agro): no product comparison, no service-unit match check."
+      },
+      "comparison": {
+        "help": "A/B comparison: baseline and project products must match on the service unit (e.g. MWh)."
+      }
+    },
+    "scope": {
+      "published": {
+        "help": "In the trusted model curve. Published directly by any signed-in author — no server-side review — and every change is versioned and attributed."
+      },
+      "draft": {
+        "help": "A personal work-in-progress; stays out of the trusted curve."
+      },
+      "scenario": {
+        "help": "A what-if; stays out of the trusted curve."
+      }
+    },
+    "techKind": {
+      "structure": {
+        "help": "Capital-intensive object (plant/installation): expects a unit CAPEX and a physical size."
+      },
+      "modernization": {
+        "help": "Upgrade/conversion of an existing asset."
+      },
+      "practice": {
+        "help": "Operational/organizational practice: low CAPEX, mostly OPEX."
+      },
+      "infrastructure": {
+        "help": "Networks, pipelines, capture/storage systems."
+      }
+    },
+    "sourceType": {
+      "official_stat": {
+        "help": "Official statistics/reporting (UNFCCC BTR, national stats). Highest reliability."
+      },
+      "literature": {
+        "help": "Scientific/industry literature, peer-reviewed sources."
+      },
+      "standard": {
+        "help": "A standard/methodology (IPCC Guidelines, GOST, ISO)."
+      },
+      "expert_estimate": {
+        "help": "A specialist's expert estimate; state who and on what basis."
+      },
+      "assumption": {
+        "help": "An author's working assumption; must carry a binding and a rationale."
+      },
+      "placeholder": {
+        "help": "A stand-in with no source — low confidence; replace with a real source before relying on the measure."
+      }
+    },
+    "confidence": {
+      "high": {
+        "help": "High: backed by an official/standard source."
+      },
+      "medium": {
+        "help": "Medium: literature/expert estimate with caveats."
+      },
+      "low": {
+        "help": "Low: assumption/placeholder; needs verification."
+      }
+    },
+    "bindingMode": {
+      "reuse": {
+        "help": "Reuse the library value by its ref key — the preferred mode."
+      },
+      "alt": {
+        "help": "A custom value differing from the library ref; divergence_reason is required (why it differs)."
+      },
+      "new": {
+        "help": "A local value with no library analogue — flagged for review; add a reference when one exists."
+      }
+    },
+    "ceilingDim": {
+      "cut_resource": {
+        "help": "Capped by the cut resource (e.g. coal/methane volume)."
+      },
+      "output_product": {
+        "help": "Capped by product output."
+      },
+      "n_objects": {
+        "help": "Capped by the object count."
+      },
+      "activity": {
+        "help": "Capped by activity scale (head, area…)."
+      }
+    },
+    "materialSide": {
+      "new": {
+        "help": "Consumed by the new objects — a cost (+)."
+      },
+      "retired": {
+        "help": "Freed by the closed objects — a saving or revenue (−)."
+      }
+    }
+  },
+  "sourcing": {
+    "principle": {
+      "help": "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_technologies[0].capacity', 'materials[1].price', 'abatement.back_calc.share'); a DERIVED number instead goes in measure.computed at the same path (a formula) — a path is in sources XOR computed, never both, never a bare pasted number."
+    },
+    "provenance": {
+      "help": "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. With no source it is treated as a placeholder (low confidence, flagged)."
+    },
+    "binding": {
+      "help": "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue — flagged for review). The goal is reuse and explainability."
+    },
+    "divergenceReason": {
+      "help": "Mandatory note for binding=alt: why the value diverges from the library reference."
+    },
+    "reference": {
+      "help": "A [min, max] corridor with a unit a check anchors to: factor — the reduction factor, capex_ud — the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field."
+    }
+  },
+  "formulas": {
+    "principle": {
+      "help": "A formula is data, not code: stored as an AST over named keys (ref), not cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel parity is bit-for-bit."
+    },
+    "operators": {
+      "help": "Allowed arithmetic operators: add, sub, mul, div, sum, pv (present value), lookup. The set is closed for auditability — no other functions."
+    },
+    "predicates": {
+      "help": "Predicate operators for the checks (return true/false): lte (≤), gte (≥), between (in corridor). Used by the factor/economics/pool/sector checks."
+    },
+    "signatures": {
+      "help": "Operator arity: add/sub/mul/div are variadic (≥2 args, folded left-to-right; sub/div as a running difference/quotient); sum(…) sums its args; pv(rate, nper, payment) is the Excel present value of a constant stream; lookup(table, key) selects from a table (reserved, unused in the prototype). Predicates: lte(a,b)/gte(a,b) binary; between(x,min,max) ternary."
+    },
+    "leaves": {
+      "help": "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation."
+    },
+    "namespace": {
+      "help": "How a {ref:<key>} resolves: `res:<id>` → that resource's emission factor (EF); a key that has its own `computed` entry on the measure → that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number — both allowed. No other namespaces."
+    },
+    "example": {
+      "help": "Example (coal→gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity × capacity factor × hours/yr × (EF coal − EF gas) × 10⁻³. EF leaves use the res: namespace; 8760 and 1e-3 are literals."
+    }
+  }
+}

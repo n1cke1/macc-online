@@ -70,8 +70,8 @@ export function abatementJs(measure: Measure, library: Library): number {
  * `economics` line items. Single source so both calc paths agree.
  */
 export function economicsRollup(measure: Measure, library: Library): { capex: number; opex: number } {
-  const created = measure.created_objects ?? [];
-  const retired = measure.retired_objects ?? [];
+  const created = measure.created_technologies ?? [];
+  const retired = measure.retired_technologies ?? [];
   const materials = measure.materials ?? [];
 
   if (created.length || retired.length || materials.length) {
@@ -84,13 +84,13 @@ export function economicsRollup(measure: Measure, library: Library): { capex: nu
       return c ? evalJs(c.formula, resolve) : inline;
     };
     const capexCreated = created.reduce((s, o, i) =>
-      s + (pick(`created_objects[${i}].capex_musd`, o.capex_musd)
-        ?? (pick(`created_objects[${i}].capacity`, o.capacity) ?? 0) * (tech(o.object_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
+      s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd)
+        ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
     const capexRetired = retired.reduce((s, r, i) =>
-      s + (pick(`retired_objects[${i}].maintenance_capex_musd`, r.maintenance_capex_musd)
-        ?? (pick(`retired_objects[${i}].capacity`, r.capacity) ?? 0) * (tech(r.object_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
-    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_objects[${i}].opex_musd`, o.opex_musd) ?? 0), 0)
-      - retired.reduce((s, r, i) => s + (pick(`retired_objects[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
+      s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd)
+        ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
+    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0)
+      - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
     const opexMaterials = materials.reduce((s, m, i) => {
       const cost = m.cost_musd ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
       return s + (m.side === 'retired' ? -cost : cost);

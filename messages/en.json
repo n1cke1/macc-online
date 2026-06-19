@@ -95,7 +95,7 @@
       "potential": "Measure potential"
     },
     "maturity": { "raw": "postulated", "back_calc": "back-calc", "computed": "computed" },
-    "techKind": { "capital_asset": "capital asset", "modernization": "modernization", "practice": "practice", "infrastructure": "infrastructure" },
+    "techKind": { "structure": "capital asset", "modernization": "modernization", "practice": "practice", "infrastructure": "infrastructure" },
     "type": { "substitution": "substitution", "comparison": "A/B comparison" },
     "autoCheck": { "passed": "Model checks passed", "failed": "Has issues" },
     "field": {

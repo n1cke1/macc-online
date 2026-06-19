@@ -11,7 +11,7 @@ import { fmt, fmtMac, fmtInt } from '@/lib/format';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
-import type { BuiltObject, Library, Localized, MeasureNotation, Provenance, RetiredObject, ValueSource } from '@/lib/measure/schema';
+import type { BuiltTechnology, Library, Localized, UiHelp, Provenance, RetiredTechnology, ValueSource } from '@/lib/measure/schema';
 import type { CheckId, CheckStatus, PanelKey, PanelStatus } from '@/lib/measure/validate';
 import { useMeasureDraft } from './useMeasureDraft';
 import { useDraftOverlay } from '@/store';
@@ -109,7 +109,7 @@ function ProvText({ p }: { p?: Provenance }) {
  * provenance line + the binding discipline (reuse/alt/new + ref / divergence reason).
  * This is the «sourcing» half of the measure-notation surfaced at each value's "?".
  */
-function SourceText({ s, nt }: { s?: ValueSource; nt: MeasureNotation }) {
+function SourceText({ s, nt }: { s?: ValueSource; nt: UiHelp }) {
   if (!s) return <span className="text-slate-400">—</span>;
   const b = s.binding;
   const e = b ? nt.enums.bindingMode[b.mode] : undefined;
@@ -165,9 +165,9 @@ export default function MeasureEditor() {
   const pool = measure.potential?.pool_ref ? library.pools[measure.potential.pool_ref] : undefined;
   const num = (n: number, d = 2) => fmt(n, locale, { maximumFractionDigits: d });
   const tech = (ref: string) => library.technologies[ref];
-  // Single instruction source (measure-notation.json) → tooltips / «?» help.
-  const nt = library.notation;
-  const gh = (e?: { help: string }) => e?.help; // notation is English-base (single string)
+  // UI help source (measure-ui-help.json) → tooltips / «?» help.
+  const nt = library.uiHelp;
+  const gh = (e?: { help: string }) => e?.help; // ui-help is English-base (single string)
   // §6 source (provenance + binding) for a bare number, by its path key in measure.sources.
   const srcNode = (path: string) => (measure!.sources?.[path] ? <div className="mt-1">{t('help.source')}: <SourceText s={measure!.sources![path]} nt={nt} /></div> : null);
   // §3 computed value: evaluate its stored formula live (parity-equal to the engine).
@@ -239,8 +239,8 @@ export default function MeasureEditor() {
       </div>
     );
   };
-  const objCapex = (o: { object_ref: string; capacity?: number; capex_ud_factor?: number; capex_musd?: number }) =>
-    o.capex_musd ?? (o.capacity ?? 0) * (tech(o.object_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6;
+  const objCapex = (o: { technology_ref: string; capacity?: number; capex_ud_factor?: number; capex_musd?: number }) =>
+    o.capex_musd ?? (o.capacity ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6;
   const matCost = (m: { price?: number; cost_musd?: number; side: string }, i: number) => {
     const qty = cval(`materials[${i}].qty`) ?? (m as { qty?: number }).qty ?? 0;
     const price = cval(`materials[${i}].price`) ?? m.price ?? 0;
@@ -293,27 +293,27 @@ export default function MeasureEditor() {
   }
 
   const techOptions = Object.keys(library.technologies);
-  const addCreated = () => update((m) => { (m.created_objects ??= []).push({ object_ref: techOptions[0], capacity: 0, unit: '' }); });
-  const addRetired = () => update((m) => { (m.retired_objects ??= []).push({ object_ref: techOptions[0], capacity: 0, unit: '' }); });
+  const addCreated = () => update((m) => { (m.created_technologies ??= []).push({ technology_ref: techOptions[0], capacity: 0, unit: '' }); });
+  const addRetired = () => update((m) => { (m.retired_technologies ??= []).push({ technology_ref: techOptions[0], capacity: 0, unit: '' }); });
 
   /** Editable list of library objects (created or retired): pick · capacity · delete. */
   function ObjectList({ kind }: { kind: 'created' | 'retired' }) {
-    const items: Array<BuiltObject | RetiredObject> = (kind === 'created' ? measure!.created_objects : measure!.retired_objects) ?? [];
-    const mutate = (i: number, fn: (o: BuiltObject | RetiredObject) => void) => update((m) => {
-      const list = kind === 'created' ? (m.created_objects ??= []) : (m.retired_objects ??= []);
+    const items: Array<BuiltTechnology | RetiredTechnology> = (kind === 'created' ? measure!.created_technologies : measure!.retired_technologies) ?? [];
+    const mutate = (i: number, fn: (o: BuiltTechnology | RetiredTechnology) => void) => update((m) => {
+      const list = kind === 'created' ? (m.created_technologies ??= []) : (m.retired_technologies ??= []);
       fn(list[i]);
     });
-    const remove = (i: number) => update((m) => { (kind === 'created' ? m.created_objects : m.retired_objects)?.splice(i, 1); });
+    const remove = (i: number) => update((m) => { (kind === 'created' ? m.created_technologies : m.retired_technologies)?.splice(i, 1); });
     return (
       <>
         {items.length === 0 && kind === 'retired' && <p className="mb-1 text-xs text-muted">{t('field.noRetired')}</p>}
         {items.map((o, i) => {
-          const tc = tech(o.object_ref);
+          const tc = tech(o.technology_ref);
           const ud = kind === 'created' ? tc?.capex_ud : tc?.maintenance_capex_ud;
           return (
             <div key={i} className="mb-2 rounded border border-line p-2">
               <div className="flex items-center gap-2">
-                <select value={o.object_ref} onChange={(e) => mutate(i, (x) => { x.object_ref = e.target.value; })}
+                <select value={o.technology_ref} onChange={(e) => mutate(i, (x) => { x.technology_ref = e.target.value; })}
                   className="min-w-0 flex-1 rounded border border-line px-1.5 py-1 text-sm">
                   {techOptions.map((id) => <option key={id} value={id}>{pick(library.technologies[id].name, locale)}</option>)}
                 </select>
@@ -440,26 +440,26 @@ export default function MeasureEditor() {
       {/* Проект (economics) */}
       <Panel pkey="economics" title={t('panel.economics')} status={v?.panels.economics} help={gh(nt.panels.economics)}>
         <div className="mb-1 text-xs font-semibold text-slate-500">CAPEX</div>
-        {(measure.created_objects ?? []).map((o, i) => {
-          const tc = tech(o.object_ref);
+        {(measure.created_technologies ?? []).map((o, i) => {
+          const tc = tech(o.technology_ref);
           return (
-            <Row key={`c${i}`} label={`+ ${tc ? pick(tc.name, locale) : o.object_ref}`}
-              help={o.capex_musd != null ? srcNode(`created_objects[${i}].capex_musd`) ?? <ProvText p={tc?.provenance} /> : <>{t('help.formula')}: [{t('field.capacity').toLowerCase()}] × [{t('field.capexUd').toLowerCase()}]{o.capex_ud_factor ? ` × ${o.capex_ud_factor}` : ''} / 10⁶</>}>
+            <Row key={`c${i}`} label={`+ ${tc ? pick(tc.name, locale) : o.technology_ref}`}
+              help={o.capex_musd != null ? srcNode(`created_technologies[${i}].capex_musd`) ?? <ProvText p={tc?.provenance} /> : <>{t('help.formula')}: [{t('field.capacity').toLowerCase()}] × [{t('field.capexUd').toLowerCase()}]{o.capex_ud_factor ? ` × ${o.capex_ud_factor}` : ''} / 10⁶</>}>
               {o.capex_musd != null
-                ? <NumberField input value={o.capex_musd} onCommit={(val) => update((m) => { m.created_objects![i].capex_musd = val; })} />
+                ? <NumberField input value={o.capex_musd} onCommit={(val) => update((m) => { m.created_technologies![i].capex_musd = val; })} />
                 : <span className="tabular-nums">{num(objCapex(o))} mUSD</span>}
             </Row>
           );
         })}
-        {(measure.retired_objects ?? []).map((o, i) => (
-          <Row key={`rc${i}`} label={`− ${tech(o.object_ref) ? pick(tech(o.object_ref).name, locale) : o.object_ref}`}><span className="tabular-nums">{num(o.maintenance_capex_musd ?? 0)} mUSD</span></Row>
+        {(measure.retired_technologies ?? []).map((o, i) => (
+          <Row key={`rc${i}`} label={`− ${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref}`}><span className="tabular-nums">{num(o.maintenance_capex_musd ?? 0)} mUSD</span></Row>
         ))}
         <Row label="Σ CAPEX"><b className="tabular-nums">{computed ? num(computed.capex) : '—'} mUSD</b></Row>
 
         <div className="mb-1 mt-3 text-xs font-semibold text-slate-500">OPEX</div>
-        {(measure.created_objects ?? []).map((o, i) => o.opex_musd == null ? null : (
-          <Row key={`co${i}`} label={`${tech(o.object_ref) ? pick(tech(o.object_ref).name, locale) : o.object_ref} · OPEX`} help={srcNode(`created_objects[${i}].opex_musd`)}>
-            <NumberField input value={o.opex_musd ?? 0} onCommit={(val) => update((m) => { m.created_objects![i].opex_musd = val; })} />
+        {(measure.created_technologies ?? []).map((o, i) => o.opex_musd == null ? null : (
+          <Row key={`co${i}`} label={`${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref} · OPEX`} help={srcNode(`created_technologies[${i}].opex_musd`)}>
+            <NumberField input value={o.opex_musd ?? 0} onCommit={(val) => update((m) => { m.created_technologies![i].opex_musd = val; })} />
           </Row>
         ))}
         {(measure.materials ?? []).map((mat, i) => {

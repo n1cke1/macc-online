@@ -68,7 +68,7 @@ export interface ValueWithSource {
  * §6 — provenance + binding for a bare number that lives on the measure as a plain
  * value (object capacity, material qty/price, abatement share/activity…). Attached
  * NOT inline but via `Measure.sources`, keyed by the value's path (e.g.
- * `"created_objects[0].capacity"`), so `compute()` keeps reading the plain numbers
+ * `"created_technologies[0].capacity"`), so `compute()` keeps reading the plain numbers
  * and parity is untouched. This is how the measure-notation `sourcing` discipline
  * («accompany every number with a reference») is satisfied without re-shaping the data.
  */
@@ -119,8 +119,8 @@ export interface Flow {
  * (the factor converts the capacity unit to the capex_ud denominator unit, e.g.
  * MW→kW = 1000). `opex_musd` is this object's annual OPEX line (signed).
  */
-export interface BuiltObject {
-  object_ref: string; // technology id (library)
+export interface BuiltTechnology {
+  technology_ref: string; // technology id (library)
   capacity?: number;
   unit?: string;
   capex_ud_factor?: number; // capacity-unit → capex_ud-unit (default 1)
@@ -129,8 +129,8 @@ export interface BuiltObject {
 }
 
 /** An object we CLOSE/retire — its maintenance CAPEX/OPEX become avoided (negative). */
-export interface RetiredObject {
-  object_ref: string;
+export interface RetiredTechnology {
+  technology_ref: string;
   capacity?: number;
   unit?: string;
   capex_ud_factor?: number;
@@ -210,6 +210,16 @@ export interface Potential {
   combination_group?: string;
 }
 
+/** §A classification — what the measure does to emissions. Absent ⇒ 'reduction' (default). */
+export type Mechanism = 'reduction' | 'removal';
+/** §A soft subtype tag (optional). reduction: efficiency|fuel_switch|electrification|
+ *  process_change|demand_reduction|non_co2 · removal: nature_based|engineered. */
+export type MechanismSubtype =
+  | 'efficiency' | 'fuel_switch' | 'electrification' | 'process_change'
+  | 'demand_reduction' | 'non_co2' | 'nature_based' | 'engineered';
+/** §A removal storage durability (optional flag). */
+export type Permanence = 'short_lived' | 'durable';
+
 /** §2 — the measure. One JSON Schema (`measure.schema.json`) mirrors this type. */
 export interface Measure {
   id: string;
@@ -221,6 +231,11 @@ export interface Measure {
   /** Product we produce (displacing conventional production); optional for practices/capture. */
   product_ref?: string;
   technology_ref?: string; // primary object (kept for the economics guardrail)
+
+  /** §A classification — abatement mechanism (required). */
+  mechanism: Mechanism;
+  mechanism_subtype?: MechanismSubtype; // soft tag (optional)
+  permanence?: Permanence; // removal only: storage durability flag (optional)
 
   scope: Scope; // §7/§9 — promotion to `published` is server-authoritative
   owner_ref?: string; // identity-claim from the write path (§9); required to persist
@@ -245,7 +260,7 @@ export interface Measure {
   inputs?: Record<string, ValueWithSource>;
 
   // §6 — provenance + binding for the measure's INPUT bare numbers (object/material/
-  // abatement values), keyed by value path (e.g. "created_objects[0].capacity",
+  // abatement values), keyed by value path (e.g. "created_technologies[0].capacity",
   // "materials[1].price", "abatement.back_calc.share"). Read-only metadata: it does
   // NOT feed compute(); it powers the «?» source/binding display and the §6 rollup.
   sources?: Record<string, ValueSource>;
@@ -260,8 +275,8 @@ export interface Measure {
   abatement: Abatement; // §5 — exactly one stage block populated
   // Iteration-2: economics derives from these (see economicsRollup). The legacy
   // free-form `economics` is kept only as a fallback for un-migrated measures.
-  created_objects?: BuiltObject[]; // «Что создаём»
-  retired_objects?: RetiredObject[]; // «Что закрываем»
+  created_technologies?: BuiltTechnology[]; // «Что создаём»
+  retired_technologies?: RetiredTechnology[]; // «Что закрываем»
   materials?: Material[]; // key raw materials (OPEX)
   economics?: Economics; // legacy free-form CAPEX/OPEX line items (fallback)
   potential?: Potential; // §7
@@ -288,14 +303,14 @@ export interface Resource {
 /**
  * §1 — technology. `kind` says what sort of thing it is, which drives the
  * descriptive rules and the economics expectation:
- *  - `capital_asset`   — a new capital-intensive object (a plant, an installation);
+ *  - `structure`   — a new capital-intensive object (a plant, an installation);
  *                        expects a unit CAPEX + a physical denominator.
  *  - `modernization`   — an upgrade/conversion of an existing asset.
  *  - `practice`        — an operational/organizational measure; CAPEX may be ~0.
  *  - `infrastructure`  — networks, pipelines, capture/storage systems.
  * `capex_ud` (unit CAPEX) is validated vs a reference for asset-like kinds.
  */
-export type TechnologyKind = 'capital_asset' | 'modernization' | 'practice' | 'infrastructure';
+export type TechnologyKind = 'structure' | 'modernization' | 'practice' | 'infrastructure';
 export interface Technology {
   id: string;
   name: Localized;
@@ -333,33 +348,30 @@ export interface Subsector {
 }
 
 /**
- * The measure-notation framework — the single runtime source for the UI tooltips /
- * «?» help, the MCP `schema://measure` resource and the agent prompt
- * (`data/kz/library/measure-notation.json`). ENGLISH-BASE (iteration 3): one language
- * inline; RU returns later via a separate `translations` layer. Design rationale stays
- * in `macc-ui-concept.md`; structural validation in `data/measure.schema.json`.
+ * UI help strings for the measure editor — the «?» tooltips for panels, fields, enum values,
+ * plus the dual-use `sourcing` and `formulas` help (`data/kz/library/measure-ui-help.json`,
+ * read via `library.uiHelp`). Slimmed from the former measure-notation framework in the
+ * notation/skill split: the agent-only blocks (procedure/requirements/conventions/checks)
+ * moved to the `macc-measure-authoring` skill (served to LLMs via the MCP `guide://measure`
+ * resource, step 4); `sourcing`/`formulas` stay here for the «?» tooltips and are mirrored in
+ * the skill for the agent. ENGLISH-BASE: one language inline; RU returns via a separate
+ * `translations` layer. Design rationale: `macc-ui-concept.md`; structural validation:
+ * `data/measure.schema.json`.
  */
 export interface NotationEntry { help: string }
-export interface MeasureNotation {
-  /** Per-panel «what this panel is for / what to fill» (UI tooltips). */
+export interface UiHelp {
+  /** Per-panel «what this panel is for / what to fill». */
   panels: Record<string, NotationEntry>;
-  /** Per-field «how to fill it / what reference to attach» (UI tooltips). */
+  /** Per-field «how to fill it / what reference to attach». */
   fields: Record<string, NotationEntry>;
-  /** Per-enum-value meaning (UI tooltips). */
+  /** Per-enum-value meaning. */
   enums: Record<string, Record<string, NotationEntry>>;
-  /** §6 provenance/binding/reference discipline (UI «?» + agent). */
+  /** §6 provenance/binding/reference discipline. Dual-use: UI «?» here + the fuller
+   *  treatment in the skill (`references/sourcing.md`). */
   sourcing: Record<string, NotationEntry>;
-  /** §3 AST notation: operators, signatures, namespaces, example (UI «?» + agent). */
+  /** §3 AST notation: operators, signatures, namespaces, example. Dual-use: UI «?» here +
+   *  the full spec in the skill (`references/formula-ast.md`). */
   formulas: Record<string, NotationEntry>;
-  // ── Agent/MCP-facing blocks (not rendered as UI tooltips; served whole over MCP) ──
-  /** How to fill a measure in order: classify → data → sources; maturity ladder; publish. */
-  procedure?: Record<string, unknown>;
-  /** What each field requires, by type / maturity / scope (cumulative). */
-  requirements?: Record<string, unknown>;
-  /** Shared conventions: units, signs, time, the MAC definition. */
-  conventions?: Record<string, unknown>;
-  /** The automatic checks (advisory) as predicates + their meaning. */
-  checks?: Record<string, unknown>;
 }
 
 /** §3 — a stored formula template: AST over named slots, compiled to HyperFormula. */
@@ -450,7 +462,10 @@ export interface Library {
   indicators: Indicator[];
   /** Sector → subsectors (seeded from «Выбросы», extendable). */
   subsectors: Record<string, Subsector[]>;
-  /** The measure-notation framework (UI help / MCP / agent prompt). */
-  notation: MeasureNotation;
+  /** UI help strings for the editor «?» tooltips (panels/fields/enums). */
+  uiHelp: UiHelp;
+  /** @deprecated TEMP alias of `uiHelp`, served by the MCP `schema://measure` resource
+   *  until step 4 wires `guide://measure`. Remove then (switch server.ts to `uiHelp`). */
+  notation: UiHelp;
   globals: GlobalParams;
 }

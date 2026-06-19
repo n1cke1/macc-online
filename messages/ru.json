@@ -95,7 +95,7 @@
       "potential": "Потенциал меры"
     },
     "maturity": { "raw": "постулировано", "back_calc": "обратный счёт", "computed": "посчитано" },
-    "techKind": { "capital_asset": "капиталоёмкий объект", "modernization": "модернизация", "practice": "практика", "infrastructure": "инфраструктура" },
+    "techKind": { "structure": "капиталоёмкий объект", "modernization": "модернизация", "practice": "практика", "infrastructure": "инфраструктура" },
     "type": { "substitution": "замещение", "comparison": "сравнение A/B" },
     "autoCheck": { "passed": "Проверки модели пройдены", "failed": "Есть замечания" },
     "field": {

@@ -29,7 +29,7 @@ export async function loadLibrary(db: SupabaseClient): Promise<Library> {
     resources: (resources.data ?? []).map((r) => ({ id: r.id, name: r.name, unit: r.unit })),
     products: (products.data ?? []).map((p) => ({
       id: p.id, name: p.name, unit: p.unit, service_unit: p.service_unit ?? undefined,
-      sector_ref: p.sector_ref ?? undefined, object_ref: p.object_ref ?? undefined,
+      sector_ref: p.sector_ref ?? undefined, technology_ref: p.technology_ref ?? undefined,
     })),
     references: (refs.data ?? []).map((r) => ({
       id: r.id, type: r.type ?? '', range: [num(r.range_min), num(r.range_max)], unit: r.unit ?? '', source: r.source ?? undefined,

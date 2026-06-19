@@ -19,7 +19,7 @@ import type { Indicator, Library, Measure } from '../../../src/lib/measure/schem
 // this read to the Supabase graph tables; for now it mirrors the app loader.
 import graph from '../../../data/kz/library/graph.seed.json' with { type: 'json' };
 import checks from '../../../data/kz/library/checks.json' with { type: 'json' };
-import notation from '../../../data/kz/library/measure-notation.json' with { type: 'json' };
+import uiHelp from '../../../data/kz/library/measure-ui-help.json' with { type: 'json' };
 import globals from '../../../data/kz/library/globals.json' with { type: 'json' };
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
@@ -58,7 +58,7 @@ function buildLibrary(): Library {
     resources, technologies, products,
     references: Object.fromEntries(g.references.map((r: { id: string }) => [r.id, r])),
     pools: Object.fromEntries(g.pools.map((p: { id: string; sector_ref: string }) => [p.id, { ...p, sector: p.sector_ref }])),
-    checks, indicators: inds, subsectors, notation, formulaTemplates: BUILTIN_TEMPLATES, globals,
+    checks, indicators: inds, subsectors, uiHelp, notation: uiHelp, formulaTemplates: BUILTIN_TEMPLATES, globals,
   } as unknown as Library;
 }
 

@@ -11,7 +11,7 @@
 // so this also runs under `tsx`/Node and Deno without tsconfig-path resolution.
 import graph from '../../../data/kz/library/graph.seed.json';
 import checks from '../../../data/kz/library/checks.json';
-import notation from '../../../data/kz/library/measure-notation.json';
+import uiHelp from '../../../data/kz/library/measure-ui-help.json';
 import globals from '../../../data/kz/library/globals.json';
 import measuresSeed from '../../../data/kz/library/measures.seed.json';
 import { BUILTIN_TEMPLATES } from './templates';
@@ -24,7 +24,7 @@ export interface Graph {
   subsectors: Array<{ id: string; sector_ref: string; name: string }>;
   objects: Array<{ id: string; name: string; kind: Technology['kind']; description?: string; rules?: string; lifetimeYrs?: number }>;
   resources: Array<{ id: string; name: string; unit: string }>;
-  products: Array<{ id: string; name: string; unit: string; service_unit?: string; sector_ref?: string; object_ref?: string }>;
+  products: Array<{ id: string; name: string; unit: string; service_unit?: string; sector_ref?: string; technology_ref?: string }>;
   references: Array<Reference>;
   indicators: Array<Indicator>;
   pools: Array<{ id: string; caps_ref: string; annual_flow: number; unit: string; sector_ref: string; baselineEmissionsKt?: number }>;
@@ -37,7 +37,7 @@ const L = (en: string): Localized => ({ ru: en, en });
  * Denormalize a graph into the in-memory `Library` (parity-safe: indicator values are
  * lifted back onto their owners so the engine reads technology.capex_ud / resource.ef
  * unchanged). The same function serves the file seed (below) and the Supabase loader,
- * so both sources produce an identical Library. The authority files (checks / notation /
+ * so both sources produce an identical Library. The authority files (checks / ui-help /
  * globals / formula templates) are not in the graph — they are bundled here.
  */
 export function assembleLibrary(g: Graph): Library {
@@ -95,7 +95,8 @@ export function assembleLibrary(g: Graph): Library {
     checks: checks as unknown as Library['checks'],
     indicators,
     subsectors,
-    notation: notation as unknown as Library['notation'],
+    uiHelp: uiHelp as unknown as Library['uiHelp'],
+    notation: uiHelp as unknown as Library['notation'], // TEMP alias for the MCP resource (removed step 4)
     // Templates live in code (the engine uses them); formula-templates.json mirrors them publicly.
     formulaTemplates: BUILTIN_TEMPLATES,
     globals: globals as unknown as Library['globals'],

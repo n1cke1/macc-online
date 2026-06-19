@@ -64,7 +64,7 @@ async function main() {
   const ca = await connect(A.token);
 
   // 3) add a NEW object + indicator (authority stratum — previously read-only)
-  const obj = parse(await ca.callTool({ name: 'upsert_library_entity', arguments: { kind: 'object', entity: { id: objId, name: 'Smoke test asset', kind: 'capital_asset' } } }));
+  const obj = parse(await ca.callTool({ name: 'upsert_library_entity', arguments: { kind: 'object', entity: { id: objId, name: 'Smoke test asset', kind: 'structure' } } }));
   const ind = parse(await ca.callTool({ name: 'upsert_library_entity', arguments: { kind: 'indicator', entity: { id: indId, key: 'capex_ud', owner_kind: 'object', owner_ref: objId, value: 123, unit: '$/kW' } } }));
   console.log(`add object → ${obj.table}/${obj.id} v${obj.version} by ${obj.author.slice(0, 8)}…`);
   console.log(`add indicator → ${ind.table}/${ind.id} v${ind.version} (authority write OK)`);

@@ -1,5 +1,5 @@
 {
-  "_comment": "§11 acceptance slice in the iteration-2 structure: economics derives from created_objects + materials (parity with Excel preserved). A (kz-20) and B (kz-2) reproduce the Excel MAC/abatement; C (kz-16) stays draft (factor ~10× the corridor). Every bare number is accompanied by provenance + binding via `sources` (keyed by value path) per the measure-notation `sourcing` discipline — metadata only, it does NOT feed compute().",
+  "_comment": "§11 acceptance slice in the iteration-2 structure: economics derives from created_technologies + materials (parity with Excel preserved). A (kz-20) and B (kz-2) reproduce the Excel MAC/abatement; C (kz-16) stays draft (factor ~10× the corridor). Every bare number is accompanied by provenance + binding via `sources` (keyed by value path) per the measure-notation `sourcing` discipline — metadata only, it does NOT feed compute().",
   "measures": [
     {
       "id": "kz-20",
@@ -9,6 +9,7 @@
         "en": "Feed additives reducing enteric fermentation (CH₄)"
       },
       "sector_ref": "3",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "3",
@@ -42,14 +43,14 @@
           "reference_ref": "ref_enteric_factor"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "tech_feed_dosing",
+          "technology_ref": "tech_feed_dosing",
           "capacity": 2550000,
           "unit": "голов"
         },
         {
-          "object_ref": "tech_feed_training",
+          "technology_ref": "tech_feed_training",
           "capacity": 5100,
           "unit": "хозяйств",
           "opex_musd": 25.5
@@ -69,7 +70,7 @@
         "pool_ref": "pool_enteric"
       },
       "sources": {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           "provenance": {
             "source_type": "official_stat",
             "citation": "Поголовье под программу, 2550 тыс. голов",
@@ -80,7 +81,7 @@
             "ref": "in:capex_denominator"
           }
         },
-        "created_objects[1].capacity": {
+        "created_technologies[1].capacity": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Охват ~5100 хозяйств",
@@ -90,7 +91,7 @@
             "mode": "new"
           }
         },
-        "created_objects[1].opex_musd": {
+        "created_technologies[1].opex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год",
@@ -153,6 +154,7 @@
         "en": "Conversion of coal CHP and boilers to natural gas"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1",
@@ -254,16 +256,16 @@
           }
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "tech_coal_to_gas",
+          "technology_ref": "tech_coal_to_gas",
           "capacity": 5000,
           "unit": "МВт",
           "capex_ud_factor": 1000,
           "opex_musd": -120
         },
         {
-          "object_ref": "tech_gas_pipeline",
+          "technology_ref": "tech_gas_pipeline",
           "capacity": 5000,
           "unit": "МВт",
           "capex_ud_factor": 1000
@@ -386,7 +388,7 @@
         }
       },
       "sources": {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Замещаемая мощность угольных ТЭЦ, 5000 МВт",
@@ -397,7 +399,7 @@
             "ref": "in:cap_mw"
           }
         },
-        "created_objects[0].opex_musd": {
+        "created_technologies[0].opex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Экономия OPEX при переходе на газ",
@@ -407,7 +409,7 @@
             "mode": "new"
           }
         },
-        "created_objects[1].capacity": {
+        "created_technologies[1].capacity": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Газопровод под мощность станции",
@@ -450,6 +452,7 @@
         "en": "Coal-mine methane degassing (coalbed methane)"
       },
       "sector_ref": "1.B",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.B",
@@ -473,9 +476,9 @@
           "reference_ref": "ref_degas_factor"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "tech_mine_degas",
+          "technology_ref": "tech_mine_degas",
           "capacity": 9.791795506081222,
           "unit": "млн м³",
           "capex_musd": 300,
@@ -496,7 +499,7 @@
         "pool_ref": "pool_coal_methane"
       },
       "sources": {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Объём метана к дегазации, ~9.8 млн м³",
@@ -506,7 +509,7 @@
             "mode": "new"
           }
         },
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "placeholder",
             "citation": "Оценка CAPEX установки дегазации — требует проверки",
@@ -516,7 +519,7 @@
             "mode": "new"
           }
         },
-        "created_objects[0].opex_musd": {
+        "created_technologies[0].opex_musd": {
           "provenance": {
             "source_type": "placeholder",
             "citation": "Оценка OPEX — требует проверки",
@@ -534,7 +537,7 @@
           },
           "binding": {
             "mode": "reuse",
-            "ref": "created_objects[0].capacity"
+            "ref": "created_technologies[0].capacity"
           }
         },
         "materials[0].price": {
@@ -565,7 +568,7 @@
           },
           "binding": {
             "mode": "reuse",
-            "ref": "created_objects[0].capacity"
+            "ref": "created_technologies[0].capacity"
           }
         }
       }
@@ -578,6 +581,7 @@
         "en": "Coal CHP efficiency improvement (turbine & boiler retrofit)"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -630,13 +634,13 @@
           "en": "sector baseline × efficiency gain × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz1_0",
+          "technology_ref": "obj_kz1_0",
           "capex_musd": 7500
         },
         {
-          "object_ref": "obj_kz1_1",
+          "technology_ref": "obj_kz1_1",
           "capex_musd": 2250
         }
       ],
@@ -653,14 +657,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Модернизация турбин и котлов",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Проектные и пусконаладочные работы",
@@ -705,6 +709,7 @@
         "en": "Renewables: solar and wind power plants"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -786,13 +791,13 @@
           "en": "capacity × 8760 × CF × (1−curtailment) × EF_coal × 10⁻³"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz3_0",
+          "technology_ref": "obj_kz3_0",
           "capex_musd": 8000
         },
         {
-          "object_ref": "obj_kz3_1",
+          "technology_ref": "obj_kz3_1",
           "capex_musd": 1200
         }
       ],
@@ -809,14 +814,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "ВИЭ",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Сети и подключение",
@@ -875,6 +880,7 @@
         "en": "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -958,23 +964,23 @@
           "en": "displaced coal generation × EF_coal − gas generation × EF_gas"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz4_0",
+          "technology_ref": "obj_kz4_0",
           "capex_musd": 5600
         },
         {
-          "object_ref": "obj_kz4_1",
+          "technology_ref": "obj_kz4_1",
           "capex_musd": 7000
         },
         {
-          "object_ref": "obj_kz4_3",
+          "technology_ref": "obj_kz4_3",
           "capex_musd": 280.00000000000006
         }
       ],
-      "retired_objects": [
+      "retired_technologies": [
         {
-          "object_ref": "obj_kz4_2",
+          "technology_ref": "obj_kz4_2",
           "maintenance_capex_musd": 7000
         }
       ],
@@ -1001,28 +1007,28 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "ВИЭ (солнце+ветер)",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Газотурбинный пикер",
             "confidence": "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Отказ от модернизации ТЭЦ",
             "confidence": "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Котельная",
@@ -1095,6 +1101,7 @@
         "en": "Nuclear power (replacing baseload coal)"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -1147,9 +1154,9 @@
           "en": "nuclear generation × EF_coal × 10⁻³"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz5_0",
+          "technology_ref": "obj_kz5_0",
           "capex_musd": 36036
         }
       ],
@@ -1171,7 +1178,7 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Строительство АЭС",
@@ -1223,6 +1230,7 @@
         "en": "Heat pumps for district heating"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -1274,13 +1282,13 @@
           "en": "displaced heat × EF_coal_boiler"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz6_0",
+          "technology_ref": "obj_kz6_0",
           "capex_musd": 1040.5265410958903
         },
         {
-          "object_ref": "obj_kz6_1",
+          "technology_ref": "obj_kz6_1",
           "capex_musd": 312.15796232876704
         }
       ],
@@ -1307,14 +1315,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Тепловые насосы",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Модернизация сетей теплоснабжения",
@@ -1373,6 +1381,7 @@
         "en": "Heat-supply electrification (electric boilers + renewables)"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -1424,13 +1433,13 @@
           "en": "displaced heat × EF_coal_boiler"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz7_0",
+          "technology_ref": "obj_kz7_0",
           "capex_musd": 3405.359589041096
         },
         {
-          "object_ref": "obj_kz7_1",
+          "technology_ref": "obj_kz7_1",
           "capex_musd": 1362.1438356164385
         }
       ],
@@ -1452,14 +1461,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Электрокотлы",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Расширение электросетей",
@@ -1511,6 +1520,7 @@
         "en": "Renewables + gas peaker + boiler (alternative to new CHP)"
       },
       "sector_ref": "1.A.1",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.1"
@@ -1594,27 +1604,27 @@
           "en": "displaced coal generation × EF_coal − gas generation × EF_gas"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz8_0",
+          "technology_ref": "obj_kz8_0",
           "capex_musd": 1074.285714285714
         },
         {
-          "object_ref": "obj_kz8_1",
+          "technology_ref": "obj_kz8_1",
           "capex_musd": 150
         },
         {
-          "object_ref": "obj_kz8_3",
+          "technology_ref": "obj_kz8_3",
           "capex_musd": 1000
         },
         {
-          "object_ref": "obj_kz8_4",
+          "technology_ref": "obj_kz8_4",
           "capex_musd": 80
         }
       ],
-      "retired_objects": [
+      "retired_technologies": [
         {
-          "object_ref": "obj_kz8_2",
+          "technology_ref": "obj_kz8_2",
           "maintenance_capex_musd": 3000
         }
       ],
@@ -1641,35 +1651,35 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "ВИЭ (солнце+ветер)",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Развитие электросетей (на пикеры)",
             "confidence": "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Отказ от строительства ТЭЦ",
             "confidence": "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Газотурбинный пикер",
             "confidence": "medium"
           }
         },
-        "created_objects[3].capex_musd": {
+        "created_technologies[3].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Котельная",
@@ -1742,6 +1752,7 @@
         "en": "Waste-heat recovery (flue-gas heat recuperation)"
       },
       "sector_ref": "1.A.2",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.2"
@@ -1806,9 +1817,9 @@
           "en": "capacity × 8760 × CF × EF_coal × 10⁻³"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz9_0",
+          "technology_ref": "obj_kz9_0",
           "capex_musd": 6250
         }
       ],
@@ -1825,7 +1836,7 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Генераторы",
@@ -1877,6 +1888,7 @@
         "en": "Passenger-vehicle electrification (EVs)"
       },
       "sector_ref": "1.A.3",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.3"
@@ -1945,13 +1957,13 @@
           "en": "sector baseline × share × 1000 − grid-emissions growth"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz10_0",
+          "technology_ref": "obj_kz10_0",
           "capex_musd": 7332.251082251083
         },
         {
-          "object_ref": "obj_kz10_1",
+          "technology_ref": "obj_kz10_1",
           "capex_musd": 1466.4502164502167
         }
       ],
@@ -1968,14 +1980,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Инкрементальная стоимость EV парка",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Зарядная инфраструктура",
@@ -2027,6 +2039,7 @@
         "en": "Building thermal retrofit (facade insulation, windows, roofing)"
       },
       "sector_ref": "1.A.4",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.4"
@@ -2111,13 +2124,13 @@
           "en": "(heat_before − heat_after) × EF_coal_boiler × (1−derating)"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz11_0",
+          "technology_ref": "obj_kz11_0",
           "capex_musd": 9000
         },
         {
-          "object_ref": "obj_kz11_1",
+          "technology_ref": "obj_kz11_1",
           "capex_musd": 1800
         }
       ],
@@ -2139,14 +2152,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Утепление фасадов и кровли",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Замена окон и дверей",
@@ -2212,6 +2225,7 @@
         "en": "Residential gasification (transitional measure)"
       },
       "sector_ref": "1.A.4",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.4"
@@ -2264,13 +2278,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz12_0",
+          "technology_ref": "obj_kz12_0",
           "capex_musd": 2500
         },
         {
-          "object_ref": "obj_kz12_1",
+          "technology_ref": "obj_kz12_1",
           "capex_musd": 0.6
         }
       ],
@@ -2292,14 +2306,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Магистральные и распред. газопроводы",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Подключение потребителей",
@@ -2351,6 +2365,7 @@
         "en": "Electric boiler + renewables (full district-heating decarbonization)"
       },
       "sector_ref": "1.A.4",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.A.4"
@@ -2414,23 +2429,23 @@
           "en": "sector baseline × technical potential × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz13_0",
+          "technology_ref": "obj_kz13_0",
           "capex_musd": 1403.0588418430887
         },
         {
-          "object_ref": "obj_kz13_1",
+          "technology_ref": "obj_kz13_1",
           "capex_musd": 561.2235367372355
         },
         {
-          "object_ref": "obj_kz13_2",
+          "technology_ref": "obj_kz13_2",
           "capex_musd": 420.9176525529266
         }
       ],
-      "retired_objects": [
+      "retired_technologies": [
         {
-          "object_ref": "obj_kz13_3",
+          "technology_ref": "obj_kz13_3",
           "maintenance_capex_musd": 2200.8771357975043
         }
       ],
@@ -2452,28 +2467,28 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Электрокотлы",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Расширение электросетей",
             "confidence": "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "СМР и тепловые сети",
             "confidence": "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Экономия: закрытие котельных",
@@ -2532,6 +2547,7 @@
         "en": "LDAR: methane leak detection and repair (oil & gas)"
       },
       "sector_ref": "1.B",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.B"
@@ -2584,13 +2600,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz14_0",
+          "technology_ref": "obj_kz14_0",
           "capex_musd": 40
         },
         {
-          "object_ref": "obj_kz14_1",
+          "technology_ref": "obj_kz14_1",
           "capex_musd": 15
         }
       ],
@@ -2607,14 +2623,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Обследование и ремонт",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "OGI камеры и оборудование",
@@ -2659,6 +2675,7 @@
         "en": "Associated petroleum gas (APG) utilization"
       },
       "sector_ref": "1.B",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.B"
@@ -2711,13 +2728,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz15_0",
+          "technology_ref": "obj_kz15_0",
           "capex_musd": 1500
         },
         {
-          "object_ref": "obj_kz15_1",
+          "technology_ref": "obj_kz15_1",
           "capex_musd": 375
         }
       ],
@@ -2734,14 +2751,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "ГТЭС и компрессорное оборудование",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Подводящая инфраструктура",
@@ -2786,6 +2803,7 @@
         "en": "Leak reduction in the gas transmission system"
       },
       "sector_ref": "1.B",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "1.B"
@@ -2838,13 +2856,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz17_0",
+          "technology_ref": "obj_kz17_0",
           "capex_musd": 600
         },
         {
-          "object_ref": "obj_kz17_1",
+          "technology_ref": "obj_kz17_1",
           "capex_musd": 30
         }
       ],
@@ -2861,14 +2879,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Модернизация газопроводов и КС",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Спутниковый мониторинг",
@@ -2913,6 +2931,7 @@
         "en": "Clinker-factor reduction in cement production"
       },
       "sector_ref": "2",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "2"
@@ -2965,9 +2984,9 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz18_0",
+          "technology_ref": "obj_kz18_0",
           "capex_musd": 200
         }
       ],
@@ -2984,7 +3003,7 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Модернизация заводов",
@@ -3029,6 +3048,7 @@
         "en": "CCS in metallurgy and cement"
       },
       "sector_ref": "2",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "2"
@@ -3081,13 +3101,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz19_0",
+          "technology_ref": "obj_kz19_0",
           "capex_musd": 925.7142857142857
         },
         {
-          "object_ref": "obj_kz19_1",
+          "technology_ref": "obj_kz19_1",
           "capex_musd": 277.71428571428567
         }
       ],
@@ -3099,14 +3119,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Установки улавливания CO₂",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Транспорт и хранение",
@@ -3144,6 +3164,7 @@
         "en": "Improved manure management (biogas)"
       },
       "sector_ref": "3",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "3"
@@ -3196,13 +3217,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz21_0",
+          "technology_ref": "obj_kz21_0",
           "capex_musd": 250
         },
         {
-          "object_ref": "obj_kz21_1",
+          "technology_ref": "obj_kz21_1",
           "capex_musd": 50
         }
       ],
@@ -3219,14 +3240,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Биогазовые установки",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Покрытие лагун и инфраструктура",
@@ -3271,6 +3292,7 @@
         "en": "Precision agriculture (N₂O reduction from fertilizers)"
       },
       "sector_ref": "3",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "3"
@@ -3323,13 +3345,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz22_0",
+          "technology_ref": "obj_kz22_0",
           "capex_musd": 150
         },
         {
-          "object_ref": "obj_kz22_1",
+          "technology_ref": "obj_kz22_1",
           "capex_musd": 30
         }
       ],
@@ -3346,14 +3368,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "GPS-навигация и датчики",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Обучение и агрономическая поддержка",
@@ -3398,6 +3420,7 @@
         "en": "Improved pasture management"
       },
       "sector_ref": "3",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "3"
@@ -3450,13 +3473,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz23_0",
+          "technology_ref": "obj_kz23_0",
           "capex_musd": 200
         },
         {
-          "object_ref": "obj_kz23_1",
+          "technology_ref": "obj_kz23_1",
           "capex_musd": 30
         }
       ],
@@ -3473,14 +3496,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Восстановление пастбищ",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Инфраструктура ротационного выпаса",
@@ -3525,6 +3548,7 @@
         "en": "Afforestation and reforestation"
       },
       "sector_ref": "4",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "4"
@@ -3587,13 +3611,13 @@
           "en": "target area × survival rate × sequestration rate"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz24_0",
+          "technology_ref": "obj_kz24_0",
           "capex_musd": 2000
         },
         {
-          "object_ref": "obj_kz24_1",
+          "technology_ref": "obj_kz24_1",
           "capex_musd": 200
         }
       ],
@@ -3610,14 +3634,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Саженцы, подготовка почвы, посадка",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Питомники и логистика",
@@ -3669,6 +3693,7 @@
         "en": "Landfill-gas (LFG) capture and utilization"
       },
       "sector_ref": "5",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "5"
@@ -3721,13 +3746,13 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz25_0",
+          "technology_ref": "obj_kz25_0",
           "capex_musd": 100
         },
         {
-          "object_ref": "obj_kz25_1",
+          "technology_ref": "obj_kz25_1",
           "capex_musd": 40
         }
       ],
@@ -3744,14 +3769,14 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Системы дегазации",
             "confidence": "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Газопоршневые генераторы",
@@ -3796,6 +3821,7 @@
         "en": "Wastewater-treatment upgrade (CH₄ reduction)"
       },
       "sector_ref": "5",
+      "mechanism": "reduction",
       "sectors": [
         {
           "sector_ref": "5"
@@ -3848,9 +3874,9 @@
           "en": "sector baseline × share × 1000"
         }
       },
-      "created_objects": [
+      "created_technologies": [
         {
-          "object_ref": "obj_kz26_0",
+          "technology_ref": "obj_kz26_0",
           "capex_musd": 150
         }
       ],
@@ -3867,7 +3893,7 @@
         }
       ],
       "sources": {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Модернизация КОС",

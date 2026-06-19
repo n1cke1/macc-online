@@ -67,7 +67,7 @@
     {
       "id": "tech_feed_dosing",
       "name": "Dosing equipment",
-      "kind": "capital_asset",
+      "kind": "structure",
       "description": "Per-head feed-additive dosing systems.",
       "rules": "Per-head capital asset: CAPEX = head × unit CAPEX.",
       "lifetimeYrs": 10
@@ -99,32 +99,32 @@
     {
       "id": "obj_kz1_0",
       "name": "Turbine & boiler upgrade",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz1_1",
       "name": "Engineering & commissioning",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz3_0",
       "name": "Renewables",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz3_1",
       "name": "Grid & connection",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz4_0",
       "name": "Renewables (solar + wind)",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz4_1",
       "name": "Gas-turbine peaker",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz4_2",
@@ -134,42 +134,42 @@
     {
       "id": "obj_kz4_3",
       "name": "Boiler house",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz5_0",
       "name": "Nuclear plant construction",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz6_0",
       "name": "Heat pumps",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz6_1",
       "name": "Heat-network upgrade",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz7_0",
       "name": "Electric boilers",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz7_1",
       "name": "Grid expansion",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz8_0",
       "name": "Renewables (solar + wind)",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz8_1",
       "name": "Grid expansion (for peakers)",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz8_2",
@@ -179,62 +179,62 @@
     {
       "id": "obj_kz8_3",
       "name": "Gas-turbine peaker",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz8_4",
       "name": "Boiler house",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz9_0",
       "name": "Generators",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz10_0",
       "name": "Incremental cost of the EV fleet",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz10_1",
       "name": "Charging infrastructure",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz11_0",
       "name": "Facade & roof insulation",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz11_1",
       "name": "Window & door replacement",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz12_0",
       "name": "Trunk & distribution gas pipelines",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz12_1",
       "name": "Consumer connections",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz13_0",
       "name": "Electric boilers",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz13_1",
       "name": "Grid expansion",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz13_2",
       "name": "Construction works & heat networks",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz13_3",
@@ -244,102 +244,102 @@
     {
       "id": "obj_kz14_0",
       "name": "Survey & repair",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz14_1",
       "name": "OGI cameras & equipment",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz15_0",
       "name": "Gas-turbine plant & compressor equipment",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz15_1",
       "name": "Feeder infrastructure",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz17_0",
       "name": "Gas-pipeline & compressor-station upgrade",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz17_1",
       "name": "Satellite monitoring",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz18_0",
       "name": "Plant upgrade",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz19_0",
       "name": "CO₂ capture units",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz19_1",
       "name": "Transport & storage",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz21_0",
       "name": "Biogas plants",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz21_1",
       "name": "Lagoon covers & infrastructure",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz22_0",
       "name": "GPS navigation & sensors",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz22_1",
       "name": "Training & agronomic support",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz23_0",
       "name": "Pasture restoration",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz23_1",
       "name": "Rotational-grazing infrastructure",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz24_0",
       "name": "Seedlings, soil prep & planting",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz24_1",
       "name": "Nurseries & logistics",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz25_0",
       "name": "Degassing systems",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz25_1",
       "name": "Reciprocating gas-engine generators",
-      "kind": "capital_asset"
+      "kind": "structure"
     },
     {
       "id": "obj_kz26_0",
       "name": "Wastewater-treatment-plant upgrade",
-      "kind": "capital_asset"
+      "kind": "structure"
     }
   ],
   "resources": [
@@ -707,7 +707,7 @@
       "unit": "MWh",
       "service_unit": "MWh",
       "sector_ref": "1.A.1",
-      "object_ref": "tech_coal_to_gas"
+      "technology_ref": "tech_coal_to_gas"
     }
   ],
   "references": [

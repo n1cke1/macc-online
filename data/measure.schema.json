@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://macc.kz/schema/measure.json",
   "title": "Measure",
-  "description": "Authoring input object — the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_objects + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
+  "description": "Authoring input object — the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
   "type": "object",
-  "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "abatement"],
+  "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "mechanism", "abatement"],
   "additionalProperties": false,
   "properties": {
     "id": { "type": "string", "description": "Measure id, e.g. 'kz-2'." },
@@ -21,6 +21,9 @@
     },
     "product_ref": { "type": "string", "description": "Product produced (displaces conventional production); optional for practices/capture." },
     "technology_ref": { "type": "string", "description": "Primary object (kept for the economics guardrail)." },
+    "mechanism": { "enum": ["reduction", "removal"], "description": "Abatement mechanism (classification). Absent ⇒ reduction. Removal = CDR (BECCS/DACCS/nature-based); fossil-CO₂ capture is reduction." },
+    "mechanism_subtype": { "enum": ["efficiency", "fuel_switch", "electrification", "process_change", "demand_reduction", "non_co2", "nature_based", "engineered"], "description": "Soft subtype tag (optional)." },
+    "permanence": { "enum": ["short_lived", "durable"], "description": "Removal only: storage durability flag (optional)." },
     "scope": { "enum": ["published", "draft", "scenario"] },
     "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); the creator. Set by the server." },
     "maturity_stage": { "enum": ["raw", "back_calc", "computed"] },
@@ -79,11 +82,11 @@
         "formula_label": { "$ref": "#/$defs/localized" }
       }
     },
-    "created_objects": {
+    "created_technologies": {
       "type": "array", "description": "Objects the measure CREATES (build). Economics derives from these.",
       "items": { "$ref": "#/$defs/builtObject" }
     },
-    "retired_objects": {
+    "retired_technologies": {
       "type": "array", "description": "Objects the measure CLOSES; their CAPEX/OPEX are avoided (subtracted).",
       "items": { "$ref": "#/$defs/retiredObject" }
     },
@@ -93,7 +96,7 @@
     },
     "sources": {
       "type": "object",
-      "description": "§6 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_objects[0].capacity', 'materials[1].price', 'abatement.back_calc.share'). A path is in `sources` (input) XOR `computed` (derived).",
+      "description": "§6 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_technologies[0].capacity', 'materials[1].price', 'abatement.back_calc.share'). A path is in `sources` (input) XOR `computed` (derived).",
       "additionalProperties": { "$ref": "#/$defs/valueSource" }
     },
     "computed": {
@@ -103,7 +106,7 @@
     },
     "economics": {
       "type": "object", "additionalProperties": false,
-      "description": "LEGACY free-form CAPEX/OPEX line items — fallback for un-migrated measures only. Prefer created_objects + materials.",
+      "description": "LEGACY free-form CAPEX/OPEX line items — fallback for un-migrated measures only. Prefer created_technologies + materials.",
       "properties": {
         "capex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
         "opex": { "type": "array", "items": { "$ref": "#/$defs/valueWithSource" } },
@@ -131,10 +134,10 @@
       "properties": { "resource_ref": { "type": "string" }, "qty_per_unit": { "type": "number" }, "unit": { "type": "string" } }
     },
     "builtObject": {
-      "type": "object", "required": ["object_ref"], "additionalProperties": false,
+      "type": "object", "required": ["technology_ref"], "additionalProperties": false,
       "description": "CAPEX = capex_musd ?? capacity × tech.capex_ud × (capex_ud_factor ?? 1) / 1e6.",
       "properties": {
-        "object_ref": { "type": "string", "description": "library object id" },
+        "technology_ref": { "type": "string", "description": "library object id" },
         "capacity": { "type": "number" }, "unit": { "type": "string" },
         "capex_ud_factor": { "type": "number", "description": "capacity unit → capex_ud denominator (e.g. MW→kW = 1000)" },
         "capex_musd": { "type": "number", "description": "explicit CAPEX when not capacity-driven" },
@@ -142,9 +145,9 @@
       }
     },
     "retiredObject": {
-      "type": "object", "required": ["object_ref"], "additionalProperties": false,
+      "type": "object", "required": ["technology_ref"], "additionalProperties": false,
       "properties": {
-        "object_ref": { "type": "string" }, "capacity": { "type": "number" }, "unit": { "type": "string" },
+        "technology_ref": { "type": "string" }, "capacity": { "type": "number" }, "unit": { "type": "string" },
         "capex_ud_factor": { "type": "number" },
         "maintenance_capex_musd": { "type": "number", "description": "avoided maintenance CAPEX (subtracted)" },
         "opex_musd": { "type": "number", "description": "avoided OPEX (signed)" }

@@ -165,15 +165,15 @@ function buildChecks(
 /** The measure's bare numbers that must each be tagged (input source or computed formula). */
 export function taggablePaths(m: Measure): string[] {
   const p: string[] = [];
-  (m.created_objects ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`created_objects[${i}].capacity`);
-    if (o.capex_musd != null) p.push(`created_objects[${i}].capex_musd`);
-    if (o.opex_musd != null) p.push(`created_objects[${i}].opex_musd`);
+  (m.created_technologies ?? []).forEach((o, i) => {
+    if (o.capacity != null) p.push(`created_technologies[${i}].capacity`);
+    if (o.capex_musd != null) p.push(`created_technologies[${i}].capex_musd`);
+    if (o.opex_musd != null) p.push(`created_technologies[${i}].opex_musd`);
   });
-  (m.retired_objects ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`retired_objects[${i}].capacity`);
-    if (o.maintenance_capex_musd != null) p.push(`retired_objects[${i}].maintenance_capex_musd`);
-    if (o.opex_musd != null) p.push(`retired_objects[${i}].opex_musd`);
+  (m.retired_technologies ?? []).forEach((o, i) => {
+    if (o.capacity != null) p.push(`retired_technologies[${i}].capacity`);
+    if (o.maintenance_capex_musd != null) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
+    if (o.opex_musd != null) p.push(`retired_technologies[${i}].opex_musd`);
   });
   (m.materials ?? []).forEach((mt, i) => {
     if (mt.qty != null || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
@@ -214,14 +214,14 @@ function buildPanels(
     // Iteration-2 panels: build = «Что создаём» (objects), baseline = «Отрасль и
     // продукт» (sector required, product optional), project = «Что закрываем» (optional).
     overview: req(!!measure.name && !!measure.sector_ref, 'name/sector'),
-    build: req((measure.created_objects?.length ?? 0) > 0 || !!measure.technology_ref, 'created_objects'),
+    build: req((measure.created_technologies?.length ?? 0) > 0 || !!measure.technology_ref, 'created_technologies'),
     baseline: req(!!measure.sector_ref, 'sector'),
     project: 'ok',
     reduction: !stageBlock
       ? (missing.push('abatement'), 'incomplete')
       : checks.factor === 'warn' ? 'warn' : 'ok',
     economics:
-      (measure.created_objects?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0
+      (measure.created_technologies?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0
         ? (checks.economics === 'warn' ? 'warn' : 'ok')
         : (missing.push('objects/materials'), 'incomplete'),
     potential: !measure.potential?.pool_ref
@@ -259,8 +259,8 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
   if (offenders.length) {
     const has = (...prefixes: string[]) => offenders.some((p) => prefixes.some((pre) => p.startsWith(pre)));
     const degrade = (s: PanelStatus): PanelStatus => (s === 'warn' ? s : 'incomplete');
-    if (has('materials', 'created_objects', 'retired_objects')) panels.economics = degrade(panels.economics);
-    if (has('created_objects')) panels.build = degrade(panels.build);
+    if (has('materials', 'created_technologies', 'retired_technologies')) panels.economics = degrade(panels.economics);
+    if (has('created_technologies')) panels.build = degrade(panels.build);
     if (has('abatement')) panels.reduction = degrade(panels.reduction);
     missing.push(...offenders.map((p) => `untagged number: ${p}`));
   }
