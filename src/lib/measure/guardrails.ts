@@ -56,11 +56,10 @@ export function abatementJs(measure: Measure, library: Library): number {
     if (!tmpl) throw new Error(`Unknown template '${a.computed.formula_ref}'`);
     return evalJs(bindTemplate(tmpl, a.computed.bindings, resolve), resolve);
   }
-  const block = a.back_calc ?? a.raw;
-  if (!block) throw new Error(`Measure '${measure.id}': no abatement block`);
+  if (!a.raw) throw new Error(`Measure '${measure.id}': no abatement block`);
   const baseline = library.pools[measure.potential?.pool_ref ?? '']?.baselineEmissionsKt;
   if (baseline == null) throw new Error(`Measure '${measure.id}': share path needs pool.baselineEmissionsKt`);
-  return baseline * block.share;
+  return baseline * a.raw.share;
 }
 
 /**
@@ -126,10 +125,10 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
   };
   const checks: Record<CheckId, CheckStatus> = { factor: 'na', economics: 'na', pool: 'na', sector: 'na' };
 
-  const bc = measure.abatement.back_calc;
-  const ref = bc ? library.references[bc.reference_ref] : undefined;
-  if (measure.maturity_stage === 'back_calc' && bc && ref) {
-    checks.factor = run('factor', { abatement: abatementKt, activity: bc.activity_scalar.qty, min: ref.range[0], max: ref.range[1] });
+  const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : undefined;
+  const ref = factorInput?.reference_ref ? library.references[factorInput.reference_ref] : undefined;
+  if (factorInput && ref) {
+    checks.factor = run('factor', { factor: factorInput.value, min: ref.range[0], max: ref.range[1] });
   }
 
   const tech = measure.technology_ref ? library.technologies[measure.technology_ref] : undefined;

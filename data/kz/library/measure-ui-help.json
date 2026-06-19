@@ -100,21 +100,18 @@
   "enums": {
     "maturity": {
       "raw": {
-        "help": "Postulated: reduction = baseline × share; no anchor or check. The first stage — next is back-calc."
-      },
-      "back_calc": {
-        "help": "Back-calc: implied factor = reduction / activity checked vs the reference corridor (✓/⚠). In-corridor and sourced → eligible for «computed»."
+        "help": "Postulated: reduction = baseline × share; no anchor or check. The first stage — next is computed."
       },
       "computed": {
-        "help": "Computed: reduction expanded by a formula (activity × factor); the share becomes a control. The highest maturity stage."
+        "help": "Computed: reduction expanded by a bottom-up formula (activity × factor). The per-unit factor is sanity-checked vs its reference corridor (✓/⚠). The highest maturity stage."
       }
     },
     "type": {
-      "substitution": {
-        "help": "Substitution (CCS/CCUS, agro): no product comparison, no service-unit match check."
+      "standalone": {
+        "help": "Standalone baseline (CCS/CCUS, agro): absolute project footprint, no product comparison or service-unit match check."
       },
       "comparison": {
-        "help": "A/B comparison: baseline and project products must match on the service unit (e.g. MWh)."
+        "help": "Comparison baseline: baseline and project products must match on the service unit (e.g. MWh)."
       }
     },
     "scope": {
@@ -209,10 +206,10 @@
   },
   "sourcing": {
     "principle": {
-      "help": "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_technologies[0].capacity', 'materials[1].price', 'abatement.back_calc.share'); a DERIVED number instead goes in measure.computed at the same path (a formula) — a path is in sources XOR computed, never both, never a bare pasted number."
+      "help": "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_technologies[0].capacity', 'materials[1].price'); a DERIVED number instead goes in measure.computed at the same path (a formula) — a path is in sources XOR computed, never both, never a bare pasted number."
     },
     "provenance": {
-      "help": "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. With no source it is treated as a placeholder (low confidence, flagged)."
+      "help": "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date, and geo_applicability (global/kz_specific/other_country) with a short kz_reliability note. With no source it is treated as a placeholder (low confidence, flagged)."
     },
     "binding": {
       "help": "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue — flagged for review). The goal is reuse and explainability."

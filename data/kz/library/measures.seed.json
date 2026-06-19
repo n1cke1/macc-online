@@ -10,6 +10,7 @@
       },
       "sector_ref": "3",
       "mechanism": "reduction",
+      "baseline_basis": "standalone",
       "sectors": [
         {
           "sector_ref": "3",
@@ -18,10 +19,7 @@
       ],
       "technology_ref": "tech_feed_additive",
       "scope": "published",
-      "maturity_stage": "back_calc",
-      "comparison": {
-        "is_substitution": true
-      },
+      "maturity_stage": "computed",
       "inputs": {
         "capex_denominator": {
           "value": 2550000,
@@ -31,17 +29,40 @@
             "citation": "Поголовье под программу 2550 тыс. голов",
             "confidence": "medium"
           }
+        },
+        "activity": {
+          "value": 2550,
+          "unit": "тыс. голов",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Поголовье под программу, 2550 тыс. голов",
+            "confidence": "high"
+          }
+        },
+        "emission_factor": {
+          "value": 0.6980392156862745,
+          "unit": "kt CO₂eq/(тыс. голов·год)",
+          "reference_ref": "ref_enteric_factor",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Удельное снижение энтерального CH₄ на тыс. голов от кормовых добавок (в коридоре ref_enteric_factor)",
+            "confidence": "medium"
+          }
         }
       },
       "abatement": {
-        "back_calc": {
-          "share": 0.1,
-          "activity_scalar": {
-            "qty": 2550,
-            "unit": "тыс. голов"
-          },
-          "reference_ref": "ref_enteric_factor"
-        }
+        "formula": {
+          "op": "mul",
+          "args": [
+            { "ref": "activity" },
+            { "ref": "emission_factor" }
+          ]
+        },
+        "formula_label": {
+          "ru": "поголовье × удельное снижение CH₄",
+          "en": "head count × per-head CH₄ reduction"
+        },
+        "factor_ref": "emission_factor"
       },
       "created_technologies": [
         {
@@ -122,27 +143,6 @@
             "mode": "reuse",
             "ref": "res:feed_additive#price"
           }
-        },
-        "abatement.back_calc.share": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "Лист «Мероприятия», доля охвата подкатегории",
-            "confidence": "medium"
-          },
-          "binding": {
-            "mode": "new"
-          }
-        },
-        "abatement.back_calc.activity_scalar.qty": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "Поголовье 2550 тыс. голов",
-            "confidence": "high"
-          },
-          "binding": {
-            "mode": "reuse",
-            "ref": "in:capex_denominator"
-          }
         }
       }
     },
@@ -155,6 +155,7 @@
       },
       "sector_ref": "1.A.1",
       "mechanism": "reduction",
+      "baseline_basis": "comparison",
       "sectors": [
         {
           "sector_ref": "1.A.1",
@@ -166,7 +167,6 @@
       "scope": "published",
       "maturity_stage": "computed",
       "comparison": {
-        "is_substitution": false,
         "service_unit_ref": "prod_mwh"
       },
       "inputs": {
@@ -453,6 +453,7 @@
       },
       "sector_ref": "1.B",
       "mechanism": "reduction",
+      "baseline_basis": "standalone",
       "sectors": [
         {
           "sector_ref": "1.B",
@@ -461,20 +462,45 @@
       ],
       "technology_ref": "tech_mine_degas",
       "scope": "published",
-      "maturity_stage": "back_calc",
-      "comparison": {
-        "is_substitution": true
-      },
-      "inputs": {},
-      "abatement": {
-        "back_calc": {
-          "share": 0.2,
-          "activity_scalar": {
-            "qty": 9.791795506081222,
-            "unit": "млн м³"
+      "maturity_stage": "computed",
+      "inputs": {
+        "activity": {
+          "value": 9.791795506081222,
+          "unit": "млн м³",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Объём метана к дегазации, ~9.8 млн м³",
+            "confidence": "low"
           },
-          "reference_ref": "ref_degas_factor"
+          "binding": {
+            "mode": "reuse",
+            "ref": "created_technologies[0].capacity"
+          }
+        },
+        "emission_factor": {
+          "value": 194.03999999999996,
+          "unit": "kt CO₂eq/(млн м³)",
+          "reference_ref": "ref_degas_factor",
+          "provenance": {
+            "source_type": "assumption",
+            "citation": "Удельный фактор постулирован; превышает коридор ref_degas_factor → мера остаётся draft",
+            "confidence": "low"
+          }
         }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            { "ref": "activity" },
+            { "ref": "emission_factor" }
+          ]
+        },
+        "formula_label": {
+          "ru": "объём метана × удельный фактор CO₂eq",
+          "en": "methane volume × per-volume CO₂eq factor"
+        },
+        "factor_ref": "emission_factor"
       },
       "created_technologies": [
         {
@@ -548,27 +574,6 @@
           },
           "binding": {
             "mode": "new"
-          }
-        },
-        "abatement.back_calc.share": {
-          "provenance": {
-            "source_type": "assumption",
-            "citation": "Доля охвата 0.2 — постулирована",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "new"
-          }
-        },
-        "abatement.back_calc.activity_scalar.qty": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Активность ~9.8 млн м³",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "reuse",
-            "ref": "created_technologies[0].capacity"
           }
         }
       }

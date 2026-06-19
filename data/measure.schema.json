@@ -24,16 +24,16 @@
     "mechanism": { "enum": ["reduction", "removal"], "description": "Abatement mechanism (classification). Absent ⇒ reduction. Removal = CDR (BECCS/DACCS/nature-based); fossil-CO₂ capture is reduction." },
     "mechanism_subtype": { "enum": ["efficiency", "fuel_switch", "electrification", "process_change", "demand_reduction", "non_co2", "nature_based", "engineered"], "description": "Soft subtype tag (optional)." },
     "permanence": { "enum": ["short_lived", "durable"], "description": "Removal only: storage durability flag (optional)." },
+    "baseline_basis": { "enum": ["comparison", "standalone"], "description": "§B axis (parallel to mechanism). comparison ⇒ service-unit baseline + comparison.service_unit_ref; standalone ⇒ absolute project footprint (CCS, agro). Optional until all measures are authored, then required." },
     "scope": { "enum": ["published", "draft", "scenario"] },
     "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); the creator. Set by the server." },
-    "maturity_stage": { "enum": ["raw", "back_calc", "computed"] },
+    "maturity_stage": { "enum": ["raw", "computed"] },
     "review_status": { "enum": ["open", "accepted", "rejected", "wontfix"] },
     "comparison": {
-      "type": "object", "required": ["is_substitution"], "additionalProperties": false,
-      "description": "A/B axis. comparison ⇒ is_substitution=false + service_unit_ref; substitution ⇒ true.",
+      "type": "object", "additionalProperties": false,
+      "description": "Service-unit baseline; present for baseline_basis='comparison'.",
       "properties": {
-        "service_unit_ref": { "type": "string" },
-        "is_substitution": { "type": "boolean" }
+        "service_unit_ref": { "type": "string" }
       }
     },
     "flows": {
@@ -58,18 +58,6 @@
           "type": "object", "required": ["share"], "additionalProperties": false,
           "properties": { "share": { "type": "number" }, "justification": { "type": "string" } }
         },
-        "back_calc": {
-          "type": "object", "required": ["share", "activity_scalar", "reference_ref"], "additionalProperties": false,
-          "properties": {
-            "share": { "type": "number" },
-            "activity_scalar": {
-              "type": "object", "required": ["qty", "unit"], "additionalProperties": false,
-              "properties": { "qty": { "type": "number" }, "unit": { "type": "string" } }
-            },
-            "implied_factor": { "type": "number", "readOnly": true },
-            "reference_ref": { "type": "string", "description": "refs entry the implied factor is checked against." }
-          }
-        },
         "computed": {
           "type": "object", "required": ["formula_ref", "bindings"], "additionalProperties": false,
           "properties": {
@@ -79,7 +67,8 @@
           }
         },
         "formula": { "$ref": "#/$defs/ast", "description": "Inline abatement AST over the measure inputs (res:<id> EF / recursive computed leaves). Wins over the stage block; ports the Excel formula directly." },
-        "formula_label": { "$ref": "#/$defs/localized" }
+        "formula_label": { "$ref": "#/$defs/localized" },
+        "factor_ref": { "type": "string", "description": "§7 X-axis: names the measure input holding the per-unit abatement factor (abatement ÷ activity). That input's reference_ref is the corridor the `factor` guardrail checks against." }
       }
     },
     "created_technologies": {
@@ -96,7 +85,7 @@
     },
     "sources": {
       "type": "object",
-      "description": "§6 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_technologies[0].capacity', 'materials[1].price', 'abatement.back_calc.share'). A path is in `sources` (input) XOR `computed` (derived).",
+      "description": "§6 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_technologies[0].capacity', 'materials[1].price'). A path is in `sources` (input) XOR `computed` (derived).",
       "additionalProperties": { "$ref": "#/$defs/valueSource" }
     },
     "computed": {
@@ -168,7 +157,9 @@
       "properties": {
         "source_type": { "enum": ["official_stat", "literature", "standard", "expert_estimate", "assumption", "placeholder"] },
         "citation": { "type": "string" }, "url": { "type": "string" }, "date": { "type": "string" },
-        "confidence": { "enum": ["high", "medium", "low"] }
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "geo_applicability": { "enum": ["global", "kz_specific", "other_country"], "description": "§B geo-applicability: global (low geo-sensitivity) / kz_specific / other_country. State KZ-reliability in kz_reliability." },
+        "kz_reliability": { "type": "string", "description": "§B short note on the number's reliability for assessing the measure in Kazakhstan." }
       }
     },
     "binding": {
@@ -183,7 +174,8 @@
       "type": "object", "required": ["value", "provenance"], "additionalProperties": false,
       "properties": {
         "value": { "type": "number" }, "unit": { "type": "string" },
-        "provenance": { "$ref": "#/$defs/provenance" }, "binding": { "$ref": "#/$defs/binding" }
+        "provenance": { "$ref": "#/$defs/provenance" }, "binding": { "$ref": "#/$defs/binding" },
+        "reference_ref": { "type": "string", "description": "§7 — optional reference corridor this number is sanity-checked against (e.g. the per-unit factor named by abatement.factor_ref)." }
       }
     },
     "valueSource": {

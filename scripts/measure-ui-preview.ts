@@ -13,18 +13,19 @@ for (const m of seedMeasures) {
   const peers = seedMeasures.filter((x) => x.id !== m.id);
   const c = compute(m, library);
   const v = validate(m, library, peers);
-  const isSub = m.comparison?.is_substitution === true;
+  const basis = m.baseline_basis ?? '—';
 
   console.log(`\n┌─ ${m.id} · ${m.name.ru}`);
-  console.log(`│ badges: [${m.sector_ref}] [${m.maturity_stage}] [${v.scope}] [${isSub ? 'substitution' : 'A/B'}]`);
+  console.log(`│ badges: [${m.sector_ref}] [${m.maturity_stage}] [${v.scope}] [${m.mechanism}] [${basis}]`);
   console.log(`│ MAC ${c.mac.toFixed(2)} USD/t · abatement ${Math.round(c.abatementKt)} kt/yr · potential ${Math.round(v.potential)} kt/yr`);
   console.log(`├─ panels`);
   for (const [k, s] of Object.entries(v.panels)) console.log(`│   ${glyph(s)} ${k.padEnd(10)} ${s}`);
   console.log(`├─ guardrails`);
   for (const [k, s] of Object.entries(v.checks)) console.log(`│   ${glyph(s)} ${k.padEnd(10)} ${s}`);
-  if (m.abatement.back_calc) {
-    const r = library.references[m.abatement.back_calc.reference_ref];
-    console.log(`│   implied factor ${c.impliedFactor?.toFixed(2)} vs corridor [${r.range.join('–')}] ${r.unit}`);
+  const factorInput = m.abatement.factor_ref ? m.inputs?.[m.abatement.factor_ref] : undefined;
+  if (factorInput?.reference_ref) {
+    const r = library.references[factorInput.reference_ref];
+    console.log(`│   factor ${c.impliedFactor?.toFixed(2)} vs corridor [${r.range.join('–')}] ${r.unit}`);
   }
   // §6 sourcing — provenance + binding per INPUT number (what each "?" shows in the UI).
   const sources = m.sources ?? {};

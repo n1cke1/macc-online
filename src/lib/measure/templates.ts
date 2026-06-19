@@ -1,7 +1,7 @@
 // §3 — formula-template library + slot binding.
 //
 // The 26 Excel formulas cluster into a few shapes; the prototype ships the two the
-// §11 cases need (`delta_ef` for B, `share` for A's raw/back_calc magnitude). A
+// §11 cases need (`delta_ef` for B, `share` for A's raw magnitude). A
 // measure at maturity `computed` references a template by id and binds its slots
 // to measure inputs / resource properties; `bindTemplate` substitutes the bound
 // values so `compileAst` sees a slot-free tree.

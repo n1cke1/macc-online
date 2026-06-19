@@ -1,7 +1,7 @@
 // §0/§5 — turn a `Measure` into a plottable result.
 //
 // One economic core (§0) for every maturity stage; abatement is derived per stage
-// (§5): `raw`/`back_calc` = baseline × share, `computed` = a formula template
+// (§5): `raw` = baseline × share, `computed` = an inline AST / formula template
 // evaluated through HyperFormula (§3). The output mirrors `MaccPoint` field names
 // (`data/schema.ts`) so the chart/drilldown can render a measure as one more bar.
 import type { Localized, SectorCode } from '@data/schema';
@@ -23,7 +23,8 @@ export interface ComputedMeasure {
   npv: number; // mUSD
   discCo2Kt: number;
   mac: number; // USD/tCO2
-  /** back_calc only — abatement / activity, compared to a reference corridor (§7 X-axis). */
+  /** §7 X-axis — the per-unit abatement factor the measure asserts (the `factor_ref`
+   *  input), compared to a reference corridor. Present only when `abatement.factor_ref` is set. */
   impliedFactor?: number;
 }
 
@@ -68,13 +69,14 @@ function computeAbatement(
   const a = measure.abatement;
   // Guard a malformed by-document doc: no abatement block at all → clear error, never a
   // `Cannot read 'formula' of undefined` TypeError (the tools surface this as advisory).
-  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed, .back_calc or .raw)`);
+  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed or .raw)`);
+  // §7 X-axis — the per-unit factor the measure asserts (abatement ÷ activity), surfaced
+  // for the corridor check + UI. It is the value of the input named by `abatement.factor_ref`.
+  const impliedFactor = a.factor_ref ? measure.inputs?.[a.factor_ref]?.value : undefined;
   // §3/§10 — an inline abatement AST wins over the maturity-stage block. It ports the
-  // Excel «Расчёты» formula directly (physics or share×baseline), evaluated by eval.ts.
+  // Excel «Расчёты» formula directly (physics or activity×factor), evaluated by eval.ts.
   if (a.formula) {
-    const abatementKt = evalAst(a.formula, resolve);
-    const act = a.back_calc?.activity_scalar.qty;
-    return { abatementKt, impliedFactor: act ? abatementKt / act : undefined };
+    return { abatementKt: evalAst(a.formula, resolve), impliedFactor };
   }
   switch (measure.maturity_stage) {
     case 'computed': {
@@ -82,13 +84,7 @@ function computeAbatement(
       const tmpl = getTemplate(a.computed.formula_ref);
       if (!tmpl) throw new Error(`Unknown formula template '${a.computed.formula_ref}'`);
       const ast = bindTemplate(tmpl, a.computed.bindings, resolve);
-      return { abatementKt: evalAst(ast, resolve) };
-    }
-    case 'back_calc': {
-      if (!a.back_calc) throw new Error(`Measure '${measure.id}': maturity=back_calc but no back_calc block`);
-      const abatementKt = poolBaselineKt(measure, library) * a.back_calc.share;
-      const qty = a.back_calc.activity_scalar.qty;
-      return { abatementKt, impliedFactor: qty ? abatementKt / qty : undefined };
+      return { abatementKt: evalAst(ast, resolve), impliedFactor };
     }
     case 'raw': {
       if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);

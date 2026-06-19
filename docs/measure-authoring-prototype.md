@@ -30,7 +30,7 @@ deliberately defers*. (Section refs below point at `macc-ui-concept.md`.)
 
 | §11 | Measure | id | sector | abat (kt) | MAC ($/t) | Role |
 |---|---|---|---|---|---|---|
-| A. Feed additives | id 20 | `3` | 1780 | 99.9 | raw→back_calc→computed; implied factor in-corridor → ✓ |
+| A. Feed additives | id 20 | `3` | 1780 | 99.9 | computed; activity × factor, factor in-corridor → ✓ |
 | B. Coal CHP → gas | id 2 | `1.A.1` | 12045 | 193.76 | flow-based; `delta_ef` template binding |
 | C. Mine degassing | id 16 | `1.B` | 1900 | 26.68 | INTENTIONALLY BROKEN: implied factor ~10× → ⚠, stays draft |
 

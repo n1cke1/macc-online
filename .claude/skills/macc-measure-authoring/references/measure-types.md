@@ -77,8 +77,8 @@ constructions) and the GHG Protocol avoided-emissions framing.
   leak/flaring reduction, and waste capture.
 
 > Renamed from the hypothesis's "substitution" to **`standalone`** — clearer, and tied to the
-> World Bank "technology-specific vs sector-wide baseline" distinction. (The schema currently
-> carries this as `is_substitution`; `true` = standalone.)
+> World Bank "technology-specific vs sector-wide baseline" distinction. The schema carries this
+> as the `baseline_basis` axis (`comparison` | `standalone`), parallel to `mechanism`.
 
 Both cost and abatement are **always computed marginally to the baseline**, so the baseline
 must be defined and documented **before** modeling. [World Bank MACC note; GHG Protocol]

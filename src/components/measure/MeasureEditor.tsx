@@ -101,7 +101,7 @@ function ProvLink({ url }: { url?: string }) {
 
 function ProvText({ p }: { p?: Provenance }) {
   if (!p) return <>—</>;
-  return <>{p.source_type} · {p.confidence}{p.citation ? ` — ${p.citation}` : ''}<ProvLink url={p.url} /></>;
+  return <>{p.source_type} · {p.confidence}{p.geo_applicability ? ` · ${p.geo_applicability}` : ''}{p.citation ? ` — ${p.citation}` : ''}{p.kz_reliability ? ` (KZ: ${p.kz_reliability})` : ''}<ProvLink url={p.url} /></>;
 }
 
 /**
@@ -115,7 +115,7 @@ function SourceText({ s, nt }: { s?: ValueSource; nt: UiHelp }) {
   const e = b ? nt.enums.bindingMode[b.mode] : undefined;
   return (
     <>
-      <div>{s.provenance.source_type} · {s.provenance.confidence}{s.provenance.citation ? ` — ${s.provenance.citation}` : ''}<ProvLink url={s.provenance.url} /></div>
+      <div>{s.provenance.source_type} · {s.provenance.confidence}{s.provenance.geo_applicability ? ` · ${s.provenance.geo_applicability}` : ''}{s.provenance.citation ? ` — ${s.provenance.citation}` : ''}{s.provenance.kz_reliability ? ` (KZ: ${s.provenance.kz_reliability})` : ''}<ProvLink url={s.provenance.url} /></div>
       {b && (
         <div className="mt-1">
           <span className="rounded bg-slate-100 px-1 font-medium" title={e?.help}>binding: {b.mode}</span>
@@ -160,7 +160,7 @@ export default function MeasureEditor() {
   if (!measure) return null;
   const v = validation;
   const ab = measure.abatement;
-  const isSub = measure.comparison?.is_substitution === true;
+  const basis = measure.baseline_basis; // §B axis; absent ⇒ not yet classified (badge hidden)
   const product = measure.product_ref ? library.products[measure.product_ref] : undefined;
   const pool = measure.potential?.pool_ref ? library.pools[measure.potential.pool_ref] : undefined;
   const num = (n: number, d = 2) => fmt(n, locale, { maximumFractionDigits: d });
@@ -261,14 +261,6 @@ export default function MeasureEditor() {
         </div>
       );
     }
-    if (ab.back_calc && pool?.baselineEmissionsKt != null) {
-      return (
-        <div className="rounded bg-slate-50 p-2 text-xs leading-relaxed text-slate-600">
-          <div className="font-medium text-slate-700">{pick(library.formulaTemplates.share.label, locale)}</div>
-          <div className="mt-1 tabular-nums">[{t('field.baselineEmissions')}] × [{t('field.share').toLowerCase()}] = {fmtInt(pool.baselineEmissionsKt, locale)} × {num(ab.back_calc.share)} = <b>{computed ? fmtInt(computed.abatementKt, locale) : '—'} kt</b></div>
-        </div>
-      );
-    }
     return null;
   }
 
@@ -279,7 +271,8 @@ export default function MeasureEditor() {
     // names bracketed like the reduction formula: [снижение] / [активность]
     const nm = (k: string) => `[${SLOT_LABEL[k] ? pick(SLOT_LABEL[k], locale) : k}]`;
     const vl = (k: string) => (k === 'value' ? num(d.value ?? 0) : (d.slots[k] != null ? num(d.slots[k]) : k));
-    const ref = id === 'factor' && measure!.abatement.back_calc ? library.references[measure!.abatement.back_calc.reference_ref] : undefined;
+    const factorInput = measure!.abatement.factor_ref ? measure!.inputs?.[measure!.abatement.factor_ref] : undefined;
+    const ref = id === 'factor' && factorInput?.reference_ref ? library.references[factorInput.reference_ref] : undefined;
     return (
       <div className="text-xs leading-relaxed">
         <div><span className={`font-semibold ${g.cls}`}>{g.ch}</span> <span className="text-slate-600">{pick(def.label, locale)}</span></div>
@@ -378,7 +371,7 @@ export default function MeasureEditor() {
         <div className="mt-2 flex flex-wrap items-center gap-1.5">
           <Badge title={gh(nt.fields.sector)}>{measure.sector_ref}</Badge>
           <Badge tone="sky" title={gh(nt.enums.maturity[measure.maturity_stage])}>{t(`maturity.${measure.maturity_stage}`)}</Badge>
-          <Badge title={gh(nt.enums.type[isSub ? 'substitution' : 'comparison'])}>{isSub ? t('type.substitution') : t('type.comparison')}</Badge>
+          {basis && <Badge title={gh(nt.enums.type[basis])}>{t(`type.${basis}`)}</Badge>}
           <Badge tone={v?.eligibleForModel ? 'green' : 'amber'}>{v?.eligibleForModel ? `✓ ${t('autoCheck.passed')}` : `⚠ ${t('autoCheck.failed')}`}</Badge>
         </div>
         <hr className="my-2 border-line" />
@@ -419,10 +412,9 @@ export default function MeasureEditor() {
           </></QHelp>
         </div>
         <ReductionFormula />
-        {ab.back_calc && (
+        {ab.factor_ref && measure.inputs?.[ab.factor_ref] && (
           <div className="mt-2">
-            <Row label={t('field.share')} help={<><div>{gh(nt.fields.share)}</div>{srcNode('abatement.back_calc.share')}</>}><NumberField input value={ab.back_calc.share} onCommit={(val) => update((m) => { m.abatement.back_calc!.share = val; })} /></Row>
-            <Row label={`${t('field.activity')} (${ab.back_calc.activity_scalar.unit})`} help={<><div>{gh(nt.fields.activity)}</div>{srcNode('abatement.back_calc.activity_scalar.qty')}</>}><NumberField input value={ab.back_calc.activity_scalar.qty} onCommit={(val) => update((m) => { m.abatement.back_calc!.activity_scalar.qty = val; })} /></Row>
+            <Row label={`${t('field.factor')}${measure.inputs[ab.factor_ref].unit ? ` (${measure.inputs[ab.factor_ref].unit})` : ''}`} help={<><div>{gh(nt.fields.activity)}</div><ProvText p={measure.inputs[ab.factor_ref].provenance} /></>}><NumberField input value={measure.inputs[ab.factor_ref].value} onCommit={(val) => update((m) => { m.inputs![ab.factor_ref!].value = val; })} /></Row>
             <div className="mt-2"><CheckFormula id="factor" /></div>
           </div>
         )}

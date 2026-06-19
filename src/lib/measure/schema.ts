@@ -33,12 +33,22 @@ export type SourceType =
 export type Confidence = 'high' | 'medium' | 'low';
 
 /** §6 — where a number came from. Missing source ⇒ treated as `placeholder`. */
+/** §B geo-applicability — how transferable a number is to a Kazakhstan assessment.
+ *  `global` = low geo-sensitivity · `kz_specific` = KZ economics/climate/construction ·
+ *  `other_country` = sourced from another country (state KZ-reliability in `kz_reliability`). */
+export type GeoApplicability = 'global' | 'kz_specific' | 'other_country';
+
 export interface Provenance {
   source_type: SourceType;
   citation?: string;
   url?: string;
   date?: string; // ISO yyyy-mm-dd
   confidence: Confidence;
+  /** §B — geo-applicability class + a short note on its reliability for assessing the
+   *  measure in Kazakhstan. Optional; expected on the numbers that move MAC/volume before
+   *  a measure is published. */
+  geo_applicability?: GeoApplicability;
+  kz_reliability?: string;
 }
 
 /**
@@ -62,6 +72,9 @@ export interface ValueWithSource {
   unit?: string;
   provenance: Provenance;
   binding?: Binding;
+  /** §7 — optional reference corridor this number is sanity-checked against (e.g. the
+   *  per-unit abatement factor named by `abatement.factor_ref`). */
+  reference_ref?: string;
 }
 
 /**
@@ -101,7 +114,7 @@ export interface ComputedValue {
 // to `published` is server-authoritative (the «canon» jargon was dropped —
 // jargon — the UI shows it as a green automatic-check status).
 export type Scope = 'published' | 'draft' | 'scenario';
-export type MaturityStage = 'raw' | 'back_calc' | 'computed';
+export type MaturityStage = 'raw' | 'computed';
 export type ReviewStatus = 'open' | 'accepted' | 'rejected' | 'wontfix';
 
 /** A flow line: how much of a resource is consumed/produced per service unit. */
@@ -157,12 +170,6 @@ export interface AbatementRaw {
   share: number; // fraction of the sector/sub-category baseline
   justification?: string;
 }
-export interface AbatementBackCalc {
-  share: number;
-  activity_scalar: { qty: number; unit: string };
-  implied_factor?: number; // (ro) derived = (baseline × share) / activity_scalar.qty
-  reference_ref: string; // §7 factor corridor this implied value is checked against
-}
 export interface AbatementComputed {
   formula_ref: string; // FormulaTemplate.id or inline-AST id
   bindings: Record<string, FormulaBinding>; // slot name → key/const it maps to
@@ -170,7 +177,6 @@ export interface AbatementComputed {
 }
 export interface Abatement {
   raw?: AbatementRaw;
-  back_calc?: AbatementBackCalc;
   computed?: AbatementComputed;
   /**
    * §3/§10 — an inline abatement AST over the measure's own inputs (and `res:<id>`
@@ -181,6 +187,13 @@ export interface Abatement {
    */
   formula?: Ast;
   formula_label?: Localized;
+  /**
+   * §7 X-axis — names the measure input that holds the per-unit abatement factor
+   * (abatement ÷ activity). That input carries a `reference_ref`; the `factor` guardrail
+   * sanity-checks its value against that reference corridor. Bottom-up replacement for
+   * the retired `back_calc` implied-factor check.
+   */
+  factor_ref?: string;
 }
 
 /** Maps a template slot to a measure input key, a resource property, or a const. */
@@ -220,6 +233,13 @@ export type MechanismSubtype =
 /** §A removal storage durability (optional flag). */
 export type Permanence = 'short_lived' | 'durable';
 
+/** §B classification — how the baseline is constructed (axis parallel to mechanism).
+ *  `comparison` = measured against a service-unit baseline (baseline & project products
+ *  matched, see `comparison.service_unit_ref`); `standalone` = absolute project footprint
+ *  with no like-for-like baseline product (CCS, many agro measures). Optional until all
+ *  measures are authored on this axis, then promoted to required. */
+export type BaselineBasis = 'comparison' | 'standalone';
+
 /** §2 — the measure. One JSON Schema (`measure.schema.json`) mirrors this type. */
 export interface Measure {
   id: string;
@@ -237,15 +257,17 @@ export interface Measure {
   mechanism_subtype?: MechanismSubtype; // soft tag (optional)
   permanence?: Permanence; // removal only: storage durability flag (optional)
 
+  /** §B classification — baseline construction axis (optional until all measures authored). */
+  baseline_basis?: BaselineBasis;
+
   scope: Scope; // §7/§9 — promotion to `published` is server-authoritative
   owner_ref?: string; // identity-claim from the write path (§9); required to persist
   maturity_stage: MaturityStage; // §5 — inferred, shown read-only
   review_status?: ReviewStatus; // governance; does NOT gate library at start (§7)
 
-  // §2 comparison — A/B axis is inferred, not asked.
+  // §2 comparison — service-unit baseline; present for baseline_basis='comparison'.
   comparison?: {
-    service_unit_ref?: string; // A → baseline & project products validated for match
-    is_substitution: boolean; // B (CCS, agro) → no product-match check
+    service_unit_ref?: string; // baseline & project products validated for match
   };
 
   // §4 flows — steps 3–4; empty on `raw`.
@@ -261,7 +283,7 @@ export interface Measure {
 
   // §6 — provenance + binding for the measure's INPUT bare numbers (object/material/
   // abatement values), keyed by value path (e.g. "created_technologies[0].capacity",
-  // "materials[1].price", "abatement.back_calc.share"). Read-only metadata: it does
+  // "materials[1].price"). Read-only metadata: it does
   // NOT feed compute(); it powers the «?» source/binding display and the §6 rollup.
   sources?: Record<string, ValueSource>;
 

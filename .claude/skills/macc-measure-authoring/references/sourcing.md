@@ -8,8 +8,7 @@
 **Principle.** Every number in a measure carries a source (provenance) and, if it is an
 assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library,
 explain divergence, or admit it is local. Attach a source via `measure.sources` keyed by the
-value's path (e.g. `'created_objects[0].capacity'`, `'materials[1].price'`,
-`'abatement.back_calc.share'`); a DERIVED number instead goes in `measure.computed` at the
+value's path (e.g. `'created_objects[0].capacity'`, `'materials[1].price'`); a DERIVED number instead goes in `measure.computed` at the
 same path (a formula) — a path is in `sources` XOR `computed`, never both, never a bare
 pasted number.
 

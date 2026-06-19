@@ -120,12 +120,13 @@ function buildChecks(
 ): { checks: Record<CheckId, CheckStatus>; details: Record<CheckId, CheckDetail | null> } {
   const details: Record<CheckId, CheckDetail | null> = { factor: null, economics: null, pool: null, sector: null };
 
-  // factor — back_calc only, needs a reference corridor.
-  const bc = measure.abatement.back_calc;
-  const ref = bc ? library.references[bc.reference_ref] : undefined;
-  if (measure.maturity_stage === 'back_calc' && bc && ref) {
+  // factor — §7 X-axis: the per-unit factor the measure asserts (the `factor_ref` input)
+  // vs that input's reference corridor.
+  const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : undefined;
+  const ref = factorInput?.reference_ref ? library.references[factorInput.reference_ref] : undefined;
+  if (factorInput && ref) {
     details.factor = runCheck(library.checks.factor, {
-      abatement: c.abatementKt, activity: bc.activity_scalar.qty, min: ref.range[0], max: ref.range[1],
+      factor: factorInput.value, min: ref.range[0], max: ref.range[1],
     });
   }
 
@@ -179,7 +180,6 @@ export function taggablePaths(m: Measure): string[] {
     if (mt.qty != null || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
     if (mt.price != null || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
   });
-  if (m.abatement.back_calc) { p.push('abatement.back_calc.share'); p.push('abatement.back_calc.activity_scalar.qty'); }
   if (m.abatement.raw) p.push('abatement.raw.share');
   return p;
 }
@@ -202,7 +202,7 @@ function buildPanels(
 ): Record<PanelKey, PanelStatus> {
   // An inline `abatement.formula` is a valid reduction definition too (the 26 migrated
   // measures use it) — recognize it so the panel isn't falsely flagged incomplete.
-  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
+  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.computed;
 
   const req = (cond: boolean, label: string): PanelStatus => {
     if (cond) return 'ok';
@@ -210,12 +210,19 @@ function buildPanels(
     return 'incomplete';
   };
 
+  // §B product rule: every measure carries exactly one product except a pure removal
+  // (mechanism='removal'). Advisory — a missing product warns (≠ incomplete) so it never
+  // gates eligibility; it just lands on the authoring worklist.
+  const productOk = !!measure.product_ref || measure.mechanism === 'removal';
+
   return {
     // Iteration-2 panels: build = «Что создаём» (objects), baseline = «Отрасль и
-    // продукт» (sector required, product optional), project = «Что закрываем» (optional).
+    // продукт» (sector required; product required unless pure removal — advisory warn).
     overview: req(!!measure.name && !!measure.sector_ref, 'name/sector'),
     build: req((measure.created_technologies?.length ?? 0) > 0 || !!measure.technology_ref, 'created_technologies'),
-    baseline: req(!!measure.sector_ref, 'sector'),
+    baseline: !measure.sector_ref
+      ? (missing.push('sector'), 'incomplete')
+      : productOk ? 'ok' : (missing.push('product_ref'), 'warn'),
     project: 'ok',
     reduction: !stageBlock
       ? (missing.push('abatement'), 'incomplete')

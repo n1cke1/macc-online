@@ -94,9 +94,9 @@
       "economics": "Проект",
       "potential": "Потенциал меры"
     },
-    "maturity": { "raw": "постулировано", "back_calc": "обратный счёт", "computed": "посчитано" },
+    "maturity": { "raw": "постулировано", "computed": "посчитано" },
     "techKind": { "structure": "капиталоёмкий объект", "modernization": "модернизация", "practice": "практика", "infrastructure": "инфраструктура" },
-    "type": { "substitution": "замещение", "comparison": "сравнение A/B" },
+    "type": { "standalone": "автономная база", "comparison": "сравнение A/B" },
     "autoCheck": { "passed": "Проверки модели пройдены", "failed": "Есть замечания" },
     "field": {
       "name": "Название",
@@ -118,6 +118,7 @@
       "noRetired": "Закрываемых объектов нет.",
       "share": "Доля мероприятия",
       "activity": "Активность",
+      "factor": "Удельный фактор",
       "baselineEmissions": "Базовые выбросы подкатегории",
       "qty": "Количество",
       "price": "Цена",

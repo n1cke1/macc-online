@@ -13,8 +13,9 @@ below are rules the author follows but are NOT yet automated.
 
 ## factor — [implemented]
 
-`between(implied_factor, reference.min, reference.max)`; implied = reduction / activity. The
-quality signal for the raw→back_calc→computed ladder; ⚠ when out of corridor.
+`between(factor, reference.min, reference.max)` — the per-unit factor named by
+`abatement.factor_ref` (= reduction / activity) vs its input's `reference_ref` corridor. The
+quality signal for the raw→computed ladder; ⚠ when out of corridor → stays `draft`.
 
 ## economics — [implemented]
 
@@ -45,5 +46,5 @@ predicate check.
 ## doubleCountReduction — [rule, not yet automated]
 
 Reduction is set by exactly one method per maturity: raw — baseline × share;
-back_calc/computed — activity × factor; comparison — Δflow × EF. Mixing methods on one
+computed — activity × factor; comparison — Δflow × EF. Mixing methods on one
 measure should be a ⚠.

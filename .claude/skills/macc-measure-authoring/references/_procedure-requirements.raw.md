@@ -22,10 +22,11 @@ different way, comparable on a service unit (power, transport): needs `serviceUn
 base/project. `substitution` — displacement/capture/practice with no comparable product
 (CCS/CCUS, agro): no comparison and no serviceUnit check.
 
-**chooseMaturity.** Start at `raw` (reduction = baseline × share). Advance to `back_calc` by
-adding activity → the implied factor is checked vs the reference corridor. Advance to
-`computed` only when reduction is expanded by a formula and the implied factor is in-corridor
-and sourced. The maturity ladder is an authoring-quality discipline (the factor check is
+**chooseMaturity.** Start at `raw` (reduction = baseline × share). Advance to `computed` when
+reduction is expanded by a bottom-up formula (`activity × factor`, or a `formula_ref`). If the
+formula rests on a per-unit `factor` input, tag it with a `reference_ref` and point
+`abatement.factor_ref` at it so the factor is checked vs the corridor (must be in-corridor and
+sourced). The maturity ladder is an authoring-quality discipline (the factor check is
 advisory, not enforced at publish).
 
 **order.** Recommended panel order: overview (name, sector) → baseline (what we displace) →
@@ -61,10 +62,9 @@ hard gates.
 
 - **raw.** Minimum: sector, subsector, share. activity, a formula and the factor check are
   not required.
-- **back_calc.** Additionally: activity and the factor corridor's `reference_ref`. The
-  implied factor must be computable (reduction / activity).
-- **computed.** Additionally: a reduction formula (AST) with every `ref` leaf resolvable; the
-  implied factor in-corridor and sourced.
+- **computed.** Additionally: a reduction formula (AST / `formula_ref`) with every `ref` leaf
+  resolvable. If it uses a top-down `activity × factor`, the per-unit `factor` is an input
+  with a `reference_ref` named by `abatement.factor_ref`, and must be in-corridor and sourced.
 
 ### byScope
 

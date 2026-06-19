@@ -2,8 +2,8 @@
   "_comment": "§7 guardrails stored as AST notation (not hardcoded in validate()). Each check defines the formula that computes the checked quantity (slots bound at validation time) and the predicate it must satisfy. validate() binds slots, evaluates both via HyperFormula, and renders them for the UI.",
   "factor": {
     "id": "factor",
-    "label": { "ru": "Физика: обратно-считанный фактор vs коридор", "en": "Physics: back-calculated factor vs corridor" },
-    "quantity": { "op": "div", "args": [ { "slot": "abatement" }, { "slot": "activity" } ] },
+    "label": { "ru": "Физика: удельный фактор vs коридор", "en": "Physics: per-unit factor vs corridor" },
+    "quantity": { "slot": "factor" },
     "predicate": { "op": "between", "args": [ { "slot": "value" }, { "slot": "min" }, { "slot": "max" } ] }
   },
   "economics": {

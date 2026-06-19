@@ -77,7 +77,7 @@ var graph_seed_default = {
     {
       id: "tech_feed_dosing",
       name: "Dosing equipment",
-      kind: "capital_asset",
+      kind: "structure",
       description: "Per-head feed-additive dosing systems.",
       rules: "Per-head capital asset: CAPEX = head \xD7 unit CAPEX.",
       lifetimeYrs: 10
@@ -109,32 +109,32 @@ var graph_seed_default = {
     {
       id: "obj_kz1_0",
       name: "Turbine & boiler upgrade",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz1_1",
       name: "Engineering & commissioning",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz3_0",
       name: "Renewables",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz3_1",
       name: "Grid & connection",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz4_0",
       name: "Renewables (solar + wind)",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz4_1",
       name: "Gas-turbine peaker",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz4_2",
@@ -144,42 +144,42 @@ var graph_seed_default = {
     {
       id: "obj_kz4_3",
       name: "Boiler house",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz5_0",
       name: "Nuclear plant construction",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz6_0",
       name: "Heat pumps",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz6_1",
       name: "Heat-network upgrade",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz7_0",
       name: "Electric boilers",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz7_1",
       name: "Grid expansion",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz8_0",
       name: "Renewables (solar + wind)",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz8_1",
       name: "Grid expansion (for peakers)",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz8_2",
@@ -189,62 +189,62 @@ var graph_seed_default = {
     {
       id: "obj_kz8_3",
       name: "Gas-turbine peaker",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz8_4",
       name: "Boiler house",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz9_0",
       name: "Generators",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz10_0",
       name: "Incremental cost of the EV fleet",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz10_1",
       name: "Charging infrastructure",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz11_0",
       name: "Facade & roof insulation",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz11_1",
       name: "Window & door replacement",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz12_0",
       name: "Trunk & distribution gas pipelines",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz12_1",
       name: "Consumer connections",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz13_0",
       name: "Electric boilers",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz13_1",
       name: "Grid expansion",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz13_2",
       name: "Construction works & heat networks",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz13_3",
@@ -254,102 +254,102 @@ var graph_seed_default = {
     {
       id: "obj_kz14_0",
       name: "Survey & repair",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz14_1",
       name: "OGI cameras & equipment",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz15_0",
       name: "Gas-turbine plant & compressor equipment",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz15_1",
       name: "Feeder infrastructure",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz17_0",
       name: "Gas-pipeline & compressor-station upgrade",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz17_1",
       name: "Satellite monitoring",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz18_0",
       name: "Plant upgrade",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz19_0",
       name: "CO\u2082 capture units",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz19_1",
       name: "Transport & storage",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz21_0",
       name: "Biogas plants",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz21_1",
       name: "Lagoon covers & infrastructure",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz22_0",
       name: "GPS navigation & sensors",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz22_1",
       name: "Training & agronomic support",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz23_0",
       name: "Pasture restoration",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz23_1",
       name: "Rotational-grazing infrastructure",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz24_0",
       name: "Seedlings, soil prep & planting",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz24_1",
       name: "Nurseries & logistics",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz25_0",
       name: "Degassing systems",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz25_1",
       name: "Reciprocating gas-engine generators",
-      kind: "capital_asset"
+      kind: "structure"
     },
     {
       id: "obj_kz26_0",
       name: "Wastewater-treatment-plant upgrade",
-      kind: "capital_asset"
+      kind: "structure"
     }
   ],
   resources: [
@@ -717,7 +717,7 @@ var graph_seed_default = {
       unit: "MWh",
       service_unit: "MWh",
       sector_ref: "1.A.1",
-      object_ref: "tech_coal_to_gas"
+      technology_ref: "tech_coal_to_gas"
     }
   ],
   references: [
@@ -981,8 +981,8 @@ var checks_default = {
   _comment: "\xA77 guardrails stored as AST notation (not hardcoded in validate()). Each check defines the formula that computes the checked quantity (slots bound at validation time) and the predicate it must satisfy. validate() binds slots, evaluates both via HyperFormula, and renders them for the UI.",
   factor: {
     id: "factor",
-    label: { ru: "\u0424\u0438\u0437\u0438\u043A\u0430: \u043E\u0431\u0440\u0430\u0442\u043D\u043E-\u0441\u0447\u0438\u0442\u0430\u043D\u043D\u044B\u0439 \u0444\u0430\u043A\u0442\u043E\u0440 vs \u043A\u043E\u0440\u0438\u0434\u043E\u0440", en: "Physics: back-calculated factor vs corridor" },
-    quantity: { op: "div", args: [{ slot: "abatement" }, { slot: "activity" }] },
+    label: { ru: "\u0424\u0438\u0437\u0438\u043A\u0430: \u0443\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u043A\u0442\u043E\u0440 vs \u043A\u043E\u0440\u0438\u0434\u043E\u0440", en: "Physics: per-unit factor vs corridor" },
+    quantity: { slot: "factor" },
     predicate: { op: "between", args: [{ slot: "value" }, { slot: "min" }, { slot: "max" }] }
   },
   economics: {
@@ -1005,157 +1005,252 @@ var checks_default = {
   }
 };
 
-// data/kz/library/measure-notation.json
-var measure_notation_default = {
-  _comment: "THE measure-notation framework \u2014 the single runtime source of the measure-authoring instruction. ENGLISH-BASE (iteration 3): one language inline; RU returns later via a separate translations layer. It is BOTH the UI tooltip/\xAB?\xBB help (panels/fields/enums/sourcing/formulas) AND the LLM instruction served by the MCP schema://measure resource (all blocks). Agent-facing blocks (procedure/requirements/conventions/checks) are not rendered as UI tooltips. Design rationale lives in macc-ui-concept.md; structural validation in data/measure.schema.json. Instruction text only \u2014 no model numbers.",
+// data/kz/library/measure-ui-help.json
+var measure_ui_help_default = {
+  _comment: "UI help strings for the measure editor \u2014 panel/field/enum \xAB?\xBB tooltips PLUS the dual-use sourcing & formulas \xAB?\xBB help. Slimmed from the former measure-notation.json (notation/skill split, step 2): the agent-only blocks (procedure/requirements/conventions/checks) moved to the macc-measure-authoring skill (served to LLMs via the MCP guide://measure resource, step 4); sourcing/formulas stay here for tooltips and are mirrored in the skill for the agent. Read by src/components/measure/MeasureEditor.tsx via library.uiHelp. Structural validation lives in data/measure.schema.json.",
   panels: {
-    overview: { help: "Measure name and sector. Type, maturity and scope are inferred (shown as badges), not entered. Summary: MAC and potential." },
-    build: { help: "Objects the measure CREATES (from the library), with size and unit metrics. Build CAPEX arises here." },
-    baseline: { help: "Sector/subsector and the product produced (with its carbon footprint) \u2014 what we displace. CCS/CCUS may list several sectors; practices use a sector only." },
-    project: { help: "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative \u2014 avoided cost." },
-    reduction: { help: "How the CO\u2082e reduction is computed by maturity stage (postulated \u2192 back-calc \u2192 computed) and the back-calculated factor vs the reference corridor." },
-    economics: { help: "CAPEX and OPEX rolled up from objects and key materials \u2192 NPV and MAC. Lines are derived from objects/flows, not hand-entered." },
-    potential: { help: "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop." }
+    overview: {
+      help: "Measure name and sector. Type, maturity and scope are inferred (shown as badges), not entered. Summary: MAC and potential."
+    },
+    build: {
+      help: "Objects the measure CREATES (from the library), with size and unit metrics. Build CAPEX arises here."
+    },
+    baseline: {
+      help: "Sector/subsector and the product produced (with its carbon footprint) \u2014 what we displace. CCS/CCUS may list several sectors; practices use a sector only."
+    },
+    project: {
+      help: "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative \u2014 avoided cost."
+    },
+    reduction: {
+      help: "How the CO\u2082e reduction is computed by maturity stage (postulated \u2192 back-calc \u2192 computed) and the back-calculated factor vs the reference corridor."
+    },
+    economics: {
+      help: "CAPEX and OPEX rolled up from objects and key materials \u2192 NPV and MAC. Lines are derived from objects/flows, not hand-entered."
+    },
+    potential: {
+      help: "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop."
+    }
   },
   fields: {
-    name: { help: "A short, clear measure name." },
-    sector: { help: "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several." },
-    subsector: { help: "Subsector within the sector (e.g. Energy \u2192 coal power). Base from the \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB sheet, extendable." },
-    produce: { help: "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)." },
-    carbonFootprint: { help: "Carbon footprint of the conventional production of the same product we displace. Accompany with a source." },
-    objectRef: { help: "A library object the measure creates or closes. If missing, create it in the library (kind, unit CAPEX, source). Line CAPEX = size \xD7 unit CAPEX." },
-    capacity: { help: "Object capacity/size in its unit. Object CAPEX = size \xD7 unit CAPEX." },
-    capexUd: { help: "Object unit capital cost (from the library), e.g. $/kW or $/head. Checked vs the capex_ud reference (see the economics check)." },
-    capexUdFactor: { help: "Factor converting the capacity unit to the unit-CAPEX denominator (e.g. MW\u2192kW = 1000). Default 1." },
-    capexMusd: { help: "Explicit object CAPEX (m$) when it isn't capacity-driven. Must carry a source." },
-    opexMusd: { help: "Annual OPEX line for this object (m$/yr), signed: cost +, avoided (for a retired object) \u2212." },
-    maintenanceCapex: { help: "Maintenance unit CAPEX of a retired object; subtracted as avoided cost." },
-    share: { help: "Sub-category coverage share (0\u20131). Reduction = sub-category baseline \xD7 share. Source \u2014 the \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB sheet." },
-    activity: { help: "Activity scale (head, million m\xB3 \u2026) the back-calc anchors to: implied = reduction / activity." },
-    materialResource: { help: "Key material/fuel flow from the resource registry (carries its own EF and price)." },
-    materialSide: { help: "Flow side: new \u2014 consumed by the new objects (cost +); retired \u2014 freed by the closed ones (saving/revenue \u2212)." },
-    qty: { help: "Annual quantity of the key material. Cost = quantity \xD7 price / 10\u2076." },
-    price: { help: "Material price (for coal/gas \u2014 from the resource registry)." },
-    serviceUnit: { help: "A/B comparison service unit (e.g. MWh): baseline and project products must match on it. Only for type=comparison." },
-    flows: { help: "Resource flows per service unit: baseline (as-was) and project (as-is). \u0394flow \xD7 price \u2192 OPEX, \u0394flow \xD7 EF \u2192 reduction. Empty at the raw stage." },
-    inputs: { help: "Local engineering premises of the measure (installed capacity, capacity factor, shares\u2026) referenced by formulas (ref:<key>) and economics lines. Each carries a source; a premise with no library analogue (binding=new) is flagged for review." },
-    pool: { help: "Resource pool: its annual ceiling is shared with other measures on the same pool (combination)." },
-    ceilingDim: { help: "The dimension that caps the measure's annual potential (resource / product / object count / activity)." },
-    combinationGroup: { help: "\xABCombination\xBB group: measures in one group share a pool; on oversubscription the cheaper (lower-MAC) ones claim it first, the rest are clipped." }
+    name: {
+      help: "A short, clear measure name."
+    },
+    sector: {
+      help: "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several."
+    },
+    subsector: {
+      help: "Subsector within the sector (e.g. Energy \u2192 coal power). Base from the \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB sheet, extendable."
+    },
+    produce: {
+      help: "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)."
+    },
+    carbonFootprint: {
+      help: "Carbon footprint of the conventional production of the same product we displace. Accompany with a source."
+    },
+    objectRef: {
+      help: "A library object the measure creates or closes. If missing, create it in the library (kind, unit CAPEX, source). Line CAPEX = size \xD7 unit CAPEX."
+    },
+    capacity: {
+      help: "Object capacity/size in its unit. Object CAPEX = size \xD7 unit CAPEX."
+    },
+    capexUd: {
+      help: "Object unit capital cost (from the library), e.g. $/kW or $/head. Checked vs the capex_ud reference (see the economics check)."
+    },
+    capexUdFactor: {
+      help: "Factor converting the capacity unit to the unit-CAPEX denominator (e.g. MW\u2192kW = 1000). Default 1."
+    },
+    capexMusd: {
+      help: "Explicit object CAPEX (m$) when it isn't capacity-driven. Must carry a source."
+    },
+    opexMusd: {
+      help: "Annual OPEX line for this object (m$/yr), signed: cost +, avoided (for a retired object) \u2212."
+    },
+    maintenanceCapex: {
+      help: "Maintenance unit CAPEX of a retired object; subtracted as avoided cost."
+    },
+    share: {
+      help: "Sub-category coverage share (0\u20131). Reduction = sub-category baseline \xD7 share. Source \u2014 the \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB sheet."
+    },
+    activity: {
+      help: "Activity scale (head, million m\xB3 \u2026) the back-calc anchors to: implied = reduction / activity."
+    },
+    materialResource: {
+      help: "Key material/fuel flow from the resource registry (carries its own EF and price)."
+    },
+    materialSide: {
+      help: "Flow side: new \u2014 consumed by the new objects (cost +); retired \u2014 freed by the closed ones (saving/revenue \u2212)."
+    },
+    qty: {
+      help: "Annual quantity of the key material. Cost = quantity \xD7 price / 10\u2076."
+    },
+    price: {
+      help: "Material price (for coal/gas \u2014 from the resource registry)."
+    },
+    serviceUnit: {
+      help: "A/B comparison service unit (e.g. MWh): baseline and project products must match on it. Only for type=comparison."
+    },
+    flows: {
+      help: "Resource flows per service unit: baseline (as-was) and project (as-is). \u0394flow \xD7 price \u2192 OPEX, \u0394flow \xD7 EF \u2192 reduction. Empty at the raw stage."
+    },
+    inputs: {
+      help: "Local engineering premises of the measure (installed capacity, capacity factor, shares\u2026) referenced by formulas (ref:<key>) and economics lines. Each carries a source; a premise with no library analogue (binding=new) is flagged for review."
+    },
+    pool: {
+      help: "Resource pool: its annual ceiling is shared with other measures on the same pool (combination)."
+    },
+    ceilingDim: {
+      help: "The dimension that caps the measure's annual potential (resource / product / object count / activity)."
+    },
+    combinationGroup: {
+      help: "\xABCombination\xBB group: measures in one group share a pool; on oversubscription the cheaper (lower-MAC) ones claim it first, the rest are clipped."
+    }
   },
   enums: {
     maturity: {
-      raw: { help: "Postulated: reduction = baseline \xD7 share; no anchor or check. The first stage \u2014 next is back-calc." },
-      back_calc: { help: "Back-calc: implied factor = reduction / activity checked vs the reference corridor (\u2713/\u26A0). In-corridor and sourced \u2192 eligible for \xABcomputed\xBB." },
-      computed: { help: "Computed: reduction expanded by a formula (activity \xD7 factor); the share becomes a control. The highest maturity stage." }
+      raw: {
+        help: "Postulated: reduction = baseline \xD7 share; no anchor or check. The first stage \u2014 next is computed."
+      },
+      computed: {
+        help: "Computed: reduction expanded by a bottom-up formula (activity \xD7 factor). The per-unit factor is sanity-checked vs its reference corridor (\u2713/\u26A0). The highest maturity stage."
+      }
     },
     type: {
-      substitution: { help: "Substitution (CCS/CCUS, agro): no product comparison, no service-unit match check." },
-      comparison: { help: "A/B comparison: baseline and project products must match on the service unit (e.g. MWh)." }
+      standalone: {
+        help: "Standalone baseline (CCS/CCUS, agro): absolute project footprint, no product comparison or service-unit match check."
+      },
+      comparison: {
+        help: "Comparison baseline: baseline and project products must match on the service unit (e.g. MWh)."
+      }
     },
     scope: {
-      published: { help: "In the trusted model curve. Published directly by any signed-in author \u2014 no server-side review \u2014 and every change is versioned and attributed." },
-      draft: { help: "A personal work-in-progress; stays out of the trusted curve." },
-      scenario: { help: "A what-if; stays out of the trusted curve." }
+      published: {
+        help: "In the trusted model curve. Published directly by any signed-in author \u2014 no server-side review \u2014 and every change is versioned and attributed."
+      },
+      draft: {
+        help: "A personal work-in-progress; stays out of the trusted curve."
+      },
+      scenario: {
+        help: "A what-if; stays out of the trusted curve."
+      }
     },
     techKind: {
-      capital_asset: { help: "Capital-intensive object (plant/installation): expects a unit CAPEX and a physical size." },
-      modernization: { help: "Upgrade/conversion of an existing asset." },
-      practice: { help: "Operational/organizational practice: low CAPEX, mostly OPEX." },
-      infrastructure: { help: "Networks, pipelines, capture/storage systems." }
+      structure: {
+        help: "Capital-intensive object (plant/installation): expects a unit CAPEX and a physical size."
+      },
+      modernization: {
+        help: "Upgrade/conversion of an existing asset."
+      },
+      practice: {
+        help: "Operational/organizational practice: low CAPEX, mostly OPEX."
+      },
+      infrastructure: {
+        help: "Networks, pipelines, capture/storage systems."
+      }
     },
     sourceType: {
-      official_stat: { help: "Official statistics/reporting (UNFCCC BTR, national stats). Highest reliability." },
-      literature: { help: "Scientific/industry literature, peer-reviewed sources." },
-      standard: { help: "A standard/methodology (IPCC Guidelines, GOST, ISO)." },
-      expert_estimate: { help: "A specialist's expert estimate; state who and on what basis." },
-      assumption: { help: "An author's working assumption; must carry a binding and a rationale." },
-      placeholder: { help: "A stand-in with no source \u2014 low confidence; replace with a real source before relying on the measure." }
+      official_stat: {
+        help: "Official statistics/reporting (UNFCCC BTR, national stats). Highest reliability."
+      },
+      literature: {
+        help: "Scientific/industry literature, peer-reviewed sources."
+      },
+      standard: {
+        help: "A standard/methodology (IPCC Guidelines, GOST, ISO)."
+      },
+      expert_estimate: {
+        help: "A specialist's expert estimate; state who and on what basis."
+      },
+      assumption: {
+        help: "An author's working assumption; must carry a binding and a rationale."
+      },
+      placeholder: {
+        help: "A stand-in with no source \u2014 low confidence; replace with a real source before relying on the measure."
+      }
     },
     confidence: {
-      high: { help: "High: backed by an official/standard source." },
-      medium: { help: "Medium: literature/expert estimate with caveats." },
-      low: { help: "Low: assumption/placeholder; needs verification." }
+      high: {
+        help: "High: backed by an official/standard source."
+      },
+      medium: {
+        help: "Medium: literature/expert estimate with caveats."
+      },
+      low: {
+        help: "Low: assumption/placeholder; needs verification."
+      }
     },
     bindingMode: {
-      reuse: { help: "Reuse the library value by its ref key \u2014 the preferred mode." },
-      alt: { help: "A custom value differing from the library ref; divergence_reason is required (why it differs)." },
-      new: { help: "A local value with no library analogue \u2014 flagged for review; add a reference when one exists." }
+      reuse: {
+        help: "Reuse the library value by its ref key \u2014 the preferred mode."
+      },
+      alt: {
+        help: "A custom value differing from the library ref; divergence_reason is required (why it differs)."
+      },
+      new: {
+        help: "A local value with no library analogue \u2014 flagged for review; add a reference when one exists."
+      }
     },
     ceilingDim: {
-      cut_resource: { help: "Capped by the cut resource (e.g. coal/methane volume)." },
-      output_product: { help: "Capped by product output." },
-      n_objects: { help: "Capped by the object count." },
-      activity: { help: "Capped by activity scale (head, area\u2026)." }
+      cut_resource: {
+        help: "Capped by the cut resource (e.g. coal/methane volume)."
+      },
+      output_product: {
+        help: "Capped by product output."
+      },
+      n_objects: {
+        help: "Capped by the object count."
+      },
+      activity: {
+        help: "Capped by activity scale (head, area\u2026)."
+      }
     },
     materialSide: {
-      new: { help: "Consumed by the new objects \u2014 a cost (+)." },
-      retired: { help: "Freed by the closed objects \u2014 a saving or revenue (\u2212)." }
+      new: {
+        help: "Consumed by the new objects \u2014 a cost (+)."
+      },
+      retired: {
+        help: "Freed by the closed objects \u2014 a saving or revenue (\u2212)."
+      }
     }
   },
   sourcing: {
-    principle: { help: "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers \u2014 reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_objects[0].capacity', 'materials[1].price', 'abatement.back_calc.share'); a DERIVED number instead goes in measure.computed at the same path (a formula) \u2014 a path is in sources XOR computed, never both, never a bare pasted number." },
-    provenance: { help: "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date. With no source it is treated as a placeholder (low confidence, flagged)." },
-    binding: { help: "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue \u2014 flagged for review). The goal is reuse and explainability." },
-    divergenceReason: { help: "Mandatory note for binding=alt: why the value diverges from the library reference." },
-    reference: { help: "A [min, max] corridor with a unit a check anchors to: factor \u2014 the reduction factor, capex_ud \u2014 the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field." }
-  },
-  formulas: {
-    principle: { help: "A formula is data, not code: stored as an AST over named keys (ref), not cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel parity is bit-for-bit." },
-    operators: { help: "Allowed arithmetic operators: add, sub, mul, div, sum, pv (present value), lookup. The set is closed for auditability \u2014 no other functions." },
-    predicates: { help: "Predicate operators for the checks (return true/false): lte (\u2264), gte (\u2265), between (in corridor). Used by the factor/economics/pool/sector checks." },
-    signatures: { help: "Operator arity: add/sub/mul/div are variadic (\u22652 args, folded left-to-right; sub/div as a running difference/quotient); sum(\u2026) sums its args; pv(rate, nper, payment) is the Excel present value of a constant stream; lookup(table, key) selects from a table (reserved, unused in the prototype). Predicates: lte(a,b)/gte(a,b) binary; between(x,min,max) ternary." },
-    leaves: { help: "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation." },
-    namespace: { help: "How a {ref:<key>} resolves: `res:<id>` \u2192 that resource's emission factor (EF); a key that has its own `computed` entry on the measure \u2192 that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number \u2014 both allowed. No other namespaces." },
-    example: { help: "Example (coal\u2192gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity \xD7 capacity factor \xD7 hours/yr \xD7 (EF coal \u2212 EF gas) \xD7 10\u207B\xB3. EF leaves use the res: namespace; 8760 and 1e-3 are literals." }
-  },
-  procedure: {
-    principle: { help: "Fill in order: classify first (this decides which panels apply), then data, then sources. Do not hand-enter inferred fields (the type badge from composition, scope). Every number carries a source; every object/resource comes from a registry, not invented." },
-    classifyType: { help: "Pick type first. comparison \u2014 the measure delivers the same product a different way, comparable on a service unit (power, transport): needs serviceUnit + flows base/project. substitution \u2014 displacement/capture/practice with no comparable product (CCS/CCUS, agro): no comparison and no serviceUnit check." },
-    chooseMaturity: { help: "Start at raw (reduction = baseline \xD7 share). Advance to back_calc by adding activity \u2192 the implied factor is checked vs the reference corridor. Advance to computed only when reduction is expanded by a formula and the implied factor is in-corridor and sourced. The maturity ladder is an authoring-quality discipline (the factor check is advisory, not enforced at publish)." },
-    order: { help: "Recommended panel order: overview (name, sector) \u2192 baseline (what we displace) \u2192 build (created objects) \u2192 project (closed objects) \u2192 reduction (reduction by maturity) \u2192 economics (CAPEX/OPEX \u2192 NPV/MAC, derived) \u2192 potential (ceiling, pool, combination)." },
-    publish: { help: "Publishing is DIRECT: any signed-in user creates or corrects a measure and it goes straight to the trusted curve (scope=published) \u2014 there is no server-side review gate. Every change is versioned and attributed to its author; co-authors = the distinct authors of the version history. validate() still runs but is ADVISORY (shown, never blocking). Use draft for personal work-in-progress and scenario for what-ifs to keep them out of the curve." }
-  },
-  requirements: {
-    principle: { help: "A field's necessity depends on three axes: type, maturity, scope. Below is what each axis value requires; requirements are cumulative (a measure should satisfy all that apply). Under direct publish these are quality expectations, surfaced by validate(), not hard gates." },
-    byType: {
-      comparison: { help: "Requires: serviceUnit; flows.baseline and flows.project per the same service unit; baseline and project products matching on that unit. carbonFootprint not required (emissions from \u0394flow \xD7 EF)." },
-      substitution: { help: "Requires: sector(s); for product displacement \u2014 produce + carbonFootprint with a source. serviceUnit and flows not needed. CCS/CCUS may list several sectors." }
+    principle: {
+      help: "Every number in a measure carries a source (provenance) and, if it is an assumption, a library binding. Rule for the LLM: do not invent numbers \u2014 reuse the library, explain divergence, or admit it is local. Attach a source via measure.sources keyed by the value's path (e.g. 'created_technologies[0].capacity', 'materials[1].price'); a DERIVED number instead goes in measure.computed at the same path (a formula) \u2014 a path is in sources XOR computed, never both, never a bare pasted number."
     },
-    byMaturity: {
-      raw: { help: "Minimum: sector, subsector, share. activity, a formula and the factor check are not required." },
-      back_calc: { help: "Additionally: activity and the factor corridor's reference_ref. The implied factor must be computable (reduction / activity)." },
-      computed: { help: "Additionally: a reduction formula (AST) with every ref leaf resolvable; the implied factor in-corridor and sourced." }
+    provenance: {
+      help: "A number's source: source_type (official_stat/literature/standard/expert_estimate/assumption/placeholder), confidence (high/medium/low), citation/url/date, and geo_applicability (global/kz_specific/other_country) with a short kz_reliability note. With no source it is treated as a placeholder (low confidence, flagged)."
     },
-    byScope: {
-      draft: { help: "Minimum to save: name, sector, type. Allows placeholders and binding=new." },
-      published: { help: "In the trusted curve. Quality bar (advisory, surfaced by validate(), not enforced): every number sourced (no placeholders); every assumption binding=reuse or alt (with divergence_reason); the advisory checks \u2713. Publishing is direct and versioned." },
-      scenario: { help: "Same fields as a measure of its maturity, but checks may be \u26A0 \u2014 a scenario stays out of the trusted curve." }
+    binding: {
+      help: "Assumption discipline: reuse (take the library value by ref), alt (a custom value + a required divergence_reason), new (local, no analogue \u2014 flagged for review). The goal is reuse and explainability."
     },
-    conditional: {
-      explicitCapex: { help: "capexMusd (explicit CAPEX) should carry a source; otherwise treated as a placeholder (low confidence)." },
-      altBinding: { help: "binding=alt requires divergence_reason. binding=new is flagged for review (no library analogue yet)." },
-      objectResolves: { help: "objectRef and materialResource must resolve to an existing registry entry. If missing, create it in the library/resource registry first \u2014 do not type a name into the measure." }
+    divergenceReason: {
+      help: "Mandatory note for binding=alt: why the value diverges from the library reference."
+    },
+    reference: {
+      help: "A [min, max] corridor with a unit a check anchors to: factor \u2014 the reduction factor, capex_ud \u2014 the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field."
     }
   },
-  conventions: {
-    principle: { help: "Shared conventions for units, signs, time and the MAC definition. The numbers themselves live elsewhere \u2014 here are the rules for reading them. All unit conversions are explicit (like capexUdFactor); no implicit multipliers." },
-    units: { help: "Canonical units: reduction \u2014 kt CO\u2082e/yr; MAC \u2014 USD/t CO\u2082e; CAPEX \u2014 m USD; OPEX \u2014 m USD/yr (signed); material price \u2014 USD per resource unit; emission factor \u2014 t CO\u2082e per resource unit; unit CAPEX \u2014 in the library's own unit ($/kW, $/head\u2026). A field in another unit is converted by an explicit factor (e.g. capexUdFactor)." },
-    signs: { help: "One sign rule: cost +, avoided cost / saving / revenue \u2212. By panel: build \u2014 CAPEX/OPEX +; project (closed) \u2014 maintenance CAPEX and OPEX \u2212. By flow: materialSide new +, retired \u2212. Emissions reduction is always positive." },
-    time: { help: "Lifetime and the discount rate are model parameters, not measure fields: the discount rate is a global (library.globals.discountRate); lifetime comes from the object's technology.lifetimeYrs (or measure inputs.lifetime). CAPEX is incurred in year 0; OPEX and reduction are annual streams over the lifetime; pv discounts a stream to year 0 at the rate." },
-    mac: { help: "MAC (USD/t CO\u2082e) = NPV / discounted-reduction \xD7 1000, where NPV = CAPEX \u2212 PV(rate, lifetime, OPEX) and discounted-reduction = \u2212PV(rate, lifetime, annual reduction), in kt (\xD71000 converts kt\u2192t). Evaluated by the same HyperFormula PV as the Excel model, so the result is parity-exact." },
-    footprintUnit: { help: "carbonFootprint \u2014 t CO\u2082e per unit of the produce product (the same unit as the service unit for comparison). Keep consistent with the produce unit." },
-    language: { help: "The notation is English-base (single language); a separate translations layer adds other locales later. Free-text measure fields (name, citation, divergence_reason) may be in any language. Numeric format: dot as the decimal separator; dates ISO 8601 (YYYY-MM-DD)." }
-  },
-  checks: {
-    principle: { help: "Automatic checks on predicates (lte/gte/between), surfaced by validate(): \u2713 pass, \u26A0 warn. They are ADVISORY \u2014 they do NOT block publishing (publishing is direct). They inform the author and drive `eligibleForModel` (= all checks \u2713 and panels complete), shown as a badge. IMPLEMENTED checks: factor, economics, pool, sector. The rest below are rules the author follows but are NOT yet automated." },
-    factor: { help: "[implemented] between(implied_factor, reference.min, reference.max); implied = reduction / activity. The quality signal for the raw\u2192back_calc\u2192computed ladder; \u26A0 when out of corridor." },
-    economics: { help: "[implemented] between(implied unit CAPEX, capex_ud.min, capex_ud.max) per object. \u26A0 out of corridor (add a divergence_reason if binding=alt)." },
-    pool: { help: "[implemented] lte(sum of pool annual allocations, pool.ceiling). On oversubscription the cheaper (lower-MAC) claim first, the rest are clipped; a \u26A0 on any measure whose share is clipped." },
-    sector: { help: "[implemented] lte(sum of sector reductions, the sector backstop). A coarse double-count check for the sector; a \u26A0." },
-    serviceUnitMatch: { help: "[rule, not yet automated] type=comparison only: flows.baseline and flows.project products should match on serviceUnit; a mismatch should be a \u26A0." },
-    provenance: { help: "[rule, not yet automated] every number should have source_type \u2260 placeholder and (for an assumption) binding \u2260 new; surfaced as the \xA73/\xA76 notation gap (untagged / no-formula), not yet a predicate check." },
-    doubleCountReduction: { help: "[rule, not yet automated] reduction is set by exactly one method per maturity: raw \u2014 baseline \xD7 share; back_calc/computed \u2014 activity \xD7 factor; comparison \u2014 \u0394flow \xD7 EF. Mixing methods on one measure should be a \u26A0." }
+  formulas: {
+    principle: {
+      help: "A formula is data, not code: stored as an AST over named keys (ref), not cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel parity is bit-for-bit."
+    },
+    operators: {
+      help: "Allowed arithmetic operators: add, sub, mul, div, sum, pv (present value), lookup. The set is closed for auditability \u2014 no other functions."
+    },
+    predicates: {
+      help: "Predicate operators for the checks (return true/false): lte (\u2264), gte (\u2265), between (in corridor). Used by the factor/economics/pool/sector checks."
+    },
+    signatures: {
+      help: "Operator arity: add/sub/mul/div are variadic (\u22652 args, folded left-to-right; sub/div as a running difference/quotient); sum(\u2026) sums its args; pv(rate, nper, payment) is the Excel present value of a constant stream; lookup(table, key) selects from a table (reserved, unused in the prototype). Predicates: lte(a,b)/gte(a,b) binary; between(x,min,max) ternary."
+    },
+    leaves: {
+      help: "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation."
+    },
+    namespace: {
+      help: "How a {ref:<key>} resolves: `res:<id>` \u2192 that resource's emission factor (EF); a key that has its own `computed` entry on the measure \u2192 that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number \u2014 both allowed. No other namespaces."
+    },
+    example: {
+      help: "Example (coal\u2192gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity \xD7 capacity factor \xD7 hours/yr \xD7 (EF coal \u2212 EF gas) \xD7 10\u207B\xB3. EF leaves use the res: namespace; 8760 and 1e-3 are literals."
+    }
   }
 };
 
@@ -1166,7 +1261,7 @@ var globals_default = {
 
 // data/kz/library/measures.seed.json
 var measures_seed_default = {
-  _comment: "\xA711 acceptance slice in the iteration-2 structure: economics derives from created_objects + materials (parity with Excel preserved). A (kz-20) and B (kz-2) reproduce the Excel MAC/abatement; C (kz-16) stays draft (factor ~10\xD7 the corridor). Every bare number is accompanied by provenance + binding via `sources` (keyed by value path) per the measure-notation `sourcing` discipline \u2014 metadata only, it does NOT feed compute().",
+  _comment: "\xA711 acceptance slice in the iteration-2 structure: economics derives from created_technologies + materials (parity with Excel preserved). A (kz-20) and B (kz-2) reproduce the Excel MAC/abatement; C (kz-16) stays draft (factor ~10\xD7 the corridor). Every bare number is accompanied by provenance + binding via `sources` (keyed by value path) per the measure-notation `sourcing` discipline \u2014 metadata only, it does NOT feed compute().",
   measures: [
     {
       id: "kz-20",
@@ -1176,6 +1271,8 @@ var measures_seed_default = {
         en: "Feed additives reducing enteric fermentation (CH\u2084)"
       },
       sector_ref: "3",
+      mechanism: "reduction",
+      baseline_basis: "standalone",
       sectors: [
         {
           sector_ref: "3",
@@ -1184,10 +1281,7 @@ var measures_seed_default = {
       ],
       technology_ref: "tech_feed_additive",
       scope: "published",
-      maturity_stage: "back_calc",
-      comparison: {
-        is_substitution: true
-      },
+      maturity_stage: "computed",
       inputs: {
         capex_denominator: {
           value: 255e4,
@@ -1197,26 +1291,49 @@ var measures_seed_default = {
             citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
             confidence: "medium"
           }
+        },
+        activity: {
+          value: 2550,
+          unit: "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+            confidence: "high"
+          }
+        },
+        emission_factor: {
+          value: 0.6980392156862745,
+          unit: "kt CO\u2082eq/(\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432\xB7\u0433\u043E\u0434)",
+          reference_ref: "ref_enteric_factor",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u043E\u0435 \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u044D\u043D\u0442\u0435\u0440\u0430\u043B\u044C\u043D\u043E\u0433\u043E CH\u2084 \u043D\u0430 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432 \u043E\u0442 \u043A\u043E\u0440\u043C\u043E\u0432\u044B\u0445 \u0434\u043E\u0431\u0430\u0432\u043E\u043A (\u0432 \u043A\u043E\u0440\u0438\u0434\u043E\u0440\u0435 ref_enteric_factor)",
+            confidence: "medium"
+          }
         }
       },
       abatement: {
-        back_calc: {
-          share: 0.1,
-          activity_scalar: {
-            qty: 2550,
-            unit: "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432"
-          },
-          reference_ref: "ref_enteric_factor"
-        }
+        formula: {
+          op: "mul",
+          args: [
+            { ref: "activity" },
+            { ref: "emission_factor" }
+          ]
+        },
+        formula_label: {
+          ru: "\u043F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \xD7 \u0443\u0434\u0435\u043B\u044C\u043D\u043E\u0435 \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 CH\u2084",
+          en: "head count \xD7 per-head CH\u2084 reduction"
+        },
+        factor_ref: "emission_factor"
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "tech_feed_dosing",
+          technology_ref: "tech_feed_dosing",
           capacity: 255e4,
           unit: "\u0433\u043E\u043B\u043E\u0432"
         },
         {
-          object_ref: "tech_feed_training",
+          technology_ref: "tech_feed_training",
           capacity: 5100,
           unit: "\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432",
           opex_musd: 25.5
@@ -1236,7 +1353,7 @@ var measures_seed_default = {
         pool_ref: "pool_enteric"
       },
       sources: {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           provenance: {
             source_type: "official_stat",
             citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
@@ -1247,7 +1364,7 @@ var measures_seed_default = {
             ref: "in:capex_denominator"
           }
         },
-        "created_objects[1].capacity": {
+        "created_technologies[1].capacity": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0445\u0432\u0430\u0442 ~5100 \u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432",
@@ -1257,7 +1374,7 @@ var measures_seed_default = {
             mode: "new"
           }
         },
-        "created_objects[1].opex_musd": {
+        "created_technologies[1].opex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0441\u043E\u043F\u0440\u043E\u0432\u043E\u0436\u0434\u0435\u043D\u0438\u0435, ~5 \u0442\u044B\u0441.$/\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432\u043E/\u0433\u043E\u0434",
@@ -1288,27 +1405,6 @@ var measures_seed_default = {
             mode: "reuse",
             ref: "res:feed_additive#price"
           }
-        },
-        "abatement.back_calc.share": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB, \u0434\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 \u043F\u043E\u0434\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438",
-            confidence: "medium"
-          },
-          binding: {
-            mode: "new"
-          }
-        },
-        "abatement.back_calc.activity_scalar.qty": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
-            confidence: "high"
-          },
-          binding: {
-            mode: "reuse",
-            ref: "in:capex_denominator"
-          }
         }
       }
     },
@@ -1320,6 +1416,8 @@ var measures_seed_default = {
         en: "Conversion of coal CHP and boilers to natural gas"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
+      baseline_basis: "comparison",
       sectors: [
         {
           sector_ref: "1.A.1",
@@ -1331,7 +1429,6 @@ var measures_seed_default = {
       scope: "published",
       maturity_stage: "computed",
       comparison: {
-        is_substitution: false,
         service_unit_ref: "prod_mwh"
       },
       inputs: {
@@ -1421,16 +1518,16 @@ var measures_seed_default = {
           }
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "tech_coal_to_gas",
+          technology_ref: "tech_coal_to_gas",
           capacity: 5e3,
           unit: "\u041C\u0412\u0442",
           capex_ud_factor: 1e3,
           opex_musd: -120
         },
         {
-          object_ref: "tech_gas_pipeline",
+          technology_ref: "tech_gas_pipeline",
           capacity: 5e3,
           unit: "\u041C\u0412\u0442",
           capex_ud_factor: 1e3
@@ -1553,7 +1650,7 @@ var measures_seed_default = {
         }
       },
       sources: {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u0422\u042D\u0426, 5000 \u041C\u0412\u0442",
@@ -1564,7 +1661,7 @@ var measures_seed_default = {
             ref: "in:cap_mw"
           }
         },
-        "created_objects[0].opex_musd": {
+        "created_technologies[0].opex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F OPEX \u043F\u0440\u0438 \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0435 \u043D\u0430 \u0433\u0430\u0437",
@@ -1574,7 +1671,7 @@ var measures_seed_default = {
             mode: "new"
           }
         },
-        "created_objects[1].capacity": {
+        "created_technologies[1].capacity": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434 \u043F\u043E\u0434 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0441\u0442\u0430\u043D\u0446\u0438\u0438",
@@ -1617,6 +1714,8 @@ var measures_seed_default = {
         en: "Coal-mine methane degassing (coalbed methane)"
       },
       sector_ref: "1.B",
+      mechanism: "reduction",
+      baseline_basis: "standalone",
       sectors: [
         {
           sector_ref: "1.B",
@@ -1625,24 +1724,49 @@ var measures_seed_default = {
       ],
       technology_ref: "tech_mine_degas",
       scope: "published",
-      maturity_stage: "back_calc",
-      comparison: {
-        is_substitution: true
-      },
-      inputs: {},
-      abatement: {
-        back_calc: {
-          share: 0.2,
-          activity_scalar: {
-            qty: 9.791795506081222,
-            unit: "\u043C\u043B\u043D \u043C\xB3"
+      maturity_stage: "computed",
+      inputs: {
+        activity: {
+          value: 9.791795506081222,
+          unit: "\u043C\u043B\u043D \u043C\xB3",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \u043A \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438, ~9.8 \u043C\u043B\u043D \u043C\xB3",
+            confidence: "low"
           },
-          reference_ref: "ref_degas_factor"
+          binding: {
+            mode: "reuse",
+            ref: "created_technologies[0].capacity"
+          }
+        },
+        emission_factor: {
+          value: 194.03999999999996,
+          unit: "kt CO\u2082eq/(\u043C\u043B\u043D \u043C\xB3)",
+          reference_ref: "ref_degas_factor",
+          provenance: {
+            source_type: "assumption",
+            citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u043A\u0442\u043E\u0440 \u043F\u043E\u0441\u0442\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D; \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u0435\u0442 \u043A\u043E\u0440\u0438\u0434\u043E\u0440 ref_degas_factor \u2192 \u043C\u0435\u0440\u0430 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F draft",
+            confidence: "low"
+          }
         }
       },
-      created_objects: [
+      abatement: {
+        formula: {
+          op: "mul",
+          args: [
+            { ref: "activity" },
+            { ref: "emission_factor" }
+          ]
+        },
+        formula_label: {
+          ru: "\u043E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \xD7 \u0443\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u043A\u0442\u043E\u0440 CO\u2082eq",
+          en: "methane volume \xD7 per-volume CO\u2082eq factor"
+        },
+        factor_ref: "emission_factor"
+      },
+      created_technologies: [
         {
-          object_ref: "tech_mine_degas",
+          technology_ref: "tech_mine_degas",
           capacity: 9.791795506081222,
           unit: "\u043C\u043B\u043D \u043C\xB3",
           capex_musd: 300,
@@ -1663,7 +1787,7 @@ var measures_seed_default = {
         pool_ref: "pool_coal_methane"
       },
       sources: {
-        "created_objects[0].capacity": {
+        "created_technologies[0].capacity": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \u043A \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438, ~9.8 \u043C\u043B\u043D \u043C\xB3",
@@ -1673,7 +1797,7 @@ var measures_seed_default = {
             mode: "new"
           }
         },
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "placeholder",
             citation: "\u041E\u0446\u0435\u043D\u043A\u0430 CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
@@ -1683,7 +1807,7 @@ var measures_seed_default = {
             mode: "new"
           }
         },
-        "created_objects[0].opex_musd": {
+        "created_technologies[0].opex_musd": {
           provenance: {
             source_type: "placeholder",
             citation: "\u041E\u0446\u0435\u043D\u043A\u0430 OPEX \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
@@ -1701,7 +1825,7 @@ var measures_seed_default = {
           },
           binding: {
             mode: "reuse",
-            ref: "created_objects[0].capacity"
+            ref: "created_technologies[0].capacity"
           }
         },
         "materials[0].price": {
@@ -1712,27 +1836,6 @@ var measures_seed_default = {
           },
           binding: {
             mode: "new"
-          }
-        },
-        "abatement.back_calc.share": {
-          provenance: {
-            source_type: "assumption",
-            citation: "\u0414\u043E\u043B\u044F \u043E\u0445\u0432\u0430\u0442\u0430 0.2 \u2014 \u043F\u043E\u0441\u0442\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D\u0430",
-            confidence: "low"
-          },
-          binding: {
-            mode: "new"
-          }
-        },
-        "abatement.back_calc.activity_scalar.qty": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "\u0410\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C ~9.8 \u043C\u043B\u043D \u043C\xB3",
-            confidence: "low"
-          },
-          binding: {
-            mode: "reuse",
-            ref: "created_objects[0].capacity"
           }
         }
       }
@@ -1745,6 +1848,7 @@ var measures_seed_default = {
         en: "Coal CHP efficiency improvement (turbine & boiler retrofit)"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -1797,13 +1901,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 efficiency gain \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz1_0",
+          technology_ref: "obj_kz1_0",
           capex_musd: 7500
         },
         {
-          object_ref: "obj_kz1_1",
+          technology_ref: "obj_kz1_1",
           capex_musd: 2250
         }
       ],
@@ -1820,14 +1924,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0443\u0440\u0431\u0438\u043D \u0438 \u043A\u043E\u0442\u043B\u043E\u0432",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041F\u0440\u043E\u0435\u043A\u0442\u043D\u044B\u0435 \u0438 \u043F\u0443\u0441\u043A\u043E\u043D\u0430\u043B\u0430\u0434\u043E\u0447\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u044B",
@@ -1872,6 +1976,7 @@ var measures_seed_default = {
         en: "Renewables: solar and wind power plants"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -1953,13 +2058,13 @@ var measures_seed_default = {
           en: "capacity \xD7 8760 \xD7 CF \xD7 (1\u2212curtailment) \xD7 EF_coal \xD7 10\u207B\xB3"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz3_0",
+          technology_ref: "obj_kz3_0",
           capex_musd: 8e3
         },
         {
-          object_ref: "obj_kz3_1",
+          technology_ref: "obj_kz3_1",
           capex_musd: 1200
         }
       ],
@@ -1976,14 +2081,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0412\u0418\u042D",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0435\u0442\u0438 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435",
@@ -2042,6 +2147,7 @@ var measures_seed_default = {
         en: "Renewables + gas peaker + boiler replacing CHP (retiring old coal CHP)"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -2125,23 +2231,23 @@ var measures_seed_default = {
           en: "displaced coal generation \xD7 EF_coal \u2212 gas generation \xD7 EF_gas"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz4_0",
+          technology_ref: "obj_kz4_0",
           capex_musd: 5600
         },
         {
-          object_ref: "obj_kz4_1",
+          technology_ref: "obj_kz4_1",
           capex_musd: 7e3
         },
         {
-          object_ref: "obj_kz4_3",
+          technology_ref: "obj_kz4_3",
           capex_musd: 280.00000000000006
         }
       ],
-      retired_objects: [
+      retired_technologies: [
         {
-          object_ref: "obj_kz4_2",
+          technology_ref: "obj_kz4_2",
           maintenance_capex_musd: 7e3
         }
       ],
@@ -2168,28 +2274,28 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
             confidence: "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0422\u042D\u0426",
             confidence: "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
@@ -2262,6 +2368,7 @@ var measures_seed_default = {
         en: "Nuclear power (replacing baseload coal)"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -2314,9 +2421,9 @@ var measures_seed_default = {
           en: "nuclear generation \xD7 EF_coal \xD7 10\u207B\xB3"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz5_0",
+          technology_ref: "obj_kz5_0",
           capex_musd: 36036
         }
       ],
@@ -2338,7 +2445,7 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E \u0410\u042D\u0421",
@@ -2390,6 +2497,7 @@ var measures_seed_default = {
         en: "Heat pumps for district heating"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -2441,13 +2549,13 @@ var measures_seed_default = {
           en: "displaced heat \xD7 EF_coal_boiler"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz6_0",
+          technology_ref: "obj_kz6_0",
           capex_musd: 1040.5265410958903
         },
         {
-          object_ref: "obj_kz6_1",
+          technology_ref: "obj_kz6_1",
           capex_musd: 312.15796232876704
         }
       ],
@@ -2474,14 +2582,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043D\u0430\u0441\u043E\u0441\u044B",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0441\u0435\u0442\u0435\u0439 \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F",
@@ -2540,6 +2648,7 @@ var measures_seed_default = {
         en: "Heat-supply electrification (electric boilers + renewables)"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -2591,13 +2700,13 @@ var measures_seed_default = {
           en: "displaced heat \xD7 EF_coal_boiler"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz7_0",
+          technology_ref: "obj_kz7_0",
           capex_musd: 3405.359589041096
         },
         {
-          object_ref: "obj_kz7_1",
+          technology_ref: "obj_kz7_1",
           capex_musd: 1362.1438356164385
         }
       ],
@@ -2619,14 +2728,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
@@ -2678,6 +2787,7 @@ var measures_seed_default = {
         en: "Renewables + gas peaker + boiler (alternative to new CHP)"
       },
       sector_ref: "1.A.1",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.1"
@@ -2761,27 +2871,27 @@ var measures_seed_default = {
           en: "displaced coal generation \xD7 EF_coal \u2212 gas generation \xD7 EF_gas"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz8_0",
+          technology_ref: "obj_kz8_0",
           capex_musd: 1074.285714285714
         },
         {
-          object_ref: "obj_kz8_1",
+          technology_ref: "obj_kz8_1",
           capex_musd: 150
         },
         {
-          object_ref: "obj_kz8_3",
+          technology_ref: "obj_kz8_3",
           capex_musd: 1e3
         },
         {
-          object_ref: "obj_kz8_4",
+          technology_ref: "obj_kz8_4",
           capex_musd: 80
         }
       ],
-      retired_objects: [
+      retired_technologies: [
         {
-          object_ref: "obj_kz8_2",
+          technology_ref: "obj_kz8_2",
           maintenance_capex_musd: 3e3
         }
       ],
@@ -2808,35 +2918,35 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0420\u0430\u0437\u0432\u0438\u0442\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439 (\u043D\u0430 \u043F\u0438\u043A\u0435\u0440\u044B)",
             confidence: "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0422\u042D\u0426",
             confidence: "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
             confidence: "medium"
           }
         },
-        "created_objects[3].capex_musd": {
+        "created_technologies[3].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
@@ -2909,6 +3019,7 @@ var measures_seed_default = {
         en: "Waste-heat recovery (flue-gas heat recuperation)"
       },
       sector_ref: "1.A.2",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.2"
@@ -2973,9 +3084,9 @@ var measures_seed_default = {
           en: "capacity \xD7 8760 \xD7 CF \xD7 EF_coal \xD7 10\u207B\xB3"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz9_0",
+          technology_ref: "obj_kz9_0",
           capex_musd: 6250
         }
       ],
@@ -2992,7 +3103,7 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
@@ -3044,6 +3155,7 @@ var measures_seed_default = {
         en: "Passenger-vehicle electrification (EVs)"
       },
       sector_ref: "1.A.3",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.3"
@@ -3112,13 +3224,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000 \u2212 grid-emissions growth"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz10_0",
+          technology_ref: "obj_kz10_0",
           capex_musd: 7332.251082251083
         },
         {
-          object_ref: "obj_kz10_1",
+          technology_ref: "obj_kz10_1",
           capex_musd: 1466.4502164502167
         }
       ],
@@ -3135,14 +3247,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0418\u043D\u043A\u0440\u0435\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C EV \u043F\u0430\u0440\u043A\u0430",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0417\u0430\u0440\u044F\u0434\u043D\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
@@ -3194,6 +3306,7 @@ var measures_seed_default = {
         en: "Building thermal retrofit (facade insulation, windows, roofing)"
       },
       sector_ref: "1.A.4",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.4"
@@ -3278,13 +3391,13 @@ var measures_seed_default = {
           en: "(heat_before \u2212 heat_after) \xD7 EF_coal_boiler \xD7 (1\u2212derating)"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz11_0",
+          technology_ref: "obj_kz11_0",
           capex_musd: 9e3
         },
         {
-          object_ref: "obj_kz11_1",
+          technology_ref: "obj_kz11_1",
           capex_musd: 1800
         }
       ],
@@ -3306,14 +3419,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0423\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0441\u0430\u0434\u043E\u0432 \u0438 \u043A\u0440\u043E\u0432\u043B\u0438",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0417\u0430\u043C\u0435\u043D\u0430 \u043E\u043A\u043E\u043D \u0438 \u0434\u0432\u0435\u0440\u0435\u0439",
@@ -3379,6 +3492,7 @@ var measures_seed_default = {
         en: "Residential gasification (transitional measure)"
       },
       sector_ref: "1.A.4",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.4"
@@ -3431,13 +3545,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz12_0",
+          technology_ref: "obj_kz12_0",
           capex_musd: 2500
         },
         {
-          object_ref: "obj_kz12_1",
+          technology_ref: "obj_kz12_1",
           capex_musd: 0.6
         }
       ],
@@ -3459,14 +3573,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u0430\u0433\u0438\u0441\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0435 \u0438 \u0440\u0430\u0441\u043F\u0440\u0435\u0434. \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u044B",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043B\u0435\u0439",
@@ -3518,6 +3632,7 @@ var measures_seed_default = {
         en: "Electric boiler + renewables (full district-heating decarbonization)"
       },
       sector_ref: "1.A.4",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.A.4"
@@ -3581,23 +3696,23 @@ var measures_seed_default = {
           en: "sector baseline \xD7 technical potential \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz13_0",
+          technology_ref: "obj_kz13_0",
           capex_musd: 1403.0588418430887
         },
         {
-          object_ref: "obj_kz13_1",
+          technology_ref: "obj_kz13_1",
           capex_musd: 561.2235367372355
         },
         {
-          object_ref: "obj_kz13_2",
+          technology_ref: "obj_kz13_2",
           capex_musd: 420.9176525529266
         }
       ],
-      retired_objects: [
+      retired_technologies: [
         {
-          object_ref: "obj_kz13_3",
+          technology_ref: "obj_kz13_3",
           maintenance_capex_musd: 2200.8771357975043
         }
       ],
@@ -3619,28 +3734,28 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
             confidence: "medium"
           }
         },
-        "created_objects[2].capex_musd": {
+        "created_technologies[2].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u041C\u0420 \u0438 \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u0441\u0435\u0442\u0438",
             confidence: "medium"
           }
         },
-        "retired_objects[0].maintenance_capex_musd": {
+        "retired_technologies[0].maintenance_capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F: \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445",
@@ -3699,6 +3814,7 @@ var measures_seed_default = {
         en: "LDAR: methane leak detection and repair (oil & gas)"
       },
       sector_ref: "1.B",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.B"
@@ -3751,13 +3867,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz14_0",
+          technology_ref: "obj_kz14_0",
           capex_musd: 40
         },
         {
-          object_ref: "obj_kz14_1",
+          technology_ref: "obj_kz14_1",
           capex_musd: 15
         }
       ],
@@ -3774,14 +3890,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435 \u0438 \u0440\u0435\u043C\u043E\u043D\u0442",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "OGI \u043A\u0430\u043C\u0435\u0440\u044B \u0438 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
@@ -3826,6 +3942,7 @@ var measures_seed_default = {
         en: "Associated petroleum gas (APG) utilization"
       },
       sector_ref: "1.B",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.B"
@@ -3878,13 +3995,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz15_0",
+          technology_ref: "obj_kz15_0",
           capex_musd: 1500
         },
         {
-          object_ref: "obj_kz15_1",
+          technology_ref: "obj_kz15_1",
           capex_musd: 375
         }
       ],
@@ -3901,14 +4018,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0422\u042D\u0421 \u0438 \u043A\u043E\u043C\u043F\u0440\u0435\u0441\u0441\u043E\u0440\u043D\u043E\u0435 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041F\u043E\u0434\u0432\u043E\u0434\u044F\u0449\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
@@ -3953,6 +4070,7 @@ var measures_seed_default = {
         en: "Leak reduction in the gas transmission system"
       },
       sector_ref: "1.B",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "1.B"
@@ -4005,13 +4123,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz17_0",
+          technology_ref: "obj_kz17_0",
           capex_musd: 600
         },
         {
-          object_ref: "obj_kz17_1",
+          technology_ref: "obj_kz17_1",
           capex_musd: 30
         }
       ],
@@ -4028,14 +4146,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 \u0438 \u041A\u0421",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433",
@@ -4080,6 +4198,7 @@ var measures_seed_default = {
         en: "Clinker-factor reduction in cement production"
       },
       sector_ref: "2",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "2"
@@ -4132,9 +4251,9 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz18_0",
+          technology_ref: "obj_kz18_0",
           capex_musd: 200
         }
       ],
@@ -4151,7 +4270,7 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0437\u0430\u0432\u043E\u0434\u043E\u0432",
@@ -4196,6 +4315,7 @@ var measures_seed_default = {
         en: "CCS in metallurgy and cement"
       },
       sector_ref: "2",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "2"
@@ -4248,13 +4368,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz19_0",
+          technology_ref: "obj_kz19_0",
           capex_musd: 925.7142857142857
         },
         {
-          object_ref: "obj_kz19_1",
+          technology_ref: "obj_kz19_1",
           capex_musd: 277.71428571428567
         }
       ],
@@ -4266,14 +4386,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F CO\u2082",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0422\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442 \u0438 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435",
@@ -4311,6 +4431,7 @@ var measures_seed_default = {
         en: "Improved manure management (biogas)"
       },
       sector_ref: "3",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "3"
@@ -4363,13 +4484,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz21_0",
+          technology_ref: "obj_kz21_0",
           capex_musd: 250
         },
         {
-          object_ref: "obj_kz21_1",
+          technology_ref: "obj_kz21_1",
           capex_musd: 50
         }
       ],
@@ -4386,14 +4507,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0411\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043B\u0430\u0433\u0443\u043D \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
@@ -4438,6 +4559,7 @@ var measures_seed_default = {
         en: "Precision agriculture (N\u2082O reduction from fertilizers)"
       },
       sector_ref: "3",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "3"
@@ -4490,13 +4612,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz22_0",
+          technology_ref: "obj_kz22_0",
           capex_musd: 150
         },
         {
-          object_ref: "obj_kz22_1",
+          technology_ref: "obj_kz22_1",
           capex_musd: 30
         }
       ],
@@ -4513,14 +4635,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "GPS-\u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F \u0438 \u0434\u0430\u0442\u0447\u0438\u043A\u0438",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0430\u0433\u0440\u043E\u043D\u043E\u043C\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430",
@@ -4565,6 +4687,7 @@ var measures_seed_default = {
         en: "Improved pasture management"
       },
       sector_ref: "3",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "3"
@@ -4617,13 +4740,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz23_0",
+          technology_ref: "obj_kz23_0",
           capex_musd: 200
         },
         {
-          object_ref: "obj_kz23_1",
+          technology_ref: "obj_kz23_1",
           capex_musd: 30
         }
       ],
@@ -4640,14 +4763,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0430\u0441\u0442\u0431\u0438\u0449",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u0440\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u043F\u0430\u0441\u0430",
@@ -4692,6 +4815,7 @@ var measures_seed_default = {
         en: "Afforestation and reforestation"
       },
       sector_ref: "4",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "4"
@@ -4754,13 +4878,13 @@ var measures_seed_default = {
           en: "target area \xD7 survival rate \xD7 sequestration rate"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz24_0",
+          technology_ref: "obj_kz24_0",
           capex_musd: 2e3
         },
         {
-          object_ref: "obj_kz24_1",
+          technology_ref: "obj_kz24_1",
           capex_musd: 200
         }
       ],
@@ -4777,14 +4901,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0430\u0436\u0435\u043D\u0446\u044B, \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u043F\u043E\u0447\u0432\u044B, \u043F\u043E\u0441\u0430\u0434\u043A\u0430",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u0438 \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0430",
@@ -4836,6 +4960,7 @@ var measures_seed_default = {
         en: "Landfill-gas (LFG) capture and utilization"
       },
       sector_ref: "5",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "5"
@@ -4888,13 +5013,13 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz25_0",
+          technology_ref: "obj_kz25_0",
           capex_musd: 100
         },
         {
-          object_ref: "obj_kz25_1",
+          technology_ref: "obj_kz25_1",
           capex_musd: 40
         }
       ],
@@ -4911,14 +5036,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
             confidence: "medium"
           }
         },
-        "created_objects[1].capex_musd": {
+        "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0413\u0430\u0437\u043E\u043F\u043E\u0440\u0448\u043D\u0435\u0432\u044B\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
@@ -4963,6 +5088,7 @@ var measures_seed_default = {
         en: "Wastewater-treatment upgrade (CH\u2084 reduction)"
       },
       sector_ref: "5",
+      mechanism: "reduction",
       sectors: [
         {
           sector_ref: "5"
@@ -5015,9 +5141,9 @@ var measures_seed_default = {
           en: "sector baseline \xD7 share \xD7 1000"
         }
       },
-      created_objects: [
+      created_technologies: [
         {
-          object_ref: "obj_kz26_0",
+          technology_ref: "obj_kz26_0",
           capex_musd: 150
         }
       ],
@@ -5034,7 +5160,7 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_objects[0].capex_musd": {
+        "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u041A\u041E\u0421",
@@ -5210,7 +5336,9 @@ function assembleLibrary(g) {
     checks: checks_default,
     indicators,
     subsectors,
-    notation: measure_notation_default,
+    uiHelp: measure_ui_help_default,
+    notation: measure_ui_help_default,
+    // TEMP alias for the MCP resource (removed step 4)
     // Templates live in code (the engine uses them); formula-templates.json mirrors them publicly.
     formulaTemplates: BUILTIN_TEMPLATES,
     globals: globals_default
@@ -5411,8 +5539,8 @@ function makeResolver(measure, library2) {
   return resolve;
 }
 function economicsRollup(measure, library2) {
-  const created = measure.created_objects ?? [];
-  const retired = measure.retired_objects ?? [];
+  const created = measure.created_technologies ?? [];
+  const retired = measure.retired_technologies ?? [];
   const materials = measure.materials ?? [];
   if (created.length || retired.length || materials.length) {
     const tech = (ref) => library2.technologies[ref];
@@ -5421,9 +5549,9 @@ function economicsRollup(measure, library2) {
       const c = measure.computed?.[path];
       return c ? evalAst(c.formula, resolve) : inline;
     };
-    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_objects[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_objects[${i}].capacity`, o.capacity) ?? 0) * (tech(o.object_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
-    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_objects[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_objects[${i}].capacity`, r.capacity) ?? 0) * (tech(r.object_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
-    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_objects[${i}].opex_musd`, o.opex_musd) ?? 0), 0) - retired.reduce((s, r, i) => s + (pick(`retired_objects[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
+    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
+    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
+    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0) - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
     const opexMaterials = materials.reduce((s, m, i) => {
       const cost = m.cost_musd ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
       return s + (m.side === "retired" ? -cost : cost);
@@ -5463,11 +5591,10 @@ function poolBaselineKt(measure, library2) {
 }
 function computeAbatement(measure, library2, resolve) {
   const a = measure.abatement;
-  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed, .back_calc or .raw)`);
+  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed or .raw)`);
+  const impliedFactor = a.factor_ref ? measure.inputs?.[a.factor_ref]?.value : void 0;
   if (a.formula) {
-    const abatementKt = evalAst(a.formula, resolve);
-    const act = a.back_calc?.activity_scalar.qty;
-    return { abatementKt, impliedFactor: act ? abatementKt / act : void 0 };
+    return { abatementKt: evalAst(a.formula, resolve), impliedFactor };
   }
   switch (measure.maturity_stage) {
     case "computed": {
@@ -5475,13 +5602,7 @@ function computeAbatement(measure, library2, resolve) {
       const tmpl = getTemplate(a.computed.formula_ref);
       if (!tmpl) throw new Error(`Unknown formula template '${a.computed.formula_ref}'`);
       const ast = bindTemplate(tmpl, a.computed.bindings, resolve);
-      return { abatementKt: evalAst(ast, resolve) };
-    }
-    case "back_calc": {
-      if (!a.back_calc) throw new Error(`Measure '${measure.id}': maturity=back_calc but no back_calc block`);
-      const abatementKt = poolBaselineKt(measure, library2) * a.back_calc.share;
-      const qty = a.back_calc.activity_scalar.qty;
-      return { abatementKt, impliedFactor: qty ? abatementKt / qty : void 0 };
+      return { abatementKt: evalAst(ast, resolve), impliedFactor };
     }
     case "raw": {
       if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
@@ -5573,12 +5694,11 @@ function stackPools(computed, measureById, library2) {
 }
 function buildChecks(measure, c, library2, peers) {
   const details = { factor: null, economics: null, pool: null, sector: null };
-  const bc = measure.abatement.back_calc;
-  const ref = bc ? library2.references[bc.reference_ref] : void 0;
-  if (measure.maturity_stage === "back_calc" && bc && ref) {
+  const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : void 0;
+  const ref = factorInput?.reference_ref ? library2.references[factorInput.reference_ref] : void 0;
+  if (factorInput && ref) {
     details.factor = runCheck(library2.checks.factor, {
-      abatement: c.abatementKt,
-      activity: bc.activity_scalar.qty,
+      factor: factorInput.value,
       min: ref.range[0],
       max: ref.range[1]
     });
@@ -5607,24 +5727,20 @@ function buildChecks(measure, c, library2, peers) {
 }
 function taggablePaths(m) {
   const p = [];
-  (m.created_objects ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`created_objects[${i}].capacity`);
-    if (o.capex_musd != null) p.push(`created_objects[${i}].capex_musd`);
-    if (o.opex_musd != null) p.push(`created_objects[${i}].opex_musd`);
+  (m.created_technologies ?? []).forEach((o, i) => {
+    if (o.capacity != null) p.push(`created_technologies[${i}].capacity`);
+    if (o.capex_musd != null) p.push(`created_technologies[${i}].capex_musd`);
+    if (o.opex_musd != null) p.push(`created_technologies[${i}].opex_musd`);
   });
-  (m.retired_objects ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`retired_objects[${i}].capacity`);
-    if (o.maintenance_capex_musd != null) p.push(`retired_objects[${i}].maintenance_capex_musd`);
-    if (o.opex_musd != null) p.push(`retired_objects[${i}].opex_musd`);
+  (m.retired_technologies ?? []).forEach((o, i) => {
+    if (o.capacity != null) p.push(`retired_technologies[${i}].capacity`);
+    if (o.maintenance_capex_musd != null) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
+    if (o.opex_musd != null) p.push(`retired_technologies[${i}].opex_musd`);
   });
   (m.materials ?? []).forEach((mt, i) => {
     if (mt.qty != null || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
     if (mt.price != null || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
   });
-  if (m.abatement.back_calc) {
-    p.push("abatement.back_calc.share");
-    p.push("abatement.back_calc.activity_scalar.qty");
-  }
   if (m.abatement.raw) p.push("abatement.raw.share");
   return p;
 }
@@ -5634,21 +5750,22 @@ function notationGaps(m) {
   return { untagged, computedNoFormula };
 }
 function buildPanels(measure, checks, missing) {
-  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.back_calc ?? measure.abatement.computed;
+  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.computed;
   const req = (cond, label) => {
     if (cond) return "ok";
     missing.push(label);
     return "incomplete";
   };
+  const productOk = !!measure.product_ref || measure.mechanism === "removal";
   return {
     // Iteration-2 panels: build = «Что создаём» (objects), baseline = «Отрасль и
-    // продукт» (sector required, product optional), project = «Что закрываем» (optional).
+    // продукт» (sector required; product required unless pure removal — advisory warn).
     overview: req(!!measure.name && !!measure.sector_ref, "name/sector"),
-    build: req((measure.created_objects?.length ?? 0) > 0 || !!measure.technology_ref, "created_objects"),
-    baseline: req(!!measure.sector_ref, "sector"),
+    build: req((measure.created_technologies?.length ?? 0) > 0 || !!measure.technology_ref, "created_technologies"),
+    baseline: !measure.sector_ref ? (missing.push("sector"), "incomplete") : productOk ? "ok" : (missing.push("product_ref"), "warn"),
     project: "ok",
     reduction: !stageBlock ? (missing.push("abatement"), "incomplete") : checks.factor === "warn" ? "warn" : "ok",
-    economics: (measure.created_objects?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0 ? checks.economics === "warn" ? "warn" : "ok" : (missing.push("objects/materials"), "incomplete"),
+    economics: (measure.created_technologies?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0 ? checks.economics === "warn" ? "warn" : "ok" : (missing.push("objects/materials"), "incomplete"),
     potential: !measure.potential?.pool_ref ? (missing.push("potential.pool_ref"), "incomplete") : "ok"
   };
 }
@@ -5667,8 +5784,8 @@ function validate(measure, library2, peers = []) {
   if (offenders.length) {
     const has = (...prefixes) => offenders.some((p) => prefixes.some((pre) => p.startsWith(pre)));
     const degrade = (s) => s === "warn" ? s : "incomplete";
-    if (has("materials", "created_objects", "retired_objects")) panels.economics = degrade(panels.economics);
-    if (has("created_objects")) panels.build = degrade(panels.build);
+    if (has("materials", "created_technologies", "retired_technologies")) panels.economics = degrade(panels.economics);
+    if (has("created_technologies")) panels.build = degrade(panels.build);
     if (has("abatement")) panels.reduction = degrade(panels.reduction);
     missing.push(...offenders.map((p) => `untagged number: ${p}`));
   }
@@ -5695,9 +5812,9 @@ var measure_schema_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://macc.kz/schema/measure.json",
   title: "Measure",
-  description: "Authoring input object \u2014 the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_objects + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
+  description: "Authoring input object \u2014 the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
   type: "object",
-  required: ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "abatement"],
+  required: ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "mechanism", "abatement"],
   additionalProperties: false,
   properties: {
     id: { type: "string", description: "Measure id, e.g. 'kz-2'." },
@@ -5716,18 +5833,20 @@ var measure_schema_default = {
     },
     product_ref: { type: "string", description: "Product produced (displaces conventional production); optional for practices/capture." },
     technology_ref: { type: "string", description: "Primary object (kept for the economics guardrail)." },
+    mechanism: { enum: ["reduction", "removal"], description: "Abatement mechanism (classification). Absent \u21D2 reduction. Removal = CDR (BECCS/DACCS/nature-based); fossil-CO\u2082 capture is reduction." },
+    mechanism_subtype: { enum: ["efficiency", "fuel_switch", "electrification", "process_change", "demand_reduction", "non_co2", "nature_based", "engineered"], description: "Soft subtype tag (optional)." },
+    permanence: { enum: ["short_lived", "durable"], description: "Removal only: storage durability flag (optional)." },
+    baseline_basis: { enum: ["comparison", "standalone"], description: "\xA7B axis (parallel to mechanism). comparison \u21D2 service-unit baseline + comparison.service_unit_ref; standalone \u21D2 absolute project footprint (CCS, agro). Optional until all measures are authored, then required." },
     scope: { enum: ["published", "draft", "scenario"] },
     owner_ref: { type: "string", description: "Identity claim from the write path (\xA79); the creator. Set by the server." },
-    maturity_stage: { enum: ["raw", "back_calc", "computed"] },
+    maturity_stage: { enum: ["raw", "computed"] },
     review_status: { enum: ["open", "accepted", "rejected", "wontfix"] },
     comparison: {
       type: "object",
-      required: ["is_substitution"],
       additionalProperties: false,
-      description: "A/B axis. comparison \u21D2 is_substitution=false + service_unit_ref; substitution \u21D2 true.",
+      description: "Service-unit baseline; present for baseline_basis='comparison'.",
       properties: {
-        service_unit_ref: { type: "string" },
-        is_substitution: { type: "boolean" }
+        service_unit_ref: { type: "string" }
       }
     },
     flows: {
@@ -5756,22 +5875,6 @@ var measure_schema_default = {
           additionalProperties: false,
           properties: { share: { type: "number" }, justification: { type: "string" } }
         },
-        back_calc: {
-          type: "object",
-          required: ["share", "activity_scalar", "reference_ref"],
-          additionalProperties: false,
-          properties: {
-            share: { type: "number" },
-            activity_scalar: {
-              type: "object",
-              required: ["qty", "unit"],
-              additionalProperties: false,
-              properties: { qty: { type: "number" }, unit: { type: "string" } }
-            },
-            implied_factor: { type: "number", readOnly: true },
-            reference_ref: { type: "string", description: "refs entry the implied factor is checked against." }
-          }
-        },
         computed: {
           type: "object",
           required: ["formula_ref", "bindings"],
@@ -5783,15 +5886,16 @@ var measure_schema_default = {
           }
         },
         formula: { $ref: "#/$defs/ast", description: "Inline abatement AST over the measure inputs (res:<id> EF / recursive computed leaves). Wins over the stage block; ports the Excel formula directly." },
-        formula_label: { $ref: "#/$defs/localized" }
+        formula_label: { $ref: "#/$defs/localized" },
+        factor_ref: { type: "string", description: "\xA77 X-axis: names the measure input holding the per-unit abatement factor (abatement \xF7 activity). That input's reference_ref is the corridor the `factor` guardrail checks against." }
       }
     },
-    created_objects: {
+    created_technologies: {
       type: "array",
       description: "Objects the measure CREATES (build). Economics derives from these.",
       items: { $ref: "#/$defs/builtObject" }
     },
-    retired_objects: {
+    retired_technologies: {
       type: "array",
       description: "Objects the measure CLOSES; their CAPEX/OPEX are avoided (subtracted).",
       items: { $ref: "#/$defs/retiredObject" }
@@ -5803,7 +5907,7 @@ var measure_schema_default = {
     },
     sources: {
       type: "object",
-      description: "\xA76 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_objects[0].capacity', 'materials[1].price', 'abatement.back_calc.share'). A path is in `sources` (input) XOR `computed` (derived).",
+      description: "\xA76 provenance+binding for the measure's INPUT bare numbers, keyed by value path (e.g. 'created_technologies[0].capacity', 'materials[1].price'). A path is in `sources` (input) XOR `computed` (derived).",
       additionalProperties: { $ref: "#/$defs/valueSource" }
     },
     computed: {
@@ -5814,7 +5918,7 @@ var measure_schema_default = {
     economics: {
       type: "object",
       additionalProperties: false,
-      description: "LEGACY free-form CAPEX/OPEX line items \u2014 fallback for un-migrated measures only. Prefer created_objects + materials.",
+      description: "LEGACY free-form CAPEX/OPEX line items \u2014 fallback for un-migrated measures only. Prefer created_technologies + materials.",
       properties: {
         capex: { type: "array", items: { $ref: "#/$defs/valueWithSource" } },
         opex: { type: "array", items: { $ref: "#/$defs/valueWithSource" } },
@@ -5849,11 +5953,11 @@ var measure_schema_default = {
     },
     builtObject: {
       type: "object",
-      required: ["object_ref"],
+      required: ["technology_ref"],
       additionalProperties: false,
       description: "CAPEX = capex_musd ?? capacity \xD7 tech.capex_ud \xD7 (capex_ud_factor ?? 1) / 1e6.",
       properties: {
-        object_ref: { type: "string", description: "library object id" },
+        technology_ref: { type: "string", description: "library object id" },
         capacity: { type: "number" },
         unit: { type: "string" },
         capex_ud_factor: { type: "number", description: "capacity unit \u2192 capex_ud denominator (e.g. MW\u2192kW = 1000)" },
@@ -5863,10 +5967,10 @@ var measure_schema_default = {
     },
     retiredObject: {
       type: "object",
-      required: ["object_ref"],
+      required: ["technology_ref"],
       additionalProperties: false,
       properties: {
-        object_ref: { type: "string" },
+        technology_ref: { type: "string" },
         capacity: { type: "number" },
         unit: { type: "string" },
         capex_ud_factor: { type: "number" },
@@ -5896,7 +6000,9 @@ var measure_schema_default = {
         citation: { type: "string" },
         url: { type: "string" },
         date: { type: "string" },
-        confidence: { enum: ["high", "medium", "low"] }
+        confidence: { enum: ["high", "medium", "low"] },
+        geo_applicability: { enum: ["global", "kz_specific", "other_country"], description: "\xA7B geo-applicability: global (low geo-sensitivity) / kz_specific / other_country. State KZ-reliability in kz_reliability." },
+        kz_reliability: { type: "string", description: "\xA7B short note on the number's reliability for assessing the measure in Kazakhstan." }
       }
     },
     binding: {
@@ -5918,7 +6024,8 @@ var measure_schema_default = {
         value: { type: "number" },
         unit: { type: "string" },
         provenance: { $ref: "#/$defs/provenance" },
-        binding: { $ref: "#/$defs/binding" }
+        binding: { $ref: "#/$defs/binding" },
+        reference_ref: { type: "string", description: "\xA77 \u2014 optional reference corridor this number is sanity-checked against (e.g. the per-unit factor named by abatement.factor_ref)." }
       }
     },
     valueSource: {
@@ -6127,7 +6234,7 @@ function buildServer(deps) {
     "upsert_library_entity",
     {
       title: "Upsert library entity",
-      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,object_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}.",
+      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}.",
       inputSchema: {
         kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | pool | subsector"),
         entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)")
@@ -6211,7 +6318,7 @@ async function loadLibrary(db) {
       unit: p.unit,
       service_unit: p.service_unit ?? void 0,
       sector_ref: p.sector_ref ?? void 0,
-      object_ref: p.object_ref ?? void 0
+      technology_ref: p.technology_ref ?? void 0
     })),
     references: (refs.data ?? []).map((r) => ({
       id: r.id,

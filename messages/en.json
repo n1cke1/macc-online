@@ -94,9 +94,9 @@
       "economics": "Project",
       "potential": "Measure potential"
     },
-    "maturity": { "raw": "postulated", "back_calc": "back-calc", "computed": "computed" },
+    "maturity": { "raw": "postulated", "computed": "computed" },
     "techKind": { "structure": "capital asset", "modernization": "modernization", "practice": "practice", "infrastructure": "infrastructure" },
-    "type": { "substitution": "substitution", "comparison": "A/B comparison" },
+    "type": { "standalone": "standalone", "comparison": "A/B comparison" },
     "autoCheck": { "passed": "Model checks passed", "failed": "Has issues" },
     "field": {
       "name": "Name",
@@ -118,6 +118,7 @@
       "noRetired": "No closed objects.",
       "share": "Measure share",
       "activity": "Activity",
+      "factor": "Per-unit factor",
       "baselineEmissions": "Sub-category baseline emissions",
       "qty": "Quantity",
       "price": "Price",
