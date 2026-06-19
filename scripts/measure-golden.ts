@@ -4,9 +4,9 @@
 //
 // Proves three things:
 //   1. The AST→HyperFormula path reproduces the Excel-derived MAC/abatement for the
-//      two valid measures (A=kz-20 feed additives, B=kz-2 coal CHP→gas).
-//   2. The broken measure (C=kz-16 mine degassing) trips the factor guardrail (⚠)
-//      and stays draft — never auto-promoted to published.
+//      two parity measures (A=kz-20 feed additives, B=kz-2 coal CHP→gas).
+//   2. kz-16 (mine degassing) trips the factor guardrail (⚠) and kz-2 is clipped in its
+//      shared coal-power pool by cheaper peers — both stay draft, never auto-promoted.
 //   3. Pool stacking clips potential by MAC order, independent of input order.
 import baselineJson from '../data/kz/model.data.json';
 import { library, getSeedMeasure, seedMeasures } from '../src/lib/measure/library';
@@ -83,9 +83,14 @@ expect(vA.checks.factor === 'ok', 'kz-20', `factor check ok (implied in corridor
 expect(vA.checks.economics === 'ok', 'kz-20', `economics check ok — got ${vA.checks.economics}`);
 expect(vA.eligibleForModel === true, 'kz-20', 'eligible for published');
 
+// kz-2 (coal→gas) shares pool_coal_power with cheaper coal-displacers (kz-3/4/5/8). Being the
+// most expensive, it is the share clipped on oversubscription, so its pool check ⚠ and it is
+// NOT eligible — the MAC-order competition the shared pool is meant to model (the cheaper ones
+// stay published). Economics is unaffected (the limit/pool bound volume, not the MAC).
 const vB = validate(getSeedMeasure('kz-2')!, library, seedMeasures.filter((m) => m.id !== 'kz-2'));
 expect(vB.checks.economics === 'ok', 'kz-2', `economics check ok — got ${vB.checks.economics}`);
-expect(vB.eligibleForModel === true, 'kz-2', 'eligible for published');
+expect(vB.checks.pool === 'warn', 'kz-2', `pool check ⚠ (clipped by cheaper coal-displacers) — got ${vB.checks.pool}`);
+expect(vB.eligibleForModel === false, 'kz-2', 'NOT eligible — clipped in pool_coal_power by cheaper peers');
 
 const vC = validate(getSeedMeasure('kz-16')!, library, seedMeasures.filter((m) => m.id !== 'kz-16'));
 const cC = compute(getSeedMeasure('kz-16')!, library);

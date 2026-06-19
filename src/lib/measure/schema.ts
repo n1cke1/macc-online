@@ -214,6 +214,18 @@ export interface Economics {
 
 /** §7 — potential ceiling: which dimension caps the measure and against which pool. */
 export type CeilingDim = 'cut_resource' | 'output_product' | 'n_objects' | 'activity';
+/**
+ * §7 — the per-measure limiting factor: an industry ceiling the unit measure's own
+ * consumption may not exceed. Independent of the pool (the pool is a shared ceiling
+ * measures *combine* against; the limit caps this one measure's scale). It does NOT
+ * enter the bottom-up formulas and does NOT change the MAC — it bounds the volume.
+ * `validate` checks `consumption ≤ ceiling`; on overflow the author lowers the scale
+ * input until it fits (the engine never auto-clips here, unlike pool stacking).
+ */
+export interface PotentialLimit {
+  indicator_ref: string;   // library indicator holding the ceiling (value + unit + source)
+  consumption_ref: string; // measure input/computed key = unit-measure consumption in the limit's dimension
+}
 export interface Potential {
   ceiling_dim: CeilingDim;
   pool_ref: string; // §1 pool; a self-created pool ⇒ measure stays draft
@@ -221,6 +233,9 @@ export interface Potential {
   // pool ceiling, so on oversubscription the cheaper (lower-MAC) ones claim it
   // first and the rest are clipped (see stackPools in validate.ts).
   combination_group?: string;
+  /** §7 limiting factor — required for model eligibility (validation marks the potential
+   *  panel incomplete if absent); optional in the type so a draft can be built incrementally. */
+  limit?: PotentialLimit;
 }
 
 /** §A classification — what the measure does to emissions. Absent ⇒ 'reduction' (default). */
@@ -236,8 +251,9 @@ export type Permanence = 'short_lived' | 'durable';
 /** §B classification — how the baseline is constructed (axis parallel to mechanism).
  *  `comparison` = measured against a service-unit baseline (baseline & project products
  *  matched, see `comparison.service_unit_ref`); `standalone` = absolute project footprint
- *  with no like-for-like baseline product (CCS, many agro measures). Optional until all
- *  measures are authored on this axis, then promoted to required. */
+ *  with no like-for-like baseline product (CCS, many agro measures). Required for model
+ *  eligibility (validation marks the baseline panel incomplete if absent); the field stays
+ *  optional in the type so a half-authored draft can still be constructed. */
 export type BaselineBasis = 'comparison' | 'standalone';
 
 /** §2 — the measure. One JSON Schema (`measure.schema.json`) mirrors this type. */
@@ -416,14 +432,14 @@ export interface FormulaTemplate {
  * check lives in library notation, not in code.
  */
 export interface CheckDef {
-  id: 'factor' | 'economics' | 'pool' | 'sector';
+  id: 'factor' | 'economics' | 'pool' | 'sector' | 'limit';
   label: Localized;
   quantity: Ast; // value being checked (e.g. implied factor = abatement / activity)
   predicate: Ast; // e.g. between(value, min, max) or lte(value, ceiling)
 }
 
 // ── Iteration-3 entity graph: the Indicator is the hub ───────────────────────
-export type IndicatorOwnerKind = 'object' | 'resource' | 'product' | 'global';
+export type IndicatorOwnerKind = 'object' | 'resource' | 'product' | 'subsector' | 'global';
 
 /**
  * §1 hub — every library number (capex_ud, ef, price, carbon_footprint, eff …) is an

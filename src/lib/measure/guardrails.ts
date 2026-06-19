@@ -6,7 +6,7 @@
 // This module takes the library as a parameter (no JSON imports) so it is Deno-clean.
 // `measure-golden` pins it against `validate()`/`compute()` so the two agree.
 import { type Ast, isLeafSlot, isNode } from './ast';
-import { type RefResolver as Resolver, evalAst as evalJs } from './eval';
+import { type RefResolver as Resolver, evalAst as evalJs, economicCore } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import type { Library, Measure } from './schema';
 import type { CheckId, CheckStatus } from './validate';
@@ -103,6 +103,23 @@ export function economicsRollup(measure: Measure, library: Library): { capex: nu
   return { capex: sum(e?.capex), opex: sum(e?.opex) - sum(e?.revenue) };
 }
 
+/** Duration (yr) — pure-TS mirror of compute.resolveDuration. */
+function durationJs(measure: Measure, library: Library): number {
+  const tech = measure.technology_ref ? library.technologies[measure.technology_ref] : undefined;
+  const dur = tech?.lifetimeYrs ?? measure.inputs?.lifetime?.value;
+  if (dur == null) throw new Error(`Measure '${measure.id}': cannot resolve duration`);
+  return dur;
+}
+
+/** MAC (USD/tCO₂) — pure-TS mirror of compute(): same rollup + economicCore, for pool ordering. */
+function macJs(measure: Measure, library: Library): number {
+  const { capex, opex } = economicsRollup(measure, library);
+  return economicCore({
+    capex, opex, abatementKt: abatementJs(measure, library),
+    durationYrs: durationJs(measure, library), discountRate: library.globals.discountRate,
+  }).mac;
+}
+
 const ECON_BAND: [number, number] = [0.5, 2.0];
 
 export interface GuardrailResult {
@@ -123,7 +140,7 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
     const value = evalJs(bindSlots(def.quantity, slots), noRef);
     return evalJs(bindSlots(def.predicate, { ...slots, value }), noRef) === 1 ? 'ok' : 'warn';
   };
-  const checks: Record<CheckId, CheckStatus> = { factor: 'na', economics: 'na', pool: 'na', sector: 'na' };
+  const checks: Record<CheckId, CheckStatus> = { factor: 'na', economics: 'na', pool: 'na', sector: 'na', limit: 'na' };
 
   const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : undefined;
   const ref = factorInput?.reference_ref ? library.references[factorInput.reference_ref] : undefined;
@@ -144,13 +161,31 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
   const poolRef = measure.potential?.pool_ref;
   const pool = poolRef ? library.pools[poolRef] : undefined;
   if (pool) {
-    const peerSum = peers
-      .filter((p) => p.potential?.pool_ref === poolRef)
+    // MAC-cumulative: only pool peers at least as cheap claim the ceiling first (mirrors
+    // validate.ts + stackPools) — the measure warns iff its own share is the one clipped.
+    const ownMac = macJs(measure, library);
+    const cum = abatementKt + peers
+      .filter((p) => p.potential?.pool_ref === poolRef && macJs(p, library) <= ownMac)
       .reduce((s, p) => s + abatementJs(p, library), 0);
-    checks.pool = run('pool', { sum_pool: abatementKt + peerSum, ceiling: pool.annual_flow });
+    checks.pool = run('pool', { sum_pool: cum, ceiling: pool.annual_flow });
   }
   if (pool?.baselineEmissionsKt != null) {
     checks.sector = run('sector', { abatement: abatementKt, baseline: pool.baselineEmissionsKt });
+  }
+
+  // limit — §7 per-measure ceiling: this measure's consumption vs an industry indicator.
+  const limit = measure.potential?.limit;
+  if (limit) {
+    const ceiling = library.indicators.find((i) => i.id === limit.indicator_ref)?.value;
+    let consumption: number | undefined;
+    try {
+      consumption = makeResolver(measure, library)(limit.consumption_ref);
+    } catch {
+      consumption = undefined;
+    }
+    if (ceiling != null && consumption != null) {
+      checks.limit = run('limit', { consumption, ceiling });
+    }
   }
 
   const eligible = !!pool && Object.values(checks).every((s) => s !== 'warn');

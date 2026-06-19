@@ -9,17 +9,18 @@
 //   economics — implied unit CAPEX vs technology band (Y-axis)
 //   pool      — Σ by pool ≤ ceiling, via MAC-order stacking (order-independent)
 //   sector    — reduction ≤ sub-category baseline (coarse backstop)
+//   limit     — this measure's own consumption ≤ an industry ceiling (per-measure)
 //
 // Publication is never blocked; only promotion to `published` is — and that is
 // server-authoritative (Edge Function). This pure function only reports.
 import { type Ast, isNode, isLeafSlot } from './ast';
 import { evalAst, evalPredicate } from './eval';
-import { compute, type ComputedMeasure } from './compute';
+import { compute, makeResolver, type ComputedMeasure } from './compute';
 import type { Library, CheckDef, Measure, Scope } from './schema';
 
 export type CheckStatus = 'ok' | 'warn' | 'na';
 export type PanelStatus = 'ok' | 'warn' | 'incomplete';
-export type CheckId = 'factor' | 'economics' | 'pool' | 'sector';
+export type CheckId = 'factor' | 'economics' | 'pool' | 'sector' | 'limit';
 
 export type PanelKey =
   | 'overview' | 'build' | 'baseline' | 'project' | 'reduction' | 'economics' | 'potential';
@@ -118,7 +119,7 @@ function buildChecks(
   library: Library,
   peers: { measure: Measure; computed: ComputedMeasure }[],
 ): { checks: Record<CheckId, CheckStatus>; details: Record<CheckId, CheckDetail | null> } {
-  const details: Record<CheckId, CheckDetail | null> = { factor: null, economics: null, pool: null, sector: null };
+  const details: Record<CheckId, CheckDetail | null> = { factor: null, economics: null, pool: null, sector: null, limit: null };
 
   // factor — §7 X-axis: the per-unit factor the measure asserts (the `factor_ref` input)
   // vs that input's reference corridor.
@@ -140,13 +141,17 @@ function buildChecks(
     details.economics = runCheck(library.checks.economics, { capex: c.capex, denominator: denom, min, max });
   }
 
-  // pool — summed reductions across the pool group vs the ceiling.
+  // pool — MAC-cumulative: pool peers at least as cheap (MAC ≤ ours) claim the ceiling
+  // first; this measure warns iff *its* share is the one clipped (matches stackPools and
+  // checks.md), not whenever the whole group oversubscribes.
   const poolRef = measure.potential?.pool_ref;
   const pool = poolRef ? library.pools[poolRef] : undefined;
   if (pool) {
-    const groupSum = c.abatementKt
-      + peers.filter((p) => p.measure.potential?.pool_ref === poolRef).reduce((s, p) => s + p.computed.abatementKt, 0);
-    details.pool = runCheck(library.checks.pool, { sum_pool: groupSum, ceiling: pool.annual_flow });
+    const cheaperInPool = peers.filter(
+      (p) => p.measure.potential?.pool_ref === poolRef && p.computed.mac <= c.mac,
+    );
+    const cum = c.abatementKt + cheaperInPool.reduce((s, p) => s + p.computed.abatementKt, 0);
+    details.pool = runCheck(library.checks.pool, { sum_pool: cum, ceiling: pool.annual_flow });
   }
 
   // sector — reduction vs the sub-category baseline.
@@ -154,10 +159,30 @@ function buildChecks(
     details.sector = runCheck(library.checks.sector, { abatement: c.abatementKt, baseline: pool.baselineEmissionsKt });
   }
 
+  // limit — §7 per-measure limiting factor: this measure's own consumption (an input/computed
+  // value, resolved bottom-up) vs an industry ceiling stored as a library indicator. Independent
+  // of the pool; bounds the volume, not the MAC. Skipped silently if either ref doesn't resolve.
+  const limit = measure.potential?.limit;
+  if (limit) {
+    const ceiling = library.indicators.find((i) => i.id === limit.indicator_ref)?.value;
+    let consumption: number | undefined;
+    try {
+      consumption = makeResolver(measure, library)(limit.consumption_ref);
+    } catch {
+      consumption = undefined;
+    }
+    if (ceiling != null && consumption != null) {
+      details.limit = runCheck(library.checks.limit, { consumption, ceiling });
+    }
+  }
+
   const status = (d: CheckDetail | null): CheckStatus => d?.status ?? 'na';
   return {
     details,
-    checks: { factor: status(details.factor), economics: status(details.economics), pool: status(details.pool), sector: status(details.sector) },
+    checks: {
+      factor: status(details.factor), economics: status(details.economics),
+      pool: status(details.pool), sector: status(details.sector), limit: status(details.limit),
+    },
   };
 }
 
@@ -222,7 +247,9 @@ function buildPanels(
     build: req((measure.created_technologies?.length ?? 0) > 0 || !!measure.technology_ref, 'created_technologies'),
     baseline: !measure.sector_ref
       ? (missing.push('sector'), 'incomplete')
-      : productOk ? 'ok' : (missing.push('product_ref'), 'warn'),
+      : !measure.baseline_basis
+        ? (missing.push('baseline_basis'), 'incomplete') // §B — required now all measures are authored on the axis
+        : productOk ? 'ok' : (missing.push('product_ref'), 'warn'),
     project: 'ok',
     reduction: !stageBlock
       ? (missing.push('abatement'), 'incomplete')
@@ -231,9 +258,13 @@ function buildPanels(
       (measure.created_technologies?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0
         ? (checks.economics === 'warn' ? 'warn' : 'ok')
         : (missing.push('objects/materials'), 'incomplete'),
+    // pool_ref + a per-measure limit are both required (incomplete if absent now that every
+    // measure is authored on the limiting factor); a limit *overflow* degrades to 'warn'.
     potential: !measure.potential?.pool_ref
       ? (missing.push('potential.pool_ref'), 'incomplete')
-      : 'ok',
+      : !measure.potential?.limit
+        ? (missing.push('potential.limit'), 'incomplete')
+        : checks.limit === 'warn' ? (missing.push('potential.limit exceeded'), 'warn') : 'ok',
   };
 }
 

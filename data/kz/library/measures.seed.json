@@ -27,7 +27,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Поголовье под программу 2550 тыс. голов",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "activity": {
@@ -36,7 +37,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Поголовье под программу, 2550 тыс. голов",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "emission_factor": {
@@ -46,7 +48,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Удельное снижение энтерального CH₄ на тыс. голов от кормовых добавок (в коридоре ref_enteric_factor)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -54,8 +57,12 @@
         "formula": {
           "op": "mul",
           "args": [
-            { "ref": "activity" },
-            { "ref": "emission_factor" }
+            {
+              "ref": "activity"
+            },
+            {
+              "ref": "emission_factor"
+            }
           ]
         },
         "formula_label": {
@@ -88,7 +95,11 @@
       ],
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_enteric"
+        "pool_ref": "pool_enteric",
+        "limit": {
+          "indicator_ref": "ind_cattle_population",
+          "consumption_ref": "activity"
+        }
       },
       "sources": {
         "created_technologies[0].capacity": {
@@ -144,7 +155,8 @@
             "ref": "res:feed_additive#price"
           }
         }
-      }
+      },
+      "mechanism_subtype": "non_co2"
     },
     {
       "id": "kz-2",
@@ -164,7 +176,7 @@
       ],
       "product_ref": "prod_mwh",
       "technology_ref": "tech_coal_to_gas",
-      "scope": "published",
+      "scope": "draft",
       "maturity_stage": "computed",
       "comparison": {
         "service_unit_ref": "prod_mwh"
@@ -176,7 +188,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Замещаемая мощность",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "kium": {
@@ -185,7 +198,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "КИУМ",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "capex_denominator": {
@@ -193,7 +207,8 @@
           "unit": "кВт",
           "provenance": {
             "source_type": "expert_estimate",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "eff_gas": {
@@ -203,7 +218,8 @@
             "source_type": "placeholder",
             "citation": "КПД газового блока (нетто) — TODO: подставить стандарт/ГОСТ",
             "url": "https://example.org/TODO-gas-efficiency",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "global"
           }
         },
         "q_gas": {
@@ -213,7 +229,8 @@
             "source_type": "placeholder",
             "citation": "Низшая теплотворность природного газа (LHV) — TODO: подставить ГОСТ 31369/справочник",
             "url": "https://example.org/TODO-gas-lhv",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "global"
           }
         },
         "eff_coal": {
@@ -223,7 +240,8 @@
             "source_type": "placeholder",
             "citation": "КПД угольного блока (нетто) — TODO: подставить стандарт",
             "url": "https://example.org/TODO-coal-efficiency",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "global"
           }
         },
         "q_coal": {
@@ -233,7 +251,8 @@
             "source_type": "placeholder",
             "citation": "Низшая теплотворность угля (LHV) — TODO: подставить справочник по марке",
             "url": "https://example.org/TODO-coal-lhv",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "global"
           }
         }
       },
@@ -287,7 +306,11 @@
       ],
       "potential": {
         "ceiling_dim": "n_objects",
-        "pool_ref": "pool_coal_power"
+        "pool_ref": "pool_coal_power",
+        "limit": {
+          "indicator_ref": "ind_coal_power_capacity",
+          "consumption_ref": "cap_mw"
+        }
       },
       "computed": {
         "gas_intensity": {
@@ -461,7 +484,7 @@
         }
       ],
       "technology_ref": "tech_mine_degas",
-      "scope": "published",
+      "scope": "draft",
       "maturity_stage": "computed",
       "inputs": {
         "activity": {
@@ -470,7 +493,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Объём метана к дегазации, ~9.8 млн м³",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "kz_specific"
           },
           "binding": {
             "mode": "reuse",
@@ -484,7 +508,8 @@
           "provenance": {
             "source_type": "assumption",
             "citation": "Удельный фактор постулирован; превышает коридор ref_degas_factor → мера остаётся draft",
-            "confidence": "low"
+            "confidence": "low",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -492,8 +517,12 @@
         "formula": {
           "op": "mul",
           "args": [
-            { "ref": "activity" },
-            { "ref": "emission_factor" }
+            {
+              "ref": "activity"
+            },
+            {
+              "ref": "emission_factor"
+            }
           ]
         },
         "formula_label": {
@@ -522,7 +551,11 @@
       ],
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_coal_methane"
+        "pool_ref": "pool_coal_methane",
+        "limit": {
+          "indicator_ref": "ind_cmm_volume",
+          "consumption_ref": "activity"
+        }
       },
       "sources": {
         "created_technologies[0].capacity": {
@@ -576,7 +609,8 @@
             "mode": "new"
           }
         }
-      }
+      },
+      "mechanism_subtype": "non_co2"
     },
     {
       "id": "kz-1",
@@ -589,7 +623,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.coal_power"
         }
       ],
       "scope": "published",
@@ -601,7 +636,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -609,7 +645,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "eff_gain": {
@@ -617,7 +654,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "global"
           }
         }
       },
@@ -704,6 +742,17 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "efficiency",
+      "baseline_basis": "standalone",
+      "product_ref": "prod_mwh",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_coal_efficiency",
+        "limit": {
+          "indicator_ref": "ind_coal_fleet_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -715,53 +764,79 @@
       },
       "sector_ref": "1.A.1",
       "mechanism": "reduction",
+      "mechanism_subtype": "fuel_switch",
+      "baseline_basis": "comparison",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.res_power"
         }
       ],
       "scope": "published",
       "maturity_stage": "computed",
+      "product_ref": "prod_mwh",
+      "comparison": {
+        "service_unit_ref": "prod_mwh"
+      },
+      "potential": {
+        "ceiling_dim": "n_objects",
+        "pool_ref": "pool_coal_power",
+        "limit": {
+          "indicator_ref": "ind_res_potential",
+          "consumption_ref": "cap_mw"
+        }
+      },
       "inputs": {
         "lifetime": {
           "value": 25,
           "unit": "лет",
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "citation": "Срок службы / срок проекта ВИЭ (СЭС/ВЭС)",
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "cap_mw": {
           "value": 10000,
+          "unit": "МВт",
           "provenance": {
+            "url": "https://www.power-technology.com/analyst-comment/kazakhstan-renewable-power-capacity-2035/",
+            "citation": "Вводимая мощность ВИЭ РК (сценарный объём); план ≈12,9 ГВт к 2035, потенциал кратно выше",
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "cf": {
           "value": 0.35,
+          "unit": "доля",
           "provenance": {
+            "url": "https://en.wikipedia.org/wiki/Renewable_energy_in_Kazakhstan",
+            "citation": "Средневзвешенный КИУМ ВИЭ РК (микс ВЭС~0.4/СЭС~0.17) ≈0.35",
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "curtailment": {
           "value": 0.1,
+          "unit": "доля",
           "provenance": {
+            "citation": "Ограничение выдачи мощности ВИЭ (curtailment) при росте доли ВИЭ в сети РК",
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_coal": {
           "value": 1,
+          "unit": "тCO₂/МВт·ч",
           "provenance": {
+            "citation": "Удельные выбросы вытесняемой угольной генерации (globals модели, лист MACC)",
             "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -888,7 +963,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.res_power"
         }
       ],
       "scope": "published",
@@ -900,7 +976,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "gen_displaced_gwh": {
@@ -908,7 +985,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_coal": {
@@ -916,7 +994,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "gen_gas_gwh": {
@@ -924,7 +1003,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_gas": {
@@ -932,7 +1012,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1096,6 +1177,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "fuel_switch",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_mwh",
+      "comparison": {
+        "service_unit_ref": "prod_mwh"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_coal_power",
+        "limit": {
+          "indicator_ref": "ind_coal_generation",
+          "consumption_ref": "gen_displaced_gwh"
+        }
       }
     },
     {
@@ -1109,7 +1204,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.nuclear_power"
         }
       ],
       "scope": "published",
@@ -1121,7 +1217,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "gen_mwh": {
@@ -1129,7 +1226,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_coal": {
@@ -1137,7 +1235,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1225,6 +1324,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "fuel_switch",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_mwh",
+      "comparison": {
+        "service_unit_ref": "prod_mwh"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_coal_power",
+        "limit": {
+          "indicator_ref": "ind_nuclear_gen",
+          "consumption_ref": "gen_mwh"
+        }
       }
     },
     {
@@ -1238,7 +1351,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.coal_heat"
         }
       ],
       "scope": "published",
@@ -1250,7 +1364,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "heat_kgcal": {
@@ -1258,7 +1373,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_boiler": {
@@ -1266,7 +1382,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1376,6 +1493,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "electrification",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_heat",
+      "comparison": {
+        "service_unit_ref": "prod_heat"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_coal_heat",
+        "limit": {
+          "indicator_ref": "ind_coal_heat_supply",
+          "consumption_ref": "heat_kgcal"
+        }
       }
     },
     {
@@ -1389,7 +1520,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.coal_heat"
         }
       ],
       "scope": "published",
@@ -1401,7 +1533,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "heat_kgcal": {
@@ -1409,7 +1542,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_boiler": {
@@ -1417,7 +1551,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1515,6 +1650,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "electrification",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_heat",
+      "comparison": {
+        "service_unit_ref": "prod_heat"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_coal_heat",
+        "limit": {
+          "indicator_ref": "ind_coal_heat_supply",
+          "consumption_ref": "heat_kgcal"
+        }
       }
     },
     {
@@ -1528,7 +1677,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.1"
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.res_power"
         }
       ],
       "scope": "published",
@@ -1540,7 +1690,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "gen_displaced_gwh": {
@@ -1548,7 +1699,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_coal": {
@@ -1556,7 +1708,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "gen_gas_gwh": {
@@ -1564,7 +1717,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_gas": {
@@ -1572,7 +1726,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1747,6 +1902,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "fuel_switch",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_mwh",
+      "comparison": {
+        "service_unit_ref": "prod_mwh"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_coal_power",
+        "limit": {
+          "indicator_ref": "ind_coal_generation",
+          "consumption_ref": "gen_displaced_gwh"
+        }
       }
     },
     {
@@ -1760,7 +1929,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.2"
+          "sector_ref": "1.A.2",
+          "subsector_ref": "1.A.2.industry_energy"
         }
       ],
       "scope": "published",
@@ -1772,7 +1942,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "cap_mw": {
@@ -1780,7 +1951,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "cf": {
@@ -1788,7 +1960,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_coal": {
@@ -1796,7 +1969,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -1883,6 +2057,20 @@
             "confidence": "high"
           }
         }
+      },
+      "mechanism_subtype": "efficiency",
+      "baseline_basis": "comparison",
+      "product_ref": "prod_mwh",
+      "comparison": {
+        "service_unit_ref": "prod_mwh"
+      },
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_industry_energy",
+        "limit": {
+          "indicator_ref": "ind_whr_capacity",
+          "consumption_ref": "cap_mw"
+        }
       }
     },
     {
@@ -1896,7 +2084,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.3"
+          "sector_ref": "1.A.3",
+          "subsector_ref": "1.A.3.road"
         }
       ],
       "scope": "published",
@@ -1908,7 +2097,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -1916,7 +2106,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -1924,7 +2115,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "grid_growth_kt": {
@@ -1932,7 +2124,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2034,6 +2227,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "electrification",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_road_transport",
+        "limit": {
+          "indicator_ref": "ind_road_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2047,7 +2250,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.4"
+          "sector_ref": "1.A.4",
+          "subsector_ref": "1.A.4.residential"
         }
       ],
       "scope": "published",
@@ -2059,7 +2263,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "heat_before_kgcal": {
@@ -2067,7 +2272,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "heat_after_kgcal": {
@@ -2075,7 +2281,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "ef_boiler": {
@@ -2083,7 +2290,8 @@
           "provenance": {
             "source_type": "standard",
             "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "derating": {
@@ -2091,7 +2299,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "global"
           }
         }
       },
@@ -2220,6 +2429,17 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "demand_reduction",
+      "baseline_basis": "standalone",
+      "product_ref": "prod_heat",
+      "potential": {
+        "ceiling_dim": "output_product",
+        "pool_ref": "pool_residential_heat",
+        "limit": {
+          "indicator_ref": "ind_residential_heat",
+          "consumption_ref": "heat_before_kgcal"
+        }
       }
     },
     {
@@ -2233,7 +2453,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.4"
+          "sector_ref": "1.A.4",
+          "subsector_ref": "1.A.4.residential"
         }
       ],
       "scope": "published",
@@ -2245,7 +2466,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2253,7 +2475,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2261,7 +2484,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2360,6 +2584,17 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "fuel_switch",
+      "baseline_basis": "standalone",
+      "product_ref": "prod_heat",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_residential_heat",
+        "limit": {
+          "indicator_ref": "ind_residential_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2373,7 +2608,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.A.4"
+          "sector_ref": "1.A.4",
+          "subsector_ref": "1.A.4.residential"
         }
       ],
       "scope": "published",
@@ -2385,7 +2621,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2393,7 +2630,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "tech_potential": {
@@ -2401,7 +2639,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2409,7 +2648,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2542,6 +2782,17 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "electrification",
+      "baseline_basis": "standalone",
+      "product_ref": "prod_heat",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_residential_heat",
+        "limit": {
+          "indicator_ref": "ind_residential_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2555,7 +2806,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.B"
+          "sector_ref": "1.B",
+          "subsector_ref": "1.B.og_methane"
         }
       ],
       "scope": "published",
@@ -2567,7 +2819,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2575,7 +2828,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2583,7 +2837,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2670,6 +2925,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_og_methane",
+        "limit": {
+          "indicator_ref": "ind_og_methane_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2683,7 +2948,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.B"
+          "sector_ref": "1.B",
+          "subsector_ref": "1.B.og_methane"
         }
       ],
       "scope": "published",
@@ -2695,7 +2961,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2703,7 +2970,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2711,7 +2979,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2798,6 +3067,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_og_methane",
+        "limit": {
+          "indicator_ref": "ind_og_methane_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2811,7 +3090,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "1.B"
+          "sector_ref": "1.B",
+          "subsector_ref": "1.B.og_methane"
         }
       ],
       "scope": "published",
@@ -2823,7 +3103,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2831,7 +3112,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2839,7 +3121,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -2926,6 +3209,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_og_methane",
+        "limit": {
+          "indicator_ref": "ind_og_methane_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -2939,7 +3232,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "2"
+          "sector_ref": "2",
+          "subsector_ref": "2.cement"
         }
       ],
       "scope": "published",
@@ -2951,7 +3245,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -2959,7 +3254,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -2967,7 +3263,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3043,6 +3340,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "process_change",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_cement",
+        "limit": {
+          "indicator_ref": "ind_cement_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3056,7 +3363,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "2"
+          "sector_ref": "2",
+          "subsector_ref": "2.metallurgy"
         }
       ],
       "scope": "published",
@@ -3068,7 +3376,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3076,7 +3385,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3084,7 +3394,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3159,6 +3470,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "process_change",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_industry_ccs",
+        "limit": {
+          "indicator_ref": "ind_metals_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3172,7 +3493,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "3"
+          "sector_ref": "3",
+          "subsector_ref": "3.manure"
         }
       ],
       "scope": "published",
@@ -3184,7 +3506,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3192,7 +3515,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3200,7 +3524,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3287,6 +3612,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_manure",
+        "limit": {
+          "indicator_ref": "ind_manure_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3300,7 +3635,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "3"
+          "sector_ref": "3",
+          "subsector_ref": "3.soils"
         }
       ],
       "scope": "published",
@@ -3312,7 +3648,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3320,7 +3657,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3328,7 +3666,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3415,6 +3754,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_ag_soils",
+        "limit": {
+          "indicator_ref": "ind_ag_soils_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3428,7 +3777,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "3"
+          "sector_ref": "3",
+          "subsector_ref": "3.soils"
         }
       ],
       "scope": "published",
@@ -3440,7 +3790,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3448,7 +3799,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3456,7 +3808,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3543,6 +3896,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "process_change",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_ag_soils",
+        "limit": {
+          "indicator_ref": "ind_ag_soils_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3553,10 +3916,11 @@
         "en": "Afforestation and reforestation"
       },
       "sector_ref": "4",
-      "mechanism": "reduction",
+      "mechanism": "removal",
       "sectors": [
         {
-          "sector_ref": "4"
+          "sector_ref": "4",
+          "subsector_ref": "4.forestry"
         }
       ],
       "scope": "published",
@@ -3568,7 +3932,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "area_kha": {
@@ -3576,7 +3941,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "survival": {
@@ -3584,7 +3950,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "seq_rate": {
@@ -3592,7 +3959,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3688,6 +4056,17 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "nature_based",
+      "permanence": "short_lived",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "activity",
+        "pool_ref": "pool_afforestation",
+        "limit": {
+          "indicator_ref": "ind_afforestation_area",
+          "consumption_ref": "area_kha"
+        }
       }
     },
     {
@@ -3701,7 +4080,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "5"
+          "sector_ref": "5",
+          "subsector_ref": "5.solid_waste"
         }
       ],
       "scope": "published",
@@ -3713,7 +4093,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3721,7 +4102,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3729,7 +4111,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3816,6 +4199,16 @@
             "confidence": "medium"
           }
         }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_solid_waste",
+        "limit": {
+          "indicator_ref": "ind_swaste_emissions",
+          "consumption_ref": "base_emissions"
+        }
       }
     },
     {
@@ -3829,7 +4222,8 @@
       "mechanism": "reduction",
       "sectors": [
         {
-          "sector_ref": "5"
+          "sector_ref": "5",
+          "subsector_ref": "5.wastewater"
         }
       ],
       "scope": "published",
@@ -3841,7 +4235,8 @@
           "provenance": {
             "source_type": "expert_estimate",
             "citation": "Срок службы / срок проекта",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "global"
           }
         },
         "base_emissions": {
@@ -3849,7 +4244,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
           }
         },
         "share": {
@@ -3857,7 +4253,8 @@
           "provenance": {
             "source_type": "official_stat",
             "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
@@ -3932,6 +4329,16 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        }
+      },
+      "mechanism_subtype": "non_co2",
+      "baseline_basis": "standalone",
+      "potential": {
+        "ceiling_dim": "cut_resource",
+        "pool_ref": "pool_wastewater",
+        "limit": {
+          "indicator_ref": "ind_wastewater_emissions",
+          "consumption_ref": "base_emissions"
         }
       }
     }

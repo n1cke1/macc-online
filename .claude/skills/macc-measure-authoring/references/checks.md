@@ -8,8 +8,8 @@
 **Principle.** Automatic checks on predicates (`lte`/`gte`/`between`), surfaced by
 `validate()`: ✓ pass, ⚠ warn. They are ADVISORY — they do NOT block publishing (publishing
 is direct). They inform the author and drive `eligibleForModel` (= all checks ✓ and panels
-complete), shown as a badge. IMPLEMENTED checks: factor, economics, pool, sector. The rest
-below are rules the author follows but are NOT yet automated.
+complete), shown as a badge. IMPLEMENTED checks: factor, economics, pool, sector, limit. The
+rest below are rules the author follows but are NOT yet automated.
 
 ## factor — [implemented]
 
@@ -31,6 +31,14 @@ quality signal for the raw→computed ladder; ⚠ when out of corridor → stays
 
 `lte(sum of sector reductions, the sector backstop)`. A coarse double-count check for the
 sector; a ⚠.
+
+## limit — [implemented]
+
+`lte(consumption, ceiling)` — the unit measure's own consumption in its limiting dimension
+(`potential.limit.consumption_ref`, an input/computed value resolved bottom-up) vs an industry
+ceiling stored as a library indicator (`potential.limit.indicator_ref`). Per-measure and
+independent of the pool; bounds the **volume**, never the MAC. ⚠ on overflow → lower the scale
+input until it fits (the engine does **not** auto-clip here). See `references/potential.md`.
 
 ## serviceUnitMatch — [rule, not yet automated]
 

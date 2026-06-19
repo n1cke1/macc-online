@@ -107,7 +107,14 @@
       "properties": {
         "ceiling_dim": { "enum": ["cut_resource", "output_product", "n_objects", "activity"] },
         "pool_ref": { "type": "string" },
-        "combination_group": { "type": "string" }
+        "combination_group": { "type": "string" },
+        "limit": {
+          "type": "object", "required": ["indicator_ref", "consumption_ref"], "additionalProperties": false,
+          "properties": {
+            "indicator_ref": { "type": "string" },
+            "consumption_ref": { "type": "string" }
+          }
+        }
       }
     },
     "provenance_rollup": { "enum": ["high", "medium", "low"], "readOnly": true }

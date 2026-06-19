@@ -23,5 +23,11 @@
     "label": { "ru": "Сектор: снижение ≤ базовые выбросы подкатегории", "en": "Sector: reduction ≤ sub-category baseline" },
     "quantity": { "slot": "abatement" },
     "predicate": { "op": "lte", "args": [ { "slot": "value" }, { "slot": "baseline" } ] }
+  },
+  "limit": {
+    "id": "limit",
+    "label": { "ru": "Лимит: потребление меры ≤ отраслевой потолок", "en": "Limit: measure consumption ≤ industry ceiling" },
+    "quantity": { "slot": "consumption" },
+    "predicate": { "op": "lte", "args": [ { "slot": "value" }, { "slot": "ceiling" } ] }
   }
 }

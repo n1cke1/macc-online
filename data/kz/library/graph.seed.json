@@ -45,6 +45,66 @@
       "id": "3.orchards",
       "sector_ref": "3",
       "name": "Orchard cultivation"
+    },
+    {
+      "id": "1.A.1.res_power",
+      "sector_ref": "1.A.1",
+      "name": "Renewable power generation (solar + wind)"
+    },
+    {
+      "id": "1.A.1.nuclear_power",
+      "sector_ref": "1.A.1",
+      "name": "Nuclear power generation"
+    },
+    {
+      "id": "1.A.1.coal_heat",
+      "sector_ref": "1.A.1",
+      "name": "Coal-based district heat (CHP + heat-only boilers)"
+    },
+    {
+      "id": "1.A.2.industry_energy",
+      "sector_ref": "1.A.2",
+      "name": "Industrial energy use (manufacturing & construction)"
+    },
+    {
+      "id": "1.A.3.road",
+      "sector_ref": "1.A.3",
+      "name": "Road transport"
+    },
+    {
+      "id": "1.A.4.residential",
+      "sector_ref": "1.A.4",
+      "name": "Residential & municipal heat (ЖКХ)"
+    },
+    {
+      "id": "1.B.og_methane",
+      "sector_ref": "1.B",
+      "name": "Oil & gas fugitive methane (venting, flaring, leaks)"
+    },
+    {
+      "id": "3.manure",
+      "sector_ref": "3",
+      "name": "Manure management"
+    },
+    {
+      "id": "3.soils",
+      "sector_ref": "3",
+      "name": "Agricultural soils & grassland"
+    },
+    {
+      "id": "4.forestry",
+      "sector_ref": "4",
+      "name": "Afforestation & reforestation (LULUCF)"
+    },
+    {
+      "id": "5.solid_waste",
+      "sector_ref": "5",
+      "name": "Solid waste (landfill gas)"
+    },
+    {
+      "id": "5.wastewater",
+      "sector_ref": "5",
+      "name": "Wastewater treatment"
     }
   ],
   "objects": [
@@ -708,6 +768,13 @@
       "service_unit": "MWh",
       "sector_ref": "1.A.1",
       "technology_ref": "tech_coal_to_gas"
+    },
+    {
+      "id": "prod_heat",
+      "name": "District heat",
+      "unit": "тыс. Гкал",
+      "service_unit": "Гкал",
+      "sector_ref": "1.A.1"
     }
   ],
   "references": [
@@ -936,6 +1003,293 @@
         "source_type": "standard",
         "confidence": "high"
       }
+    },
+    {
+      "id": "ind_coal_power_capacity",
+      "key": "max_capacity",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.coal_power",
+      "value": 13200,
+      "unit": "МВт",
+      "provenance": {
+        "url": "https://ar2024.samruk-energy.kz/en/kazakhstan-power-and-coal-markets.html",
+        "citation": "Угольная генерация РК ≈13,2 ГВт (≈47% от установленных 28 ГВт), Samruk-Energy, обзор рынка 2024",
+        "source_type": "literature",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_res_potential",
+      "key": "max_capacity",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.res_power",
+      "value": 100000,
+      "unit": "МВт",
+      "provenance": {
+        "url": "https://en.wikipedia.org/wiki/Renewable_energy_in_Kazakhstan",
+        "citation": "Консервативная экономически осваиваемая мощность ВИЭ РК к 2060 (≈100 ГВт) — техпотенциал ветра ≈760 ГВт экономично; ограничение не лимитирующее, реальный кап — вытесняемый уголь (пул)",
+        "source_type": "expert_estimate",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_nuclear_gen",
+      "key": "max_generation",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.nuclear_power",
+      "value": 47300000,
+      "unit": "МВт·ч/год",
+      "provenance": {
+        "url": "https://sightlineu3o8.com/2026/04/kazakhstan-plans-to-build-at-least-three-nuclear-power-plants-by-2050/",
+        "citation": "Планируемая выработка АЭС РК к 2050: ≥3 АЭС (~6 ГВт @ КИУМ 0.9 ≈ 47,3 ТВт·ч); первая АЭС Улькен 2,4 ГВт к 2035 (World Nuclear News)",
+        "source_type": "literature",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_coal_generation",
+      "key": "max_generation",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.coal_power",
+      "value": 88300,
+      "unit": "ГВт·ч/год",
+      "provenance": {
+        "url": "https://ar2024.samruk-energy.kz/en/kazakhstan-power-and-coal-markets.html",
+        "citation": "Угольная электрогенерация РК ≈88,3 ТВт·ч/год (74,9% от 117,9 ТВт·ч, 2024) — потолок вытесняемой угольной выработки",
+        "source_type": "literature",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_coal_fleet_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.coal_power",
+      "value": 135.3,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Базовые выбросы угольной энергетики РК (лист «Выбросы», офиц. инвентаризация UNFCCC BTR1) — база, к которой применяется прирост КПД; не лимитирующее (мера охватывает весь парк)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_coal_heat_supply",
+      "key": "max_heat",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.coal_heat",
+      "value": 200000,
+      "unit": "тыс. Гкал/год",
+      "provenance": {
+        "url": "https://www.iea.org/reports/clean-household-energy-consumption-in-kazakhstan-a-roadmap",
+        "citation": "Объём угольного централизованного теплоснабжения РК (оценка) — реальный лимит задаёт пул pool_coal_heat по выбросам; здесь верхняя оценка по теплу",
+        "source_type": "expert_estimate",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_whr_capacity",
+      "key": "max_capacity",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.2.industry_energy",
+      "value": 5000,
+      "unit": "МВт",
+      "provenance": {
+        "url": "https://www.mdpi.com/2071-1050/17/16/7195",
+        "citation": "Потенциал утилизации ВЭР (рекуперация тепла отходящих газов) в металлургии/цементе РК — оценка ≈5 ГВт эквивалентной мощности генерации",
+        "source_type": "expert_estimate",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_road_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.3.road",
+      "value": 27.1,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы дорожного транспорта РК (лист «Выбросы», UNFCCC BTR1) — база для доли электрификации; мера охватывает её часть",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_residential_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.4.residential",
+      "value": 46.5,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы ЖКХ/прочих секторов РК (лист «Выбросы», UNFCCC BTR1) — база для мер газификации/электрификации",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_residential_heat",
+      "key": "max_heat",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.4.residential",
+      "value": 500000,
+      "unit": "тыс. Гкал/год",
+      "provenance": {
+        "url": "https://www.iea.org/reports/clean-household-energy-consumption-in-kazakhstan-a-roadmap",
+        "citation": "Теплопотребление жилого фонда РК (оценка, отопление ≈60% бытового энергоспроса, IEA) — верхняя граница объёма термомодернизации",
+        "source_type": "expert_estimate",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_og_methane_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.B.og_methane",
+      "value": 34.2,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Летучие выбросы метана нефтегаза РК ≈34,2 Мт CO₂eq (лист «Выбросы», UNFCCC BTR1) — общая база для LDAR/ПНГ/утечек ГТС",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_cmm_volume",
+      "key": "max_volume",
+      "owner_kind": "subsector",
+      "owner_ref": "1.B.coal_methane",
+      "value": 30,
+      "unit": "усл. ед. (объём метана)",
+      "provenance": {
+        "citation": "Извлекаемый объём шахтного метана угольных пластов РК (Карагандинский бассейн, оценка) — верхняя граница дегазации",
+        "source_type": "expert_estimate",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_cement_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "2.cement",
+      "value": 8.6,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Процессные выбросы цементного производства РК ≈8,6 Мт (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_metals_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "2.metallurgy",
+      "value": 27.0,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы металлургии+цемента РК ≈27 Мт — база для CCS (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_cattle_population",
+      "key": "max_population",
+      "owner_kind": "subsector",
+      "owner_ref": "3.enteric",
+      "value": 8000,
+      "unit": "тыс. голов",
+      "provenance": {
+        "citation": "Поголовье КРС РК ≈8 млн голов (Бюро нацстатистики РК)",
+        "source_type": "expert_estimate",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_manure_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "3.manure",
+      "value": 3.3,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы от управления навозом РК ≈3,3 Мт (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_ag_soils_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "3.soils",
+      "value": 11.6,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы с/х почв и пастбищ РК ≈11,6 Мт (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_afforestation_area",
+      "key": "max_area",
+      "owner_kind": "subsector",
+      "owner_ref": "4.forestry",
+      "value": 5000,
+      "unit": "тыс. га",
+      "provenance": {
+        "citation": "Потенциальная площадь лесонасаждения РК (нац. программа «2 млрд деревьев»; оценка ≈5 млн га)",
+        "source_type": "expert_estimate",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_swaste_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "5.solid_waste",
+      "value": 3.6,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы CH₄ ТБО РК ≈3,6 Мт (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_wastewater_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "5.wastewater",
+      "value": 3.2,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "citation": "Выбросы CH₄ сточных вод РК ≈3,2 Мт (лист «Выбросы», UNFCCC BTR1)",
+        "source_type": "official_stat",
+        "confidence": "high",
+        "geo_applicability": "kz_specific"
+      }
     }
   ],
   "pools": [
@@ -950,10 +1304,11 @@
     {
       "id": "pool_coal_power",
       "caps_ref": "resource:coal_power",
-      "annual_flow": 60000,
+      "annual_flow": 88000,
       "unit": "kt CO₂eq/yr",
       "sector_ref": "1.A.1",
-      "baselineEmissionsKt": 130000
+      "baselineEmissionsKt": 130000,
+      "_source": "Угольная электрогенерация РК ≈88 ТВт·ч/год × EF≈1 тCO₂/МВт·ч ≈88 Мт CO₂ — потолок вытеснения (Samruk-Energy 2024)"
     },
     {
       "id": "pool_coal_methane",
@@ -962,6 +1317,123 @@
       "unit": "kt CO₂eq/yr",
       "sector_ref": "1.B",
       "baselineEmissionsKt": 9500
+    },
+    {
+      "id": "pool_coal_efficiency",
+      "caps_ref": "resource:coal_power",
+      "annual_flow": 5000,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.A.1",
+      "baselineEmissionsKt": 130000,
+      "_source": "Потенциал снижения за счёт роста КПД угольного парка (не вытеснение — отдельный пул, иначе двойной счёт с вытесняющими мерами)"
+    },
+    {
+      "id": "pool_coal_heat",
+      "caps_ref": "resource:coal_heat",
+      "annual_flow": 40000,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.A.1",
+      "baselineEmissionsKt": 42000,
+      "_source": "Выбросы угольного централизованного теплоснабжения РК (ТЭЦ-тепло + угольные котельные) ≈42 Мт — оценка как остаток 1.A.1 за вычетом электрогенерации"
+    },
+    {
+      "id": "pool_industry_energy",
+      "caps_ref": "resource:industry_energy",
+      "annual_flow": 30000,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.A.2",
+      "baselineEmissionsKt": 30000,
+      "_source": "Энергетические выбросы обрабатывающей промышленности РК 1.A.2 (≈30 Мт, оценка; промышленность ~21,6% ГВт-выбросов, металлургия 70% — MDPI 2025)"
+    },
+    {
+      "id": "pool_road_transport",
+      "caps_ref": "activity:road_transport",
+      "annual_flow": 27100,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.A.3",
+      "baselineEmissionsKt": 27100,
+      "_source": "Выбросы дорожного транспорта РК ≈27,1 Мт (лист «Выбросы», BTR1)"
+    },
+    {
+      "id": "pool_residential_heat",
+      "caps_ref": "resource:residential_fuel",
+      "annual_flow": 46500,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.A.4",
+      "baselineEmissionsKt": 46500,
+      "_source": "Выбросы ЖКХ/прочих секторов РК ≈46,5 Мт (лист «Выбросы», BTR1) — общий пул конкуренции газификации/электрификации/термомодернизации"
+    },
+    {
+      "id": "pool_og_methane",
+      "caps_ref": "resource:og_methane",
+      "annual_flow": 34200,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "1.B",
+      "baselineEmissionsKt": 34200,
+      "_source": "Летучие выбросы метана нефтегаза РК ≈34,2 Мт (BTR1) — общий пул конкуренции LDAR/ПНГ/утечек ГТС"
+    },
+    {
+      "id": "pool_cement",
+      "caps_ref": "resource:cement_process",
+      "annual_flow": 8600,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "2",
+      "baselineEmissionsKt": 8600,
+      "_source": "Процессные выбросы цемента РК ≈8,6 Мт (BTR1)"
+    },
+    {
+      "id": "pool_industry_ccs",
+      "caps_ref": "resource:industry_co2",
+      "annual_flow": 27000,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "2",
+      "baselineEmissionsKt": 27000,
+      "_source": "Выбросы металлургии+цемента под CCS ≈27 Мт (BTR1)"
+    },
+    {
+      "id": "pool_manure",
+      "caps_ref": "activity:manure",
+      "annual_flow": 3300,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "3",
+      "baselineEmissionsKt": 3300,
+      "_source": "Выбросы управления навозом ≈3,3 Мт (BTR1)"
+    },
+    {
+      "id": "pool_ag_soils",
+      "caps_ref": "activity:ag_soils",
+      "annual_flow": 11600,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "3",
+      "baselineEmissionsKt": 11600,
+      "_source": "Выбросы с/х почв+пастбищ ≈11,6 Мт (BTR1) — общий пул точного земледелия и управления пастбищами"
+    },
+    {
+      "id": "pool_afforestation",
+      "caps_ref": "activity:afforestation",
+      "annual_flow": 10000,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "4",
+      "baselineEmissionsKt": 10000,
+      "_source": "Потенциал поглощения лесонасаждением РК (оценка)"
+    },
+    {
+      "id": "pool_solid_waste",
+      "caps_ref": "resource:landfill_gas",
+      "annual_flow": 3600,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "5",
+      "baselineEmissionsKt": 3600,
+      "_source": "Выбросы CH₄ ТБО ≈3,6 Мт (BTR1)"
+    },
+    {
+      "id": "pool_wastewater",
+      "caps_ref": "resource:wastewater_ch4",
+      "annual_flow": 3200,
+      "unit": "kt CO₂eq/yr",
+      "sector_ref": "5",
+      "baselineEmissionsKt": 3200,
+      "_source": "Выбросы CH₄ сточных вод ≈3,2 Мт (BTR1)"
     }
   ]
 }

@@ -20,7 +20,7 @@
       "help": "CAPEX and OPEX rolled up from objects and key materials → NPV and MAC. Lines are derived from objects/flows, not hand-entered."
     },
     "potential": {
-      "help": "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop."
+      "help": "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop. A per-measure limit caps this measure's own scale against an industry ceiling — on overflow lower the scale (it bounds volume, not the MAC)."
     }
   },
   "fields": {
