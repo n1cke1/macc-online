@@ -20,7 +20,7 @@ function loadDbUrl(): string {
   return line.slice('SUPABASE_DB_URL='.length).trim();
 }
 
-const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql'];
+const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql', '0013_indicator_subsector.sql', '0014_products_technology_ref.sql'];
 const mode = process.argv[2] ?? '--check';
 
 interface Graph {
@@ -45,6 +45,8 @@ async function migrate(c: Client) {
   const policies = (await c.query(`select policyname from pg_policies where schemaname='public'`)).rows.map((r) => r.policyname as string);
   const funcs = (await c.query(`select proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'`)).rows.map((r) => r.proname as string);
   const funcSrc = (await c.query(`select prosrc from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public' and proname in ('measure_publish','measure_publish_admin')`)).rows.map((r) => r.prosrc as string).join(' ');
+  const ckSrc = (await c.query(`select pg_get_constraintdef(oid) as def from pg_constraint where conname='indicators_owner_kind_check'`)).rows.map((r) => r.def as string).join(' ');
+  const prodCols = (await c.query(`select column_name from information_schema.columns where table_schema='public' and table_name='products'`)).rows.map((r) => r.column_name as string);
   // Per-migration "already applied" hallmark (idempotent re-runs).
   const applied = (f: string): boolean =>
     f.includes('0005') ? have.includes('measures')
@@ -55,6 +57,8 @@ async function migrate(c: Client) {
     : f.includes('0010') ? have.includes('library_versions')
     : f.includes('0011') ? funcSrc.includes('v_scope')
     : f.includes('0012') ? funcs.includes('measure_create')
+    : f.includes('0013') ? ckSrc.includes('subsector')
+    : f.includes('0014') ? prodCols.includes('technology_ref')
     : false;
   for (const f of MIGRATIONS) {
     if (applied(f)) { console.log(`  ⤳ ${f}: skip (already applied)`); continue; }

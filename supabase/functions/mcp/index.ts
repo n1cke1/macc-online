@@ -55,6 +55,66 @@ var graph_seed_default = {
       id: "3.orchards",
       sector_ref: "3",
       name: "Orchard cultivation"
+    },
+    {
+      id: "1.A.1.res_power",
+      sector_ref: "1.A.1",
+      name: "Renewable power generation (solar + wind)"
+    },
+    {
+      id: "1.A.1.nuclear_power",
+      sector_ref: "1.A.1",
+      name: "Nuclear power generation"
+    },
+    {
+      id: "1.A.1.coal_heat",
+      sector_ref: "1.A.1",
+      name: "Coal-based district heat (CHP + heat-only boilers)"
+    },
+    {
+      id: "1.A.2.industry_energy",
+      sector_ref: "1.A.2",
+      name: "Industrial energy use (manufacturing & construction)"
+    },
+    {
+      id: "1.A.3.road",
+      sector_ref: "1.A.3",
+      name: "Road transport"
+    },
+    {
+      id: "1.A.4.residential",
+      sector_ref: "1.A.4",
+      name: "Residential & municipal heat (\u0416\u041A\u0425)"
+    },
+    {
+      id: "1.B.og_methane",
+      sector_ref: "1.B",
+      name: "Oil & gas fugitive methane (venting, flaring, leaks)"
+    },
+    {
+      id: "3.manure",
+      sector_ref: "3",
+      name: "Manure management"
+    },
+    {
+      id: "3.soils",
+      sector_ref: "3",
+      name: "Agricultural soils & grassland"
+    },
+    {
+      id: "4.forestry",
+      sector_ref: "4",
+      name: "Afforestation & reforestation (LULUCF)"
+    },
+    {
+      id: "5.solid_waste",
+      sector_ref: "5",
+      name: "Solid waste (landfill gas)"
+    },
+    {
+      id: "5.wastewater",
+      sector_ref: "5",
+      name: "Wastewater treatment"
     }
   ],
   objects: [
@@ -718,6 +778,13 @@ var graph_seed_default = {
       service_unit: "MWh",
       sector_ref: "1.A.1",
       technology_ref: "tech_coal_to_gas"
+    },
+    {
+      id: "prod_heat",
+      name: "District heat",
+      unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B",
+      service_unit: "\u0413\u043A\u0430\u043B",
+      sector_ref: "1.A.1"
     }
   ],
   references: [
@@ -946,6 +1013,293 @@ var graph_seed_default = {
         source_type: "standard",
         confidence: "high"
       }
+    },
+    {
+      id: "ind_coal_power_capacity",
+      key: "max_capacity",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.coal_power",
+      value: 13200,
+      unit: "\u041C\u0412\u0442",
+      provenance: {
+        url: "https://ar2024.samruk-energy.kz/en/kazakhstan-power-and-coal-markets.html",
+        citation: "\u0423\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0420\u041A \u224813,2 \u0413\u0412\u0442 (\u224847% \u043E\u0442 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044B\u0445 28 \u0413\u0412\u0442), Samruk-Energy, \u043E\u0431\u0437\u043E\u0440 \u0440\u044B\u043D\u043A\u0430 2024",
+        source_type: "literature",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_res_potential",
+      key: "max_capacity",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.res_power",
+      value: 1e5,
+      unit: "\u041C\u0412\u0442",
+      provenance: {
+        url: "https://en.wikipedia.org/wiki/Renewable_energy_in_Kazakhstan",
+        citation: "\u041A\u043E\u043D\u0441\u0435\u0440\u0432\u0430\u0442\u0438\u0432\u043D\u0430\u044F \u044D\u043A\u043E\u043D\u043E\u043C\u0438\u0447\u0435\u0441\u043A\u0438 \u043E\u0441\u0432\u0430\u0438\u0432\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D \u0420\u041A \u043A 2060 (\u2248100 \u0413\u0412\u0442) \u2014 \u0442\u0435\u0445\u043F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u0432\u0435\u0442\u0440\u0430 \u2248760 \u0413\u0412\u0442 \u044D\u043A\u043E\u043D\u043E\u043C\u0438\u0447\u043D\u043E; \u043E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u043D\u0435 \u043B\u0438\u043C\u0438\u0442\u0438\u0440\u0443\u044E\u0449\u0435\u0435, \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043A\u0430\u043F \u2014 \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u0435\u043C\u044B\u0439 \u0443\u0433\u043E\u043B\u044C (\u043F\u0443\u043B)",
+        source_type: "expert_estimate",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_nuclear_gen",
+      key: "max_generation",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.nuclear_power",
+      value: 473e5,
+      unit: "\u041C\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
+      provenance: {
+        url: "https://sightlineu3o8.com/2026/04/kazakhstan-plans-to-build-at-least-three-nuclear-power-plants-by-2050/",
+        citation: "\u041F\u043B\u0430\u043D\u0438\u0440\u0443\u0435\u043C\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u0410\u042D\u0421 \u0420\u041A \u043A 2050: \u22653 \u0410\u042D\u0421 (~6 \u0413\u0412\u0442 @ \u041A\u0418\u0423\u041C 0.9 \u2248 47,3 \u0422\u0412\u0442\xB7\u0447); \u043F\u0435\u0440\u0432\u0430\u044F \u0410\u042D\u0421 \u0423\u043B\u044C\u043A\u0435\u043D 2,4 \u0413\u0412\u0442 \u043A 2035 (World Nuclear News)",
+        source_type: "literature",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_coal_generation",
+      key: "max_generation",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.coal_power",
+      value: 88300,
+      unit: "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
+      provenance: {
+        url: "https://ar2024.samruk-energy.kz/en/kazakhstan-power-and-coal-markets.html",
+        citation: "\u0423\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0420\u041A \u224888,3 \u0422\u0412\u0442\xB7\u0447/\u0433\u043E\u0434 (74,9% \u043E\u0442 117,9 \u0422\u0412\u0442\xB7\u0447, 2024) \u2014 \u043F\u043E\u0442\u043E\u043B\u043E\u043A \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u0435\u043C\u043E\u0439 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0438",
+        source_type: "literature",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_coal_fleet_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.coal_power",
+      value: 135.3,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0411\u0430\u0437\u043E\u0432\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u044D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u043A\u0438 \u0420\u041A (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, \u043E\u0444\u0438\u0446. \u0438\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u0438\u0437\u0430\u0446\u0438\u044F UNFCCC BTR1) \u2014 \u0431\u0430\u0437\u0430, \u043A \u043A\u043E\u0442\u043E\u0440\u043E\u0439 \u043F\u0440\u0438\u043C\u0435\u043D\u044F\u0435\u0442\u0441\u044F \u043F\u0440\u0438\u0440\u043E\u0441\u0442 \u041A\u041F\u0414; \u043D\u0435 \u043B\u0438\u043C\u0438\u0442\u0438\u0440\u0443\u044E\u0449\u0435\u0435 (\u043C\u0435\u0440\u0430 \u043E\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0435\u0442 \u0432\u0435\u0441\u044C \u043F\u0430\u0440\u043A)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_coal_heat_supply",
+      key: "max_heat",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.coal_heat",
+      value: 2e5,
+      unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
+      provenance: {
+        url: "https://www.iea.org/reports/clean-household-energy-consumption-in-kazakhstan-a-roadmap",
+        citation: "\u041E\u0431\u044A\u0451\u043C \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0446\u0435\u043D\u0442\u0440\u0430\u043B\u0438\u0437\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F \u0420\u041A (\u043E\u0446\u0435\u043D\u043A\u0430) \u2014 \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u043B\u0438\u043C\u0438\u0442 \u0437\u0430\u0434\u0430\u0451\u0442 \u043F\u0443\u043B pool_coal_heat \u043F\u043E \u0432\u044B\u0431\u0440\u043E\u0441\u0430\u043C; \u0437\u0434\u0435\u0441\u044C \u0432\u0435\u0440\u0445\u043D\u044F\u044F \u043E\u0446\u0435\u043D\u043A\u0430 \u043F\u043E \u0442\u0435\u043F\u043B\u0443",
+        source_type: "expert_estimate",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_whr_capacity",
+      key: "max_capacity",
+      owner_kind: "subsector",
+      owner_ref: "1.A.2.industry_energy",
+      value: 5e3,
+      unit: "\u041C\u0412\u0442",
+      provenance: {
+        url: "https://www.mdpi.com/2071-1050/17/16/7195",
+        citation: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u0443\u0442\u0438\u043B\u0438\u0437\u0430\u0446\u0438\u0438 \u0412\u042D\u0420 (\u0440\u0435\u043A\u0443\u043F\u0435\u0440\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u0430 \u043E\u0442\u0445\u043E\u0434\u044F\u0449\u0438\u0445 \u0433\u0430\u0437\u043E\u0432) \u0432 \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u0438/\u0446\u0435\u043C\u0435\u043D\u0442\u0435 \u0420\u041A \u2014 \u043E\u0446\u0435\u043D\u043A\u0430 \u22485 \u0413\u0412\u0442 \u044D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u043E\u0439 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u0438 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438",
+        source_type: "expert_estimate",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_road_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.A.3.road",
+      value: 27.1,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0434\u043E\u0440\u043E\u0436\u043D\u043E\u0433\u043E \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 \u0420\u041A (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1) \u2014 \u0431\u0430\u0437\u0430 \u0434\u043B\u044F \u0434\u043E\u043B\u0438 \u044D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438; \u043C\u0435\u0440\u0430 \u043E\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0435\u0442 \u0435\u0451 \u0447\u0430\u0441\u0442\u044C",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_residential_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.A.4.residential",
+      value: 46.5,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0416\u041A\u0425/\u043F\u0440\u043E\u0447\u0438\u0445 \u0441\u0435\u043A\u0442\u043E\u0440\u043E\u0432 \u0420\u041A (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1) \u2014 \u0431\u0430\u0437\u0430 \u0434\u043B\u044F \u043C\u0435\u0440 \u0433\u0430\u0437\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438/\u044D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_residential_heat",
+      key: "max_heat",
+      owner_kind: "subsector",
+      owner_ref: "1.A.4.residential",
+      value: 5e5,
+      unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
+      provenance: {
+        url: "https://www.iea.org/reports/clean-household-energy-consumption-in-kazakhstan-a-roadmap",
+        citation: "\u0422\u0435\u043F\u043B\u043E\u043F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0436\u0438\u043B\u043E\u0433\u043E \u0444\u043E\u043D\u0434\u0430 \u0420\u041A (\u043E\u0446\u0435\u043D\u043A\u0430, \u043E\u0442\u043E\u043F\u043B\u0435\u043D\u0438\u0435 \u224860% \u0431\u044B\u0442\u043E\u0432\u043E\u0433\u043E \u044D\u043D\u0435\u0440\u0433\u043E\u0441\u043F\u0440\u043E\u0441\u0430, IEA) \u2014 \u0432\u0435\u0440\u0445\u043D\u044F\u044F \u0433\u0440\u0430\u043D\u0438\u0446\u0430 \u043E\u0431\u044A\u0451\u043C\u0430 \u0442\u0435\u0440\u043C\u043E\u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438",
+        source_type: "expert_estimate",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_og_methane_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.B.og_methane",
+      value: 34.2,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u041B\u0435\u0442\u0443\u0447\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043D\u0430 \u043D\u0435\u0444\u0442\u0435\u0433\u0430\u0437\u0430 \u0420\u041A \u224834,2 \u041C\u0442 CO\u2082eq (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1) \u2014 \u043E\u0431\u0449\u0430\u044F \u0431\u0430\u0437\u0430 \u0434\u043B\u044F LDAR/\u041F\u041D\u0413/\u0443\u0442\u0435\u0447\u0435\u043A \u0413\u0422\u0421",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_cmm_volume",
+      key: "max_volume",
+      owner_kind: "subsector",
+      owner_ref: "1.B.coal_methane",
+      value: 30,
+      unit: "\u0443\u0441\u043B. \u0435\u0434. (\u043E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430)",
+      provenance: {
+        citation: "\u0418\u0437\u0432\u043B\u0435\u043A\u0430\u0435\u043C\u044B\u0439 \u043E\u0431\u044A\u0451\u043C \u0448\u0430\u0445\u0442\u043D\u043E\u0433\u043E \u043C\u0435\u0442\u0430\u043D\u0430 \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0445 \u043F\u043B\u0430\u0441\u0442\u043E\u0432 \u0420\u041A (\u041A\u0430\u0440\u0430\u0433\u0430\u043D\u0434\u0438\u043D\u0441\u043A\u0438\u0439 \u0431\u0430\u0441\u0441\u0435\u0439\u043D, \u043E\u0446\u0435\u043D\u043A\u0430) \u2014 \u0432\u0435\u0440\u0445\u043D\u044F\u044F \u0433\u0440\u0430\u043D\u0438\u0446\u0430 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+        source_type: "expert_estimate",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_cement_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "2.cement",
+      value: 8.6,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u041F\u0440\u043E\u0446\u0435\u0441\u0441\u043D\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0446\u0435\u043C\u0435\u043D\u0442\u043D\u043E\u0433\u043E \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u0430 \u0420\u041A \u22488,6 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_metals_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "2.metallurgy",
+      value: 27,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u0438+\u0446\u0435\u043C\u0435\u043D\u0442\u0430 \u0420\u041A \u224827 \u041C\u0442 \u2014 \u0431\u0430\u0437\u0430 \u0434\u043B\u044F CCS (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_cattle_population",
+      key: "max_population",
+      owner_kind: "subsector",
+      owner_ref: "3.enteric",
+      value: 8e3,
+      unit: "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
+      provenance: {
+        citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u041A\u0420\u0421 \u0420\u041A \u22488 \u043C\u043B\u043D \u0433\u043E\u043B\u043E\u0432 (\u0411\u044E\u0440\u043E \u043D\u0430\u0446\u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043A\u0438 \u0420\u041A)",
+        source_type: "expert_estimate",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_manure_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "3.manure",
+      value: 3.3,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u043E\u0442 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0430\u0432\u043E\u0437\u043E\u043C \u0420\u041A \u22483,3 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_ag_soils_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "3.soils",
+      value: 11.6,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0441/\u0445 \u043F\u043E\u0447\u0432 \u0438 \u043F\u0430\u0441\u0442\u0431\u0438\u0449 \u0420\u041A \u224811,6 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_afforestation_area",
+      key: "max_area",
+      owner_kind: "subsector",
+      owner_ref: "4.forestry",
+      value: 5e3,
+      unit: "\u0442\u044B\u0441. \u0433\u0430",
+      provenance: {
+        citation: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u0430\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u043B\u0435\u0441\u043E\u043D\u0430\u0441\u0430\u0436\u0434\u0435\u043D\u0438\u044F \u0420\u041A (\u043D\u0430\u0446. \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0430 \xAB2 \u043C\u043B\u0440\u0434 \u0434\u0435\u0440\u0435\u0432\u044C\u0435\u0432\xBB; \u043E\u0446\u0435\u043D\u043A\u0430 \u22485 \u043C\u043B\u043D \u0433\u0430)",
+        source_type: "expert_estimate",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_swaste_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "5.solid_waste",
+      value: 3.6,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0422\u0411\u041E \u0420\u041A \u22483,6 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_wastewater_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "5.wastewater",
+      value: 3.2,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        citation: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0441\u0442\u043E\u0447\u043D\u044B\u0445 \u0432\u043E\u0434 \u0420\u041A \u22483,2 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, UNFCCC BTR1)",
+        source_type: "official_stat",
+        confidence: "high",
+        geo_applicability: "kz_specific"
+      }
     }
   ],
   pools: [
@@ -960,10 +1314,11 @@ var graph_seed_default = {
     {
       id: "pool_coal_power",
       caps_ref: "resource:coal_power",
-      annual_flow: 6e4,
+      annual_flow: 88e3,
       unit: "kt CO\u2082eq/yr",
       sector_ref: "1.A.1",
-      baselineEmissionsKt: 13e4
+      baselineEmissionsKt: 13e4,
+      _source: "\u0423\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0420\u041A \u224888 \u0422\u0412\u0442\xB7\u0447/\u0433\u043E\u0434 \xD7 EF\u22481 \u0442CO\u2082/\u041C\u0412\u0442\xB7\u0447 \u224888 \u041C\u0442 CO\u2082 \u2014 \u043F\u043E\u0442\u043E\u043B\u043E\u043A \u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u0438\u044F (Samruk-Energy 2024)"
     },
     {
       id: "pool_coal_methane",
@@ -972,6 +1327,123 @@ var graph_seed_default = {
       unit: "kt CO\u2082eq/yr",
       sector_ref: "1.B",
       baselineEmissionsKt: 9500
+    },
+    {
+      id: "pool_coal_efficiency",
+      caps_ref: "resource:coal_power",
+      annual_flow: 5e3,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.1",
+      baselineEmissionsKt: 13e4,
+      _source: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u044F \u0437\u0430 \u0441\u0447\u0451\u0442 \u0440\u043E\u0441\u0442\u0430 \u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0440\u043A\u0430 (\u043D\u0435 \u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u0438\u0435 \u2014 \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0443\u043B, \u0438\u043D\u0430\u0447\u0435 \u0434\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u0447\u0451\u0442 \u0441 \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u044E\u0449\u0438\u043C\u0438 \u043C\u0435\u0440\u0430\u043C\u0438)"
+    },
+    {
+      id: "pool_coal_heat",
+      caps_ref: "resource:coal_heat",
+      annual_flow: 4e4,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.1",
+      baselineEmissionsKt: 42e3,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0446\u0435\u043D\u0442\u0440\u0430\u043B\u0438\u0437\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F \u0420\u041A (\u0422\u042D\u0426-\u0442\u0435\u043F\u043B\u043E + \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0435) \u224842 \u041C\u0442 \u2014 \u043E\u0446\u0435\u043D\u043A\u0430 \u043A\u0430\u043A \u043E\u0441\u0442\u0430\u0442\u043E\u043A 1.A.1 \u0437\u0430 \u0432\u044B\u0447\u0435\u0442\u043E\u043C \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438"
+    },
+    {
+      id: "pool_industry_energy",
+      caps_ref: "resource:industry_energy",
+      annual_flow: 3e4,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.2",
+      baselineEmissionsKt: 3e4,
+      _source: "\u042D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043E\u0431\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u044E\u0449\u0435\u0439 \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0441\u0442\u0438 \u0420\u041A 1.A.2 (\u224830 \u041C\u0442, \u043E\u0446\u0435\u043D\u043A\u0430; \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0441\u0442\u044C ~21,6% \u0413\u0412\u0442-\u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432, \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u044F 70% \u2014 MDPI 2025)"
+    },
+    {
+      id: "pool_road_transport",
+      caps_ref: "activity:road_transport",
+      annual_flow: 27100,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.3",
+      baselineEmissionsKt: 27100,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0434\u043E\u0440\u043E\u0436\u043D\u043E\u0433\u043E \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 \u0420\u041A \u224827,1 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, BTR1)"
+    },
+    {
+      id: "pool_residential_heat",
+      caps_ref: "resource:residential_fuel",
+      annual_flow: 46500,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.A.4",
+      baselineEmissionsKt: 46500,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0416\u041A\u0425/\u043F\u0440\u043E\u0447\u0438\u0445 \u0441\u0435\u043A\u0442\u043E\u0440\u043E\u0432 \u0420\u041A \u224846,5 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0446\u0438\u0438 \u0433\u0430\u0437\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438/\u044D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438/\u0442\u0435\u0440\u043C\u043E\u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
+    },
+    {
+      id: "pool_og_methane",
+      caps_ref: "resource:og_methane",
+      annual_flow: 34200,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "1.B",
+      baselineEmissionsKt: 34200,
+      _source: "\u041B\u0435\u0442\u0443\u0447\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043D\u0430 \u043D\u0435\u0444\u0442\u0435\u0433\u0430\u0437\u0430 \u0420\u041A \u224834,2 \u041C\u0442 (BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0446\u0438\u0438 LDAR/\u041F\u041D\u0413/\u0443\u0442\u0435\u0447\u0435\u043A \u0413\u0422\u0421"
+    },
+    {
+      id: "pool_cement",
+      caps_ref: "resource:cement_process",
+      annual_flow: 8600,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "2",
+      baselineEmissionsKt: 8600,
+      _source: "\u041F\u0440\u043E\u0446\u0435\u0441\u0441\u043D\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0446\u0435\u043C\u0435\u043D\u0442\u0430 \u0420\u041A \u22488,6 \u041C\u0442 (BTR1)"
+    },
+    {
+      id: "pool_industry_ccs",
+      caps_ref: "resource:industry_co2",
+      annual_flow: 27e3,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "2",
+      baselineEmissionsKt: 27e3,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u0438+\u0446\u0435\u043C\u0435\u043D\u0442\u0430 \u043F\u043E\u0434 CCS \u224827 \u041C\u0442 (BTR1)"
+    },
+    {
+      id: "pool_manure",
+      caps_ref: "activity:manure",
+      annual_flow: 3300,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "3",
+      baselineEmissionsKt: 3300,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0430\u0432\u043E\u0437\u043E\u043C \u22483,3 \u041C\u0442 (BTR1)"
+    },
+    {
+      id: "pool_ag_soils",
+      caps_ref: "activity:ag_soils",
+      annual_flow: 11600,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "3",
+      baselineEmissionsKt: 11600,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0441/\u0445 \u043F\u043E\u0447\u0432+\u043F\u0430\u0441\u0442\u0431\u0438\u0449 \u224811,6 \u041C\u0442 (BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0437\u0435\u043C\u043B\u0435\u0434\u0435\u043B\u0438\u044F \u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0441\u0442\u0431\u0438\u0449\u0430\u043C\u0438"
+    },
+    {
+      id: "pool_afforestation",
+      caps_ref: "activity:afforestation",
+      annual_flow: 1e4,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "4",
+      baselineEmissionsKt: 1e4,
+      _source: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u043F\u043E\u0433\u043B\u043E\u0449\u0435\u043D\u0438\u044F \u043B\u0435\u0441\u043E\u043D\u0430\u0441\u0430\u0436\u0434\u0435\u043D\u0438\u0435\u043C \u0420\u041A (\u043E\u0446\u0435\u043D\u043A\u0430)"
+    },
+    {
+      id: "pool_solid_waste",
+      caps_ref: "resource:landfill_gas",
+      annual_flow: 3600,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "5",
+      baselineEmissionsKt: 3600,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0422\u0411\u041E \u22483,6 \u041C\u0442 (BTR1)"
+    },
+    {
+      id: "pool_wastewater",
+      caps_ref: "resource:wastewater_ch4",
+      annual_flow: 3200,
+      unit: "kt CO\u2082eq/yr",
+      sector_ref: "5",
+      baselineEmissionsKt: 3200,
+      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0441\u0442\u043E\u0447\u043D\u044B\u0445 \u0432\u043E\u0434 \u22483,2 \u041C\u0442 (BTR1)"
     }
   ]
 };
@@ -1002,6 +1474,12 @@ var checks_default = {
     label: { ru: "\u0421\u0435\u043A\u0442\u043E\u0440: \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u2264 \u0431\u0430\u0437\u043E\u0432\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043F\u043E\u0434\u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438", en: "Sector: reduction \u2264 sub-category baseline" },
     quantity: { slot: "abatement" },
     predicate: { op: "lte", args: [{ slot: "value" }, { slot: "baseline" }] }
+  },
+  limit: {
+    id: "limit",
+    label: { ru: "\u041B\u0438\u043C\u0438\u0442: \u043F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u043C\u0435\u0440\u044B \u2264 \u043E\u0442\u0440\u0430\u0441\u043B\u0435\u0432\u043E\u0439 \u043F\u043E\u0442\u043E\u043B\u043E\u043A", en: "Limit: measure consumption \u2264 industry ceiling" },
+    quantity: { slot: "consumption" },
+    predicate: { op: "lte", args: [{ slot: "value" }, { slot: "ceiling" }] }
   }
 };
 
@@ -1028,7 +1506,7 @@ var measure_ui_help_default = {
       help: "CAPEX and OPEX rolled up from objects and key materials \u2192 NPV and MAC. Lines are derived from objects/flows, not hand-entered."
     },
     potential: {
-      help: "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop."
+      help: "Annual ceiling, the resource pool and measure combination (a shared pool is clipped by MAC order), plus a coarse sector backstop. A per-measure limit caps this measure's own scale against an industry ceiling \u2014 on overflow lower the scale (it bounds volume, not the MAC)."
     }
   },
   fields: {
@@ -1289,7 +1767,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         activity: {
@@ -1298,7 +1777,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041F\u043E\u0433\u043E\u043B\u043E\u0432\u044C\u0435 \u043F\u043E\u0434 \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0443, 2550 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         emission_factor: {
@@ -1308,7 +1788,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u043E\u0435 \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u044D\u043D\u0442\u0435\u0440\u0430\u043B\u044C\u043D\u043E\u0433\u043E CH\u2084 \u043D\u0430 \u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432 \u043E\u0442 \u043A\u043E\u0440\u043C\u043E\u0432\u044B\u0445 \u0434\u043E\u0431\u0430\u0432\u043E\u043A (\u0432 \u043A\u043E\u0440\u0438\u0434\u043E\u0440\u0435 ref_enteric_factor)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -1316,8 +1797,12 @@ var measures_seed_default = {
         formula: {
           op: "mul",
           args: [
-            { ref: "activity" },
-            { ref: "emission_factor" }
+            {
+              ref: "activity"
+            },
+            {
+              ref: "emission_factor"
+            }
           ]
         },
         formula_label: {
@@ -1350,7 +1835,11 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_enteric"
+        pool_ref: "pool_enteric",
+        limit: {
+          indicator_ref: "ind_cattle_population",
+          consumption_ref: "activity"
+        }
       },
       sources: {
         "created_technologies[0].capacity": {
@@ -1406,7 +1895,8 @@ var measures_seed_default = {
             ref: "res:feed_additive#price"
           }
         }
-      }
+      },
+      mechanism_subtype: "non_co2"
     },
     {
       id: "kz-2",
@@ -1438,7 +1928,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         kium: {
@@ -1447,7 +1938,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "\u041A\u0418\u0423\u041C",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         capex_denominator: {
@@ -1455,7 +1947,8 @@ var measures_seed_default = {
           unit: "\u043A\u0412\u0442",
           provenance: {
             source_type: "expert_estimate",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         eff_gas: {
@@ -1465,7 +1958,8 @@ var measures_seed_default = {
             source_type: "placeholder",
             citation: "\u041A\u041F\u0414 \u0433\u0430\u0437\u043E\u0432\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442/\u0413\u041E\u0421\u0422",
             url: "https://example.org/TODO-gas-efficiency",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "global"
           }
         },
         q_gas: {
@@ -1475,7 +1969,8 @@ var measures_seed_default = {
             source_type: "placeholder",
             citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u0438\u0440\u043E\u0434\u043D\u043E\u0433\u043E \u0433\u0430\u0437\u0430 (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0413\u041E\u0421\u0422 31369/\u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A",
             url: "https://example.org/TODO-gas-lhv",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "global"
           }
         },
         eff_coal: {
@@ -1485,7 +1980,8 @@ var measures_seed_default = {
             source_type: "placeholder",
             citation: "\u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0431\u043B\u043E\u043A\u0430 (\u043D\u0435\u0442\u0442\u043E) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u0442\u0430\u043D\u0434\u0430\u0440\u0442",
             url: "https://example.org/TODO-coal-efficiency",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "global"
           }
         },
         q_coal: {
@@ -1495,7 +1991,8 @@ var measures_seed_default = {
             source_type: "placeholder",
             citation: "\u041D\u0438\u0437\u0448\u0430\u044F \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043B\u044F (LHV) \u2014 TODO: \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u043F\u0440\u0430\u0432\u043E\u0447\u043D\u0438\u043A \u043F\u043E \u043C\u0430\u0440\u043A\u0435",
             url: "https://example.org/TODO-coal-lhv",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "global"
           }
         }
       },
@@ -1549,7 +2046,11 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "n_objects",
-        pool_ref: "pool_coal_power"
+        pool_ref: "pool_coal_power",
+        limit: {
+          indicator_ref: "ind_coal_power_capacity",
+          consumption_ref: "cap_mw"
+        }
       },
       computed: {
         gas_intensity: {
@@ -1732,7 +2233,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 \u043A \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438, ~9.8 \u043C\u043B\u043D \u043C\xB3",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "kz_specific"
           },
           binding: {
             mode: "reuse",
@@ -1746,7 +2248,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "assumption",
             citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u0444\u0430\u043A\u0442\u043E\u0440 \u043F\u043E\u0441\u0442\u0443\u043B\u0438\u0440\u043E\u0432\u0430\u043D; \u043F\u0440\u0435\u0432\u044B\u0448\u0430\u0435\u0442 \u043A\u043E\u0440\u0438\u0434\u043E\u0440 ref_degas_factor \u2192 \u043C\u0435\u0440\u0430 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F draft",
-            confidence: "low"
+            confidence: "low",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -1754,8 +2257,12 @@ var measures_seed_default = {
         formula: {
           op: "mul",
           args: [
-            { ref: "activity" },
-            { ref: "emission_factor" }
+            {
+              ref: "activity"
+            },
+            {
+              ref: "emission_factor"
+            }
           ]
         },
         formula_label: {
@@ -1784,7 +2291,11 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_coal_methane"
+        pool_ref: "pool_coal_methane",
+        limit: {
+          indicator_ref: "ind_cmm_volume",
+          consumption_ref: "activity"
+        }
       },
       sources: {
         "created_technologies[0].capacity": {
@@ -1838,7 +2349,8 @@ var measures_seed_default = {
             mode: "new"
           }
         }
-      }
+      },
+      mechanism_subtype: "non_co2"
     },
     {
       id: "kz-1",
@@ -1851,7 +2363,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.coal_power"
         }
       ],
       scope: "published",
@@ -1863,7 +2376,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -1871,7 +2385,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         eff_gain: {
@@ -1879,7 +2394,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "global"
           }
         }
       },
@@ -1966,6 +2482,17 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "efficiency",
+      baseline_basis: "standalone",
+      product_ref: "prod_mwh",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_coal_efficiency",
+        limit: {
+          indicator_ref: "ind_coal_fleet_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -1977,53 +2504,79 @@ var measures_seed_default = {
       },
       sector_ref: "1.A.1",
       mechanism: "reduction",
+      mechanism_subtype: "fuel_switch",
+      baseline_basis: "comparison",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.res_power"
         }
       ],
       scope: "published",
       maturity_stage: "computed",
+      product_ref: "prod_mwh",
+      comparison: {
+        service_unit_ref: "prod_mwh"
+      },
+      potential: {
+        ceiling_dim: "n_objects",
+        pool_ref: "pool_coal_power",
+        limit: {
+          indicator_ref: "ind_res_potential",
+          consumption_ref: "cap_mw"
+        }
+      },
       inputs: {
         lifetime: {
           value: 25,
           unit: "\u043B\u0435\u0442",
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430 \u0412\u0418\u042D (\u0421\u042D\u0421/\u0412\u042D\u0421)",
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         cap_mw: {
           value: 1e4,
+          unit: "\u041C\u0412\u0442",
           provenance: {
+            url: "https://www.power-technology.com/analyst-comment/kazakhstan-renewable-power-capacity-2035/",
+            citation: "\u0412\u0432\u043E\u0434\u0438\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D \u0420\u041A (\u0441\u0446\u0435\u043D\u0430\u0440\u043D\u044B\u0439 \u043E\u0431\u044A\u0451\u043C); \u043F\u043B\u0430\u043D \u224812,9 \u0413\u0412\u0442 \u043A 2035, \u043F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u043A\u0440\u0430\u0442\u043D\u043E \u0432\u044B\u0448\u0435",
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         cf: {
           value: 0.35,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
+            url: "https://en.wikipedia.org/wiki/Renewable_energy_in_Kazakhstan",
+            citation: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0439 \u041A\u0418\u0423\u041C \u0412\u0418\u042D \u0420\u041A (\u043C\u0438\u043A\u0441 \u0412\u042D\u0421~0.4/\u0421\u042D\u0421~0.17) \u22480.35",
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         curtailment: {
           value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
+            citation: "\u041E\u0433\u0440\u0430\u043D\u0438\u0447\u0435\u043D\u0438\u0435 \u0432\u044B\u0434\u0430\u0447\u0438 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u0438 \u0412\u0418\u042D (curtailment) \u043F\u0440\u0438 \u0440\u043E\u0441\u0442\u0435 \u0434\u043E\u043B\u0438 \u0412\u0418\u042D \u0432 \u0441\u0435\u0442\u0438 \u0420\u041A",
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_coal: {
           value: 1,
+          unit: "\u0442CO\u2082/\u041C\u0412\u0442\xB7\u0447",
           provenance: {
+            citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u0435\u043C\u043E\u0439 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 (globals \u043C\u043E\u0434\u0435\u043B\u0438, \u043B\u0438\u0441\u0442 MACC)",
             source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -2150,7 +2703,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.res_power"
         }
       ],
       scope: "published",
@@ -2162,7 +2716,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         gen_displaced_gwh: {
@@ -2170,7 +2725,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_coal: {
@@ -2178,7 +2734,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         gen_gas_gwh: {
@@ -2186,7 +2743,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_gas: {
@@ -2194,7 +2752,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -2358,6 +2917,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "fuel_switch",
+      baseline_basis: "comparison",
+      product_ref: "prod_mwh",
+      comparison: {
+        service_unit_ref: "prod_mwh"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_coal_power",
+        limit: {
+          indicator_ref: "ind_coal_generation",
+          consumption_ref: "gen_displaced_gwh"
+        }
       }
     },
     {
@@ -2371,7 +2944,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.nuclear_power"
         }
       ],
       scope: "published",
@@ -2383,7 +2957,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         gen_mwh: {
@@ -2391,7 +2966,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_coal: {
@@ -2399,7 +2975,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -2487,6 +3064,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "fuel_switch",
+      baseline_basis: "comparison",
+      product_ref: "prod_mwh",
+      comparison: {
+        service_unit_ref: "prod_mwh"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_coal_power",
+        limit: {
+          indicator_ref: "ind_nuclear_gen",
+          consumption_ref: "gen_mwh"
+        }
       }
     },
     {
@@ -2500,7 +3091,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.coal_heat"
         }
       ],
       scope: "published",
@@ -2512,7 +3104,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         heat_kgcal: {
@@ -2520,7 +3113,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_boiler: {
@@ -2528,7 +3122,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -2638,6 +3233,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "electrification",
+      baseline_basis: "comparison",
+      product_ref: "prod_heat",
+      comparison: {
+        service_unit_ref: "prod_heat"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_coal_heat",
+        limit: {
+          indicator_ref: "ind_coal_heat_supply",
+          consumption_ref: "heat_kgcal"
+        }
       }
     },
     {
@@ -2651,7 +3260,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.coal_heat"
         }
       ],
       scope: "published",
@@ -2663,7 +3273,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         heat_kgcal: {
@@ -2671,7 +3282,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_boiler: {
@@ -2679,7 +3291,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -2777,6 +3390,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "electrification",
+      baseline_basis: "comparison",
+      product_ref: "prod_heat",
+      comparison: {
+        service_unit_ref: "prod_heat"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_coal_heat",
+        limit: {
+          indicator_ref: "ind_coal_heat_supply",
+          consumption_ref: "heat_kgcal"
+        }
       }
     },
     {
@@ -2790,7 +3417,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.1"
+          sector_ref: "1.A.1",
+          subsector_ref: "1.A.1.res_power"
         }
       ],
       scope: "published",
@@ -2802,7 +3430,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         gen_displaced_gwh: {
@@ -2810,7 +3439,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_coal: {
@@ -2818,7 +3448,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         gen_gas_gwh: {
@@ -2826,7 +3457,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_gas: {
@@ -2834,7 +3466,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3009,6 +3642,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "fuel_switch",
+      baseline_basis: "comparison",
+      product_ref: "prod_mwh",
+      comparison: {
+        service_unit_ref: "prod_mwh"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_coal_power",
+        limit: {
+          indicator_ref: "ind_coal_generation",
+          consumption_ref: "gen_displaced_gwh"
+        }
       }
     },
     {
@@ -3022,7 +3669,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.2"
+          sector_ref: "1.A.2",
+          subsector_ref: "1.A.2.industry_energy"
         }
       ],
       scope: "published",
@@ -3034,7 +3682,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         cap_mw: {
@@ -3042,7 +3691,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         cf: {
@@ -3050,7 +3700,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_coal: {
@@ -3058,7 +3709,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3145,6 +3797,20 @@ var measures_seed_default = {
             confidence: "high"
           }
         }
+      },
+      mechanism_subtype: "efficiency",
+      baseline_basis: "comparison",
+      product_ref: "prod_mwh",
+      comparison: {
+        service_unit_ref: "prod_mwh"
+      },
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_industry_energy",
+        limit: {
+          indicator_ref: "ind_whr_capacity",
+          consumption_ref: "cap_mw"
+        }
       }
     },
     {
@@ -3158,7 +3824,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.3"
+          sector_ref: "1.A.3",
+          subsector_ref: "1.A.3.road"
         }
       ],
       scope: "published",
@@ -3170,7 +3837,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -3178,7 +3846,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -3186,7 +3855,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         grid_growth_kt: {
@@ -3194,7 +3864,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3296,6 +3967,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "electrification",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_road_transport",
+        limit: {
+          indicator_ref: "ind_road_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -3309,7 +3990,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.4"
+          sector_ref: "1.A.4",
+          subsector_ref: "1.A.4.residential"
         }
       ],
       scope: "published",
@@ -3321,7 +4003,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         heat_before_kgcal: {
@@ -3329,7 +4012,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         heat_after_kgcal: {
@@ -3337,7 +4021,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         ef_boiler: {
@@ -3345,7 +4030,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         derating: {
@@ -3353,7 +4039,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "global"
           }
         }
       },
@@ -3482,6 +4169,17 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "demand_reduction",
+      baseline_basis: "standalone",
+      product_ref: "prod_heat",
+      potential: {
+        ceiling_dim: "output_product",
+        pool_ref: "pool_residential_heat",
+        limit: {
+          indicator_ref: "ind_residential_heat",
+          consumption_ref: "heat_before_kgcal"
+        }
       }
     },
     {
@@ -3495,7 +4193,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.4"
+          sector_ref: "1.A.4",
+          subsector_ref: "1.A.4.residential"
         }
       ],
       scope: "published",
@@ -3507,7 +4206,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -3515,7 +4215,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -3523,7 +4224,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3622,6 +4324,17 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "fuel_switch",
+      baseline_basis: "standalone",
+      product_ref: "prod_heat",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_residential_heat",
+        limit: {
+          indicator_ref: "ind_residential_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -3635,7 +4348,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.A.4"
+          sector_ref: "1.A.4",
+          subsector_ref: "1.A.4.residential"
         }
       ],
       scope: "published",
@@ -3647,7 +4361,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -3655,7 +4370,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         tech_potential: {
@@ -3663,7 +4379,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -3671,7 +4388,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3804,6 +4522,17 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "electrification",
+      baseline_basis: "standalone",
+      product_ref: "prod_heat",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_residential_heat",
+        limit: {
+          indicator_ref: "ind_residential_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -3817,7 +4546,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.B"
+          sector_ref: "1.B",
+          subsector_ref: "1.B.og_methane"
         }
       ],
       scope: "published",
@@ -3829,7 +4559,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -3837,7 +4568,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -3845,7 +4577,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -3932,6 +4665,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_og_methane",
+        limit: {
+          indicator_ref: "ind_og_methane_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -3945,7 +4688,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.B"
+          sector_ref: "1.B",
+          subsector_ref: "1.B.og_methane"
         }
       ],
       scope: "published",
@@ -3957,7 +4701,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -3965,7 +4710,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -3973,7 +4719,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4060,6 +4807,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_og_methane",
+        limit: {
+          indicator_ref: "ind_og_methane_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4073,7 +4830,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "1.B"
+          sector_ref: "1.B",
+          subsector_ref: "1.B.og_methane"
         }
       ],
       scope: "published",
@@ -4085,7 +4843,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4093,7 +4852,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4101,7 +4861,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4188,6 +4949,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_og_methane",
+        limit: {
+          indicator_ref: "ind_og_methane_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4201,7 +4972,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "2"
+          sector_ref: "2",
+          subsector_ref: "2.cement"
         }
       ],
       scope: "published",
@@ -4213,7 +4985,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4221,7 +4994,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4229,7 +5003,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4305,6 +5080,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "process_change",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_cement",
+        limit: {
+          indicator_ref: "ind_cement_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4318,7 +5103,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "2"
+          sector_ref: "2",
+          subsector_ref: "2.metallurgy"
         }
       ],
       scope: "published",
@@ -4330,7 +5116,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4338,7 +5125,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4346,7 +5134,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4421,6 +5210,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "process_change",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_industry_ccs",
+        limit: {
+          indicator_ref: "ind_metals_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4434,7 +5233,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "3"
+          sector_ref: "3",
+          subsector_ref: "3.manure"
         }
       ],
       scope: "published",
@@ -4446,7 +5246,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4454,7 +5255,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4462,7 +5264,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4549,6 +5352,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_manure",
+        limit: {
+          indicator_ref: "ind_manure_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4562,7 +5375,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "3"
+          sector_ref: "3",
+          subsector_ref: "3.soils"
         }
       ],
       scope: "published",
@@ -4574,7 +5388,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4582,7 +5397,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4590,7 +5406,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4677,6 +5494,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_ag_soils",
+        limit: {
+          indicator_ref: "ind_ag_soils_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4690,7 +5517,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "3"
+          sector_ref: "3",
+          subsector_ref: "3.soils"
         }
       ],
       scope: "published",
@@ -4702,7 +5530,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4710,7 +5539,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4718,7 +5548,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4805,6 +5636,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "process_change",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_ag_soils",
+        limit: {
+          indicator_ref: "ind_ag_soils_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -4815,10 +5656,11 @@ var measures_seed_default = {
         en: "Afforestation and reforestation"
       },
       sector_ref: "4",
-      mechanism: "reduction",
+      mechanism: "removal",
       sectors: [
         {
-          sector_ref: "4"
+          sector_ref: "4",
+          subsector_ref: "4.forestry"
         }
       ],
       scope: "published",
@@ -4830,7 +5672,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         area_kha: {
@@ -4838,7 +5681,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         survival: {
@@ -4846,7 +5690,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         seq_rate: {
@@ -4854,7 +5699,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -4950,6 +5796,17 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "nature_based",
+      permanence: "short_lived",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "activity",
+        pool_ref: "pool_afforestation",
+        limit: {
+          indicator_ref: "ind_afforestation_area",
+          consumption_ref: "area_kha"
+        }
       }
     },
     {
@@ -4963,7 +5820,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "5"
+          sector_ref: "5",
+          subsector_ref: "5.solid_waste"
         }
       ],
       scope: "published",
@@ -4975,7 +5833,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -4983,7 +5842,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -4991,7 +5851,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -5078,6 +5939,16 @@ var measures_seed_default = {
             confidence: "medium"
           }
         }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_solid_waste",
+        limit: {
+          indicator_ref: "ind_swaste_emissions",
+          consumption_ref: "base_emissions"
+        }
       }
     },
     {
@@ -5091,7 +5962,8 @@ var measures_seed_default = {
       mechanism: "reduction",
       sectors: [
         {
-          sector_ref: "5"
+          sector_ref: "5",
+          subsector_ref: "5.wastewater"
         }
       ],
       scope: "published",
@@ -5103,7 +5975,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "expert_estimate",
             citation: "\u0421\u0440\u043E\u043A \u0441\u043B\u0443\u0436\u0431\u044B / \u0441\u0440\u043E\u043A \u043F\u0440\u043E\u0435\u043A\u0442\u0430",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "global"
           }
         },
         base_emissions: {
@@ -5111,7 +5984,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
+            confidence: "high",
+            geo_applicability: "kz_specific"
           }
         },
         share: {
@@ -5119,7 +5993,8 @@ var measures_seed_default = {
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
@@ -5194,6 +6069,16 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        }
+      },
+      mechanism_subtype: "non_co2",
+      baseline_basis: "standalone",
+      potential: {
+        ceiling_dim: "cut_resource",
+        pool_ref: "pool_wastewater",
+        limit: {
+          indicator_ref: "ind_wastewater_emissions",
+          consumption_ref: "base_emissions"
         }
       }
     }
@@ -5693,7 +6578,7 @@ function stackPools(computed, measureById, library2) {
   return out;
 }
 function buildChecks(measure, c, library2, peers) {
-  const details = { factor: null, economics: null, pool: null, sector: null };
+  const details = { factor: null, economics: null, pool: null, sector: null, limit: null };
   const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : void 0;
   const ref = factorInput?.reference_ref ? library2.references[factorInput.reference_ref] : void 0;
   if (factorInput && ref) {
@@ -5713,16 +6598,38 @@ function buildChecks(measure, c, library2, peers) {
   const poolRef = measure.potential?.pool_ref;
   const pool = poolRef ? library2.pools[poolRef] : void 0;
   if (pool) {
-    const groupSum = c.abatementKt + peers.filter((p) => p.measure.potential?.pool_ref === poolRef).reduce((s, p) => s + p.computed.abatementKt, 0);
-    details.pool = runCheck(library2.checks.pool, { sum_pool: groupSum, ceiling: pool.annual_flow });
+    const cheaperInPool = peers.filter(
+      (p) => p.measure.potential?.pool_ref === poolRef && p.computed.mac <= c.mac
+    );
+    const cum = c.abatementKt + cheaperInPool.reduce((s, p) => s + p.computed.abatementKt, 0);
+    details.pool = runCheck(library2.checks.pool, { sum_pool: cum, ceiling: pool.annual_flow });
   }
   if (pool?.baselineEmissionsKt != null) {
     details.sector = runCheck(library2.checks.sector, { abatement: c.abatementKt, baseline: pool.baselineEmissionsKt });
   }
+  const limit = measure.potential?.limit;
+  if (limit) {
+    const ceiling = library2.indicators.find((i) => i.id === limit.indicator_ref)?.value;
+    let consumption;
+    try {
+      consumption = makeResolver2(measure, library2)(limit.consumption_ref);
+    } catch {
+      consumption = void 0;
+    }
+    if (ceiling != null && consumption != null) {
+      details.limit = runCheck(library2.checks.limit, { consumption, ceiling });
+    }
+  }
   const status = (d) => d?.status ?? "na";
   return {
     details,
-    checks: { factor: status(details.factor), economics: status(details.economics), pool: status(details.pool), sector: status(details.sector) }
+    checks: {
+      factor: status(details.factor),
+      economics: status(details.economics),
+      pool: status(details.pool),
+      sector: status(details.sector),
+      limit: status(details.limit)
+    }
   };
 }
 function taggablePaths(m) {
@@ -5762,11 +6669,13 @@ function buildPanels(measure, checks, missing) {
     // продукт» (sector required; product required unless pure removal — advisory warn).
     overview: req(!!measure.name && !!measure.sector_ref, "name/sector"),
     build: req((measure.created_technologies?.length ?? 0) > 0 || !!measure.technology_ref, "created_technologies"),
-    baseline: !measure.sector_ref ? (missing.push("sector"), "incomplete") : productOk ? "ok" : (missing.push("product_ref"), "warn"),
+    baseline: !measure.sector_ref ? (missing.push("sector"), "incomplete") : !measure.baseline_basis ? (missing.push("baseline_basis"), "incomplete") : productOk ? "ok" : (missing.push("product_ref"), "warn"),
     project: "ok",
     reduction: !stageBlock ? (missing.push("abatement"), "incomplete") : checks.factor === "warn" ? "warn" : "ok",
     economics: (measure.created_technologies?.length ?? 0) > 0 || (measure.materials?.length ?? 0) > 0 || (measure.economics?.capex?.length ?? 0) > 0 ? checks.economics === "warn" ? "warn" : "ok" : (missing.push("objects/materials"), "incomplete"),
-    potential: !measure.potential?.pool_ref ? (missing.push("potential.pool_ref"), "incomplete") : "ok"
+    // pool_ref + a per-measure limit are both required (incomplete if absent now that every
+    // measure is authored on the limiting factor); a limit *overflow* degrades to 'warn'.
+    potential: !measure.potential?.pool_ref ? (missing.push("potential.pool_ref"), "incomplete") : !measure.potential?.limit ? (missing.push("potential.limit"), "incomplete") : checks.limit === "warn" ? (missing.push("potential.limit exceeded"), "warn") : "ok"
   };
 }
 function validate(measure, library2, peers = []) {
@@ -5932,7 +6841,16 @@ var measure_schema_default = {
       properties: {
         ceiling_dim: { enum: ["cut_resource", "output_product", "n_objects", "activity"] },
         pool_ref: { type: "string" },
-        combination_group: { type: "string" }
+        combination_group: { type: "string" },
+        limit: {
+          type: "object",
+          required: ["indicator_ref", "consumption_ref"],
+          additionalProperties: false,
+          properties: {
+            indicator_ref: { type: "string" },
+            consumption_ref: { type: "string" }
+          }
+        }
       }
     },
     provenance_rollup: { enum: ["high", "medium", "low"], readOnly: true }
