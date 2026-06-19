@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import type { MaccPoint, DatasetTotals, Levers } from '@data/schema';
 import type { ProjectOverrides } from '@/lib/calc';
+import type { CommunityData } from '@/lib/community/extras';
 import { projects as baselineProjects, totals as baselineTotals } from '@/lib/data';
 import { BASELINE_LEVERS, isBaseline } from '@/lib/scenario';
 
@@ -65,7 +66,10 @@ interface ScenarioState {
   levers: Levers;
   /** Per-measure cell overrides keyed by provenance ref ("Расчёты!C8"). */
   overrides: ProjectOverrides;
+  /** The plotted curve = file dataset + community extras, merged in merit order. */
   projects: MaccPoint[];
+  /** Community measures (published, authored via the collab layer; ids beyond kz-26). */
+  extras: MaccPoint[];
   totals: DatasetTotals;
   /** True while levers AND overrides are pristine (Excel-default scenario). */
   atBaseline: boolean;
@@ -84,10 +88,21 @@ interface ScenarioState {
   clearOverrides: (cells: string[]) => void;
   /** Restore the Excel-default baseline (clears levers AND overrides). */
   reset: () => void;
+  /** Fetch + merge the community-authored published measures (runs once for everyone). */
+  loadCommunity: () => void;
 }
 
 function pristine(levers: Levers, overrides: ProjectOverrides): boolean {
   return isBaseline(levers) && Object.keys(overrides).length === 0;
+}
+
+// Community extras: cached after the first fetch; the merged file curve to overlay onto.
+let communityCache: CommunityData | null = null;
+let baseCurve: MaccPoint[] = baselineProjects;
+
+/** File curve + community extras, sorted ascending by MAC (merit order). */
+function mergeCurve(base: MaccPoint[], extras: MaccPoint[]): MaccPoint[] {
+  return extras.length ? [...base, ...extras].sort((a, b) => a.mac - b.mac) : base;
 }
 
 async function recompute(
@@ -100,23 +115,37 @@ async function recompute(
   const baseline = pristine(levers, overrides);
   set({ levers, overrides, atBaseline: baseline, computing: true, recomputeToken: token });
 
+  let base: MaccPoint[];
+  let totals: DatasetTotals;
   if (baseline) {
     // Baseline is the published golden data — skip the engine entirely.
-    set({ projects: baselineProjects, totals: baselineTotals, computing: false });
-    return;
+    base = baselineProjects;
+    totals = baselineTotals;
+  } else {
+    // Lazy-load the calc engine only when the user actually moves off baseline.
+    const { recalc } = await import('@/lib/calc');
+    const result = recalc(levers, overrides);
+    if (get().recomputeToken !== token) return; // a newer recompute superseded us
+    base = result.projects;
+    totals = result.totals;
   }
+  baseCurve = base;
 
-  // Lazy-load the calc engine only when the user actually moves off baseline.
-  const { recalc } = await import('@/lib/calc');
-  const result = recalc(levers, overrides);
-  if (get().recomputeToken !== token) return; // a newer recompute superseded us
-  set({ projects: result.projects, totals: result.totals, computing: false });
+  // Recompute the community extras at the new levers (lazy; keeps the engine out of core).
+  let extras = get().extras;
+  if (communityCache) {
+    const { computeExtras } = await import('@/lib/community/extras');
+    if (get().recomputeToken !== token) return;
+    extras = computeExtras(communityCache, levers);
+  }
+  set({ projects: mergeCurve(base, extras), extras, totals, computing: false });
 }
 
 export const useScenario = create<ScenarioState>((set, get) => ({
   levers: { ...BASELINE_LEVERS },
   overrides: {},
   projects: baselineProjects,
+  extras: [],
   totals: baselineTotals,
   atBaseline: true,
   computing: false,
@@ -151,5 +180,15 @@ export const useScenario = create<ScenarioState>((set, get) => ({
   },
   reset: () => {
     void recompute({ ...BASELINE_LEVERS }, {}, get, set);
+  },
+  loadCommunity: () => {
+    void (async () => {
+      const mod = await import('@/lib/community/extras');
+      const data = await mod.loadCommunityExtras();
+      if (!data) return; // backend absent / no extras → curve stays the file dataset
+      communityCache = data;
+      const extras = mod.computeExtras(data, get().levers);
+      set({ extras, projects: mergeCurve(baseCurve, extras) });
+    })();
   },
 }));

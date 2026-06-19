@@ -13,6 +13,7 @@ import AssumptionsPanel from '@/components/assumptions/AssumptionsPanel';
 import GlobalAssumptionsPanel from '@/components/assumptions/GlobalAssumptionsPanel';
 import ExportBar from '@/components/assumptions/ExportBar';
 import ScenarioUrlSync from '@/components/assumptions/ScenarioUrlSync';
+import CommunityLoader from '@/components/macc/CommunityLoader';
 import AuthButtonGate from '@/components/collab/AuthButtonGate';
 import AllComments from '@/components/collab/AllComments';
 import MeasureAuthoringGate from '@/components/measure/MeasureAuthoringGate';
@@ -41,6 +42,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       </header>
 
       <ScenarioUrlSync />
+      <CommunityLoader />
 
       <div className="space-y-4">
         <MethodologyBanner />
