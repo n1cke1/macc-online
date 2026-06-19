@@ -16,6 +16,8 @@ import { validate } from '../src/lib/measure/validate';
 import { SKILL_GUIDE } from '../src/lib/measure/skill.generated';
 import measureSchema from '../data/measure.schema.json';
 import type { Library, Measure } from '../src/lib/measure/schema';
+import { bindTemplateSymbolic } from '../src/lib/measure/templates';
+import { renderAst } from '../src/lib/measure/eval';
 import { dbListMeasures, dbGetMeasure, dbCreateMeasure, dbUpdateMeasure, dbSetScope, dbMeasureHistory, dbListLibrary, dbUpsertLibraryEntity, dbLibraryHistory, LIBRARY_TABLES, type AuthedUser } from './db';
 
 /** Everything a server instance needs — supplied per transport (and, in C, per request). */
@@ -45,6 +47,42 @@ const compactSchema = structureOnly(measureSchema);
 
 const ok = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(data, null, 2) }] });
 const err = (msg: string) => ({ isError: true, content: [{ type: 'text' as const, text: msg }] });
+
+/**
+ * Inline the formula template body into a measure's `abatement.computed` for
+ * audit (closes the §3/§6 "every number traceable" gap on `formula_ref` measures
+ * — the AST otherwise lives in the engine, opaque to a single get_measure
+ * response). Read-time only; the stored document keeps the compact
+ * `{formula_ref, bindings}` shape — single source of truth, no drift.
+ *
+ * Adds, when `abatement.computed.formula_ref` is set:
+ *   • `formula`        — the full template `{id, label, description, output, expr, slots}` from `library.formulaTemplates`
+ *   • `resolved_ast`   — the template AST with each `{slot}` replaced by the binding's `{ref}` / `{const}` (symbolic, NOT numeric — `compute_measure` is for evaluation)
+ *   • `human`          — `resolved_ast` rendered as a plain-language string
+ *
+ * On an unknown template id or unbound slot, the measure is still returned; the
+ * failure surfaces as `formula_resolution_error` (a single get_measure call
+ * never breaks because the library moved).
+ */
+function enrichComputedForAudit(measure: Measure, library: Library): Measure {
+  const a = measure.abatement;
+  if (!a?.computed?.formula_ref) return measure;
+  const ref = a.computed.formula_ref;
+  const tmpl = library.formulaTemplates[ref];
+  if (!tmpl) {
+    return { ...measure, abatement: { ...a, computed: { ...a.computed,
+      formula_resolution_error: `Unknown formula template '${ref}' (not in library.formulaTemplates).` } } } as Measure;
+  }
+  try {
+    const resolved_ast = bindTemplateSymbolic(tmpl, a.computed.bindings);
+    const human = renderAst(resolved_ast, (k) => k);
+    return { ...measure, abatement: { ...a, computed: { ...a.computed,
+      formula: tmpl, resolved_ast, human } } } as Measure;
+  } catch (e) {
+    return { ...measure, abatement: { ...a, computed: { ...a.computed,
+      formula: tmpl, formula_resolution_error: (e as Error).message } } } as Measure;
+  }
+}
 
 // Some MCP clients serialize an object-typed argument as a JSON STRING. Declare the
 // measure as an object (so well-behaved clients send an object) AND tolerate a
@@ -137,11 +175,11 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: fetch one measure's full document ────────────────────────────────────
   server.registerTool(
     'get_measure',
-    { title: 'Get measure', description: 'Return the full measure document by id.', inputSchema: { id: z.string().describe('measure id, e.g. "kz-2"') } },
+    { title: 'Get measure', description: 'Return the full measure document by id. For measures whose abatement uses a `formula_ref` (named engine template like `delta_ef`), the response inlines the template body (`abatement.computed.formula` — `expr` AST + `slots`), a slot-substituted `resolved_ast` (refs/consts only, NOT evaluated — `compute_measure` is for that), and a `human` rendering, so the §3/§6 audit chain reaches the leaves from one call.', inputSchema: { id: z.string().describe('measure id, e.g. "kz-2"') } },
     async ({ id }) => {
       if (!user) return err(AUTH_ERR);
       const m = (await dbGetMeasure(user, id)) ?? getSeedMeasure(id);
-      return m ? ok(m) : err(`Unknown measure '${id}'`);
+      return m ? ok(enrichComputedForAudit(m, library)) : err(`Unknown measure '${id}'`);
     },
   );
 

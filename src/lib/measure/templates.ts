@@ -80,3 +80,27 @@ export function bindTemplate(
   };
   return walk(template.expr);
 }
+
+/**
+ * Symbolic counterpart to `bindTemplate`: replaces each `{slot}` with the
+ * binding's `{ref}` or `{const}` WITHOUT resolving refs to numbers. Used for
+ * audit/display surfaces (e.g. the MCP `get_measure` enrichment) where we want
+ * the formula's identity traced down to leaves that point back into the
+ * measure's inputs / resources — not the evaluated value.
+ */
+export function bindTemplateSymbolic(
+  template: FormulaTemplate,
+  bindings: Record<string, FormulaBinding>,
+): Ast {
+  const leafFor = (slot: string): Ast => {
+    const b = bindings[slot];
+    if (!b) throw new Error(`Template '${template.id}': slot '${slot}' is not bound`);
+    return 'const' in b ? { const: b.const } : { ref: b.ref };
+  };
+  const walk = (node: Ast): Ast => {
+    if (isLeafSlot(node)) return leafFor(node.slot);
+    if (isNode(node)) return { op: node.op, args: node.args.map(walk) };
+    return node;
+  };
+  return walk(template.expr);
+}

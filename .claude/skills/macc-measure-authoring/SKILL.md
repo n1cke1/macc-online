@@ -197,7 +197,6 @@ often skipped — and skipping them is what produces a messy registry and a meas
 6. **Publish gate** — make a measure part of the shared curve only when the numbers that
    matter rest on real sources. If a number that materially moves the MAC or the volume is
    still a guess/placeholder, keep it a **draft** and note what is missing.
-   → `references/requirements.md`.
 
 ---
 

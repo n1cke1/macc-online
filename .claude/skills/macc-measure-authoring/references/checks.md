@@ -1,15 +1,13 @@
 # Checks — the advisory guardrails
 
-> Mechanically extracted (verbatim) from the `checks` block of
-> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).
-> Describes what `validate_measure` does; the `[rule, not yet automated]` items are
-> authoring rules, not code — candidates to surface in the skill workflow.
+How to read `validate_measure`'s output.
 
 **Principle.** Automatic checks on predicates (`lte`/`gte`/`between`), surfaced by
 `validate()`: ✓ pass, ⚠ warn. They are ADVISORY — they do NOT block publishing (publishing
 is direct). They inform the author and drive `eligibleForModel` (= all checks ✓ and panels
-complete), shown as a badge. IMPLEMENTED checks: factor, economics, pool, sector, limit. The
-rest below are rules the author follows but are NOT yet automated.
+complete), shown as a badge. IMPLEMENTED: the §3/§6 notation rule (`provenance`, below) plus
+the five predicate checks factor, economics, pool, sector, limit. The remaining two
+(`serviceUnitMatch`, `doubleCountReduction`) are rules the author follows but are NOT yet automated.
 
 ## factor — [implemented]
 
@@ -45,11 +43,14 @@ input until it fits (the engine does **not** auto-clip here). See `references/po
 `type=comparison` only: `flows.baseline` and `flows.project` products should match on
 `serviceUnit`; a mismatch should be a ⚠.
 
-## provenance — [rule, not yet automated]
+## provenance — [implemented]
 
-Every number should have `source_type ≠ placeholder` and (for an assumption)
-`binding ≠ new`; surfaced as the §3/§6 notation gap (untagged / no-formula), not yet a
-predicate check.
+The §3/§6 notation rule: every number must be an `input` (in `sources`) or `computed`
+(a formula) — never a bare literal. `validate()` surfaces the gaps as `untagged` /
+`computedNoFormula` and folds them into `missing`, so they hold a measure back from
+`eligibleForModel`. Source *quality* is a separate, non-automated judgment for the publish
+gate: before a number joins the shared curve it should rest on `source_type ≠ placeholder`
+and (for an assumption) `binding ≠ new` — see the publish gate in the workflow (SKILL.md, step 6).
 
 ## doubleCountReduction — [rule, not yet automated]
 
