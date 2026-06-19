@@ -39,5 +39,12 @@ When the credible figure is a total rather than a full bottom-up chain, still au
 > The legacy `back_calc` maturity stage (baseline × share, with an *implied* factor) is
 > **retired** — express the same thing bottom-up as `activity × factor` instead.
 
-> TODO (expert): enumerate the available `formula_ref`s and their required bindings;
-> document each `factor:*` ref type and its accepted range source.
+The available `formula_ref`s and their required bindings are exposed in the
+`get_measure` MCP response: for any measure on a `formula_ref`, the answer
+inlines `abatement.computed.formula` (the template body — `expr` AST + `slots`),
+a slot-substituted `resolved_ast`, and a `human` rendering, so the audit chain
+reaches the leaves from one call. Engine source of truth is
+`src/lib/measure/templates.ts` → `BUILTIN_TEMPLATES` (mirrored as a published
+trust anchor at `data/kz/library/formula-templates.json`).
+
+> TODO (expert): document each `factor:*` ref type and its accepted range source.
