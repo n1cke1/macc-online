@@ -5235,26 +5235,29 @@ async function dbGetMeasure(user, id) {
   if (error) throw new Error(`get: ${error.message}`);
   return data?.data ?? null;
 }
-async function dbUpsertMeasure(user, measure, note) {
-  const { data: prev } = await user.client.from("measures").select("scope,data").eq("id", measure.id).maybeSingle();
-  const prevName = prev?.data?.name;
-  const newName = measure.name;
-  const sameName = !!prevName && !!newName && (prevName.ru ?? "") === (newName.ru ?? "") && (prevName.en ?? "") === (newName.en ?? "");
-  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: measure.id, p_patch: measure, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("measure_publish", { p_id: measure.id, p_patch: measure, p_note: note ?? null });
+async function contributorsOf(user, id) {
+  const { data } = await user.client.from("measure_versions").select("author_id").eq("measure_id", id);
+  return [...new Set((data ?? []).map((r) => r.author_id).filter(Boolean))];
+}
+async function dbCreateMeasure(user, measure, note) {
+  const { id: _drop, ...payload } = measure;
+  const rpc = user.serviceRole ? user.client.rpc("measure_create_admin", { p_data: payload, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("measure_create", { p_data: payload, p_note: note ?? null });
   const { data, error } = await rpc;
-  if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
+  if (error) throw new Error(`create (as ${user.userId}): ${error.message}`);
   const row = data;
-  const { data: vers } = await user.client.from("measure_versions").select("author_id").eq("measure_id", measure.id);
-  const contributors = [...new Set((vers ?? []).map((r) => r.author_id).filter(Boolean))];
-  return {
-    finalScope: row?.scope ?? "draft",
-    version: row?.version ?? null,
-    ownerId: row?.owner_id ?? null,
-    contributors,
-    created: !prev,
-    overwroteName: prev && !sameName ? prevName?.en ?? prevName?.ru ?? "(unnamed)" : null,
-    previousScope: prev?.scope ?? null
-  };
+  return { id: row.id, finalScope: row.scope ?? "draft", version: row.version ?? 1, ownerId: row.owner_id ?? null, contributors: await contributorsOf(user, row.id) };
+}
+async function dbUpdateMeasure(user, id, patch, note) {
+  const { data: existing } = await user.client.from("measures").select("id").eq("id", id).maybeSingle();
+  if (!existing) throw new Error(`no measure '${id}' to update \u2014 use create_measure for a new one (the server assigns its id)`);
+  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: id, p_patch: patch, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("measure_publish", { p_id: id, p_patch: patch, p_note: note ?? null });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`update (as ${user.userId}): ${error.message}`);
+  const row = data;
+  return { id, finalScope: row?.scope ?? "draft", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id) };
+}
+async function dbSetScope(user, id, scope, note) {
+  return dbUpdateMeasure(user, id, { scope }, note ?? `scope \u2192 ${scope}`);
 }
 async function dbMeasureHistory(user, id) {
   const { data, error } = await user.client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
@@ -6047,32 +6050,51 @@ function buildServer(deps) {
       }
     }
   );
+  const advisoryOf = (v) => [
+    ...v.untagged.map((p) => `untagged: ${p}`),
+    ...v.computedNoFormula.map((p) => `no-formula: ${p}`),
+    ...Object.entries(v.checks).filter(([, s]) => s === "warn").map(([k]) => `check ${k}: warn`),
+    ...v.missing
+  ];
   server.registerTool(
-    "upsert_measure",
-    { title: "Save / publish measure", description: 'Create or correct a measure. The document SCOPE is honored: `scope:"draft"` saves a private work-in-progress (visible only to you); `scope:"published"` puts it in the live shared model; a new measure with no scope defaults to draft. Any logged-in user may edit any measure; every change is versioned + attributed. validate() runs as ADVISORY only (never blocking). Returns `action` (created|updated) and warns if you OVERWROTE a different existing measure (id collision). Use list_measures first to avoid reusing a taken id.', inputSchema: { measure: measureArg.describe('a measure document \u2014 an OBJECT (a JSON string is also accepted); set scope:"published" to go live, "draft" to keep private'), note: z.string().optional().describe("optional change note for the version history") } },
+    "create_measure",
+    { title: "Create measure", description: 'Create a NEW measure. The SERVER assigns its id (kz-N) \u2014 do NOT supply one; any `id` you pass is ignored. The document SCOPE is honored: omit it / "draft" \u2192 a private work-in-progress (visible only to you), "published" \u2192 live in the shared model. Versioned (v1) + attributed. validate() runs as ADVISORY only. Returns the assigned id. (To change an existing measure use update_measure; to publish/retire one use set_measure_scope.)', inputSchema: { measure: measureArg.describe("the measure content as an OBJECT (no id needed; see schema://measure)"), note: z.string().optional().describe("optional note for the version history") } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
-      const m = measure;
       try {
-        const v = validate(m, library2, peersOf(m.id));
-        const advisory = [...v.untagged.map((p) => `untagged: ${p}`), ...v.computedNoFormula.map((p) => `no-formula: ${p}`), ...Object.entries(v.checks).filter(([, s]) => s === "warn").map(([k]) => `check ${k}: warn`), ...v.missing];
-        const res = await dbUpsertMeasure(user, m, note);
-        if (res.overwroteName) {
-          advisory.unshift(`OVERWROTE existing measure "${res.overwroteName}" (was ${res.previousScope}) at id '${m.id}' \u2014 if you meant to add a NEW measure, pick a free id (see list_measures); the previous version is kept in measure_history.`);
-        }
-        return ok({
-          id: m.id,
-          author: user.email ?? user.userId,
-          action: res.created ? "created" : "updated",
-          finalScope: res.finalScope,
-          version: res.version,
-          ownerId: res.ownerId,
-          contributors: res.contributors,
-          eligibleForModel: v.eligibleForModel,
-          advisory
-        });
+        const res = await dbCreateMeasure(user, measure, note);
+        const v = validate({ ...measure, id: res.id }, library2, seedMeasures2);
+        return ok({ id: res.id, action: "created", author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, eligibleForModel: v.eligibleForModel, advisory: advisoryOf(v) });
       } catch (e) {
-        return err(`publish failed: ${e.message}`);
+        return err(`create failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "update_measure",
+    { title: "Update measure", description: "Correct an EXISTING measure by id (the id must already exist \u2014 an unknown id is refused, so a typo cannot create a phantom). `measure` is merged into the stored document; its SCOPE is honored. Any logged-in user may edit any measure; the change is versioned + attributed (co-authors tracked). validate() is ADVISORY only.", inputSchema: { id: z.string().describe('the existing measure id, e.g. "kz-2"'), measure: measureArg.describe("the fields to set, as an OBJECT (merged into the stored document)"), note: z.string().optional().describe("change note for the version history") } },
+    async ({ id, measure, note }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const res = await dbUpdateMeasure(user, id, measure, note);
+        const full = await dbGetMeasure(user, id) ?? { ...measure, id };
+        const v = validate(full, library2, peersOf(id));
+        return ok({ id, action: "updated", author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, contributors: res.contributors, eligibleForModel: v.eligibleForModel, advisory: advisoryOf(v) });
+      } catch (e) {
+        return err(`update failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "set_measure_scope",
+    { title: "Set measure scope", description: `Change a measure's lifecycle scope: "published" (live in the shared curve), "draft" (private to the owner), "scenario" (a what-if), or "archived" (soft-delete \u2014 hidden from the curve, but the row + full history are kept; there is no hard delete). Versioned + attributed.`, inputSchema: { id: z.string().describe("measure id"), scope: z.enum(["published", "draft", "scenario", "archived"]), note: z.string().optional() } },
+    async ({ id, scope, note }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        const res = await dbSetScope(user, id, scope, note);
+        return ok({ id, action: "scope-changed", finalScope: res.finalScope, version: res.version, author: user.email ?? user.userId });
+      } catch (e) {
+        return err(`set_measure_scope failed: ${e.message}`);
       }
     }
   );

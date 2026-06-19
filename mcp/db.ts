@@ -38,35 +38,48 @@ export async function dbGetMeasure(user: AuthedUser, id: string): Promise<Measur
  * (author = auth.uid()); the service-role path uses measure_publish_admin (author passed).
  * Returns the new version and the co-authors (distinct authors across the history).
  */
-export async function dbUpsertMeasure(user: AuthedUser, measure: Measure, note?: string): Promise<{
-  finalScope: string; version: number | null; ownerId: string | null; contributors: string[];
-  created: boolean; overwroteName: string | null; previousScope: string | null;
-}> {
-  // Overwrite awareness (open-edit collision guard): read the existing row first so the
-  // caller learns whether this CREATED a measure or CORRECTED an existing one — and, if
-  // an existing one, what its name/scope were (a name mismatch ⇒ likely an id collision).
-  const { data: prev } = await user.client.from('measures').select('scope,data').eq('id', measure.id).maybeSingle();
-  const prevName = (prev?.data as Measure | undefined)?.name;
-  const newName = measure.name;
-  // Compare by field, not JSON.stringify — Postgres jsonb reorders object keys ({en,ru} vs
-  // {ru,en}), which would otherwise flag every legitimate correction as an overwrite.
-  const sameName = !!prevName && !!newName
-    && (prevName.ru ?? '') === (newName.ru ?? '') && (prevName.en ?? '') === (newName.en ?? '');
+interface WriteResult { id: string; finalScope: string; version: number | null; ownerId: string | null; contributors: string[] }
 
+async function contributorsOf(user: AuthedUser, id: string): Promise<string[]> {
+  const { data } = await user.client.from('measure_versions').select('author_id').eq('measure_id', id);
+  return [...new Set((data ?? []).map((r) => r.author_id as string).filter(Boolean))];
+}
+
+/**
+ * CREATE a new measure. The SERVER allocates the id (kz-N, N ≥ 27) — the client never
+ * picks one, so an LLM can't collide with an existing/seeded measure. v1 + history.
+ */
+export async function dbCreateMeasure(user: AuthedUser, measure: Measure, note?: string): Promise<WriteResult> {
+  const { id: _drop, ...payload } = measure as Measure & { id?: string }; // server owns the id
   const rpc = user.serviceRole
-    ? user.client.rpc('measure_publish_admin', { p_id: measure.id, p_patch: measure, p_author: user.userId, p_note: note ?? null })
-    : user.client.rpc('measure_publish', { p_id: measure.id, p_patch: measure, p_note: note ?? null });
+    ? user.client.rpc('measure_create_admin', { p_data: payload, p_author: user.userId, p_note: note ?? null })
+    : user.client.rpc('measure_create', { p_data: payload, p_note: note ?? null });
   const { data, error } = await rpc;
-  if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
+  if (error) throw new Error(`create (as ${user.userId}): ${error.message}`);
+  const row = data as { id: string; version?: number; owner_id?: string; scope?: string };
+  return { id: row.id, finalScope: row.scope ?? 'draft', version: row.version ?? 1, ownerId: row.owner_id ?? null, contributors: await contributorsOf(user, row.id) };
+}
+
+/**
+ * UPDATE an EXISTING measure (versioned correction). The id must already exist — an
+ * unknown id is refused (no silent create), so a typo can't spawn a phantom measure.
+ * `patch` is merged into the stored document; the document scope is honored.
+ */
+export async function dbUpdateMeasure(user: AuthedUser, id: string, patch: Record<string, unknown>, note?: string): Promise<WriteResult> {
+  const { data: existing } = await user.client.from('measures').select('id').eq('id', id).maybeSingle();
+  if (!existing) throw new Error(`no measure '${id}' to update — use create_measure for a new one (the server assigns its id)`);
+  const rpc = user.serviceRole
+    ? user.client.rpc('measure_publish_admin', { p_id: id, p_patch: patch, p_author: user.userId, p_note: note ?? null })
+    : user.client.rpc('measure_publish', { p_id: id, p_patch: patch, p_note: note ?? null });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`update (as ${user.userId}): ${error.message}`);
   const row = data as { version?: number; owner_id?: string; scope?: string } | null;
-  const { data: vers } = await user.client.from('measure_versions').select('author_id').eq('measure_id', measure.id);
-  const contributors = [...new Set((vers ?? []).map((r) => r.author_id as string).filter(Boolean))];
-  return {
-    finalScope: row?.scope ?? 'draft', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors,
-    created: !prev,
-    overwroteName: prev && !sameName ? ((prevName?.en ?? prevName?.ru) ?? '(unnamed)') : null,
-    previousScope: prev?.scope ?? null,
-  };
+  return { id, finalScope: row?.scope ?? 'draft', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id) };
+}
+
+/** Lifecycle: set a measure's scope (published / draft / scenario / archived). Versioned. */
+export async function dbSetScope(user: AuthedUser, id: string, scope: string, note?: string): Promise<WriteResult> {
+  return dbUpdateMeasure(user, id, { scope }, note ?? `scope → ${scope}`);
 }
 
 /** Version history of a measure (append-only): version, author, note, time. */

@@ -11,7 +11,7 @@ import { readFileSync } from 'node:fs';
 import type { AuthedUser } from './db';
 
 // Re-export the env-agnostic data layer so existing importers keep using `./supabase`.
-export { dbListMeasures, dbGetMeasure, dbUpsertMeasure, dbMeasureHistory, type AuthedUser } from './db';
+export { dbListMeasures, dbGetMeasure, dbCreateMeasure, dbUpdateMeasure, dbSetScope, dbMeasureHistory, type AuthedUser } from './db';
 
 // Cross-runtime so the same module loads under Node (stdio / local HTTP host) AND Deno
 // (Supabase Edge). Node reads creds from process.env (seeded from the .env files below);

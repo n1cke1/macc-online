@@ -20,7 +20,7 @@ function loadDbUrl(): string {
   return line.slice('SUPABASE_DB_URL='.length).trim();
 }
 
-const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql'];
+const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql'];
 const mode = process.argv[2] ?? '--check';
 
 interface Graph {
@@ -54,6 +54,7 @@ async function migrate(c: Client) {
     : f.includes('0009') ? funcs.includes('measure_publish_admin')
     : f.includes('0010') ? have.includes('library_versions')
     : f.includes('0011') ? funcSrc.includes('v_scope')
+    : f.includes('0012') ? funcs.includes('measure_create')
     : false;
   for (const f of MIGRATIONS) {
     if (applied(f)) { console.log(`  ⤳ ${f}: skip (already applied)`); continue; }
