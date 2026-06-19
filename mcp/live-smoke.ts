@@ -55,13 +55,14 @@ async function main() {
   const authC = await connect(sess.session!.access_token);
   const list = parse(await authC.callTool({ name: 'list_measures', arguments: {} }));
   console.log(`auth: list_measures → count=${list.measures.length} (${list.measures.map((m: { id: string; mac: number }) => `${m.id}@${m.mac.toFixed(1)}`).join(', ')})`);
-  const got = parse(await authC.callTool({ name: 'get_measure', arguments: { id: 'kz-2' } }));
+  // kz-20 is published (kz-2/kz-16 are drafts → invisible to a non-owner throwaway user).
+  const got = parse(await authC.callTool({ name: 'get_measure', arguments: { id: 'kz-20' } }));
   const comp = parse(await authC.callTool({ name: 'compute_measure', arguments: { measure: got } }));
-  console.log(`auth: compute kz-2 → MAC=${comp.mac.toFixed(2)} opex=${comp.opex.toFixed(1)} (expect 193.76 / 928.1)`);
+  console.log(`auth: compute kz-20 → MAC=${comp.mac.toFixed(2)} (expect 99.90)`);
   await authC.close();
 
   await admin.auth.admin.deleteUser(uid);
-  if (Math.abs(comp.mac - 193.76) > 0.5) throw new Error(`kz-2 MAC drifted: ${comp.mac}`);
+  if (Math.abs(comp.mac - 99.9) > 0.5) throw new Error(`kz-20 MAC drifted: ${comp.mac}`);
   console.log('LIVE-SMOKE OK — hosted MCP works end-to-end over HTTP, on Supabase Edge.');
 }
 main().catch((e) => { console.error('LIVE-SMOKE FAIL:', e); process.exit(1); });
