@@ -5,7 +5,7 @@
 // hardcoded here: validate() binds their slots from measure-derived values,
 // evaluates the quantity + predicate through HyperFormula, and returns enough
 // (status, value, bound slots) for the UI to render each check's formula.
-//   factor    — physics: back-calc implied factor vs reference corridor (X-axis)
+//   factor    — physics: per-unit factor vs reference corridor (X-axis)
 //   economics — implied unit CAPEX vs technology band (Y-axis)
 //   pool      — Σ by pool ≤ ceiling, via MAC-order stacking (order-independent)
 //   sector    — reduction ≤ sub-category baseline (coarse backstop)

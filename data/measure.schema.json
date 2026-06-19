@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://macc.kz/schema/measure.json",
   "title": "Measure",
-  "description": "Authoring input object — the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
+  "description": "Authoring input object — the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the UI-help overlay (measure-ui-help.json: panels/fields/enums/sourcing/formulas) and the macc-measure-authoring skill (procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
   "type": "object",
   "required": ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "mechanism", "abatement"],
   "additionalProperties": false,

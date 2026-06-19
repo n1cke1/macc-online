@@ -1,7 +1,7 @@
 // The measure-authoring data contract — the *input* side of the model.
 //
 // `data/schema.ts` defines the *output* (`MaccPoint`, one rendered bar). This file
-// defines the *input* «measure» object (§2 of `macc-ui-concept.md`) plus the §1
+// defines the *input* «measure» object (§2 of `docs/macc-ui-concept.md`) plus the §1
 // reference entities and the §6 provenance/binding wrappers. One JSON Schema
 // (`measure.schema.json`) mirrors `Measure` and is the single source for the
 // authoring form, the MCP contract and `validate()`. `compute(measure, library)`
@@ -393,7 +393,7 @@ export interface Subsector {
  * moved to the `macc-measure-authoring` skill (served to LLMs via the MCP `guide://measure`
  * resource, step 4); `sourcing`/`formulas` stay here for the «?» tooltips and are mirrored in
  * the skill for the agent. ENGLISH-BASE: one language inline; RU returns via a separate
- * `translations` layer. Design rationale: `macc-ui-concept.md`; structural validation:
+ * `translations` layer. Design rationale: `docs/macc-ui-concept.md`; structural validation:
  * `data/measure.schema.json`.
  */
 export interface NotationEntry { help: string }

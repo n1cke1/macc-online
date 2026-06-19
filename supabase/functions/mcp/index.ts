@@ -1500,7 +1500,7 @@ var measure_ui_help_default = {
       help: "Objects the measure CLOSES (no longer needed). Their maintenance unit CAPEX and OPEX become negative \u2014 avoided cost."
     },
     reduction: {
-      help: "How the CO\u2082e reduction is computed by maturity stage (postulated \u2192 back-calc \u2192 computed) and the back-calculated factor vs the reference corridor."
+      help: "How the CO\u2082e reduction is computed by maturity stage (raw \u2192 computed) and the per-unit factor vs its reference corridor."
     },
     economics: {
       help: "CAPEX and OPEX rolled up from objects and key materials \u2192 NPV and MAC. Lines are derived from objects/flows, not hand-entered."
@@ -1550,7 +1550,7 @@ var measure_ui_help_default = {
       help: "Sub-category coverage share (0\u20131). Reduction = sub-category baseline \xD7 share. Source \u2014 the \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB sheet."
     },
     activity: {
-      help: "Activity scale (head, million m\xB3 \u2026) the back-calc anchors to: implied = reduction / activity."
+      help: "Activity scale (head, million m\xB3 \u2026) the bottom-up reduction anchors to: reduction = activity \xD7 factor."
     },
     materialResource: {
       help: "Key material/fuel flow from the resource registry (carries its own EF and price)."
@@ -1586,7 +1586,7 @@ var measure_ui_help_default = {
   enums: {
     maturity: {
       raw: {
-        help: "Postulated: reduction = baseline \xD7 share; no anchor or check. The first stage \u2014 next is computed."
+        help: "Raw: reduction = baseline \xD7 share; no bottom-up anchor or factor check. The first stage \u2014 next is computed."
       },
       computed: {
         help: "Computed: reduction expanded by a bottom-up formula (activity \xD7 factor). The per-unit factor is sanity-checked vs its reference corridor (\u2713/\u26A0). The highest maturity stage."
@@ -1704,7 +1704,7 @@ var measure_ui_help_default = {
       help: "Mandatory note for binding=alt: why the value diverges from the library reference."
     },
     reference: {
-      help: "A [min, max] corridor with a unit a check anchors to: factor \u2014 the reduction factor, capex_ud \u2014 the object unit CAPEX. Set reference_ref on the back-calc and on the object; the corridor's own source lives in its source field."
+      help: "A [min, max] corridor with a unit a check anchors to: factor \u2014 the reduction factor, capex_ud \u2014 the object unit CAPEX. Set reference_ref on the factor and on the object; the corridor's own source lives in its source field."
     }
   },
   formulas: {
@@ -1916,7 +1916,7 @@ var measures_seed_default = {
       ],
       product_ref: "prod_mwh",
       technology_ref: "tech_coal_to_gas",
-      scope: "published",
+      scope: "draft",
       maturity_stage: "computed",
       comparison: {
         service_unit_ref: "prod_mwh"
@@ -2224,7 +2224,7 @@ var measures_seed_default = {
         }
       ],
       technology_ref: "tech_mine_degas",
-      scope: "published",
+      scope: "draft",
       maturity_stage: "computed",
       inputs: {
         activity: {
@@ -6721,7 +6721,7 @@ var measure_schema_default = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: "https://macc.kz/schema/measure.json",
   title: "Measure",
-  description: "Authoring input object \u2014 the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the sibling `notation` (panels/fields/enums/sourcing/formulas/procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
+  description: "Authoring input object \u2014 the STRUCTURE of a measure. Mirrors src/lib/measure/schema.ts. HOW to fill each field, units, the MAC definition, the AST notation and sourcing rules live in the UI-help overlay (measure-ui-help.json: panels/fields/enums/sourcing/formulas) and the macc-measure-authoring skill (procedure/requirements/conventions/checks). Economics derives from created_technologies + materials; the legacy `economics` array is a fallback only. For a complete worked example, call get_measure('kz-2').",
   type: "object",
   required: ["id", "schema_version", "name", "sector_ref", "scope", "maturity_stage", "mechanism", "abatement"],
   additionalProperties: false,

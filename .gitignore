@@ -45,6 +45,16 @@ supabase/.temp/
 # Local-only development roadmap (kept on disk, not published)
 docs/excel-restructure-plan_upd.md
 
+# Authoring drafts in repo root (work in progress, not published).
+# README.md and CLAUDE.md are whitelisted because they are part of the repo.
+/*.md
+!/README.md
+!/CLAUDE.md
+
+# Superseded design-phase docs — kept on disk for provenance, not published.
+# (The architecture they specified is now implemented; see git log.)
+docs/design/
+
 # NOTE: data/<country>/*.json ARE committed on purpose — they are the
 # published, third-party-verifiable trust anchor (see CLAUDE.md principle 2).
 *.xlsx.bak

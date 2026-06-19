@@ -20,9 +20,18 @@ supabase/
                            soft-delete · role mgmt · rate-limit · notify webhook
     0004_object_anchors.sql  comment anchors on per-project line items
     0005_measures_schema.sql measures + library (technologies/resources/products)
-    0006_measures_rls.sql    RLS · scope guard (server-only publish) · measure_upsert
+    0006_measures_rls.sql    RLS · scope guard · measure_upsert
+    0007_library_graph.sql   normalized library graph (objects/resources/products/…)
+    0008_measure_versions.sql per-edit version log (attributed, append-only)
+    0009_measure_publish_admin.sql  publish path
+    0010_open_library.sql    open the library to any signed-in author
+    0011_respect_scope.sql   honor document scope (draft/published/scenario)
+    0012_create_and_archive.sql  split create/update · server-assigned ids · archive
+    0013_indicator_subsector.sql limit indicators + subsector on measures
+    0014_products_technology_ref.sql  product ↔ technology reference link
   functions/notify/                Deno Edge Function: review email via Resend
   functions/validate-and-promote/  Deno Edge Function: server-side guardrails → publish
+  functions/mcp/                   Deno Edge Function: hosted measure-authoring MCP
 ```
 
 ## 1. Create the project & apply migrations
@@ -100,7 +109,7 @@ references/pools/checks/subsectors — stays in the published `data/kz/library/*
 files). Apply and deploy:
 
 ```bash
-supabase db push                          # applies 0005 (measures) + 0006 (RLS) + 0007 (library graph)
+supabase db push                          # applies the measures + library migrations (0005–0014) in order
 SUPABASE_URL=https://<ref>.supabase.co \
   SUPABASE_SERVICE_ROLE_KEY=<service-role-jwt> \
   npm run seed-library                    # loads data/kz/library/graph.seed.json into the graph tables
@@ -186,9 +195,7 @@ supabase functions deploy mcp --project-ref <ref> --no-verify-jwt --use-api
   refresh; auto-refresh / OAuth 2.1 is a later §9 step.
 - **Smoke the deployed endpoint:** `MCP_URL=https://<ref>.supabase.co/functions/v1/mcp
   npx tsx mcp/live-smoke.ts` (mints a throwaway user; checks the no-token gate, the public
-  resource, and an authenticated compute over the internet). Local pre-deploy variants:
-  `mcp/edge-smoke.ts` (Supabase-loaded library under Node) and `mcp/http-smoke.ts`
-  (file-backed).
+  resource, and an authenticated compute over the internet).
 
 ## Security model (summary)
 

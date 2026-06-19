@@ -2,8 +2,8 @@
 //
 // A THIN wrapper — `Deno.serve` over the shared Web-standard handler
 // (`mcp/http-handler.ts`). The MCP server definition, the tool set and the transport
-// are all shared verbatim with the local stdio (`mcp/measure-server.ts`) and Node-HTTP
-// (`mcp/http-server.ts`) entries; only the runtime + the library/measures source differ:
+// are all shared verbatim with the local stdio entry (`mcp/measure-server.ts`);
+// only the runtime + the library/measures source differ:
 //   • identity — `Authorization: Bearer <Supabase JWT>` (the web session token);
 //   • library  — the 0007 authority tables via `load-supabase.ts` (runtime = Supabase),
 //                not the bundled file seed;

@@ -1,9 +1,8 @@
 // §9 — the hosted MCP request handler, Web-standard (Request → Response).
 //
 // This is the host-agnostic core: `(request: Request) => Promise<Response>`, exactly
-// the shape `Deno.serve` (Supabase Edge, `supabase/functions/mcp`) and the local
-// node:http bridge (`mcp/http-server.ts`) both expect. Per request (serverless =
-// stateless):
+// the shape `Deno.serve` (Supabase Edge, `supabase/functions/mcp`) expects. Per request
+// (serverless = stateless):
 //   1. resolve the user from `Authorization: Bearer <Supabase JWT>` (null → tools refuse),
 //   2. build a fresh server bound to that user + the library/measures,
 //   3. drive it through the Web-standard Streamable-HTTP transport in JSON mode.
