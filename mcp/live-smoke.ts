@@ -34,7 +34,9 @@ async function main() {
   const anonC = await connect();
   const res = await anonC.readResource({ uri: 'schema://measure' });
   const payload = JSON.parse((res.contents[0] as { text: string }).text);
-  console.log(`no-token: resource → notation+schema: ${!!payload.notation && !!payload.jsonSchema ? '✓' : '✗'}`);
+  console.log(`no-token: resource schema://measure → uiHelp+schema: ${!!payload.uiHelp && !!payload.jsonSchema ? '✓' : '✗'}`);
+  const guide = (await anonC.readResource({ uri: 'guide://measure' }).then((g) => (g.contents[0] as { text: string }).text));
+  console.log(`no-token: resource guide://measure → ${(guide.length / 1024).toFixed(1)} kB, workflow: ${guide.includes('# D. Workflow') ? '✓' : '✗'}`);
   console.log(`no-token: call list_measures → ${isErr(await anonC.callTool({ name: 'list_measures', arguments: {} })) ? 'REFUSED ✓' : 'ALLOWED ✗'}`);
   await anonC.close();
 

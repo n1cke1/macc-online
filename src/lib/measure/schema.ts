@@ -500,10 +500,8 @@ export interface Library {
   indicators: Indicator[];
   /** Sector → subsectors (seeded from «Выбросы», extendable). */
   subsectors: Record<string, Subsector[]>;
-  /** UI help strings for the editor «?» tooltips (panels/fields/enums). */
+  /** UI help strings for the editor «?» tooltips (panels/fields/enums); also served by
+   *  the MCP `schema://measure` resource. The authoring judgment lives in `guide://measure`. */
   uiHelp: UiHelp;
-  /** @deprecated TEMP alias of `uiHelp`, served by the MCP `schema://measure` resource
-   *  until step 4 wires `guide://measure`. Remove then (switch server.ts to `uiHelp`). */
-  notation: UiHelp;
   globals: GlobalParams;
 }

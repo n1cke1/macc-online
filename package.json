@@ -11,6 +11,7 @@
     "etl": "py scripts/etl.py",
     "golden": "tsx scripts/golden.ts",
     "measure-golden": "tsx scripts/measure-golden.ts",
+    "gen-skill": "tsx scripts/gen-skill-bundle.ts",
     "seed-library": "tsx scripts/seed-library.ts",
     "supabase-apply": "tsx scripts/supabase-apply.ts",
     "mcp": "tsx mcp/measure-server.ts",

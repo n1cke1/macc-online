@@ -18,7 +18,11 @@ async function main() {
 
   const res = await client.readResource({ uri: 'schema://measure' });
   const doc = JSON.parse((res.contents[0] as { text: string }).text);
-  console.log('resource schema://measure → notation groups:', Object.keys(doc.notation).join(', '));
+  console.log('resource schema://measure → uiHelp groups:', Object.keys(doc.uiHelp).join(', '));
+
+  const guide = await client.readResource({ uri: 'guide://measure' });
+  const guideText = (guide.contents[0] as { text: string }).text;
+  console.log(`resource guide://measure → ${(guideText.length / 1024).toFixed(1)} kB, workflow section: ${guideText.includes('# D. Workflow') ? '✓' : '✗'}`);
 
   const r = await client.callTool({ name: 'list_measures', arguments: {} });
   const refused = (r as { isError?: boolean }).isError === true;

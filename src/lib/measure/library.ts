@@ -96,7 +96,6 @@ export function assembleLibrary(g: Graph): Library {
     indicators,
     subsectors,
     uiHelp: uiHelp as unknown as Library['uiHelp'],
-    notation: uiHelp as unknown as Library['notation'], // TEMP alias for the MCP resource (removed step 4)
     // Templates live in code (the engine uses them); formula-templates.json mirrors them publicly.
     formulaTemplates: BUILTIN_TEMPLATES,
     globals: globals as unknown as Library['globals'],

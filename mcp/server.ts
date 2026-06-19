@@ -13,6 +13,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { compute } from '../src/lib/measure/compute';
 import { validate } from '../src/lib/measure/validate';
+import { SKILL_GUIDE } from '../src/lib/measure/skill.generated';
 import measureSchema from '../data/measure.schema.json';
 import type { Library, Measure } from '../src/lib/measure/schema';
 import { dbListMeasures, dbGetMeasure, dbCreateMeasure, dbUpdateMeasure, dbSetScope, dbMeasureHistory, dbListLibrary, dbUpsertLibraryEntity, dbLibraryHistory, LIBRARY_TABLES, type AuthedUser } from './db';
@@ -63,20 +64,38 @@ export function buildServer(deps: ServerDeps): McpServer {
 
   const server = new McpServer({ name: 'macc-measure', version: '0.1.0' });
 
-  // ── Resource: the single measure-authoring instruction (notation + schema), public ──
+  // ── Resource: the measure STRUCTURE (field help + JSON Schema), public ───────────
   server.registerResource(
-    'measure-notation',
+    'measure-schema',
     'schema://measure',
     {
-      title: 'Measure authoring notation + schema',
-      description: 'The measure-notation framework (panels/fields/enums/sourcing/formulas) plus the JSON Schema of a measure. The single instruction for authoring a measure.',
+      title: 'Measure structure: field help + JSON Schema',
+      description: 'The measure STRUCTURE: field-level help (panels/fields/enums/sourcing/formulas) plus the JSON Schema of a measure document. For the authoring JUDGMENT (procedure, mechanism/baseline choice, sectors, sourcing, formula AST, potential, checks) read guide://measure FIRST.',
       mimeType: 'application/json',
     },
     async (uri) => ({
       contents: [{
         uri: uri.href,
         mimeType: 'application/json',
-        text: JSON.stringify({ notation: library.notation, jsonSchema: compactSchema }),
+        text: JSON.stringify({ uiHelp: library.uiHelp, jsonSchema: compactSchema }),
+      }],
+    }),
+  );
+
+  // ── Resource: the authoring guide (the macc-measure-authoring skill), public ──────
+  server.registerResource(
+    'measure-guide',
+    'guide://measure',
+    {
+      title: 'Measure authoring guide',
+      description: 'The full measure-authoring judgment: the model of a measure, the quality bar and the workflow (classify → build on the library → bottom-up formulas → limiting factor → validate → publish), the sector playbook, sourcing discipline, the formula AST and the validation checks. Read this BEFORE create_measure / update_measure / upsert_library_entity.',
+      mimeType: 'text/markdown',
+    },
+    async (uri) => ({
+      contents: [{
+        uri: uri.href,
+        mimeType: 'text/markdown',
+        text: SKILL_GUIDE.markdown,
       }],
     }),
   );

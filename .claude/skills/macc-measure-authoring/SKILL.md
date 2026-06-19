@@ -132,7 +132,7 @@ The shared registry that makes measures comparable: industries/subsectors, **tec
 - **Reuse before creating.** Before adding a new entry, search for an existing one that
   matches *what it is* — class, unit, cost structure, lifetime — not just its name (names
   vary, so the same thing is easily duplicated). Create a new entry only when nothing
-  existing genuinely fits. Discipline: `references/registry-hygiene.md`.
+  existing genuinely fits.
 
 ---
 
@@ -182,7 +182,6 @@ often skipped — and skipping them is what produces a messy registry and a meas
    (compared on a service unit) or not? This decides what the measure needs.
 2. **Build on the library** — resolve every value to a library entity *first*: reuse one that
    already fits, or create the missing one. Never inline a name.
-   → `references/registry-hygiene.md`.
 3. **Compute the unit measure (bottom-up)** — write the formulas so every number is an input
    or computed from inputs (§3/§6), then read off the first CAPEX / OPEX / abatement and MAC.
    → `references/formula-ast.md`.
