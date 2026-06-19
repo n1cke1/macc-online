@@ -40,7 +40,19 @@ export async function dbGetMeasure(user: AuthedUser, id: string): Promise<Measur
  */
 export async function dbUpsertMeasure(user: AuthedUser, measure: Measure, note?: string): Promise<{
   finalScope: string; version: number | null; ownerId: string | null; contributors: string[];
+  created: boolean; overwroteName: string | null; previousScope: string | null;
 }> {
+  // Overwrite awareness (open-edit collision guard): read the existing row first so the
+  // caller learns whether this CREATED a measure or CORRECTED an existing one — and, if
+  // an existing one, what its name/scope were (a name mismatch ⇒ likely an id collision).
+  const { data: prev } = await user.client.from('measures').select('scope,data').eq('id', measure.id).maybeSingle();
+  const prevName = (prev?.data as Measure | undefined)?.name;
+  const newName = measure.name;
+  // Compare by field, not JSON.stringify — Postgres jsonb reorders object keys ({en,ru} vs
+  // {ru,en}), which would otherwise flag every legitimate correction as an overwrite.
+  const sameName = !!prevName && !!newName
+    && (prevName.ru ?? '') === (newName.ru ?? '') && (prevName.en ?? '') === (newName.en ?? '');
+
   const rpc = user.serviceRole
     ? user.client.rpc('measure_publish_admin', { p_id: measure.id, p_patch: measure, p_author: user.userId, p_note: note ?? null })
     : user.client.rpc('measure_publish', { p_id: measure.id, p_patch: measure, p_note: note ?? null });
@@ -49,7 +61,12 @@ export async function dbUpsertMeasure(user: AuthedUser, measure: Measure, note?:
   const row = data as { version?: number; owner_id?: string; scope?: string } | null;
   const { data: vers } = await user.client.from('measure_versions').select('author_id').eq('measure_id', measure.id);
   const contributors = [...new Set((vers ?? []).map((r) => r.author_id as string).filter(Boolean))];
-  return { finalScope: row?.scope ?? 'published', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors };
+  return {
+    finalScope: row?.scope ?? 'draft', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors,
+    created: !prev,
+    overwroteName: prev && !sameName ? ((prevName?.en ?? prevName?.ru) ?? '(unnamed)') : null,
+    previousScope: prev?.scope ?? null,
+  };
 }
 
 /** Version history of a measure (append-only): version, author, note, time. */

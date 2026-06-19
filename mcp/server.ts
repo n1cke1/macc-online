@@ -134,7 +134,7 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: upsert (direct publish; validate() is advisory only) ──────────────────
   server.registerTool(
     'upsert_measure',
-    { title: 'Publish measure', description: 'Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).', inputSchema: { measure: measureArg.describe('a measure document — an OBJECT (a JSON string is also accepted)'), note: z.string().optional().describe('optional change note for the version history') } },
+    { title: 'Save / publish measure', description: 'Create or correct a measure. The document SCOPE is honored: `scope:"draft"` saves a private work-in-progress (visible only to you); `scope:"published"` puts it in the live shared model; a new measure with no scope defaults to draft. Any logged-in user may edit any measure; every change is versioned + attributed. validate() runs as ADVISORY only (never blocking). Returns `action` (created|updated) and warns if you OVERWROTE a different existing measure (id collision). Use list_measures first to avoid reusing a taken id.', inputSchema: { measure: measureArg.describe('a measure document — an OBJECT (a JSON string is also accepted); set scope:"published" to go live, "draft" to keep private'), note: z.string().optional().describe('optional change note for the version history') } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
       const m = measure as Measure;
@@ -142,9 +142,15 @@ export function buildServer(deps: ServerDeps): McpServer {
         const v = validate(m, library, peersOf(m.id));
         const advisory = [...v.untagged.map((p) => `untagged: ${p}`), ...v.computedNoFormula.map((p) => `no-formula: ${p}`), ...Object.entries(v.checks).filter(([, s]) => s === 'warn').map(([k]) => `check ${k}: warn`), ...v.missing];
         const res = await dbUpsertMeasure(user, m, note);
+        // Collision guard: writing onto an id that already held a DIFFERENT measure is
+        // almost always an accidental overwrite — surface it loudly (open-edit can't block).
+        if (res.overwroteName) {
+          advisory.unshift(`OVERWROTE existing measure "${res.overwroteName}" (was ${res.previousScope}) at id '${m.id}' — if you meant to add a NEW measure, pick a free id (see list_measures); the previous version is kept in measure_history.`);
+        }
         return ok({
           id: m.id,
           author: user.email ?? user.userId,
+          action: res.created ? 'created' : 'updated',
           finalScope: res.finalScope,
           version: res.version,
           ownerId: res.ownerId,

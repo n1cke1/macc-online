@@ -5236,13 +5236,25 @@ async function dbGetMeasure(user, id) {
   return data?.data ?? null;
 }
 async function dbUpsertMeasure(user, measure, note) {
+  const { data: prev } = await user.client.from("measures").select("scope,data").eq("id", measure.id).maybeSingle();
+  const prevName = prev?.data?.name;
+  const newName = measure.name;
+  const sameName = !!prevName && !!newName && (prevName.ru ?? "") === (newName.ru ?? "") && (prevName.en ?? "") === (newName.en ?? "");
   const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: measure.id, p_patch: measure, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("measure_publish", { p_id: measure.id, p_patch: measure, p_note: note ?? null });
   const { data, error } = await rpc;
   if (error) throw new Error(`publish (as ${user.userId}): ${error.message}`);
   const row = data;
   const { data: vers } = await user.client.from("measure_versions").select("author_id").eq("measure_id", measure.id);
   const contributors = [...new Set((vers ?? []).map((r) => r.author_id).filter(Boolean))];
-  return { finalScope: row?.scope ?? "published", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors };
+  return {
+    finalScope: row?.scope ?? "draft",
+    version: row?.version ?? null,
+    ownerId: row?.owner_id ?? null,
+    contributors,
+    created: !prev,
+    overwroteName: prev && !sameName ? prevName?.en ?? prevName?.ru ?? "(unnamed)" : null,
+    previousScope: prev?.scope ?? null
+  };
 }
 async function dbMeasureHistory(user, id) {
   const { data, error } = await user.client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
@@ -6037,7 +6049,7 @@ function buildServer(deps) {
   );
   server.registerTool(
     "upsert_measure",
-    { title: "Publish measure", description: "Create or correct a measure and publish it directly to the model (no server-side review). Any logged-in user may edit any measure; the change is versioned and attributed (co-authors are tracked). validate() still runs but is ADVISORY only (returned as `advisory`, never blocking).", inputSchema: { measure: measureArg.describe("a measure document \u2014 an OBJECT (a JSON string is also accepted)"), note: z.string().optional().describe("optional change note for the version history") } },
+    { title: "Save / publish measure", description: 'Create or correct a measure. The document SCOPE is honored: `scope:"draft"` saves a private work-in-progress (visible only to you); `scope:"published"` puts it in the live shared model; a new measure with no scope defaults to draft. Any logged-in user may edit any measure; every change is versioned + attributed. validate() runs as ADVISORY only (never blocking). Returns `action` (created|updated) and warns if you OVERWROTE a different existing measure (id collision). Use list_measures first to avoid reusing a taken id.', inputSchema: { measure: measureArg.describe('a measure document \u2014 an OBJECT (a JSON string is also accepted); set scope:"published" to go live, "draft" to keep private'), note: z.string().optional().describe("optional change note for the version history") } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
       const m = measure;
@@ -6045,9 +6057,13 @@ function buildServer(deps) {
         const v = validate(m, library2, peersOf(m.id));
         const advisory = [...v.untagged.map((p) => `untagged: ${p}`), ...v.computedNoFormula.map((p) => `no-formula: ${p}`), ...Object.entries(v.checks).filter(([, s]) => s === "warn").map(([k]) => `check ${k}: warn`), ...v.missing];
         const res = await dbUpsertMeasure(user, m, note);
+        if (res.overwroteName) {
+          advisory.unshift(`OVERWROTE existing measure "${res.overwroteName}" (was ${res.previousScope}) at id '${m.id}' \u2014 if you meant to add a NEW measure, pick a free id (see list_measures); the previous version is kept in measure_history.`);
+        }
         return ok({
           id: m.id,
           author: user.email ?? user.userId,
+          action: res.created ? "created" : "updated",
           finalScope: res.finalScope,
           version: res.version,
           ownerId: res.ownerId,
