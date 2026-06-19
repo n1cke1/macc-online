@@ -47,40 +47,42 @@ async function mintUser(tag: string): Promise<{ uid: string; token: string; emai
 }
 
 async function main() {
-  const testId = `kz-authtest-${Date.now()}`;
-
   // 1) gate.
   const anonClient = await connect();
-  console.log(`no-token publish → ${isErr(await anonClient.callTool({ name: 'upsert_measure', arguments: { measure: { id: 'x' } } })) ? 'REFUSED ✓' : 'ALLOWED ✗'}`);
+  console.log(`no-token create → ${isErr(await anonClient.callTool({ name: 'create_measure', arguments: { measure: { name: { ru: 'x', en: 'x' } } } })) ? 'REFUSED ✓' : 'ALLOWED ✗'}`);
   await anonClient.close();
 
   // 2) two authors.
   const A = await mintUser('alice');
   const B = await mintUser('bob');
-  console.log(`authors: A=${A.email.split('@')[0]} (${A.uid.slice(0, 8)}…), B=${B.email.split('@')[0]} (${B.uid.slice(0, 8)}…)`);
+  console.log(`authors: A=${A.uid.slice(0, 8)}…, B=${B.uid.slice(0, 8)}…`);
 
-  // 3) A publishes a NON-eligible measure directly (proves: no server-side review).
-  const m = structuredClone(getSeedMeasure('kz-16'))!; // factor ⚠ → NOT eligible
-  m.id = testId;
+  // 3) A CREATES a measure — server assigns the id (no collision possible).
+  const m = structuredClone(getSeedMeasure('kz-16')) as Partial<ReturnType<typeof getSeedMeasure>> & Record<string, unknown>;
+  delete (m as { id?: string }).id;
+  (m as { scope?: string }).scope = 'published';
   const ca = await connect(A.token);
-  const pubA = parse(await ca.callTool({ name: 'upsert_measure', arguments: { measure: m, note: 'initial draft by Alice' } }));
-  console.log(`A publish(${testId}) → scope=${pubA.finalScope} version=${pubA.version} eligible=${pubA.eligibleForModel} advisory=${pubA.advisory.length} contributors=${pubA.contributors.length}`);
+  const created = parse(await ca.callTool({ name: 'create_measure', arguments: { measure: m, note: 'created by Alice' } }));
+  const id = created.id as string;
+  console.log(`A create → id=${id} scope=${created.finalScope} version=${created.version} (v1: ${created.version === 1})`);
   await ca.close();
 
-  // 4) B corrects the SAME measure → version 2, two co-authors, owner stays A.
-  const m2 = structuredClone(m);
-  m2.name = { ru: m.name.ru + ' (правка Боба)', en: m.name.en + ' (Bob edit)' };
+  // 4) B UPDATES the same id → v2, two co-authors, owner stays A. Unknown id refused.
   const cb = await connect(B.token);
-  const pubB = parse(await cb.callTool({ name: 'upsert_measure', arguments: { measure: m2, note: 'corrected name by Bob' } }));
-  console.log(`B correct(${testId}) → version=${pubB.version} contributors=${pubB.contributors.length} ownerStaysA=${pubB.ownerId === A.uid}`);
-  const hist = parse(await cb.callTool({ name: 'measure_history', arguments: { id: testId } }));
-  console.log(`history → ${hist.versions.length} versions, ${hist.contributors.length} co-authors:`, hist.versions.map((v: { version: number; note: string }) => `v${v.version}(${v.note})`).join(', '));
+  const upd = parse(await cb.callTool({ name: 'update_measure', arguments: { id, measure: { name: { ru: 'правка Боба', en: 'Bob edit' } }, note: 'corrected by Bob' } }));
+  console.log(`B update → version=${upd.version} contributors=${upd.contributors.length} ownerStaysA=${upd.ownerId === A.uid}`);
+  console.log(`update unknown id → ${isErr(await cb.callTool({ name: 'update_measure', arguments: { id: 'kz-nope-x', measure: {} } })) ? 'REFUSED ✓' : 'ALLOWED ✗'}`);
+  const arch = parse(await cb.callTool({ name: 'set_measure_scope', arguments: { id, scope: 'archived' } }));
+  console.log(`archive → finalScope=${arch.finalScope} (soft-delete)`);
+  const hist = parse(await cb.callTool({ name: 'measure_history', arguments: { id } }));
+  console.log(`history → ${hist.versions.length} versions, ${hist.contributors.length} co-authors`);
   await cb.close();
 
   // 5) verify in DB + cleanup.
-  const row = await admin.from('measures').select('owner_id,scope,version').eq('id', testId).single();
+  const row = await admin.from('measures').select('owner_id,scope,version').eq('id', id).single();
   console.log(`DB → owner=${(row.data!.owner_id as string).slice(0, 8)}… scope=${row.data!.scope} version=${row.data!.version} (owner==A: ${row.data!.owner_id === A.uid})`);
-  await admin.from('measures').delete().eq('id', testId);
+  await admin.from('measure_versions').delete().eq('measure_id', id);
+  await admin.from('measures').delete().eq('id', id);
   await admin.auth.admin.deleteUser(A.uid);
   await admin.auth.admin.deleteUser(B.uid);
   console.log('cleaned up (measure + 2 users)');
