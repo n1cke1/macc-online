@@ -24,6 +24,10 @@ async function main() {
   const guideText = (guide.contents[0] as { text: string }).text;
   console.log(`resource guide://measure → ${(guideText.length / 1024).toFixed(1)} kB, workflow section: ${guideText.includes('# D. Workflow') ? '✓' : '✗'}`);
 
+  const gtool = await client.callTool({ name: 'get_authoring_guide', arguments: {} });
+  const gtext = ((gtool as { content: { text: string }[] }).content)[0].text;
+  console.log(`tool get_authoring_guide (no token) → ${(gtext.length / 1024).toFixed(1)} kB, guide+schema: ${gtext.includes('# D. Workflow') && gtext.includes('JSON Schema') ? '✓' : '✗'}`);
+
   const r = await client.callTool({ name: 'list_measures', arguments: {} });
   const refused = (r as { isError?: boolean }).isError === true;
   console.log(`list_measures without token → ${refused ? 'REFUSED ✓ (login required)' : 'ALLOWED ✗'}`);

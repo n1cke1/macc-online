@@ -100,6 +100,25 @@ export function buildServer(deps: ServerDeps): McpServer {
     }),
   );
 
+  // ── Tool: the authoring guide + structure, as a TOOL (public, no auth) ───────────
+  // Mirror of the guide://measure + schema://measure resources, exposed as a tool because
+  // some MCP clients (e.g. claude.ai custom connectors) surface tools to the model but not
+  // resources. One call returns everything needed to author a measure.
+  server.registerTool(
+    'get_authoring_guide',
+    {
+      title: 'Get the measure authoring guide',
+      description: 'Read the full measure-authoring guide (the macc-measure-authoring skill: model, quality bar, workflow, sectors, sourcing, formula AST, potential, checks) PLUS the measure JSON Schema and field-level help. Call this FIRST, before create_measure / update_measure / upsert_library_entity. Public — no sign-in required.',
+      inputSchema: {},
+    },
+    async () => ({
+      content: [{
+        type: 'text' as const,
+        text: `${SKILL_GUIDE.markdown}\n\n---\n\n# Measure JSON Schema (structure)\n\n\`\`\`json\n${JSON.stringify(compactSchema)}\n\`\`\`\n\n# Field-level help (uiHelp)\n\n\`\`\`json\n${JSON.stringify(library.uiHelp)}\n\`\`\`\n`,
+      }],
+    }),
+  );
+
   // ── Tool: list the measures visible to the signed-in user ──────────────────────
   server.registerTool(
     'list_measures',

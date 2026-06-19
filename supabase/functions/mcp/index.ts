@@ -7049,6 +7049,35 @@ function buildServer(deps) {
     })
   );
   server.registerTool(
+    "get_authoring_guide",
+    {
+      title: "Get the measure authoring guide",
+      description: "Read the full measure-authoring guide (the macc-measure-authoring skill: model, quality bar, workflow, sectors, sourcing, formula AST, potential, checks) PLUS the measure JSON Schema and field-level help. Call this FIRST, before create_measure / update_measure / upsert_library_entity. Public \u2014 no sign-in required.",
+      inputSchema: {}
+    },
+    async () => ({
+      content: [{
+        type: "text",
+        text: `${SKILL_GUIDE.markdown}
+
+---
+
+# Measure JSON Schema (structure)
+
+\`\`\`json
+${JSON.stringify(compactSchema)}
+\`\`\`
+
+# Field-level help (uiHelp)
+
+\`\`\`json
+${JSON.stringify(library2.uiHelp)}
+\`\`\`
+`
+      }]
+    })
+  );
+  server.registerTool(
     "list_measures",
     { title: "List measures", description: "List the measures visible to the signed-in user (their drafts + published), with headline outputs and model-eligibility.", inputSchema: {} },
     async () => {
