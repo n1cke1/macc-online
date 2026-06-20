@@ -137,6 +137,15 @@
     "notEligible": "Stays draft",
     "clear": "Reset draft"
   },
+  "measureDrill": {
+    "title": "Measure breakdown",
+    "hint": "Select a measure on the chart to see a detailed breakdown with formulas.",
+    "confidence": "Weakest confidence along the source chain",
+    "mechanism": {
+      "reduction": "reduction",
+      "removal": "removal"
+    }
+  },
   "collab": {
     "threadTitle": "Review",
     "discuss": "Discuss this assumption",

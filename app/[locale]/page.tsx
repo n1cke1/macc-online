@@ -16,7 +16,7 @@ import ScenarioUrlSync from '@/components/assumptions/ScenarioUrlSync';
 import CommunityLoader from '@/components/macc/CommunityLoader';
 import AuthButtonGate from '@/components/collab/AuthButtonGate';
 import AllComments from '@/components/collab/AllComments';
-import MeasureAuthoringGate from '@/components/measure/MeasureAuthoringGate';
+import MeasureDrilldownGate from '@/components/measure/MeasureDrilldownGate';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -66,8 +66,9 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <MeasuresTable />
         </section>
 
-        {/* Measure authoring (accordion editor; renders nothing unless NEXT_PUBLIC_AUTHORING=1) */}
-        <MeasureAuthoringGate />
+        {/* Read-only measure drill-down (formulas + indicators by section; logged-in only,
+            renders nothing unless the collab/Supabase layer is configured) */}
+        <MeasureDrilldownGate />
 
         {/* Mobile: chart available below the list */}
         <section className="sm:hidden">
