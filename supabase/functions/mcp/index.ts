@@ -1326,6 +1326,494 @@ var graph_seed_default = {
         citation: "Natural gas LHV ~34 GJ per 1000 m\xB3",
         confidence: "medium"
       }
+    },
+    {
+      id: "ind_nuclear_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz5_0",
+      value: 7700,
+      unit: "$/kW",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0439 CAPEX \u0410\u042D\u0421 (capexNuclear, \u043B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB) \u2014 7700 $/\u043A\u0412\u0442",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_kz1_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz1_0",
+      value: 500,
+      unit: "$/kW",
+      provenance: {
+        source_type: "literature",
+        citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0422\u042D\u0426 (capexCoalChpEfficiency, \u043B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB) \u2014 500 $/\u043A\u0412\u0442",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_kz3_0_solar",
+      key: "capex_ud_solar",
+      owner_kind: "object",
+      owner_ref: "obj_kz3_0",
+      value: 500,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA Renewable Power Generation Costs 2023 \u2014 solar PV utility-scale ~500 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz3_0_wind",
+      key: "capex_ud_wind",
+      owner_kind: "object",
+      owner_ref: "obj_kz3_0",
+      value: 900,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA Renewable Power Generation Costs 2023 \u2014 onshore wind ~900 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_coal_carbon",
+      key: "carbon_content",
+      owner_kind: "resource",
+      owner_ref: "coal",
+      value: 0.4,
+      unit: "tC/t",
+      provenance: {
+        source_type: "standard",
+        citation: "IPCC default carbon content of coal (\u22480.4 tC/t for sub-bituminous)",
+        confidence: "high",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz4_0_solar",
+      key: "capex_ud_solar",
+      owner_kind: "object",
+      owner_ref: "obj_kz4_0",
+      value: 500,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA Renewable Power Generation Costs 2023 \u2014 solar PV ~500 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz4_0_wind",
+      key: "capex_ud_wind",
+      owner_kind: "object",
+      owner_ref: "obj_kz4_0",
+      value: 900,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA Renewable Power Generation Costs 2023 \u2014 onshore wind ~900 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz4_1_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz4_1",
+      value: 1e3,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u0433\u0430\u0437\u043E\u0432\u044B\u0439 \u043F\u0438\u043A\u0435\u0440 CCGT/OCGT (MACC!E49)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz4_2_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz4_2",
+      value: 1e3,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0422\u042D\u0426 \u2014 \u0438\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u044B\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_4_1)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz4_3_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz4_3",
+      value: 100,
+      unit: "$/\u043A\u0412\u0442(\u0442)",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u043F\u0435\u0440\u0435\u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F \u0432 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u0443\u044E (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_4_2)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz6_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz6_0",
+      value: 1750,
+      unit: "$/\u043A\u0412\u0442(\u044D)",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0423\u0434. CAPEX \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0432\u043E\u0433\u043E \u043D\u0430\u0441\u043E\u0441\u0430 >1\u041C\u0412\u0442 (MACC!E51)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz7_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz7_0",
+      value: 150,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0423\u0434. CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u0430 (Euroheat & Power; MACC!E52)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz8_0_solar",
+      key: "capex_ud_solar",
+      owner_kind: "object",
+      owner_ref: "obj_kz8_0",
+      value: 500,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA 2023 \u2014 solar PV ~500 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz8_0_wind",
+      key: "capex_ud_wind",
+      owner_kind: "object",
+      owner_ref: "obj_kz8_0",
+      value: 900,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "IRENA 2023 \u2014 onshore wind ~900 $/\u043A\u0412\u0442",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz8_3_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz8_3",
+      value: 1e3,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u0433\u0430\u0437\u043E\u0432\u044B\u0439 \u043F\u0438\u043A\u0435\u0440 (MACC!E49)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz8_4_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz8_4",
+      value: 200,
+      unit: "$/\u043A\u0412\u0442(\u0442)",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_3)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz8_2_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz8_2",
+      value: 3e3,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u0438\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u043E\u0439 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_1)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz9_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz9_0",
+      value: 2500,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0423\u0434. CAPEX \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0430 \u0412\u042D\u0420, \u043F\u0440\u043E\u043C\u044B\u0448\u043B. \u0442\u0435\u043F\u043B\u043E\u043E\u0431\u043C\u0435\u043D\u043D\u0438\u043A\u0438 (MACC!E53)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz10_0_capex",
+      key: "capex_per_vehicle",
+      owner_kind: "object",
+      owner_ref: "obj_kz10_0",
+      value: 5e3,
+      unit: "$/\u0430\u0432\u0442\u043E",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0420\u0430\u0437\u043D\u0438\u0446\u0430 CAPEX EV vs \u0414\u0412\u0421, IEA EV Outlook 2024 (MACC!E54)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz11_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz11_0",
+      value: 100,
+      unit: "$/\u043C\xB2",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0423\u0434. CAPEX \u0443\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u044F (\u0444\u0430\u0441\u0430\u0434+\u043E\u043A\u043D\u0430+\u043A\u0440\u043E\u0432\u043B\u044F, MACC!E55)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz12_0_capex",
+      key: "capex_ud_km",
+      owner_kind: "object",
+      owner_ref: "obj_kz12_0",
+      value: 0.5,
+      unit: "mUSD/\u043A\u043C",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u0430, \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0430 \u0433\u0430\u0437\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_3)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz12_1_capex",
+      key: "capex_ud_conn",
+      owner_kind: "object",
+      owner_ref: "obj_kz12_1",
+      value: 2,
+      unit: "\u0442\u044B\u0441. $/\u0448\u0442",
+      provenance: {
+        source_type: "expert_estimate",
+        citation: "\u0423\u0434. CAPEX \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F \u043F\u043E\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043B\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_5)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz13_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz13_0",
+      value: 150,
+      unit: "$/\u043A\u0412\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "MACC!E52 \u2014 Euroheat & Power, \u0443\u0434. CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u0430",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz14_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz14_0",
+      value: 8,
+      unit: "\u0442\u044B\u0441. $/\u043E\u0431\u044A\u0435\u043A\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "EPA LDAR cost \u2014 \u043E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435+\u0440\u0435\u043C\u043E\u043D\u0442 (in_14_3)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz14_1_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz14_1",
+      value: 3,
+      unit: "\u0442\u044B\u0441. $/\u043E\u0431\u044A\u0435\u043A\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "FLIR GF320 OGI \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435 (in_14_4)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz15_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz15_0",
+      value: 500,
+      unit: "$/\u0442\u044B\u0441.\u043C\xB3/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "literature",
+        citation: "\u041C\u0430\u043B\u044B\u0435 \u0413\u0422\u0423 \u2014 \u0443\u0434. CAPEX \u0413\u0422\u042D\u0421/\u043A\u043E\u043C\u043F\u0440\u0435\u0441\u0441\u0438\u0438 (in_15_3)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz17_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz17_0",
+      value: 0.1,
+      unit: "mUSD/\u043A\u043C",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0417\u0430\u043C\u0435\u043D\u0430 \u0443\u043F\u043B\u043E\u0442\u043D\u0435\u043D\u0438\u0439, \u041A\u0421 \u2014 \u0443\u0434. CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 (in_17_4)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz18_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz18_0",
+      value: 50,
+      unit: "mUSD/\u0437\u0430\u0432\u043E\u0434",
+      provenance: {
+        source_type: "literature",
+        citation: "\u041F\u043E\u043C\u043E\u043B\u044C\u043D\u044B\u0435 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u0438, \u0441\u0438\u043B\u043E\u0441\u044B \u2014 \u0443\u0434. CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0437\u0430\u0432\u043E\u0434\u0430 (in_18_3)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz19_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz19_0",
+      value: 300,
+      unit: "$/\u0442 CO\u2082/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "literature",
+        citation: "MACC!E56 capexCcus \u2014 TRL 6-7, \u043F\u0435\u0440\u0432\u044B\u0435 \u043F\u0440\u043E\u0435\u043A\u0442\u044B",
+        confidence: "low",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz21_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz21_0",
+      value: 0.5,
+      unit: "mUSD/\u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0443",
+      provenance: {
+        source_type: "literature",
+        citation: "500-1000 \u043C\xB3/\u0441\u0443\u0442 \u2014 \u0443\u0434. CAPEX \u0431\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u043E\u0439 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 (in_21_3)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz22_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz22_0",
+      value: 30,
+      unit: "$/\u0433\u0430",
+      provenance: {
+        source_type: "literature",
+        citation: "Variable rate application \u2014 \u0443\u0434. CAPEX GPS/\u0434\u0430\u0442\u0447\u0438\u043A\u0438 (in_22_3)",
+        confidence: "medium",
+        geo_applicability: "global"
+      }
+    },
+    {
+      id: "ind_kz23_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz23_0",
+      value: 20,
+      unit: "$/\u0433\u0430",
+      provenance: {
+        source_type: "literature",
+        citation: "\u041F\u043E\u0434\u0441\u0435\u0432, \u043E\u0433\u043E\u0440\u0430\u0436\u0438\u0432\u0430\u043D\u0438\u0435 \u2014 \u0443\u0434. CAPEX \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F (in_23_3)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz24_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz24_0",
+      value: 2e3,
+      unit: "$/\u0433\u0430",
+      provenance: {
+        source_type: "literature",
+        citation: "MACC!E57 capexAfforestation \u2014 FAO Forestry, \u0430\u0434\u0430\u043F\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u043E \u0434\u043B\u044F \u041A\u0417 + \u043F\u043E\u043B\u0438\u0432",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz25_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz25_0",
+      value: 5,
+      unit: "mUSD/\u043F\u043E\u043B\u0438\u0433\u043E\u043D",
+      provenance: {
+        source_type: "literature",
+        citation: "\u041A\u0440\u0443\u043F\u043D\u044B\u0435 \u0433\u043E\u0440\u043E\u0434\u0430 \u2014 \u0443\u0434. CAPEX \u0441\u0438\u0441\u0442\u0435\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 (in_25_3)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
+    },
+    {
+      id: "ind_kz26_0_capex",
+      key: "capex_ud",
+      owner_kind: "object",
+      owner_ref: "obj_kz26_0",
+      value: 10,
+      unit: "mUSD/\u0448\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "\u0410\u044D\u0440\u043E\u0431\u043D\u0430\u044F \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0430 + \u0431\u0438\u043E\u0433\u0430\u0437 \u2014 \u0443\u0434. CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u041A\u041E\u0421 (in_26_3)",
+        confidence: "medium",
+        geo_applicability: "kz_specific"
+      }
     }
   ],
   pools: [
@@ -2288,6 +2776,36 @@ var measures_seed_default = {
             confidence: "low",
             geo_applicability: "kz_specific"
           }
+        },
+        program_capex: {
+          value: 300,
+          unit: "mUSD",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0430\u0440\u0430\u0433\u0430\u043D\u0434\u0430, 10-15 \u0448\u0430\u0445\u0442 \u2014 CAPEX \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 (in_16_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        om_rate: {
+          value: 0.04,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX/\u0433\u043E\u0434",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 (in_16_7)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        methane_price: {
+          value: 150,
+          unit: "$/\u0442\u044B\u0441. \u043C\xB3",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0412\u044B\u0433\u043E\u0434\u0430 \u043E\u0442 \u043F\u0440\u043E\u0434\u0430\u0436\u0438 \u043C\u0435\u0442\u0430\u043D\u0430 (in_16_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -2311,18 +2829,22 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "tech_mine_degas",
-          capacity: 9.791795506081222,
+          capacity: {
+            ref: "activity"
+          },
           unit: "\u043C\u043B\u043D \u043C\xB3",
-          capex_musd: 300,
-          opex_musd: 12
+          capex_musd: {
+            ref: "program_capex"
+          }
         }
       ],
       materials: [
         {
           resource_ref: "methane",
           side: "retired",
-          qty: 9791.795506081224,
-          price: 150,
+          price: {
+            ref: "methane_price"
+          },
           unit: "\u0442\u044B\u0441. \u043C\xB3"
         }
       ],
@@ -2347,47 +2869,92 @@ var measures_seed_default = {
         },
         "created_technologies[0].capex_musd": {
           provenance: {
-            source_type: "placeholder",
-            citation: "\u041E\u0446\u0435\u043D\u043A\u0430 CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
-            confidence: "low"
-          },
-          binding: {
-            mode: "new"
+            source_type: "expert_estimate",
+            citation: "CAPEX \u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 = \u0432\u0445\u043E\u0434 in_16_2",
+            confidence: "medium"
           }
         },
         "created_technologies[0].opex_musd": {
           provenance: {
-            source_type: "placeholder",
-            citation: "\u041E\u0446\u0435\u043D\u043A\u0430 OPEX \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
-            confidence: "low"
-          },
-          binding: {
-            mode: "new"
+            source_type: "expert_estimate",
+            citation: "\u0422\u041E\u0438\u0420 = CAPEX \xD7 \u0434\u043E\u043B\u044F in_16_7",
+            confidence: "medium"
           }
         },
         "materials[0].qty": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0412\u044B\u0441\u0432\u043E\u0431\u043E\u0436\u0434\u0430\u0435\u043C\u044B\u0439 \u043C\u0435\u0442\u0430\u043D",
-            confidence: "low"
-          },
-          binding: {
-            mode: "reuse",
-            ref: "created_technologies[0].capacity"
+            citation: "\u041E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430 = \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C \xD7 1000 (\u043C\u043B\u043D\u2192\u0442\u044B\u0441. \u043C\xB3)",
+            confidence: "medium"
           }
         },
         "materials[0].price": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0426\u0435\u043D\u0430 \u043C\u0435\u0442\u0430\u043D\u0430 150 $/\u0442\u044B\u0441. \u043C\xB3",
-            confidence: "low"
-          },
-          binding: {
-            mode: "new"
+            citation: "\u0412\u044B\u0433\u043E\u0434\u0430 \u043E\u0442 \u043F\u0440\u043E\u0434\u0430\u0436\u0438 \u043C\u0435\u0442\u0430\u043D\u0430 = in_16_3",
+            confidence: "medium"
+          }
+        },
+        "inputs.program_capex": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_16_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.om_rate": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_16_7",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.methane_price": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_16_3",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         }
       },
-      mechanism_subtype: "non_co2"
+      mechanism_subtype: "non_co2",
+      computed: {
+        "created_technologies[0].opex_musd": {
+          label: {
+            ru: "\u0422\u041E\u0438\u0420 \u0441\u0438\u0441\u0442\u0435\u043C \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+            en: "Degas O&M"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "program_capex"
+              },
+              {
+                ref: "om_rate"
+              }
+            ]
+          }
+        },
+        "materials[0].qty": {
+          label: {
+            ru: "\u041E\u0431\u044A\u0451\u043C \u0443\u0442\u0438\u043B\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u043C\u0435\u0442\u0430\u043D\u0430, \u0442\u044B\u0441. \u043C\xB3",
+            en: "Recovered methane, k m\xB3"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "activity"
+              },
+              1e3
+            ]
+          }
+        }
+      }
     },
     {
       id: "kz-1",
@@ -2436,6 +3003,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "global"
           }
+        },
+        cap_mw: {
+          value: 15e3,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C, \u043E\u0446\u0435\u043D\u043A\u0430 \u0434\u0435\u0439\u0441\u0442\u0432\u0443\u044E\u0449\u0435\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C14)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        project_factor: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u043F\u0440\u043E\u0435\u043A\u0442\u043D\u044B\u0445 \u0438 \u043F\u0443\u0441\u043A\u043E\u043D\u0430\u043B\u0430\u0434\u043E\u0447\u043D\u044B\u0445 \u0440\u0430\u0431\u043E\u0442 \u2014 30% \u043E\u0442 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_1_5)",
+            confidence: "medium",
+            geo_applicability: "global"
+          }
         }
       },
       abatement: {
@@ -2459,11 +3046,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz1_0",
-          capex_musd: 7500
+          capacity: {
+            ref: "cap_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
-          technology_ref: "obj_kz1_1",
-          capex_musd: 2250
+          technology_ref: "obj_kz1_1"
         }
       ],
       materials: [
@@ -2479,20 +3068,6 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0443\u0440\u0431\u0438\u043D \u0438 \u043A\u043E\u0442\u043B\u043E\u0432",
-            confidence: "medium"
-          }
-        },
-        "created_technologies[1].capex_musd": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "\u041F\u0440\u043E\u0435\u043A\u0442\u043D\u044B\u0435 \u0438 \u043F\u0443\u0441\u043A\u043E\u043D\u0430\u043B\u0430\u0434\u043E\u0447\u043D\u044B\u0435 \u0440\u0430\u0431\u043E\u0442\u044B",
-            confidence: "medium"
-          }
-        },
         "materials[0].cost_musd": {
           provenance: {
             source_type: "expert_estimate",
@@ -2520,6 +3095,24 @@ var measures_seed_default = {
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium"
           }
+        },
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_mw",
+            mode: "reuse"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C, 15000 \u041C\u0412\u0442 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C14)",
+            confidence: "medium"
+          }
+        },
+        "inputs.project_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "30% \u043E\u0442 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_1_5)",
+            confidence: "medium"
+          }
         }
       },
       mechanism_subtype: "efficiency",
@@ -2531,6 +3124,48 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_coal_fleet_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0442\u0443\u0440\u0431\u0438\u043D \u0438 \u043A\u043E\u0442\u043B\u043E\u0432",
+            en: "Turbine & boiler upgrade CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "cap_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz1_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u0440\u043E\u0435\u043A\u0442\u043D\u044B\u0445 \u0438 \u041F\u041D\u0420",
+            en: "Engineering & commissioning CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "project_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -2607,33 +3242,31 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        solar_share: {
+          value: 0.25,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u0412\u0418\u042D-\u043C\u0438\u043A\u0441\u0435 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        grid_factor: {
+          value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u0441\u0435\u0442\u0438 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435, % \u043E\u0442 CAPEX \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
         formula: {
-          op: "mul",
-          args: [
-            {
-              ref: "cap_mw"
-            },
-            8760,
-            {
-              ref: "cf"
-            },
-            {
-              op: "sub",
-              args: [
-                1,
-                {
-                  ref: "curtailment"
-                }
-              ]
-            },
-            {
-              ref: "res:coal#ef"
-            },
-            1e-3
-          ]
+          ref: "abatement_kt"
         },
         formula_label: {
           ru: "\u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 8760 \xD7 \u041A\u0418\u0423\u041C \xD7 (1\u2212curtailment) \xD7 EF_\u0443\u0433\u043B\u044F \xD7 10\u207B\xB3",
@@ -2643,11 +3276,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz3_0",
-          capex_musd: 8e3
+          capacity: {
+            ref: "cap_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
-          technology_ref: "obj_kz3_1",
-          capex_musd: 1200
+          technology_ref: "obj_kz3_1"
         }
       ],
       materials: [
@@ -2663,60 +3298,196 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0412\u0418\u042D",
+            citation: "\u0412\u0432\u043E\u0434\u0438\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D, 10000 \u041C\u0412\u0442 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_6)",
+            confidence: "medium"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "\u0423\u0434. CAPEX \u0441\u043E\u043B\u043D\u0446\u0435/\u0432\u0435\u0442\u0435\u0440 (IRENA 2023, MACC!E47/E48) \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u0435\u0442\u0438 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435",
+            citation: "\u0421\u0435\u0442\u0438 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 = grid_factor \xD7 CAPEX \u0412\u0418\u042D",
             confidence: "medium"
           }
         },
         "materials[0].cost_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0422\u041E\u0438\u0420 \u0412\u0418\u042D",
+            citation: "\u0422\u041E\u0438\u0420 \u0412\u0418\u042D, 1.5% \u043E\u0442 CAPEX (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_9)",
             confidence: "medium"
           }
         },
         "materials[1].cost_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
+            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F (\u0441\u043D\u0438\u0436\u0435\u043D\u0438\u0435 CO\u2082 \u2192 \u0442 \u0443\u0433\u043B\u044F \xD7 \u0446\u0435\u043D\u0430)",
             confidence: "medium"
           }
         },
         "inputs.cap_mw": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            citation: "\u0412\u0432\u043E\u0434\u0438\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_6)",
             confidence: "medium"
           }
         },
         "inputs.cf": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            citation: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0439 \u041A\u0418\u0423\u041C \u0412\u0418\u042D \u0420\u041A \u22480.35",
             confidence: "medium"
           }
         },
         "inputs.curtailment": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            citation: "\u0414\u043E\u043B\u044F curtailment \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_2)",
             confidence: "medium"
           }
         },
-        "inputs.ef_coal": {
+        "inputs.solar_share": {
           provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u043C\u0438\u043A\u0441\u0435 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_3)",
+            confidence: "medium"
+          }
+        },
+        "inputs.grid_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u0441\u0435\u0442\u0438, % \u043E\u0442 CAPEX (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_3_4)",
+            confidence: "medium"
+          }
+        }
+      },
+      computed: {
+        abatement_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432 \u0412\u0418\u042D",
+            en: "Renewables abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "cap_mw"
+              },
+              8760,
+              {
+                ref: "cf"
+              },
+              {
+                op: "sub",
+                args: [
+                  1,
+                  {
+                    ref: "curtailment"
+                  }
+                ]
+              },
+              {
+                ref: "res:coal#ef"
+              },
+              1e-3
+            ]
+          }
+        },
+        blended_capex_ud: {
+          label: {
+            ru: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0439 \u0443\u0434. CAPEX \u0412\u0418\u042D",
+            en: "Blended renewables capex/kW"
+          },
+          formula: {
+            op: "add",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz3_0#capex_ud_wind"
+                  },
+                  {
+                    op: "sub",
+                    args: [
+                      1,
+                      {
+                        ref: "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz3_0#capex_ud_solar"
+                  },
+                  {
+                    ref: "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0412\u0418\u042D (\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F)",
+            en: "Renewables generation CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "blended_capex_ud"
+                  },
+                  {
+                    ref: "cap_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0441\u0435\u0442\u0435\u0439 \u0438 \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F",
+            en: "Grid & connection CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "grid_factor"
+              }
+            ]
           }
         }
       }
@@ -2768,6 +3539,46 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        cap_res_mw: {
+          value: 7e3,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C156)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        cap_chp_mw: {
+          value: 7e3,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_4_8)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        cap_boiler_mw: {
+          value: 2800,
+          unit: "\u041C\u0412\u0442(\u0442)",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C144)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        solar_share: {
+          value: 0.25,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u0412\u0418\u042D-\u043C\u0438\u043A\u0441\u0435",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -2806,21 +3617,33 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz4_0",
-          capex_musd: 5600
+          capacity: {
+            ref: "cap_res_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
           technology_ref: "obj_kz4_1",
-          capex_musd: 7e3
+          capacity: {
+            ref: "cap_chp_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
           technology_ref: "obj_kz4_3",
-          capex_musd: 280.00000000000006
+          capacity: {
+            ref: "cap_boiler_mw"
+          },
+          unit: "\u041C\u0412\u0442(\u0442)"
         }
       ],
       retired_technologies: [
         {
           technology_ref: "obj_kz4_2",
-          maintenance_capex_musd: 7e3
+          capacity: {
+            ref: "cap_chp_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         }
       ],
       materials: [
@@ -2846,31 +3669,122 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_res_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C156)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "Blended \u0443\u0434. CAPEX \u0412\u0418\u042D \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
+          }
+        },
+        "created_technologies[1].capacity": {
+          binding: {
+            ref: "in:cap_chp_mw",
+            mode: "reuse"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043F\u0438\u043A\u0435\u0440\u0430 = \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C157)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
+            citation: "\u0423\u0434. CAPEX \u043F\u0438\u043A\u0435\u0440\u0430 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
-        "retired_technologies[0].maintenance_capex_musd": {
+        "created_technologies[2].capacity": {
+          binding: {
+            ref: "in:cap_boiler_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0422\u042D\u0426",
-            confidence: "medium"
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C144)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "created_technologies[2].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
+            citation: "\u0423\u0434. CAPEX \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \xD7 \u0442\u0435\u043F\u043B. \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
+            confidence: "medium"
+          }
+        },
+        "retired_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_chp_mw",
+            mode: "reuse"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_4_8)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u044B\u0439 \u0443\u0434. CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
+            confidence: "medium"
+          }
+        },
+        "inputs.cap_res_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C156)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.cap_chp_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_4_8)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.cap_boiler_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C144)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.solar_share": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u0412\u0418\u042D-\u043C\u0438\u043A\u0441\u0435",
             confidence: "medium"
           }
         },
@@ -2901,34 +3815,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.gen_displaced_gwh": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
-        },
-        "inputs.gen_gas_gwh": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_gas": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
         }
       },
       mechanism_subtype: "fuel_switch",
@@ -2943,6 +3829,139 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_coal_generation",
           consumption_ref: "gen_displaced_gwh"
+        }
+      },
+      computed: {
+        blended_capex_ud: {
+          label: {
+            ru: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0439 \u0443\u0434. CAPEX \u0412\u0418\u042D",
+            en: "Blended renewables capex/kW"
+          },
+          formula: {
+            op: "add",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz4_0#capex_ud_wind"
+                  },
+                  {
+                    op: "sub",
+                    args: [
+                      1,
+                      {
+                        ref: "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz4_0#capex_ud_solar"
+                  },
+                  {
+                    ref: "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            en: "Renewables CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "blended_capex_ud"
+                  },
+                  {
+                    ref: "cap_res_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0433\u0430\u0437\u043E\u0432\u043E\u0433\u043E \u043F\u0438\u043A\u0435\u0440\u0430",
+            en: "Gas peaker CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz4_1#capex_ud"
+                  },
+                  {
+                    ref: "cap_chp_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          label: {
+            ru: "CAPEX \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
+            en: "Boiler house CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz4_3#capex_ud"
+                  },
+                  {
+                    ref: "cap_boiler_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          label: {
+            ru: "\u0418\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u044B\u0439 CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0422\u042D\u0426",
+            en: "Avoided CHP upgrade CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz4_2#capex_ud"
+                  },
+                  {
+                    ref: "cap_chp_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -2974,14 +3993,80 @@ var measures_seed_default = {
             geo_applicability: "global"
           }
         },
-        gen_mwh: {
-          value: 26805600,
-          unit: "\u041C\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
+        cap_mw: {
+          value: 3600,
+          unit: "\u041C\u0412\u0442",
           provenance: {
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            citation: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0410\u042D\u0421 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C191)",
             confidence: "medium",
             geo_applicability: "kz_specific"
+          }
+        },
+        kium: {
+          value: 0.85,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "standard",
+            citation: "\u041A\u0418\u0423\u041C \u0410\u042D\u0421 \u2014 \u0442\u0438\u043F\u043E\u0432\u043E\u0439 \u0434\u043B\u044F PWR (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C183)",
+            confidence: "high",
+            geo_applicability: "global"
+          }
+        },
+        escalation: {
+          value: 1.3,
+          unit: "",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u0441\u043A\u0430\u043B\u0430\u0446\u0438\u044F CAPEX (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C182)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        }
+      },
+      computed: {
+        gen_mwh: {
+          label: {
+            ru: "\u0412\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u0410\u042D\u0421",
+            en: "Nuclear generation"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "cap_mw"
+              },
+              8760,
+              {
+                ref: "kium"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0410\u042D\u0421",
+            en: "Nuclear plant CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "cap_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz5_0#capex_ud"
+                  },
+                  {
+                    ref: "escalation"
+                  }
+                ]
+              },
+              1e3
+            ]
           }
         }
       },
@@ -3006,7 +4091,10 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz5_0",
-          capex_musd: 36036
+          capacity: {
+            ref: "cap_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         }
       ],
       materials: [
@@ -3027,10 +4115,14 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u043E \u0410\u042D\u0421",
+            citation: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0410\u042D\u0421, 3600 \u041C\u0412\u0442 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B!C191)",
             confidence: "medium"
           }
         },
@@ -3053,20 +4145,6 @@ var measures_seed_default = {
             source_type: "expert_estimate",
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
-          }
-        },
-        "inputs.gen_mwh": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
           }
         }
       },
@@ -3132,19 +4210,51 @@ var measures_seed_default = {
             confidence: "high",
             geo_applicability: "kz_specific"
           }
+        },
+        heat_cf: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443, \u043E\u0442\u043E\u043F\u0438\u0442\u0435\u043B\u044C\u043D\u044B\u0439 \u0441\u0435\u0437\u043E\u043D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_5)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        loss_reduction: {
+          value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0435\u0440\u044C \u0432 \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u044F\u0445 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        cop: {
+          value: 3.5,
+          unit: "COP",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "COP \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0422\u041D, \u0437\u0438\u043C\u043D\u0438\u0439 \u0440\u0435\u0436\u0438\u043C (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        net_factor: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u0435\u0439, % \u043E\u0442 CAPEX \u0422\u041D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
         formula: {
-          op: "mul",
-          args: [
-            {
-              ref: "heat_kgcal"
-            },
-            {
-              ref: "ef_boiler"
-            }
-          ]
+          ref: "abatement_kt"
         },
         formula_label: {
           ru: "\u0437\u0430\u043C\u0435\u0449\u0451\u043D\u043D\u043E\u0435 \u0442\u0435\u043F\u043B\u043E \xD7 EF_\u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439_\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
@@ -3154,11 +4264,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz6_0",
-          capex_musd: 1040.5265410958903
+          capacity: {
+            ref: "hp_elec_mw"
+          },
+          unit: "\u041C\u0412\u0442(\u044D)"
         },
         {
-          technology_ref: "obj_kz6_1",
-          capex_musd: 312.15796232876704
+          technology_ref: "obj_kz6_1"
         }
       ],
       materials: [
@@ -3184,18 +4296,82 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "hp_elec_mw",
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043D\u0430\u0441\u043E\u0441\u044B",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u041D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C231)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "\u0423\u0434. CAPEX \u0422\u041D \xD7 \u044D\u043B\u0435\u043A\u0442\u0440. \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0441\u0435\u0442\u0435\u0439 \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u0435\u0439 = net_factor \xD7 CAPEX \u0422\u041D",
             confidence: "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u0437\u0430\u043C\u0435\u0449\u0435\u043D\u0438\u044F \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u043C\u0438 \u043D\u0430\u0441\u043E\u0441\u0430\u043C\u0438 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C214)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439/\u0422\u042D\u0426 (MACC!E41)",
+            confidence: "high"
+          }
+        },
+        "inputs.heat_cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_5)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.loss_reduction": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0435\u0440\u044C \u0432 \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u044F\u0445 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.cop": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "COP \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0433\u043E \u0422\u041D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_2)",
+            confidence: "medium"
+          }
+        },
+        "inputs.net_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u0435\u0439, % CAPEX (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_6_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -3225,20 +4401,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.heat_kgcal": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
         }
       },
       mechanism_subtype: "electrification",
@@ -3253,6 +4415,126 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_coal_heat_supply",
           consumption_ref: "heat_kgcal"
+        }
+      },
+      computed: {
+        abatement_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432 \u0422\u041D",
+            en: "Heat-pump abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "heat_kgcal"
+              },
+              {
+                ref: "ef_boiler"
+              }
+            ]
+          }
+        },
+        hp_thermal_mw: {
+          label: {
+            ru: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u041D",
+            en: "HP thermal capacity"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                op: "div",
+                args: [
+                  {
+                    op: "mul",
+                    args: [
+                      {
+                        ref: "abatement_kt"
+                      },
+                      1e3,
+                      1.163
+                    ]
+                  },
+                  {
+                    op: "mul",
+                    args: [
+                      8760,
+                      {
+                        ref: "heat_cf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                op: "sub",
+                args: [
+                  1,
+                  {
+                    ref: "loss_reduction"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        hp_elec_mw: {
+          label: {
+            ru: "\u042D\u043B\u0435\u043A\u0442\u0440\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u041D",
+            en: "HP electric capacity"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                ref: "hp_thermal_mw"
+              },
+              {
+                ref: "cop"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0445 \u043D\u0430\u0441\u043E\u0441\u043E\u0432",
+            en: "Heat pumps CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "hp_elec_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz6_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0442\u0435\u043F\u043B\u043E\u0441\u0435\u0442\u0435\u0439",
+            en: "Heat-network upgrade CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "net_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -3284,12 +4566,12 @@ var measures_seed_default = {
             geo_applicability: "global"
           }
         },
-        heat_kgcal: {
-          value: 51300,
+        heat_total_kgcal: {
+          value: 95e3,
           unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
+            citation: "\u041E\u0431\u0449\u0438\u0439 \u043E\u0431\u044A\u0451\u043C \u043F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0441\u0442\u0432\u0430 \u0442\u0435\u043F\u043B\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_1)",
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
@@ -3299,23 +4581,55 @@ var measures_seed_default = {
           unit: "\u0442CO\u2082/\u0413\u043A\u0430\u043B",
           provenance: {
             source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
+            citation: "EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439/\u0422\u042D\u0426 (MACC!E41)",
             confidence: "high",
+            geo_applicability: "kz_specific"
+          }
+        },
+        heat_cf: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        loss_reduction: {
+          value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0435\u0440\u044C (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        transition_share: {
+          value: 0.6,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_7)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        grid_factor: {
+          value: 0.4,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u0441\u0435\u0442\u0438, % CAPEX \u043A\u043E\u0442\u043B\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_2)",
+            confidence: "medium",
             geo_applicability: "kz_specific"
           }
         }
       },
       abatement: {
         formula: {
-          op: "mul",
-          args: [
-            {
-              ref: "heat_kgcal"
-            },
-            {
-              ref: "ef_boiler"
-            }
-          ]
+          ref: "abatement_kt"
         },
         formula_label: {
           ru: "\u0437\u0430\u043C\u0435\u0449\u0451\u043D\u043D\u043E\u0435 \u0442\u0435\u043F\u043B\u043E \xD7 EF_\u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439_\u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
@@ -3325,11 +4639,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz7_0",
-          capex_musd: 3405.359589041096
+          capacity: {
+            ref: "eb_power_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
-          technology_ref: "obj_kz7_1",
-          capex_musd: 1362.1438356164385
+          technology_ref: "obj_kz7_1"
         }
       ],
       materials: [
@@ -3350,18 +4666,83 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "eb_power_mw",
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u043E\u0432 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C271)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "\u0423\u0434. CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u0430 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439 = grid_factor \xD7 CAPEX \u043A\u043E\u0442\u043B\u043E\u0432",
             confidence: "medium"
+          }
+        },
+        "inputs.heat_total_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u0449\u0438\u0439 \u043E\u0431\u044A\u0451\u043C \u0442\u0435\u043F\u043B\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_1)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (MACC!E41)",
+            confidence: "high"
+          }
+        },
+        "inputs.heat_cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.loss_reduction": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0435\u0440\u044C (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.transition_share": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u043F\u0435\u0440\u0435\u0445\u043E\u0434\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_7)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.grid_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u0441\u0435\u0442\u0438 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_7_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -3384,20 +4765,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.heat_kgcal": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
         }
       },
       mechanism_subtype: "electrification",
@@ -3412,6 +4779,151 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_coal_heat_supply",
           consumption_ref: "heat_kgcal"
+        }
+      },
+      computed: {
+        total_thermal_mw: {
+          label: {
+            ru: "\u041E\u0431\u0449\u0438\u0435 \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u0438",
+            en: "Total thermal capacity"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "heat_total_kgcal"
+                  },
+                  1.163,
+                  1e3
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  8760,
+                  {
+                    ref: "heat_cf"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        eb_power_mw: {
+          label: {
+            ru: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u043E\u0432",
+            en: "Electric boiler capacity"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "total_thermal_mw"
+              },
+              {
+                op: "sub",
+                args: [
+                  1,
+                  {
+                    ref: "loss_reduction"
+                  }
+                ]
+              },
+              {
+                ref: "transition_share"
+              }
+            ]
+          }
+        },
+        heat_replaced_kgcal: {
+          label: {
+            ru: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0435 \u0442\u0435\u043F\u043B\u043E",
+            en: "Displaced heat"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                op: "div",
+                args: [
+                  {
+                    op: "mul",
+                    args: [
+                      {
+                        ref: "eb_power_mw"
+                      },
+                      8760,
+                      {
+                        ref: "heat_cf"
+                      }
+                    ]
+                  },
+                  1.163
+                ]
+              },
+              1e-3
+            ]
+          }
+        },
+        abatement_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432",
+            en: "Abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "heat_replaced_kgcal"
+              },
+              {
+                ref: "ef_boiler"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u043E\u0432",
+            en: "Electric boilers CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "eb_power_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz7_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            en: "Grid expansion CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "grid_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -3462,6 +4974,56 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        cap_res_mw: {
+          value: 1342.857142857143,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C113)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        cap_chp_mw: {
+          value: 1e3,
+          unit: "\u041C\u0412\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0437\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0439 \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_10)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        cap_boiler_mw: {
+          value: 400,
+          unit: "\u041C\u0412\u0442(\u0442)",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C100)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        solar_share: {
+          value: 0.25,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u0412\u0418\u042D-\u043C\u0438\u043A\u0441\u0435",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        grid_attach: {
+          value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u0438\u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435 \u043F\u0438\u043A\u0435\u0440\u043E\u0432 \u043A \u0441\u0435\u0442\u044F\u043C, % CAPEX (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_8)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -3500,25 +5062,36 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz8_0",
-          capex_musd: 1074.285714285714
+          capacity: {
+            ref: "cap_res_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
-          technology_ref: "obj_kz8_1",
-          capex_musd: 150
+          technology_ref: "obj_kz8_1"
         },
         {
           technology_ref: "obj_kz8_3",
-          capex_musd: 1e3
+          capacity: {
+            ref: "cap_chp_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
           technology_ref: "obj_kz8_4",
-          capex_musd: 80
+          capacity: {
+            ref: "cap_boiler_mw"
+          },
+          unit: "\u041C\u0412\u0442(\u0442)"
         }
       ],
       retired_technologies: [
         {
           technology_ref: "obj_kz8_2",
-          maintenance_capex_musd: 3e3
+          capacity: {
+            ref: "cap_chp_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         }
       ],
       materials: [
@@ -3544,39 +5117,141 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_res_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C113)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "Blended \u0443\u0434. CAPEX \u0412\u0418\u042D \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0420\u0430\u0437\u0432\u0438\u0442\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439 (\u043D\u0430 \u043F\u0438\u043A\u0435\u0440\u044B)",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0438 = grid_attach \xD7 CAPEX \u043F\u0438\u043A\u0435\u0440\u0430",
             confidence: "medium"
           }
         },
-        "retired_technologies[0].maintenance_capex_musd": {
+        "created_technologies[2].capacity": {
+          binding: {
+            ref: "in:cap_chp_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041E\u0442\u043A\u0430\u0437 \u043E\u0442 \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0422\u042D\u0426",
-            confidence: "medium"
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043F\u0438\u043A\u0435\u0440\u0430 = \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C120)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "created_technologies[2].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0413\u0430\u0437\u043E\u0442\u0443\u0440\u0431\u0438\u043D\u043D\u044B\u0439 \u043F\u0438\u043A\u0435\u0440",
+            citation: "\u0423\u0434. CAPEX \u043F\u0438\u043A\u0435\u0440\u0430 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
-        "created_technologies[3].capex_musd": {
+        "created_technologies[3].capacity": {
+          binding: {
+            ref: "in:cap_boiler_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041A\u043E\u0442\u0435\u043B\u044C\u043D\u0430\u044F",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C100)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[3].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0434. CAPEX \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 \xD7 \u0442\u0435\u043F\u043B. \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
+          }
+        },
+        "retired_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_chp_mw",
+            mode: "reuse"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_10)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u044B\u0439 \u0443\u0434. CAPEX \u0422\u042D\u0426 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
+            confidence: "medium"
+          }
+        },
+        "inputs.cap_res_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u043A\u0432\u0438\u0432\u0430\u043B\u0435\u043D\u0442\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u0418\u042D (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C113)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.cap_chp_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_10)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.cap_boiler_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0435\u043F\u043B\u043E\u0432\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C100)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.solar_share": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u0441\u043E\u043B\u043D\u0446\u0430 \u0432 \u0412\u0418\u042D-\u043C\u0438\u043A\u0441\u0435",
+            confidence: "medium"
+          }
+        },
+        "inputs.grid_attach": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u0438\u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u0435 \u043F\u0438\u043A\u0435\u0440\u043E\u0432 \u043A \u0441\u0435\u0442\u044F\u043C (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_8_8)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -3606,34 +5281,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.gen_displaced_gwh": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
-        },
-        "inputs.gen_gas_gwh": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_gas": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
         }
       },
       mechanism_subtype: "fuel_switch",
@@ -3648,6 +5295,156 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_coal_generation",
           consumption_ref: "gen_displaced_gwh"
+        }
+      },
+      computed: {
+        blended_capex_ud: {
+          label: {
+            ru: "\u0421\u0440\u0435\u0434\u043D\u0435\u0432\u0437\u0432\u0435\u0448\u0435\u043D\u043D\u044B\u0439 \u0443\u0434. CAPEX \u0412\u0418\u042D",
+            en: "Blended renewables capex/kW"
+          },
+          formula: {
+            op: "add",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz8_0#capex_ud_wind"
+                  },
+                  {
+                    op: "sub",
+                    args: [
+                      1,
+                      {
+                        ref: "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz8_0#capex_ud_solar"
+                  },
+                  {
+                    ref: "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0412\u0418\u042D (\u0441\u043E\u043B\u043D\u0446\u0435+\u0432\u0435\u0442\u0435\u0440)",
+            en: "Renewables CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "blended_capex_ud"
+                  },
+                  {
+                    ref: "cap_res_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          label: {
+            ru: "CAPEX \u0433\u0430\u0437\u043E\u0432\u043E\u0433\u043E \u043F\u0438\u043A\u0435\u0440\u0430",
+            en: "Gas peaker CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz8_3#capex_ud"
+                  },
+                  {
+                    ref: "cap_chp_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            en: "Grid expansion CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[2].capex_musd"
+              },
+              {
+                ref: "grid_attach"
+              }
+            ]
+          }
+        },
+        "created_technologies[3].capex_musd": {
+          label: {
+            ru: "CAPEX \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439",
+            en: "Boiler house CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz8_4#capex_ud"
+                  },
+                  {
+                    ref: "cap_boiler_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          label: {
+            ru: "\u0418\u0437\u0431\u0435\u0433\u0430\u0435\u043C\u044B\u0439 CAPEX \u0441\u0442\u0440\u043E\u0438\u0442\u0435\u043B\u044C\u0441\u0442\u0432\u0430 \u0422\u042D\u0426",
+            en: "Avoided CHP construction CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "obj:obj_kz8_2#capex_ud"
+                  },
+                  {
+                    ref: "cap_chp_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -3725,7 +5522,10 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz9_0",
-          capex_musd: 6250
+          capacity: {
+            ref: "cap_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         }
       ],
       materials: [
@@ -3741,10 +5541,39 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:cap_mw",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
+            citation: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u0430\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u042D\u0420 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_9_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "\u0423\u0434. CAPEX \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u0430 \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C",
+            confidence: "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B\u044C\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0412\u042D\u0420 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_9_2)",
+            confidence: "medium"
+          }
+        },
+        "inputs.cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0436\u0438\u0434\u0430\u0435\u043C\u044B\u0439 \u041A\u0418\u0423\u041C (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_9_1)",
             confidence: "medium"
           }
         },
@@ -3761,27 +5590,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.cap_mw": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.cf": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
         }
       },
       mechanism_subtype: "efficiency",
@@ -3796,6 +5604,31 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_whr_capacity",
           consumption_ref: "cap_mw"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u043E\u0432 \u0412\u042D\u0420",
+            en: "Waste-heat generators CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "cap_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz9_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -3856,6 +5689,46 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        mileage: {
+          value: 15e3,
+          unit: "\u043A\u043C/\u0433\u043E\u0434",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u0435\u0434\u043D\u0438\u0439 \u043F\u0440\u043E\u0431\u0435\u0433 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        consumption: {
+          value: 8,
+          unit: "\u043B/100\u043A\u043C",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u0430\u0441\u0445\u043E\u0434 \u0414\u0412\u0421 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        ef_gasoline: {
+          value: 2.31,
+          unit: "\u043A\u0433CO\u2082/\u043B",
+          provenance: {
+            source_type: "standard",
+            citation: "EF \u0431\u0435\u043D\u0437\u0438\u043D\u0430, IPCC (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_7)",
+            confidence: "high",
+            geo_applicability: "global"
+          }
+        },
+        infra_per_car: {
+          value: 1e3,
+          unit: "$/\u0430\u0432\u0442\u043E",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0437\u0430\u0440\u044F\u0434\u043D\u043E\u0439 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B \u043D\u0430 1 \u0430\u0432\u0442\u043E (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_11)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -3863,16 +5736,7 @@ var measures_seed_default = {
           op: "sub",
           args: [
             {
-              op: "mul",
-              args: [
-                {
-                  ref: "base_emissions"
-                },
-                {
-                  ref: "share"
-                },
-                1e3
-              ]
+              ref: "gasoline_abate_kt"
             },
             {
               ref: "grid_growth_kt"
@@ -3887,11 +5751,17 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz10_0",
-          capex_musd: 7332.251082251083
+          capacity: {
+            ref: "num_ev_k"
+          },
+          unit: "\u0442\u044B\u0441. \u0448\u0442"
         },
         {
           technology_ref: "obj_kz10_1",
-          capex_musd: 1466.4502164502167
+          capacity: {
+            ref: "num_ev_k"
+          },
+          unit: "\u0442\u044B\u0441. \u0448\u0442"
         }
       ],
       materials: [
@@ -3907,18 +5777,101 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "num_ev_k",
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0418\u043D\u043A\u0440\u0435\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C EV \u043F\u0430\u0440\u043A\u0430",
+            citation: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E EV (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C331)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "literature",
+            citation: "\u0420\u0430\u0437\u043D\u0438\u0446\u0430 CAPEX EV/\u0414\u0412\u0421 \xD7 \u0447\u0438\u0441\u043B\u043E \u0430\u0432\u0442\u043E",
             confidence: "medium"
           }
         },
-        "created_technologies[1].capex_musd": {
+        "created_technologies[1].capacity": {
+          binding: {
+            ref: "num_ev_k",
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0417\u0430\u0440\u044F\u0434\u043D\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            citation: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E EV (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C331)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u043D\u0430 \u0430\u0432\u0442\u043E \xD7 \u0447\u0438\u0441\u043B\u043E \u0430\u0432\u0442\u043E",
             confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 \u2014 baseline \u0441\u0435\u043A\u0442\u043E\u0440\u0430 1.A.3",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u0414\u043E\u043B\u044F \u043C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_1)",
+            confidence: "medium"
+          }
+        },
+        "inputs.grid_growth_kt": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u043E\u0441\u0442 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432 \u044D\u043D\u0435\u0440\u0433\u043E\u0441\u0438\u0441\u0442\u0435\u043C\u044B \u043E\u0442 EV (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C330)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.mileage": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u0440\u0435\u0434\u043D\u0438\u0439 \u043F\u0440\u043E\u0431\u0435\u0433 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.consumption": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0420\u0430\u0441\u0445\u043E\u0434 \u0414\u0412\u0421 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.ef_gasoline": {
+          provenance: {
+            source_type: "standard",
+            citation: "EF \u0431\u0435\u043D\u0437\u0438\u043D\u0430 IPCC (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_7)",
+            confidence: "high"
+          }
+        },
+        "inputs.infra_per_car": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u043D\u0430 \u0430\u0432\u0442\u043E (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_10_11)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -3934,27 +5887,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0431\u0435\u043D\u0437\u0438\u043D\u0430",
             confidence: "medium"
           }
-        },
-        "inputs.base_emissions": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
-          }
-        },
-        "inputs.share": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
-          }
-        },
-        "inputs.grid_growth_kt": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
         }
       },
       mechanism_subtype: "electrification",
@@ -3965,6 +5897,112 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_road_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        gasoline_abate_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432 \u0437\u0430 \u0441\u0447\u0451\u0442 \u0431\u0435\u043D\u0437\u0438\u043D\u0430",
+            en: "Gasoline-side abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "base_emissions"
+              },
+              {
+                ref: "share"
+              },
+              1e3
+            ]
+          }
+        },
+        num_ev_k: {
+          label: {
+            ru: "\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E EV, \u0442\u044B\u0441. \u0448\u0442",
+            en: "EV count, thousand"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "gasoline_abate_kt"
+                  },
+                  1e3
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "mileage"
+                  },
+                  {
+                    op: "div",
+                    args: [
+                      {
+                        ref: "consumption"
+                      },
+                      100
+                    ]
+                  },
+                  {
+                    ref: "ef_gasoline"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "\u0418\u043D\u043A\u0440\u0435\u043C\u0435\u043D\u0442\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u043F\u0430\u0440\u043A\u0430 EV",
+            en: "Incremental EV fleet cost"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "num_ev_k"
+                  },
+                  {
+                    ref: "obj:obj_kz10_0#capex_per_vehicle"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0437\u0430\u0440\u044F\u0434\u043D\u043E\u0439 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B",
+            en: "Charging infrastructure CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "num_ev_k"
+                  },
+                  {
+                    ref: "infra_per_car"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -4035,6 +6073,56 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "global"
           }
+        },
+        num_buildings_k: {
+          value: 50,
+          unit: "\u0442\u044B\u0441. \u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u0437\u0434\u0430\u043D\u0438\u0439, \u0436\u0438\u043B\u0444\u043E\u043D\u0434 \u0441\u043E\u0432. \u043F\u043E\u0441\u0442\u0440\u043E\u0439\u043A\u0438 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_11_1)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        building_width: {
+          value: 15,
+          unit: "\u043C",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0428\u0438\u0440\u0438\u043D\u0430 \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B L361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        building_length: {
+          value: 45,
+          unit: "\u043C",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043B\u0438\u043D\u0430 \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B M361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        floors: {
+          value: 5,
+          unit: "\u044D\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u0442\u0430\u0436\u043D\u043E\u0441\u0442\u044C \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B O361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        window_factor: {
+          value: 0.2,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0417\u0430\u043C\u0435\u043D\u0430 \u043E\u043A\u043E\u043D/\u0434\u0432\u0435\u0440\u0435\u0439, 20% \u043E\u0442 \u0443\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_11_11)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -4073,12 +6161,10 @@ var measures_seed_default = {
       },
       created_technologies: [
         {
-          technology_ref: "obj_kz11_0",
-          capex_musd: 9e3
+          technology_ref: "obj_kz11_0"
         },
         {
-          technology_ref: "obj_kz11_1",
-          capex_musd: 1800
+          technology_ref: "obj_kz11_1"
         }
       ],
       materials: [
@@ -4100,17 +6186,94 @@ var measures_seed_default = {
       ],
       sources: {
         "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
-            source_type: "expert_estimate",
-            citation: "\u0423\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u0435 \u0444\u0430\u0441\u0430\u0434\u043E\u0432 \u0438 \u043A\u0440\u043E\u0432\u043B\u0438",
+            source_type: "literature",
+            citation: "\u0427\u0438\u0441\u043B\u043E \u0437\u0434\u0430\u043D\u0438\u0439 \xD7 \u043F\u043B\u043E\u0449\u0430\u0434\u044C \xD7 \u0443\u0434. CAPEX \xD7 \u0434\u043E\u043B\u044F \u0444\u0430\u0441\u0430\u0434\u0430",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0417\u0430\u043C\u0435\u043D\u0430 \u043E\u043A\u043E\u043D \u0438 \u0434\u0432\u0435\u0440\u0435\u0439",
+            citation: "\u041E\u043A\u043D\u0430/\u0434\u0432\u0435\u0440\u0438 = window_factor \xD7 CAPEX \u0443\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u044F",
             confidence: "medium"
+          }
+        },
+        "inputs.heat_before_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0442\u0435\u043F\u043B\u0430 \u0434\u043E \u043F\u0440\u043E\u0435\u043A\u0442\u0430 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C355)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.heat_after_kgcal": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u0435 \u0442\u0435\u043F\u043B\u0430 \u043F\u043E\u0441\u043B\u0435 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B C357)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "standard",
+            citation: "EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439 (MACC!E41)",
+            confidence: "high"
+          }
+        },
+        "inputs.derating": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u043E\u0441\u0430\u0434\u043A\u0430 \u041A\u041F\u0414 \u0422\u042D\u0426 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_11_5)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.num_buildings_k": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u0437\u0434\u0430\u043D\u0438\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_11_1)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.building_width": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0435\u043E\u043C\u0435\u0442\u0440\u0438\u044F \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B L361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.building_length": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0435\u043E\u043C\u0435\u0442\u0440\u0438\u044F \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B M361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.floors": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u042D\u0442\u0430\u0436\u043D\u043E\u0441\u0442\u044C \u0442\u0438\u043F\u043E\u0432\u043E\u0433\u043E \u041C\u041A\u0414 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B O361)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.window_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u043E\u043A\u043E\u043D/\u0434\u0432\u0435\u0440\u0435\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_11_11)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -4133,34 +6296,6 @@ var measures_seed_default = {
             citation: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u043B\u0435\u043D\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.heat_before_kgcal": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.heat_after_kgcal": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high"
-          }
-        },
-        "inputs.derating": {
-          provenance: {
-            source_type: "expert_estimate",
-            citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
-            confidence: "medium"
-          }
         }
       },
       mechanism_subtype: "demand_reduction",
@@ -4172,6 +6307,126 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_residential_heat",
           consumption_ref: "heat_before_kgcal"
+        }
+      },
+      computed: {
+        avg_area_m2: {
+          label: {
+            ru: "\u0421\u0440\u0435\u0434\u043D\u044F\u044F \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u0437\u0434\u0430\u043D\u0438\u044F",
+            en: "Average building floor area"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "building_width"
+              },
+              {
+                ref: "building_length"
+              },
+              {
+                ref: "floors"
+              }
+            ]
+          }
+        },
+        facade_ratio: {
+          label: {
+            ru: "\u041F\u043B\u043E\u0449\u0430\u0434\u044C \u0444\u0430\u0441\u0430\u0434\u0430 \u043A \u043F\u043B\u043E\u0449\u0430\u0434\u0438 \u0434\u043E\u043C\u0430",
+            en: "Facade-to-floor area ratio"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    op: "add",
+                    args: [
+                      {
+                        ref: "building_width"
+                      },
+                      {
+                        ref: "building_length"
+                      }
+                    ]
+                  },
+                  {
+                    op: "mul",
+                    args: [
+                      3,
+                      {
+                        ref: "floors"
+                      }
+                    ]
+                  },
+                  2
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "building_width"
+                  },
+                  {
+                    ref: "building_length"
+                  },
+                  {
+                    ref: "floors"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0443\u0442\u0435\u043F\u043B\u0435\u043D\u0438\u044F \u0444\u0430\u0441\u0430\u0434\u043E\u0432 \u0438 \u043A\u0440\u043E\u0432\u043B\u0438",
+            en: "Facade & roof insulation CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "num_buildings_k"
+                  },
+                  1e3,
+                  {
+                    ref: "avg_area_m2"
+                  },
+                  {
+                    ref: "obj:obj_kz11_0#capex_ud"
+                  },
+                  {
+                    ref: "facade_ratio"
+                  }
+                ]
+              },
+              1e6
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0437\u0430\u043C\u0435\u043D\u044B \u043E\u043A\u043E\u043D \u0438 \u0434\u0432\u0435\u0440\u0435\u0439",
+            en: "Window & door replacement CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "window_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -4222,6 +6477,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        pipeline_km: {
+          value: 5e3,
+          unit: "\u043A\u043C",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        connections_k: {
+          value: 300,
+          unit: "\u0442\u044B\u0441. \u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -4245,11 +6520,17 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz12_0",
-          capex_musd: 2500
+          capacity: {
+            ref: "pipeline_km"
+          },
+          unit: "\u043A\u043C"
         },
         {
           technology_ref: "obj_kz12_1",
-          capex_musd: 0.6
+          capacity: {
+            ref: "connections_k"
+          },
+          unit: "\u0442\u044B\u0441. \u0448\u0442"
         }
       ],
       materials: [
@@ -4270,18 +6551,78 @@ var measures_seed_default = {
         }
       ],
       sources: {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          binding: {
+            ref: "in:pipeline_km",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041C\u0430\u0433\u0438\u0441\u0442\u0440\u0430\u043B\u044C\u043D\u044B\u0435 \u0438 \u0440\u0430\u0441\u043F\u0440\u0435\u0434. \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u044B",
+            citation: "\u041F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0434. CAPEX/\u043A\u043C \xD7 \u043F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C",
             confidence: "medium"
           }
         },
-        "created_technologies[1].capex_musd": {
+        "created_technologies[1].capacity": {
+          binding: {
+            ref: "in:connections_k",
+            mode: "reuse"
+          },
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043B\u0435\u0439",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          binding: {
+            mode: "derived"
+          },
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0423\u0434. CAPEX/\u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0435 \xD7 \u0447\u0438\u0441\u043B\u043E",
             confidence: "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "UNFCCC BTR1 \u2014 baseline \u0441\u0435\u043A\u0442\u043E\u0440\u0430 1.A.4",
+            confidence: "high"
+          }
+        },
+        "inputs.share": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u0414\u043E\u043B\u044F \u043C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_1)",
+            confidence: "medium"
+          }
+        },
+        "inputs.pipeline_km": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.connections_k": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439 (\u0420\u0430\u0441\u0447\u0451\u0442\u044B in_12_4)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -4304,20 +6645,6 @@ var measures_seed_default = {
             citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u0443\u0433\u043B\u044F",
             confidence: "medium"
           }
-        },
-        "inputs.base_emissions": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
-            confidence: "high"
-          }
-        },
-        "inputs.share": {
-          provenance: {
-            source_type: "official_stat",
-            citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
-            confidence: "medium"
-          }
         }
       },
       mechanism_subtype: "fuel_switch",
@@ -4329,6 +6656,48 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_residential_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432",
+            en: "Gas pipelines CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "pipeline_km"
+              },
+              {
+                ref: "obj:obj_kz12_0#capex_ud_km"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u043E\u0434\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439 \u043F\u043E\u0442\u0440\u0435\u0431\u0438\u0442\u0435\u043B\u0435\u0439",
+            en: "Consumer connections CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "connections_k"
+                  },
+                  {
+                    ref: "obj:obj_kz12_1#capex_ud_conn"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -4389,6 +6758,56 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        ef_boiler: {
+          value: 0.55,
+          unit: "tCO\u2082/\u0413\u043A\u0430\u043B",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "MACC!E41 \u2014 EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439/\u0422\u042D\u0426",
+            confidence: "high",
+            geo_applicability: "kz_specific"
+          }
+        },
+        heat_cf: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB in_13_7 \u2014 \u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        grid_factor: {
+          value: 0.4,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u043A\u043E\u0442\u043B\u0430",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB in_13_3 \u2014 \u0437\u0430\u0442\u0440\u0430\u0442\u044B \u043D\u0430 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0438",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        smr_factor: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u043A\u043E\u0442\u043B\u0430",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB in_13_4 \u2014 \u0421\u041C\u0420/\u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u0441\u0435\u0442\u0438",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        avoided_om_per_kw: {
+          value: 30,
+          unit: "$/\u043A\u0412\u0442/\u0433\u043E\u0434",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041B\u0438\u0441\u0442 \xAB\u0414\u043E\u043F\u0443\u0449\u0435\u043D\u0438\u044F\xBB in_13_5 \u2014 avoided \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -4415,21 +6834,21 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz13_0",
-          capex_musd: 1403.0588418430887
+          capacity: {
+            ref: "eb_power_mw"
+          },
+          unit: "\u041C\u0412\u0442"
         },
         {
-          technology_ref: "obj_kz13_1",
-          capex_musd: 561.2235367372355
+          technology_ref: "obj_kz13_1"
         },
         {
-          technology_ref: "obj_kz13_2",
-          capex_musd: 420.9176525529266
+          technology_ref: "obj_kz13_2"
         }
       ],
       retired_technologies: [
         {
-          technology_ref: "obj_kz13_3",
-          maintenance_capex_musd: 2200.8771357975043
+          technology_ref: "obj_kz13_3"
         }
       ],
       materials: [
@@ -4453,28 +6872,28 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u044B = \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 \u0443\u0434. CAPEX (MACC!E52) / 1000",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0420\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u0435 \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            citation: "\u042D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0438 = CAPEX \u043A\u043E\u0442\u043B\u0430 \xD7 \u0434\u043E\u043B\u044F in_13_3",
             confidence: "medium"
           }
         },
         "created_technologies[2].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u041C\u0420 \u0438 \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u0441\u0435\u0442\u0438",
+            citation: "\u0421\u041C\u0420/\u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0435 \u0441\u0435\u0442\u0438 = CAPEX \u043A\u043E\u0442\u043B\u0430 \xD7 \u0434\u043E\u043B\u044F in_13_4",
             confidence: "medium"
           }
         },
         "retired_technologies[0].maintenance_capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F: \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445",
+            citation: "\u0417\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445 = PV(WACC, \u0441\u0440\u043E\u043A, avoided O&M \xD7 \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C)",
             confidence: "medium"
           }
         },
@@ -4519,6 +6938,46 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.ef_boiler": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "MACC!E41 \u2014 EF \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u043E\u0439/\u0422\u042D\u0426",
+            confidence: "high",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.heat_cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_13_7 \u2014 \u041A\u0418\u0423\u041C \u043F\u043E \u0442\u0435\u043F\u043B\u0443",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.grid_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_13_3",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.smr_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_13_4",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.avoided_om_per_kw": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_13_5",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "electrification",
@@ -4530,6 +6989,182 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_residential_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        abatement_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432",
+            en: "Abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "base_emissions"
+              },
+              {
+                ref: "tech_potential"
+              },
+              {
+                ref: "share"
+              },
+              1e3
+            ]
+          }
+        },
+        heat_replaced: {
+          label: {
+            ru: "\u0417\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0435 \u0442\u0435\u043F\u043B\u043E, \u0442\u044B\u0441. \u0413\u043A\u0430\u043B",
+            en: "Heat replaced, k Gcal"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                ref: "abatement_kt"
+              },
+              {
+                ref: "ef_boiler"
+              }
+            ]
+          }
+        },
+        eb_power_mw: {
+          label: {
+            ru: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u043E\u0432, \u041C\u0412\u0442",
+            en: "Electric-boiler capacity, MW"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "heat_replaced"
+                  },
+                  1e3,
+                  1.163
+                ]
+              },
+              {
+                op: "mul",
+                args: [
+                  8760,
+                  {
+                    ref: "heat_cf"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u043A\u043E\u0442\u043B\u043E\u0432",
+            en: "Electric boilers CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "eb_power_mw"
+                  },
+                  {
+                    ref: "obj:obj_kz13_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0440\u0430\u0441\u0448\u0438\u0440\u0435\u043D\u0438\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0441\u0435\u0442\u0435\u0439",
+            en: "Grid-expansion CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "grid_factor"
+              }
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          label: {
+            ru: "CAPEX \u0421\u041C\u0420 \u0438 \u0442\u0435\u043F\u043B\u043E\u0432\u044B\u0445 \u0441\u0435\u0442\u0435\u0439",
+            en: "Civil works & heat-network CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "smr_factor"
+              }
+            ]
+          }
+        },
+        avoided_pmt: {
+          label: {
+            ru: "\u0413\u043E\u0434\u043E\u0432\u0430\u044F \u044D\u043A\u043E\u043D\u043E\u043C\u0438\u044F \u043D\u0430 \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0438 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445",
+            en: "Annual avoided boiler O&M"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "avoided_om_per_kw"
+                  },
+                  {
+                    ref: "eb_power_mw"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          label: {
+            ru: "\u042D\u043A\u043E\u043D\u043E\u043C\u0438\u044F CAPEX: \u0437\u0430\u043A\u0440\u044B\u0442\u0438\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0445 (PV)",
+            en: "Avoided CAPEX: boiler closure (PV)"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                op: "pv",
+                args: [
+                  {
+                    ref: "glb:discountRate"
+                  },
+                  {
+                    ref: "lifetime"
+                  },
+                  {
+                    ref: "avoided_pmt"
+                  }
+                ]
+              },
+              -1
+            ]
+          }
         }
       }
     },
@@ -4580,6 +7215,16 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        n_objects: {
+          value: 5e3,
+          unit: "\u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043A\u0432\u0430\u0436\u0438\u043D\u044B, \u041A\u0421, \u041D\u041F\u0417 \u2014 \u043E\u0446\u0435\u043D\u043A\u0430 \u041C\u042D \u0420\u041A (in_14_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -4603,11 +7248,17 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz14_0",
-          capex_musd: 40
+          capacity: {
+            ref: "n_objects"
+          },
+          unit: "\u0448\u0442"
         },
         {
           technology_ref: "obj_kz14_1",
-          capex_musd: 15
+          capacity: {
+            ref: "n_objects"
+          },
+          unit: "\u0448\u0442"
         }
       ],
       materials: [
@@ -4626,14 +7277,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435 \u0438 \u0440\u0435\u043C\u043E\u043D\u0442",
+            citation: "\u041E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u0435+\u0440\u0435\u043C\u043E\u043D\u0442 = \u043A\u043E\u043B-\u0432\u043E \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u0432 \xD7 \u0443\u0434. CAPEX / 1000",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "OGI \u043A\u0430\u043C\u0435\u0440\u044B \u0438 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
+            citation: "OGI \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435 = \u043A\u043E\u043B-\u0432\u043E \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u0432 \xD7 \u0443\u0434. CAPEX / 1000",
             confidence: "medium"
           }
         },
@@ -4664,6 +7315,14 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.n_objects": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_14_2 \u2014 \u043A\u043E\u043B-\u0432\u043E \u043E\u0431\u044A\u0435\u043A\u0442\u043E\u0432",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -4674,6 +7333,54 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043E\u0431\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u043D\u0438\u044F \u0438 \u0440\u0435\u043C\u043E\u043D\u0442\u0430",
+            en: "Survey & repair CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "n_objects"
+                  },
+                  {
+                    ref: "obj:obj_kz14_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX OGI-\u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u044F",
+            en: "OGI equipment CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "n_objects"
+                  },
+                  {
+                    ref: "obj:obj_kz14_1#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
         }
       }
     },
@@ -4724,6 +7431,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        png_volume: {
+          value: 3,
+          unit: "\u043C\u043B\u0440\u0434 \u043C\xB3/\u0433\u043E\u0434",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041C\u042D \u0420\u041A, World Bank GGFR \u2014 \u043E\u0431\u044A\u0451\u043C \u0441\u0436\u0438\u0433\u0430\u0435\u043C\u043E\u0433\u043E \u041F\u041D\u0413 (in_15_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        infra_factor: {
+          value: 0.25,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u0413\u0422\u042D\u0421",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u0434\u0432\u043E\u0434\u044F\u0449\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 (in_15_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -4747,11 +7474,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz15_0",
-          capex_musd: 1500
+          capacity: {
+            ref: "png_volume"
+          },
+          unit: "\u043C\u043B\u0440\u0434 \u043C\xB3/\u0433\u043E\u0434"
         },
         {
-          technology_ref: "obj_kz15_1",
-          capex_musd: 375
+          technology_ref: "obj_kz15_1"
         }
       ],
       materials: [
@@ -4770,14 +7499,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0413\u0422\u042D\u0421 \u0438 \u043A\u043E\u043C\u043F\u0440\u0435\u0441\u0441\u043E\u0440\u043D\u043E\u0435 \u043E\u0431\u043E\u0440\u0443\u0434\u043E\u0432\u0430\u043D\u0438\u0435",
+            citation: "\u0413\u0422\u042D\u0421 = \u043E\u0431\u044A\u0451\u043C \u041F\u041D\u0413 \xD7 \u0443\u0434. CAPEX (\u043D\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u043A\u0430 \u043C\u043B\u0440\u0434\u2192\u0442\u044B\u0441. \u043C\xB3 \u0438 $\u2192mUSD)",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041F\u043E\u0434\u0432\u043E\u0434\u044F\u0449\u0430\u044F \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 = CAPEX \u0413\u0422\u042D\u0421 \xD7 \u0434\u043E\u043B\u044F in_15_6",
             confidence: "medium"
           }
         },
@@ -4808,6 +7537,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.png_volume": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "in_15_2 \u2014 \u043E\u0431\u044A\u0451\u043C \u0441\u0436\u0438\u0433\u0430\u0435\u043C\u043E\u0433\u043E \u041F\u041D\u0413",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.infra_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_15_6",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -4818,6 +7563,49 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0413\u0422\u042D\u0421 \u0438 \u043A\u043E\u043C\u043F\u0440\u0435\u0441\u0441\u0438\u0438",
+            en: "Gas-turbine & compression CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "png_volume"
+                  },
+                  1e6,
+                  {
+                    ref: "obj:obj_kz15_0#capex_ud"
+                  }
+                ]
+              },
+              1e6
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u043E\u0434\u0432\u043E\u0434\u044F\u0449\u0435\u0439 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B",
+            en: "Feed-in infrastructure CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "infra_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -4868,6 +7656,36 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        pipeline_km: {
+          value: 2e4,
+          unit: "\u043A\u043C",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041A\u0430\u0437\u0422\u0440\u0430\u043D\u0441\u0413\u0430\u0437 \u2014 \u043F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 (in_17_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        retrofit_share: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0414\u043E\u043B\u044F \u043F\u043E\u0434\u043B\u0435\u0436\u0430\u0449\u0438\u0445 \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 (in_17_3)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        satellite_capex: {
+          value: 30,
+          unit: "mUSD",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0421\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 (in_17_7)",
+            confidence: "medium",
+            geo_applicability: "global"
+          }
         }
       },
       abatement: {
@@ -4891,11 +7709,16 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz17_0",
-          capex_musd: 600
+          capacity: {
+            ref: "pipeline_km"
+          },
+          unit: "\u043A\u043C"
         },
         {
           technology_ref: "obj_kz17_1",
-          capex_musd: 30
+          capex_musd: {
+            ref: "satellite_capex"
+          }
         }
       ],
       materials: [
@@ -4914,14 +7737,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 \u0438 \u041A\u0421",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F = \u043F\u0440\u043E\u0442\u044F\u0436\u0451\u043D\u043D\u043E\u0441\u0442\u044C \xD7 \u0434\u043E\u043B\u044F \xD7 \u0443\u0434. CAPEX",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433",
+            citation: "\u0421\u043F\u0443\u0442\u043D\u0438\u043A\u043E\u0432\u044B\u0439 \u043C\u043E\u043D\u0438\u0442\u043E\u0440\u0438\u043D\u0433 = \u0432\u0445\u043E\u0434 in_17_7",
             confidence: "medium"
           }
         },
@@ -4952,6 +7775,30 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.pipeline_km": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "in_17_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.retrofit_share": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_17_3",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.satellite_capex": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_17_7",
+            confidence: "medium",
+            geo_applicability: "global"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -4962,6 +7809,28 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0433\u0430\u0437\u043E\u043F\u0440\u043E\u0432\u043E\u0434\u043E\u0432 \u0438 \u041A\u0421",
+            en: "Pipeline & compressor retrofit CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "pipeline_km"
+              },
+              {
+                ref: "retrofit_share"
+              },
+              {
+                ref: "obj:obj_kz17_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     },
@@ -5012,6 +7881,16 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        n_plants: {
+          value: 4,
+          unit: "\u0448\u0442",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u041A\u043E\u043B-\u0432\u043E \u0446\u0435\u043C\u0435\u043D\u0442\u043D\u044B\u0445 \u0437\u0430\u0432\u043E\u0434\u043E\u0432 \u041A\u0417 (in_18_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5035,7 +7914,10 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz18_0",
-          capex_musd: 200
+          capacity: {
+            ref: "n_plants"
+          },
+          unit: "\u0448\u0442"
         }
       ],
       materials: [
@@ -5054,7 +7936,7 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u0437\u0430\u0432\u043E\u0434\u043E\u0432",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F = \u043A\u043E\u043B-\u0432\u043E \u0437\u0430\u0432\u043E\u0434\u043E\u0432 \xD7 \u0443\u0434. CAPEX",
             confidence: "medium"
           }
         },
@@ -5085,6 +7967,14 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.n_plants": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "in_18_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "process_change",
@@ -5095,6 +7985,25 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_cement_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u0437\u0430\u0432\u043E\u0434\u043E\u0432",
+            en: "Plant retrofit CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "n_plants"
+              },
+              {
+                ref: "obj:obj_kz18_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     },
@@ -5145,6 +8054,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        cf: {
+          value: 0.7,
+          unit: "\u0434\u043E\u043B\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u043E\u044D\u0444\u0444\u0438\u0446\u0438\u0435\u043D\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u044F \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F (in_19_2)",
+            confidence: "medium",
+            geo_applicability: "global"
+          }
+        },
+        transport_factor: {
+          value: 0.3,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0422\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442 \u0438 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 CO\u2082 (in_19_5)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5168,11 +8097,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz19_0",
-          capex_musd: 925.7142857142857
+          capacity: {
+            ref: "capture_capacity"
+          },
+          unit: "\u0442\u044B\u0441. \u0442 CO\u2082/\u0433\u043E\u0434"
         },
         {
-          technology_ref: "obj_kz19_1",
-          capex_musd: 277.71428571428567
+          technology_ref: "obj_kz19_1"
         }
       ],
       materials: [
@@ -5186,14 +8117,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F CO\u2082",
+            citation: "\u0423\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u0435 = \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 \u0443\u0434. CAPEX (capexCcus) / 1000",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0422\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442 \u0438 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435",
+            citation: "\u0422\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442/\u0445\u0440\u0430\u043D\u0435\u043D\u0438\u0435 = CAPEX \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F \xD7 \u0434\u043E\u043B\u044F in_19_5",
             confidence: "medium"
           }
         },
@@ -5217,6 +8148,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.cf": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_19_2",
+            confidence: "medium",
+            geo_applicability: "global"
+          }
+        },
+        "inputs.transport_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_19_5",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "process_change",
@@ -5227,6 +8174,83 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_metals_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        abatement_kt: {
+          label: {
+            ru: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432",
+            en: "Abatement"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "base_emissions"
+              },
+              {
+                ref: "share"
+              },
+              1e3
+            ]
+          }
+        },
+        capture_capacity: {
+          label: {
+            ru: "\u041C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F, \u0442\u044B\u0441. \u0442 CO\u2082/\u0433\u043E\u0434",
+            en: "Capture capacity, kt CO\u2082/yr"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                ref: "abatement_kt"
+              },
+              {
+                ref: "cf"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043E\u043A \u0443\u043B\u0430\u0432\u043B\u0438\u0432\u0430\u043D\u0438\u044F",
+            en: "Capture units CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "capture_capacity"
+                  },
+                  {
+                    ref: "obj:obj_kz19_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 \u0438 \u0445\u0440\u0430\u043D\u0435\u043D\u0438\u044F",
+            en: "Transport & storage CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "transport_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -5277,6 +8301,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        n_units: {
+          value: 500,
+          unit: "\u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0440\u0443\u043F\u043D\u044B\u0435 \u0444\u0435\u0440\u043C\u044B \u2014 \u043A\u043E\u043B-\u0432\u043E \u0431\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0445 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043E\u043A (in_21_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        lagoon_factor: {
+          value: 0.2,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043B\u0430\u0433\u0443\u043D \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 (in_21_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5300,11 +8344,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz21_0",
-          capex_musd: 250
+          capacity: {
+            ref: "n_units"
+          },
+          unit: "\u0448\u0442"
         },
         {
-          technology_ref: "obj_kz21_1",
-          capex_musd: 50
+          technology_ref: "obj_kz21_1"
         }
       ],
       materials: [
@@ -5323,14 +8369,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0411\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438",
+            citation: "\u0411\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0435 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043A\u0438 = \u043A\u043E\u043B-\u0432\u043E \xD7 \u0443\u0434. CAPEX",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043B\u0430\u0433\u0443\u043D \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430",
+            citation: "\u041F\u043E\u043A\u0440\u044B\u0442\u0438\u0435 \u043B\u0430\u0433\u0443\u043D = CAPEX \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043E\u043A \xD7 \u0434\u043E\u043B\u044F in_21_6",
             confidence: "medium"
           }
         },
@@ -5361,6 +8407,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.n_units": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_21_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.lagoon_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_21_6",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -5371,6 +8433,42 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_manure_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0431\u0438\u043E\u0433\u0430\u0437\u043E\u0432\u044B\u0445 \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043E\u043A",
+            en: "Biogas plants CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "n_units"
+              },
+              {
+                ref: "obj:obj_kz21_0#capex_ud"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u043E\u043A\u0440\u044B\u0442\u0438\u044F \u043B\u0430\u0433\u0443\u043D \u0438 \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B",
+            en: "Lagoon cover & infrastructure CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "lagoon_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -5421,6 +8519,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        area_kha: {
+          value: 5e3,
+          unit: "\u0442\u044B\u0441. \u0433\u0430",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u0417\u0435\u0440\u043D\u043E\u0432\u043E\u0439 \u043F\u043E\u044F\u0441 \u2014 \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u043F\u043E\u0434 \u0442\u043E\u0447\u043D\u043E\u0435 \u0437\u0435\u043C\u043B\u0435\u0434\u0435\u043B\u0438\u0435 (in_22_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        training_capex: {
+          value: 30,
+          unit: "mUSD",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0430\u0433\u0440\u043E\u043D\u043E\u043C\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430 (in_22_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5444,11 +8562,16 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz22_0",
-          capex_musd: 150
+          capacity: {
+            ref: "area_kha"
+          },
+          unit: "\u0442\u044B\u0441. \u0433\u0430"
         },
         {
           technology_ref: "obj_kz22_1",
-          capex_musd: 30
+          capex_musd: {
+            ref: "training_capex"
+          }
         }
       ],
       materials: [
@@ -5467,14 +8590,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "GPS-\u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F \u0438 \u0434\u0430\u0442\u0447\u0438\u043A\u0438",
+            citation: "GPS/\u0434\u0430\u0442\u0447\u0438\u043A\u0438 = \u043F\u043B\u043E\u0449\u0430\u0434\u044C \xD7 \u0443\u0434. CAPEX (\u043D\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u043A\u0430 \u0442\u044B\u0441. \u0433\u0430\u2192\u0433\u0430, $\u2192mUSD)",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 \u0438 \u0430\u0433\u0440\u043E\u043D\u043E\u043C\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u043F\u043E\u0434\u0434\u0435\u0440\u0436\u043A\u0430",
+            citation: "\u041E\u0431\u0443\u0447\u0435\u043D\u0438\u0435 = \u0432\u0445\u043E\u0434 in_22_6",
             confidence: "medium"
           }
         },
@@ -5505,6 +8628,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.area_kha": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "in_22_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.training_capex": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_22_6",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -5515,6 +8654,32 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_ag_soils_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX GPS-\u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u0438 \u0438 \u0434\u0430\u0442\u0447\u0438\u043A\u043E\u0432",
+            en: "GPS & sensors CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "area_kha"
+                  },
+                  {
+                    ref: "obj:obj_kz22_0#capex_ud"
+                  },
+                  1e3
+                ]
+              },
+              1e6
+            ]
+          }
         }
       }
     },
@@ -5565,6 +8730,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        area_kha: {
+          value: 1e4,
+          unit: "\u0442\u044B\u0441. \u0433\u0430",
+          provenance: {
+            source_type: "official_stat",
+            citation: "\u0414\u0435\u0433\u0440\u0430\u0434\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0435 \u043F\u0430\u0441\u0442\u0431\u0438\u0449\u0430 \u2014 \u043F\u043B\u043E\u0449\u0430\u0434\u044C \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F (in_23_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        rotation_factor: {
+          value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u0440\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u043F\u0430\u0441\u0430 (in_23_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5588,11 +8773,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz23_0",
-          capex_musd: 200
+          capacity: {
+            ref: "area_kha"
+          },
+          unit: "\u0442\u044B\u0441. \u0433\u0430"
         },
         {
-          technology_ref: "obj_kz23_1",
-          capex_musd: 30
+          technology_ref: "obj_kz23_1"
         }
       ],
       materials: [
@@ -5611,14 +8798,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 \u043F\u0430\u0441\u0442\u0431\u0438\u0449",
+            citation: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u0435 = \u043F\u043B\u043E\u0449\u0430\u0434\u044C \xD7 \u0443\u0434. CAPEX (\u043D\u043E\u0440\u043C\u0438\u0440\u043E\u0432\u043A\u0430 \u0442\u044B\u0441. \u0433\u0430\u2192\u0433\u0430, $\u2192mUSD)",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0418\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0430 \u0440\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u043F\u0430\u0441\u0430",
+            citation: "\u0420\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u044B\u0439 \u0432\u044B\u043F\u0430\u0441 = CAPEX \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \xD7 \u0434\u043E\u043B\u044F in_23_6",
             confidence: "medium"
           }
         },
@@ -5649,6 +8836,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.area_kha": {
+          provenance: {
+            source_type: "official_stat",
+            citation: "in_23_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.rotation_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_23_6",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "process_change",
@@ -5659,6 +8862,49 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_ag_soils_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0432\u043E\u0441\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0441\u0442\u0431\u0438\u0449",
+            en: "Pasture restoration CAPEX"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "area_kha"
+                  },
+                  {
+                    ref: "obj:obj_kz23_0#capex_ud"
+                  },
+                  1e3
+                ]
+              },
+              1e6
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u044B \u0440\u043E\u0442\u0430\u0446\u0438\u043E\u043D\u043D\u043E\u0433\u043E \u0432\u044B\u043F\u0430\u0441\u0430",
+            en: "Rotational grazing infrastructure CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "rotation_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -5719,6 +8965,16 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        nursery_factor: {
+          value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0433\u043E CAPEX",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u0438 \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0430 (in_24_6)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5744,11 +9000,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz24_0",
-          capex_musd: 2e3
+          capacity: {
+            ref: "area_kha"
+          },
+          unit: "\u0442\u044B\u0441. \u0433\u0430"
         },
         {
-          technology_ref: "obj_kz24_1",
-          capex_musd: 200
+          technology_ref: "obj_kz24_1"
         }
       ],
       materials: [
@@ -5767,14 +9025,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u0430\u0436\u0435\u043D\u0446\u044B, \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430 \u043F\u043E\u0447\u0432\u044B, \u043F\u043E\u0441\u0430\u0434\u043A\u0430",
+            citation: "\u041F\u043E\u0441\u0430\u0434\u043A\u0430 = \u043F\u043B\u043E\u0449\u0430\u0434\u044C \xD7 \u0443\u0434. CAPEX (capexAfforestation) / 1000",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u0438 \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0430",
+            citation: "\u041F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u0438 = \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 CAPEX \xD7 \u0434\u043E\u043B\u044F in_24_6",
             confidence: "medium"
           }
         },
@@ -5812,6 +9070,14 @@ var measures_seed_default = {
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium"
           }
+        },
+        "inputs.nursery_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_24_6",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "nature_based",
@@ -5823,6 +9089,48 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_afforestation_area",
           consumption_ref: "area_kha"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u043E\u0441\u0430\u0434\u043A\u0438 (\u0441\u0430\u0436\u0435\u043D\u0446\u044B, \u043F\u043E\u0434\u0433\u043E\u0442\u043E\u0432\u043A\u0430, \u043F\u043E\u0441\u0430\u0434\u043A\u0430)",
+            en: "Planting CAPEX (seedlings, prep, planting)"
+          },
+          formula: {
+            op: "div",
+            args: [
+              {
+                op: "mul",
+                args: [
+                  {
+                    ref: "area_kha"
+                  },
+                  {
+                    ref: "obj:obj_kz24_0#capex_ud"
+                  }
+                ]
+              },
+              1e3
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u043F\u0438\u0442\u043E\u043C\u043D\u0438\u043A\u043E\u0432 \u0438 \u043B\u043E\u0433\u0438\u0441\u0442\u0438\u043A\u0438",
+            en: "Nurseries & logistics CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "nursery_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -5873,6 +9181,26 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        n_sites: {
+          value: 20,
+          unit: "\u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0440\u0443\u043F\u043D\u044B\u0435 \u0433\u043E\u0440\u043E\u0434\u0430 \u2014 \u043A\u043E\u043B-\u0432\u043E \u043F\u043E\u043B\u0438\u0433\u043E\u043D\u043E\u0432 \u043F\u043E\u0434 \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u044E (in_25_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        generator_factor: {
+          value: 0.4,
+          unit: "\u0434\u043E\u043B\u044F \u043E\u0442 CAPEX \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u0413\u0430\u0437\u043E\u043F\u043E\u0440\u0448\u043D\u0435\u0432\u044B\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B (in_25_7)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -5896,11 +9224,13 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz25_0",
-          capex_musd: 100
+          capacity: {
+            ref: "n_sites"
+          },
+          unit: "\u0448\u0442"
         },
         {
-          technology_ref: "obj_kz25_1",
-          capex_musd: 40
+          technology_ref: "obj_kz25_1"
         }
       ],
       materials: [
@@ -5919,14 +9249,14 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+            citation: "\u0421\u0438\u0441\u0442\u0435\u043C\u044B \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 = \u043A\u043E\u043B-\u0432\u043E \u043F\u043E\u043B\u0438\u0433\u043E\u043D\u043E\u0432 \xD7 \u0443\u0434. CAPEX",
             confidence: "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u0413\u0430\u0437\u043E\u043F\u043E\u0440\u0448\u043D\u0435\u0432\u044B\u0435 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B",
+            citation: "\u0413\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u044B = CAPEX \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438 \xD7 \u0434\u043E\u043B\u044F in_25_7",
             confidence: "medium"
           }
         },
@@ -5957,6 +9287,22 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.n_sites": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_25_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
+        },
+        "inputs.generator_factor": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_25_7",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -5967,6 +9313,42 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_swaste_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u0441\u0438\u0441\u0442\u0435\u043C \u0434\u0435\u0433\u0430\u0437\u0430\u0446\u0438\u0438",
+            en: "Degassing systems CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "n_sites"
+              },
+              {
+                ref: "obj:obj_kz25_0#capex_ud"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          label: {
+            ru: "CAPEX \u0433\u0430\u0437\u043E\u043F\u043E\u0440\u0448\u043D\u0435\u0432\u044B\u0445 \u0433\u0435\u043D\u0435\u0440\u0430\u0442\u043E\u0440\u043E\u0432",
+            en: "Gas-engine generators CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "created_technologies[0].capex_musd"
+              },
+              {
+                ref: "generator_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -6017,6 +9399,16 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
+        },
+        n_plants: {
+          value: 15,
+          unit: "\u0448\u0442",
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "\u041A\u0440\u0443\u043F\u043D\u044B\u0435 \u0433\u043E\u0440\u043E\u0434\u0430 \u2014 \u043A\u043E\u043B-\u0432\u043E \u041A\u041E\u0421 \u043F\u043E\u0434 \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044E (in_26_2)",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       abatement: {
@@ -6040,7 +9432,10 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "obj_kz26_0",
-          capex_musd: 150
+          capacity: {
+            ref: "n_plants"
+          },
+          unit: "\u0448\u0442"
         }
       ],
       materials: [
@@ -6059,7 +9454,7 @@ var measures_seed_default = {
         "created_technologies[0].capex_musd": {
           provenance: {
             source_type: "expert_estimate",
-            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u041A\u041E\u0421",
+            citation: "\u041C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u044F \u041A\u041E\u0421 = \u043A\u043E\u043B-\u0432\u043E \xD7 \u0443\u0434. CAPEX",
             confidence: "medium"
           }
         },
@@ -6090,6 +9485,14 @@ var measures_seed_default = {
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
             confidence: "medium"
           }
+        },
+        "inputs.n_plants": {
+          provenance: {
+            source_type: "expert_estimate",
+            citation: "in_26_2",
+            confidence: "medium",
+            geo_applicability: "kz_specific"
+          }
         }
       },
       mechanism_subtype: "non_co2",
@@ -6100,6 +9503,25 @@ var measures_seed_default = {
         limit: {
           indicator_ref: "ind_wastewater_emissions",
           consumption_ref: "base_emissions"
+        }
+      },
+      computed: {
+        "created_technologies[0].capex_musd": {
+          label: {
+            ru: "CAPEX \u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438 \u041A\u041E\u0421",
+            en: "WWTP retrofit CAPEX"
+          },
+          formula: {
+            op: "mul",
+            args: [
+              {
+                ref: "n_plants"
+              },
+              {
+                ref: "obj:obj_kz26_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     }
