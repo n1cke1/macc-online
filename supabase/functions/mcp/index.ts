@@ -6823,7 +6823,8 @@ function validate(measure, library2, peers = []) {
   if (drift.length) {
     missing.push(...drift.map((d) => `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" \u2192 ${d.bound}`));
   }
-  const noWarn = Object.values(checks).every((s) => s !== "warn");
+  const GATING_CHECKS = ["factor", "economics", "sector", "limit"];
+  const noWarn = GATING_CHECKS.every((k) => checks[k] !== "warn");
   const panelsComplete = Object.values(panels).every((s) => s !== "incomplete");
   const eligibleForModel = poolInLibrary && noWarn && panelsComplete && drift.length === 0;
   return {
@@ -6836,6 +6837,7 @@ function validate(measure, library2, peers = []) {
     eligibleForModel,
     mac: c.mac,
     potential: alloc.potential,
+    displaced: alloc.clipped,
     panels,
     checks,
     details

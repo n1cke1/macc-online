@@ -176,6 +176,9 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
     }
   }
 
-  const eligible = !!pool && Object.values(checks).every((s) => s !== 'warn');
+  // Pool competition (oversubscription clip) is a render-time outcome, not a quality
+  // failure — excluded from eligibility, mirroring validate.ts. Pool *membership* gates.
+  const GATING: CheckId[] = ['factor', 'economics', 'sector', 'limit'];
+  const eligible = !!pool && GATING.every((k) => checks[k] !== 'warn');
   return { checks, eligible, abatementKt };
 }

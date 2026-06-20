@@ -55,6 +55,10 @@ export interface ValidateResult {
   mac: number;
   /** Annual potential after pool stacking (kt CO₂eq/yr). */
   potential: number;
+  /** Render-time: this measure's share is clipped by cheaper peers competing for the
+   *  same pool ceiling. NOT a quality verdict — a `published` (готово) measure can be
+   *  displaced. Scenario-dependent (re-derived per assumptions), never persisted. */
+  displaced: boolean;
   panels: Record<PanelKey, PanelStatus>;
   checks: Record<CheckId, CheckStatus>;
   details: Record<CheckId, CheckDetail | null>;
@@ -392,8 +396,13 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
       `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" → ${d.bound}`));
   }
 
-  // §7 precondition: a published pool, no failing guardrail, no incomplete panel, no drift.
-  const noWarn = Object.values(checks).every((s) => s !== 'warn');
+  // §7 precondition: belongs to a published pool, no failing INTRINSIC guardrail, no
+  // incomplete panel, no drift. The `pool` check is EXCLUDED here — being clipped by
+  // cheaper peers (pool oversubscription) is a render-time allocation outcome, not a
+  // quality failure, so it never blocks promotion (it surfaces as `displaced` instead).
+  // Pool *membership* still gates (poolInLibrary); pool *competition* does not.
+  const GATING_CHECKS: CheckId[] = ['factor', 'economics', 'sector', 'limit'];
+  const noWarn = GATING_CHECKS.every((k) => checks[k] !== 'warn');
   const panelsComplete = Object.values(panels).every((s) => s !== 'incomplete');
   const eligibleForModel = poolInLibrary && noWarn && panelsComplete && drift.length === 0;
 
@@ -407,6 +416,7 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     eligibleForModel,
     mac: c.mac,
     potential: alloc.potential,
+    displaced: alloc.clipped,
     panels,
     checks,
     details,

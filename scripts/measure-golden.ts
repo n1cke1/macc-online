@@ -82,15 +82,17 @@ const vA = validate(getSeedMeasure('kz-20')!, library, seedMeasures.filter((m) =
 expect(vA.checks.factor === 'ok', 'kz-20', `factor check ok (implied in corridor) — got ${vA.checks.factor}`);
 expect(vA.checks.economics === 'ok', 'kz-20', `economics check ok — got ${vA.checks.economics}`);
 expect(vA.eligibleForModel === true, 'kz-20', 'eligible for published');
+expect(vA.displaced === false, 'kz-20', 'not displaced — claims its full pool share');
 
 // kz-2 (coal→gas) shares pool_coal_power with cheaper coal-displacers (kz-3/4/5/8). Being the
-// most expensive, it is the share clipped on oversubscription, so its pool check ⚠ and it is
-// NOT eligible — the MAC-order competition the shared pool is meant to model (the cheaper ones
-// stay published). Economics is unaffected (the limit/pool bound volume, not the MAC).
+// most expensive, its share is clipped on oversubscription — so its pool check ⚠ AND it is
+// flagged `displaced`. But pool competition is a render-time outcome, not a quality failure:
+// after 1B it no longer gates promotion, so kz-2 is `готово` (eligibleForModel) yet displaced.
 const vB = validate(getSeedMeasure('kz-2')!, library, seedMeasures.filter((m) => m.id !== 'kz-2'));
 expect(vB.checks.economics === 'ok', 'kz-2', `economics check ok — got ${vB.checks.economics}`);
-expect(vB.checks.pool === 'warn', 'kz-2', `pool check ⚠ (clipped by cheaper coal-displacers) — got ${vB.checks.pool}`);
-expect(vB.eligibleForModel === false, 'kz-2', 'NOT eligible — clipped in pool_coal_power by cheaper peers');
+expect(vB.checks.pool === 'warn', 'kz-2', `pool check ⚠ informational (clipped by cheaper coal-displacers) — got ${vB.checks.pool}`);
+expect(vB.eligibleForModel === true, 'kz-2', 'готово — pool clipping no longer gates eligibility (render-time concern)');
+expect(vB.displaced === true, 'kz-2', 'displaced=true — share clipped in pool_coal_power by cheaper peers');
 
 const vC = validate(getSeedMeasure('kz-16')!, library, seedMeasures.filter((m) => m.id !== 'kz-16'));
 const cC = compute(getSeedMeasure('kz-16')!, library);
