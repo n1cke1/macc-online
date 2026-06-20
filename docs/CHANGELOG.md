@@ -17,3 +17,18 @@ reflect the full payload, so the history stays searchable.
   down to its leaf inputs without reading engine code.
   Storage is unchanged — read-time enrichment, no migration, no drift.
   Code landed in `76c082d`; notation/TODO update in `8159759`.
+
+### Validate
+
+- **Phase A — reuse-drift detector.** `validate()` now walks every
+  `binding.mode='reuse'` on `inputs[]` and `sources[]`, resolves the bound
+  source, and reports a `DriftEntry { path, ref, local, bound }` whenever the
+  local number disagrees with what its `binding.ref` claims to mirror. Drift
+  entries land on `missing[]` and on a new `drift[]` field, and gate
+  `eligibleForModel` (a drift can't be silently promoted). Phase A understands
+  `in:<key>` / bare-key (measure input) and JS-path refs into the measure
+  itself; `res:<id>#<key>` indicator refs are silently skipped pending Phase B
+  (resolver extension for the `#` syntax). One existing drift in the seed
+  corpus surfaces immediately — `kz-16.materials[0].qty` (9791) vs
+  `created_technologies[0].capacity` (9.79), a 1000× scale mismatch that
+  should be re-tagged `mode='alt'` with a unit-scaling `divergence_reason`.

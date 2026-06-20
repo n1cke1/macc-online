@@ -14,9 +14,9 @@
 // Publication is never blocked; only promotion to `published` is — and that is
 // server-authoritative (Edge Function). This pure function only reports.
 import { type Ast, isNode, isLeafSlot } from './ast';
-import { evalAst, evalPredicate } from './eval';
+import { evalAst, evalPredicate, type RefResolver } from './eval';
 import { compute, makeResolver, type ComputedMeasure } from './compute';
-import type { Library, CheckDef, Measure, Scope } from './schema';
+import type { Binding, Library, CheckDef, Measure, Scope } from './schema';
 
 export type CheckStatus = 'ok' | 'warn' | 'na';
 export type PanelStatus = 'ok' | 'warn' | 'incomplete';
@@ -32,12 +32,22 @@ export interface CheckDetail {
   slots: Record<string, number>; // bound slot values (for rendering the formula)
 }
 
+/** §6 drift entry — a `binding.mode='reuse'` whose local value disagrees with the source it claims. */
+export interface DriftEntry {
+  path: string; // where the local number lives in the measure (e.g. "created_technologies[0].capacity")
+  ref: string; // the binding.ref the local value claims to mirror
+  local: number; // the number stored on the measure
+  bound: number; // the number resolved through ref
+}
+
 export interface ValidateResult {
   missing: string[];
   /** §3/§6 notation rule: taggable numbers that are neither an input (sources) nor computed. */
   untagged: string[];
   /** Paths declared computed but without a (valid) formula. */
   computedNoFormula: string[];
+  /** §6 reuse-drift: binding.mode='reuse' but local value ≠ bound source. Gates eligibility. */
+  drift: DriftEntry[];
   maturity: Measure['maturity_stage'];
   /** Recommended scope (advisory). Actual `published` promotion is server-side. */
   scope: Scope;
@@ -218,6 +228,77 @@ function notationGaps(m: Measure): { untagged: string[]; computedNoFormula: stri
   return { untagged, computedNoFormula };
 }
 
+// ── §6 reuse-drift detector (Phase A backstop) ────────────────────────────────
+//
+// A measure number with `binding.mode='reuse'` claims to be taken from the
+// library or another local key. Today binding is pure provenance — the engine
+// reads the stored number, not the bound source — so the canonical value and
+// the local copy can silently drift apart (kz-27: capacity=1500, cap_mw=1163 →
+// CAPEX on one scale, abatement on another). Until binding becomes a live link
+// (Phase B/C), validate compares the two and blocks promotion on a mismatch.
+
+const DRIFT_REL_TOL = 1e-6;
+const relDiff = (a: number, b: number) =>
+  Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
+
+/** JS-style path access (`a.b[0].c`) into the measure document. */
+function readPath(measure: Measure, path: string): unknown {
+  let cur: unknown = measure;
+  for (const seg of path.match(/[^.[\]]+/g) ?? []) {
+    if (cur == null || typeof cur !== 'object') return undefined;
+    cur = (cur as Record<string, unknown>)[seg];
+  }
+  return cur;
+}
+
+const PATH_REF = /^[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?(\.[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?)*$/;
+
+/**
+ * Resolve a `binding.ref` to its source value for drift comparison. Phase A
+ * understands `in:<key>` (or bare `<key>`) → measure input value, and JS paths
+ * into the measure document. Refs the current `makeResolver` knows
+ * (`res:<id>` → resource EF) come through it. Anything else — including the
+ * `res:<id>#<key>` indicator syntax not yet recognized by the resolver —
+ * returns undefined and is skipped silently; Phase B's wider resolver will
+ * surface those.
+ */
+function resolveBindingRef(
+  ref: string,
+  measure: Measure,
+  resolve: RefResolver,
+): number | undefined {
+  const inKey = ref.startsWith('in:') ? ref.slice(3) : ref;
+  const inp = measure.inputs?.[inKey];
+  if (inp && typeof inp.value === 'number') return inp.value;
+  if (PATH_REF.test(ref)) {
+    const v = readPath(measure, ref);
+    if (typeof v === 'number') return v;
+  }
+  try { return resolve(ref); } catch { return undefined; }
+}
+
+/** Find every `binding.mode='reuse'` whose local value disagrees with its bound source. */
+export function findDrift(measure: Measure, library: Library): DriftEntry[] {
+  const resolve = makeResolver(measure, library);
+  const out: DriftEntry[] = [];
+  const check = (path: string, local: number, binding?: Binding) => {
+    if (binding?.mode !== 'reuse' || !binding.ref) return;
+    const bound = resolveBindingRef(binding.ref, measure, resolve);
+    if (bound == null) return;
+    if (relDiff(local, bound) > DRIFT_REL_TOL) {
+      out.push({ path, ref: binding.ref, local, bound });
+    }
+  };
+  for (const [k, v] of Object.entries(measure.inputs ?? {})) {
+    if (typeof v.value === 'number') check(`inputs.${k}`, v.value, v.binding);
+  }
+  for (const [p, s] of Object.entries(measure.sources ?? {})) {
+    const local = readPath(measure, p);
+    if (typeof local === 'number') check(p, local, s.binding);
+  }
+  return out;
+}
+
 // ── panels (§4) ──────────────────────────────────────────────────────────────
 
 function buildPanels(
@@ -303,15 +384,26 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     missing.push(...offenders.map((p) => `untagged number: ${p}`));
   }
 
-  // §7 precondition: a published pool, no failing guardrail, no incomplete panel.
+  // §6 reuse-drift: any binding.mode='reuse' whose local value disagrees with its bound
+  // source is silent rot — the canonical value and the local copy have come apart. Phase A
+  // surfaces every mismatch on `missing` and blocks promotion; Phase B will turn the worst
+  // cases into live refs that can't drift in the first place.
+  const drift = findDrift(measure, library);
+  if (drift.length) {
+    missing.push(...drift.map((d) =>
+      `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" → ${d.bound}`));
+  }
+
+  // §7 precondition: a published pool, no failing guardrail, no incomplete panel, no drift.
   const noWarn = Object.values(checks).every((s) => s !== 'warn');
   const panelsComplete = Object.values(panels).every((s) => s !== 'incomplete');
-  const eligibleForModel = poolInLibrary && noWarn && panelsComplete;
+  const eligibleForModel = poolInLibrary && noWarn && panelsComplete && drift.length === 0;
 
   return {
     missing,
     untagged,
     computedNoFormula,
+    drift,
     maturity: measure.maturity_stage,
     scope: eligibleForModel ? 'published' : measure.scope === 'scenario' ? 'scenario' : 'draft',
     eligibleForModel,

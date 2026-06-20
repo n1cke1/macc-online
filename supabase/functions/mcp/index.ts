@@ -6698,6 +6698,51 @@ function notationGaps(m) {
   const computedNoFormula = Object.entries(m.computed ?? {}).filter(([, c]) => !c || c.formula == null).map(([p]) => p);
   return { untagged, computedNoFormula };
 }
+var DRIFT_REL_TOL = 1e-6;
+var relDiff = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
+function readPath(measure, path) {
+  let cur = measure;
+  for (const seg of path.match(/[^.[\]]+/g) ?? []) {
+    if (cur == null || typeof cur !== "object") return void 0;
+    cur = cur[seg];
+  }
+  return cur;
+}
+var PATH_REF = /^[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?(\.[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?)*$/;
+function resolveBindingRef(ref, measure, resolve) {
+  const inKey = ref.startsWith("in:") ? ref.slice(3) : ref;
+  const inp = measure.inputs?.[inKey];
+  if (inp && typeof inp.value === "number") return inp.value;
+  if (PATH_REF.test(ref)) {
+    const v = readPath(measure, ref);
+    if (typeof v === "number") return v;
+  }
+  try {
+    return resolve(ref);
+  } catch {
+    return void 0;
+  }
+}
+function findDrift(measure, library2) {
+  const resolve = makeResolver2(measure, library2);
+  const out = [];
+  const check = (path, local, binding) => {
+    if (binding?.mode !== "reuse" || !binding.ref) return;
+    const bound = resolveBindingRef(binding.ref, measure, resolve);
+    if (bound == null) return;
+    if (relDiff(local, bound) > DRIFT_REL_TOL) {
+      out.push({ path, ref: binding.ref, local, bound });
+    }
+  };
+  for (const [k, v] of Object.entries(measure.inputs ?? {})) {
+    if (typeof v.value === "number") check(`inputs.${k}`, v.value, v.binding);
+  }
+  for (const [p, s] of Object.entries(measure.sources ?? {})) {
+    const local = readPath(measure, p);
+    if (typeof local === "number") check(p, local, s.binding);
+  }
+  return out;
+}
 function buildPanels(measure, checks, missing) {
   const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.computed;
   const req = (cond, label) => {
@@ -6740,13 +6785,18 @@ function validate(measure, library2, peers = []) {
     if (has("abatement")) panels.reduction = degrade(panels.reduction);
     missing.push(...offenders.map((p) => `untagged number: ${p}`));
   }
+  const drift = findDrift(measure, library2);
+  if (drift.length) {
+    missing.push(...drift.map((d) => `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" \u2192 ${d.bound}`));
+  }
   const noWarn = Object.values(checks).every((s) => s !== "warn");
   const panelsComplete = Object.values(panels).every((s) => s !== "incomplete");
-  const eligibleForModel = poolInLibrary && noWarn && panelsComplete;
+  const eligibleForModel = poolInLibrary && noWarn && panelsComplete && drift.length === 0;
   return {
     missing,
     untagged,
     computedNoFormula,
+    drift,
     maturity: measure.maturity_stage,
     scope: eligibleForModel ? "published" : measure.scope === "scenario" ? "scenario" : "draft",
     eligibleForModel,
