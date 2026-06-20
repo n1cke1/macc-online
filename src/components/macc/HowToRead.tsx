@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import { collabEnabled } from '@/lib/config';
 
 const KEY = 'macc-howto-dismissed';
 
@@ -28,6 +30,17 @@ export default function HowToRead() {
         <li>{t('below')}</li>
         <li>{t('sorted')}</li>
       </ul>
+      {collabEnabled && (
+        <p className="mt-2 border-t border-sky-200/70 pt-2 text-slate-700">
+          {t.rich('contribute', {
+            link: (chunks) => (
+              <Link href="/connect" className="font-medium text-sky-700 underline">
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
+      )}
       <button
         onClick={dismiss}
         className="mt-2 rounded-md bg-slate-900 px-3 py-1 text-xs font-medium text-white"

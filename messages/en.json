@@ -59,6 +59,7 @@
     "height": "Bar height = the unit cost of abatement (USD per tonne CO₂).",
     "below": "Bars below zero pay for themselves — these are no-regrets measures.",
     "sorted": "Measures are sorted cheapest-first.",
+    "contribute": "Registered users can add their own measures via an AI chat — <link>by connecting the MCP connector</link>.",
     "dismiss": "Got it"
   },
   "assumptions": {
