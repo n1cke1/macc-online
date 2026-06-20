@@ -238,7 +238,7 @@
       "help": "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation."
     },
     "namespace": {
-      "help": "How a {ref:<key>} resolves: `res:<id>` → that resource's emission factor (EF); a key that has its own `computed` entry on the measure → that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number — both allowed. No other namespaces."
+      "help": "How a {ref:<key>} resolves (prefixed forms hit the library registry directly, so editing the indicator there propagates to every measure that names it): `res:<id>` → that resource's emission factor (EF, honors year-series); `res:<id>#<key>` → a resource indicator (price, lhv, comb_factor, …); `obj:<id>#<key>` → an object/technology indicator (capex_ud, eff, …); `prd:<id>#<key>` → a product indicator (carbon_footprint, …); `sub:<id>#<key>` → a subsector indicator; `glb:<key>` → a global (discountRate, year, …); `in:<key>` → a measure input (explicit form of the bare key). A bare `<key>` resolves to that key's own `computed` formula (evaluated recursively, drill-down to primary sources) if present, else to the measure input `measure.inputs[<key>]`. Literals are {const:<n>} or a bare number — both allowed."
     },
     "example": {
       "help": "Example (coal→gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity × capacity factor × hours/yr × (EF coal − EF gas) × 10⁻³. EF leaves use the res: namespace; 8760 and 1e-3 are literals."

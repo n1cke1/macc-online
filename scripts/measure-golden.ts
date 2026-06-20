@@ -11,11 +11,11 @@
 import baselineJson from '../data/kz/model.data.json';
 import { library, getSeedMeasure, seedMeasures } from '../src/lib/measure/library';
 import { compute, type ComputedMeasure } from '../src/lib/measure/compute';
-import { validate, stackPools } from '../src/lib/measure/validate';
+import { validate, stackPools, findDrift } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
 // HyperFormula twins — the parity oracle the shipped pure-TS core is pinned against.
 import { economicCore as economicCoreHF } from '../src/lib/measure/compile';
-import type { Measure } from '../src/lib/measure/schema';
+import type { Measure, NumberOrRef } from '../src/lib/measure/schema';
 
 interface ExcelRow { id: number; mac: number; abatementKt: number; capex: number; opex: number; durationYrs: number }
 const excel = (baselineJson as unknown as { projects: ExcelRow[] }).projects;
@@ -160,6 +160,49 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
   nearOracle('npv', id, c.npv, hf.npv);
   nearOracle('discCo2', id, c.discCo2Kt, hf.discCo2Kt);
   nearOracle('mac', id, c.mac, hf.mac);
+}
+
+// ── 6. Reuse-drift backstop — the kz-27 «one quantity, two numbers» catch ─────
+// e74dd61 phase A: a `binding.mode='reuse'` whose local copy disagrees with the
+// source it claims must surface as drift and withhold promotion. This was the only
+// kz-27 miss (capacity=1500 while cap_mw=1163) the protocol had nothing to catch
+// before; pin both the detection and the eligibility gate so neither can regress.
+{
+  // 6a — detection over the §6 `sources` path (the kz-27 shape exactly).
+  const probe = (capacity: NumberOrRef): Measure => ({
+    id: 'drift-probe', schema_version: 1, name: { ru: '', en: '' }, sector_ref: '1.A.1',
+    scope: 'draft', maturity_stage: 'computed', mechanism: 'reduction',
+    abatement: { formula: { const: 1 } },
+    inputs: { cap_mw: { value: 1163, provenance: { source_type: 'assumption', confidence: 'low' } } },
+    created_technologies: [{ technology_ref: 't', capacity }],
+    sources: {
+      'created_technologies[0].capacity': {
+        provenance: { source_type: 'assumption', confidence: 'low' },
+        binding: { mode: 'reuse', ref: 'in:cap_mw' },
+      },
+    },
+  } as unknown as Measure);
+
+  const drifted = findDrift(probe(1500), library);
+  expect(drifted.length === 1 && drifted[0].local === 1500 && drifted[0].bound === 1163,
+    'drift', `capacity 1500 vs reuse→cap_mw 1163 detected (got ${JSON.stringify(drifted)})`);
+  expect(findDrift(probe(1163), library).length === 0, 'drift',
+    'capacity equal to bound source → no drift');
+  expect(findDrift(probe({ ref: 'cap_mw' }), library).length === 0, 'drift',
+    'capacity as live {ref:cap_mw} → cannot drift (phase C structural fix)');
+
+  // 6b — drift gates eligibility on a real measure: kz-20 is eligible until a
+  // drifting reuse input is injected, after which validate() must withhold promotion.
+  const peers = seedMeasures.filter((m) => m.id !== 'kz-20');
+  const tainted = JSON.parse(JSON.stringify(getSeedMeasure('kz-20')!)) as Measure;
+  tainted.inputs = {
+    ...(tainted.inputs ?? {}),
+    probe_a: { value: 100, provenance: { source_type: 'assumption', confidence: 'low' } },
+    probe_b: { value: 999, provenance: { source_type: 'assumption', confidence: 'low' }, binding: { mode: 'reuse', ref: 'in:probe_a' } },
+  };
+  const vt = validate(tainted, library, peers);
+  expect(vt.drift.length >= 1 && vt.eligibleForModel === false, 'drift',
+    `injected reuse-drift blocks promotion (drift=${vt.drift.length}, eligible=${vt.eligibleForModel})`);
 }
 
 // ── report ────────────────────────────────────────────────────────────────────
