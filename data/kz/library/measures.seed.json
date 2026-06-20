@@ -74,7 +74,9 @@
       "created_technologies": [
         {
           "technology_ref": "tech_feed_dosing",
-          "capacity": 2550000,
+          "capacity": {
+            "ref": "in:capex_denominator"
+          },
           "unit": "голов"
         },
         {
@@ -88,8 +90,12 @@
         {
           "resource_ref": "feed_additive",
           "side": "new",
-          "qty": 2550000,
-          "price": 50,
+          "qty": {
+            "ref": "in:capex_denominator"
+          },
+          "price": {
+            "ref": "res:feed_additive#price"
+          },
           "unit": "голов"
         }
       ],
@@ -278,14 +284,18 @@
       "created_technologies": [
         {
           "technology_ref": "tech_coal_to_gas",
-          "capacity": 5000,
+          "capacity": {
+            "ref": "in:cap_mw"
+          },
           "unit": "МВт",
           "capex_ud_factor": 1000,
           "opex_musd": -120
         },
         {
           "technology_ref": "tech_gas_pipeline",
-          "capacity": 5000,
+          "capacity": {
+            "ref": "in:cap_mw"
+          },
           "unit": "МВт",
           "capex_ud_factor": 1000
         }
@@ -294,13 +304,17 @@
         {
           "resource_ref": "gas",
           "side": "new",
-          "price": 250,
+          "price": {
+            "ref": "res:gas#price"
+          },
           "unit": "тыс. м³"
         },
         {
           "resource_ref": "coal",
           "side": "retired",
-          "price": 15,
+          "price": {
+            "ref": "res:coal#price"
+          },
           "unit": "т"
         }
       ],

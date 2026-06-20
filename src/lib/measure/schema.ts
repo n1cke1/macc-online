@@ -127,28 +127,40 @@ export interface Flow {
 // ── Iteration-2 composition: objects + materials (economics derives from these) ──
 
 /**
+ * §C — a scalar that is either a literal number or a `{ref:'<key>'}` pointer into
+ * the registry/inputs (the resolver namespace from compute.ts: `res:<id>#<key>`,
+ * `obj:<id>#<key>`, `prd:<id>#<key>`, `sub:<id>#<key>`, `glb:<key>`, `in:<key>`,
+ * a bare measure input key, or a JS path). Used on the line-item fields where
+ * the same physical quantity already lives in the registry or in `measure.inputs`
+ * — point at it instead of duplicating, and the engine reads it live.
+ */
+export type NumberOrRef = number | { ref: string };
+
+/**
  * An object we BUILD (a library `technology` instance at a measure-specific
  * `capacity`). CAPEX rolls up as `capex_musd ?? capacity × tech.capex_ud × factor / 1e6`
  * (the factor converts the capacity unit to the capex_ud denominator unit, e.g.
  * MW→kW = 1000). `opex_musd` is this object's annual OPEX line (signed).
+ * Each scalar is `NumberOrRef` so a measure can point at an input/indicator
+ * instead of carrying a duplicated copy.
  */
 export interface BuiltTechnology {
   technology_ref: string; // technology id (library)
-  capacity?: number;
+  capacity?: NumberOrRef;
   unit?: string;
-  capex_ud_factor?: number; // capacity-unit → capex_ud-unit (default 1)
-  capex_musd?: number; // explicit CAPEX when it isn't capacity-driven
-  opex_musd?: number; // annual OPEX line for this object (signed)
+  capex_ud_factor?: NumberOrRef; // capacity-unit → capex_ud-unit (default 1)
+  capex_musd?: NumberOrRef; // explicit CAPEX when it isn't capacity-driven
+  opex_musd?: NumberOrRef; // annual OPEX line for this object (signed)
 }
 
 /** An object we CLOSE/retire — its maintenance CAPEX/OPEX become avoided (negative). */
 export interface RetiredTechnology {
   technology_ref: string;
-  capacity?: number;
+  capacity?: NumberOrRef;
   unit?: string;
-  capex_ud_factor?: number;
-  maintenance_capex_musd?: number; // avoided maintenance CAPEX (subtracted)
-  opex_musd?: number; // avoided OPEX (signed)
+  capex_ud_factor?: NumberOrRef;
+  maintenance_capex_musd?: NumberOrRef; // avoided maintenance CAPEX (subtracted)
+  opex_musd?: NumberOrRef; // avoided OPEX (signed)
 }
 
 /**
@@ -159,9 +171,9 @@ export interface RetiredTechnology {
 export interface Material {
   resource_ref: string;
   side: 'new' | 'retired';
-  qty?: number;
-  price?: number;
-  cost_musd?: number; // explicit cost when qty/price aren't both known
+  qty?: NumberOrRef;
+  price?: NumberOrRef;
+  cost_musd?: NumberOrRef; // explicit cost when qty/price aren't both known
   unit?: string;
 }
 

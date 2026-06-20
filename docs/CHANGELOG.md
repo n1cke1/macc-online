@@ -53,3 +53,25 @@ reflect the full payload, so the history stays searchable.
 - No new drift surfaces in the seed corpus — all `res:<id>#price` bindings on
   kz-2/kz-20 happen to match the registry value, so kz-16's existing 1000×
   scale mismatch is still the only drift after Phase B.
+
+### Schema
+
+- **Phase C — eliminate dual storage on line-item scalars.** The numeric fields
+  on `created_technologies[]`, `retired_technologies[]` and `materials[]` are
+  now `NumberOrRef = number | { ref: string }`. A measure can replace
+  `capacity: 5000` with `capacity: { ref: 'in:cap_mw' }` — the engine
+  dereferences through the unified resolver at rollup time, so the line item
+  and the bound source can no longer drift apart (single physical quantity,
+  single number on disk). `taggablePaths` treats a `{ref}` as already
+  tagged (notation rule §3/§6: the ref *is* the binding), and the drift
+  detector skips paths that no longer hold a literal number. JSON Schema gains
+  a `$defs/numberOrRef` union, applied to the 9 affected scalars. The MCP web
+  editor (`MeasureEditor.tsx`) renders ref-form fields as a read-only chip
+  (`→ ref:key`) instead of a NumberField — UI authoring stays literal-only
+  for now; ref-form authoring goes through the MCP/JSON path.
+- Migrated 7 paths in the seed (kz-2: 2× capacity + 2× material.price;
+  kz-20: 1× capacity + 1× material.qty + 1× material.price). MAC/abatement/
+  CAPEX/OPEX are bit-for-bit identical to pre-migration (measure-golden 24/24).
+  kz-16's `materials[0].qty` vs `created_technologies[0].capacity` drift is
+  left in place — it's a real value disagreement (1000× scale), needs to be
+  re-tagged `mode='alt'` with a divergence_reason, not auto-migrated.

@@ -125,28 +125,38 @@
       "properties": { "ru": { "type": "string" }, "en": { "type": "string" } }
     },
     "sectorCode": { "enum": ["1.A.1", "1.A.2", "1.A.3", "1.A.4", "1.B", "2", "3", "4", "5"] },
+    "numberOrRef": {
+      "description": "A scalar that is either a literal number or a live registry/input ref ({ref:'<key>'}). Refs use the resolver namespace: 'res:<id>#<key>', 'obj:<id>#<key>', 'prd:<id>#<key>', 'sub:<id>#<key>', 'glb:<key>', 'in:<key>', bare measure input key, or a JS path into the document. A ref leaves no duplicated copy on the measure — editing the source propagates here automatically.",
+      "oneOf": [
+        { "type": "number" },
+        {
+          "type": "object", "required": ["ref"], "additionalProperties": false,
+          "properties": { "ref": { "type": "string", "description": "key the resolver understands" } }
+        }
+      ]
+    },
     "flow": {
       "type": "object", "required": ["resource_ref", "qty_per_unit"], "additionalProperties": false,
       "properties": { "resource_ref": { "type": "string" }, "qty_per_unit": { "type": "number" }, "unit": { "type": "string" } }
     },
     "builtObject": {
       "type": "object", "required": ["technology_ref"], "additionalProperties": false,
-      "description": "CAPEX = capex_musd ?? capacity × tech.capex_ud × (capex_ud_factor ?? 1) / 1e6.",
+      "description": "CAPEX = capex_musd ?? capacity × tech.capex_ud × (capex_ud_factor ?? 1) / 1e6. Scalar fields accept numberOrRef so a measure can point at the registry/inputs instead of carrying a duplicated copy.",
       "properties": {
         "technology_ref": { "type": "string", "description": "library object id" },
-        "capacity": { "type": "number" }, "unit": { "type": "string" },
-        "capex_ud_factor": { "type": "number", "description": "capacity unit → capex_ud denominator (e.g. MW→kW = 1000)" },
-        "capex_musd": { "type": "number", "description": "explicit CAPEX when not capacity-driven" },
-        "opex_musd": { "type": "number", "description": "annual OPEX line, signed" }
+        "capacity": { "$ref": "#/$defs/numberOrRef" }, "unit": { "type": "string" },
+        "capex_ud_factor": { "$ref": "#/$defs/numberOrRef", "description": "capacity unit → capex_ud denominator (e.g. MW→kW = 1000)" },
+        "capex_musd": { "$ref": "#/$defs/numberOrRef", "description": "explicit CAPEX when not capacity-driven" },
+        "opex_musd": { "$ref": "#/$defs/numberOrRef", "description": "annual OPEX line, signed" }
       }
     },
     "retiredObject": {
       "type": "object", "required": ["technology_ref"], "additionalProperties": false,
       "properties": {
-        "technology_ref": { "type": "string" }, "capacity": { "type": "number" }, "unit": { "type": "string" },
-        "capex_ud_factor": { "type": "number" },
-        "maintenance_capex_musd": { "type": "number", "description": "avoided maintenance CAPEX (subtracted)" },
-        "opex_musd": { "type": "number", "description": "avoided OPEX (signed)" }
+        "technology_ref": { "type": "string" }, "capacity": { "$ref": "#/$defs/numberOrRef" }, "unit": { "type": "string" },
+        "capex_ud_factor": { "$ref": "#/$defs/numberOrRef" },
+        "maintenance_capex_musd": { "$ref": "#/$defs/numberOrRef", "description": "avoided maintenance CAPEX (subtracted)" },
+        "opex_musd": { "$ref": "#/$defs/numberOrRef", "description": "avoided OPEX (signed)" }
       }
     },
     "material": {
@@ -154,8 +164,8 @@
       "properties": {
         "resource_ref": { "type": "string" },
         "side": { "enum": ["new", "retired"], "description": "new = consumed (cost +); retired = freed (saving −)" },
-        "qty": { "type": "number" }, "price": { "type": "number" },
-        "cost_musd": { "type": "number", "description": "explicit cost when qty/price aren't both known" },
+        "qty": { "$ref": "#/$defs/numberOrRef" }, "price": { "$ref": "#/$defs/numberOrRef" },
+        "cost_musd": { "$ref": "#/$defs/numberOrRef", "description": "explicit cost when qty/price aren't both known" },
         "unit": { "type": "string" }
       }
     },

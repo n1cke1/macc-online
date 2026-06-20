@@ -14,7 +14,7 @@ import type { CheckId, CheckStatus } from './validate';
 // means. Imported lazily-bound through ESM cycle (compute → guardrails for
 // economicsRollup; guardrails → compute for makeResolver) — safe because both
 // call sites are runtime, not module-init.
-import { makeResolver } from './compute';
+import { makeResolver, unboxNumber } from './compute';
 
 function bindSlots(ast: Ast, slots: Record<string, number>): Ast {
   if (isLeafSlot(ast)) {
@@ -60,23 +60,26 @@ export function economicsRollup(measure: Measure, library: Library): { capex: nu
 
   if (created.length || retired.length || materials.length) {
     const tech = (ref: string) => library.technologies[ref];
-    // A bare number is either entered (the inline value) or COMPUTED by a formula in
-    // `measure.computed[path]` — when present, the formula wins (single source of truth).
+    // A bare number is either entered (the inline value), COMPUTED by a formula in
+    // `measure.computed[path]`, or a `{ref}` pointer the resolver dereferences. The
+    // formula wins, then the ref/inline — single source of truth in all cases.
     const resolve = makeResolver(measure, library);
-    const pick = (path: string, inline?: number): number | undefined => {
+    const pick = (path: string, inline?: import('./schema').NumberOrRef): number | undefined => {
       const c = measure.computed?.[path];
-      return c ? evalJs(c.formula, resolve) : inline;
+      if (c) return evalJs(c.formula, resolve);
+      return unboxNumber(inline, resolve);
     };
     const capexCreated = created.reduce((s, o, i) =>
       s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd)
-        ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
+        ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
     const capexRetired = retired.reduce((s, r, i) =>
       s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd)
-        ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
+        ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
     const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0)
       - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
     const opexMaterials = materials.reduce((s, m, i) => {
-      const cost = m.cost_musd ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
+      const explicit = unboxNumber(m.cost_musd, resolve);
+      const cost = explicit ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
       return s + (m.side === 'retired' ? -cost : cost);
     }, 0);
     return { capex: capexCreated - capexRetired, opex: opexObjects + opexMaterials };

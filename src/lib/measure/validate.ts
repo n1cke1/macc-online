@@ -198,22 +198,24 @@ function buildChecks(
 
 // ── §3/§6 notation completeness: every bare number is input XOR computed ────────
 
-/** The measure's bare numbers that must each be tagged (input source or computed formula). */
+/** The measure's bare numbers that must each be tagged (input source or computed formula).
+ *  A `{ref}` form is already tagged (the ref *is* the link), so only literal numbers are listed. */
 export function taggablePaths(m: Measure): string[] {
   const p: string[] = [];
+  const isLit = (v: unknown) => typeof v === 'number';
   (m.created_technologies ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`created_technologies[${i}].capacity`);
-    if (o.capex_musd != null) p.push(`created_technologies[${i}].capex_musd`);
-    if (o.opex_musd != null) p.push(`created_technologies[${i}].opex_musd`);
+    if (isLit(o.capacity)) p.push(`created_technologies[${i}].capacity`);
+    if (isLit(o.capex_musd)) p.push(`created_technologies[${i}].capex_musd`);
+    if (isLit(o.opex_musd)) p.push(`created_technologies[${i}].opex_musd`);
   });
   (m.retired_technologies ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`retired_technologies[${i}].capacity`);
-    if (o.maintenance_capex_musd != null) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
-    if (o.opex_musd != null) p.push(`retired_technologies[${i}].opex_musd`);
+    if (isLit(o.capacity)) p.push(`retired_technologies[${i}].capacity`);
+    if (isLit(o.maintenance_capex_musd)) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
+    if (isLit(o.opex_musd)) p.push(`retired_technologies[${i}].opex_musd`);
   });
   (m.materials ?? []).forEach((mt, i) => {
-    if (mt.qty != null || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
-    if (mt.price != null || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
+    if (isLit(mt.qty) || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
+    if (isLit(mt.price) || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
   });
   if (m.abatement.raw) p.push('abatement.raw.share');
   return p;

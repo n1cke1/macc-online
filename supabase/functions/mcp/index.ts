@@ -1814,7 +1814,9 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "tech_feed_dosing",
-          capacity: 255e4,
+          capacity: {
+            ref: "in:capex_denominator"
+          },
           unit: "\u0433\u043E\u043B\u043E\u0432"
         },
         {
@@ -1828,8 +1830,12 @@ var measures_seed_default = {
         {
           resource_ref: "feed_additive",
           side: "new",
-          qty: 255e4,
-          price: 50,
+          qty: {
+            ref: "in:capex_denominator"
+          },
+          price: {
+            ref: "res:feed_additive#price"
+          },
           unit: "\u0433\u043E\u043B\u043E\u0432"
         }
       ],
@@ -2018,14 +2024,18 @@ var measures_seed_default = {
       created_technologies: [
         {
           technology_ref: "tech_coal_to_gas",
-          capacity: 5e3,
+          capacity: {
+            ref: "in:cap_mw"
+          },
           unit: "\u041C\u0412\u0442",
           capex_ud_factor: 1e3,
           opex_musd: -120
         },
         {
           technology_ref: "tech_gas_pipeline",
-          capacity: 5e3,
+          capacity: {
+            ref: "in:cap_mw"
+          },
           unit: "\u041C\u0412\u0442",
           capex_ud_factor: 1e3
         }
@@ -2034,13 +2044,17 @@ var measures_seed_default = {
         {
           resource_ref: "gas",
           side: "new",
-          price: 250,
+          price: {
+            ref: "res:gas#price"
+          },
           unit: "\u0442\u044B\u0441. \u043C\xB3"
         },
         {
           resource_ref: "coal",
           side: "retired",
-          price: 15,
+          price: {
+            ref: "res:coal#price"
+          },
           unit: "\u0442"
         }
       ],
@@ -6457,13 +6471,15 @@ function economicsRollup(measure, library2) {
     const resolve = makeResolver(measure, library2);
     const pick = (path, inline) => {
       const c = measure.computed?.[path];
-      return c ? evalAst(c.formula, resolve) : inline;
+      if (c) return evalAst(c.formula, resolve);
+      return unboxNumber(inline, resolve);
     };
-    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6), 0);
-    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (r.capex_ud_factor ?? 1) / 1e6), 0);
+    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
+    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
     const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0) - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
     const opexMaterials = materials.reduce((s, m, i) => {
-      const cost = m.cost_musd ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
+      const explicit = unboxNumber(m.cost_musd, resolve);
+      const cost = explicit ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
       return s + (m.side === "retired" ? -cost : cost);
     }, 0);
     return { capex: capexCreated - capexRetired, opex: opexObjects + opexMaterials };
@@ -6474,6 +6490,13 @@ function economicsRollup(measure, library2) {
 }
 
 // src/lib/measure/compute.ts
+var isRef = (v) => typeof v === "object" && v !== null && typeof v.ref === "string";
+function unboxNumber(v, resolve) {
+  if (v == null) return void 0;
+  if (typeof v === "number") return v;
+  if (isRef(v)) return resolve(v.ref);
+  return void 0;
+}
 var INDICATOR_PREFIX = {
   res: "resource",
   obj: "object",
@@ -6693,19 +6716,20 @@ function buildChecks(measure, c, library2, peers) {
 }
 function taggablePaths(m) {
   const p = [];
+  const isLit = (v) => typeof v === "number";
   (m.created_technologies ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`created_technologies[${i}].capacity`);
-    if (o.capex_musd != null) p.push(`created_technologies[${i}].capex_musd`);
-    if (o.opex_musd != null) p.push(`created_technologies[${i}].opex_musd`);
+    if (isLit(o.capacity)) p.push(`created_technologies[${i}].capacity`);
+    if (isLit(o.capex_musd)) p.push(`created_technologies[${i}].capex_musd`);
+    if (isLit(o.opex_musd)) p.push(`created_technologies[${i}].opex_musd`);
   });
   (m.retired_technologies ?? []).forEach((o, i) => {
-    if (o.capacity != null) p.push(`retired_technologies[${i}].capacity`);
-    if (o.maintenance_capex_musd != null) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
-    if (o.opex_musd != null) p.push(`retired_technologies[${i}].opex_musd`);
+    if (isLit(o.capacity)) p.push(`retired_technologies[${i}].capacity`);
+    if (isLit(o.maintenance_capex_musd)) p.push(`retired_technologies[${i}].maintenance_capex_musd`);
+    if (isLit(o.opex_musd)) p.push(`retired_technologies[${i}].opex_musd`);
   });
   (m.materials ?? []).forEach((mt, i) => {
-    if (mt.qty != null || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
-    if (mt.price != null || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
+    if (isLit(mt.qty) || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
+    if (isLit(mt.price) || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
   });
   if (m.abatement.raw) p.push("abatement.raw.share");
   return p;
@@ -6974,6 +6998,18 @@ var measure_schema_default = {
       properties: { ru: { type: "string" }, en: { type: "string" } }
     },
     sectorCode: { enum: ["1.A.1", "1.A.2", "1.A.3", "1.A.4", "1.B", "2", "3", "4", "5"] },
+    numberOrRef: {
+      description: "A scalar that is either a literal number or a live registry/input ref ({ref:'<key>'}). Refs use the resolver namespace: 'res:<id>#<key>', 'obj:<id>#<key>', 'prd:<id>#<key>', 'sub:<id>#<key>', 'glb:<key>', 'in:<key>', bare measure input key, or a JS path into the document. A ref leaves no duplicated copy on the measure \u2014 editing the source propagates here automatically.",
+      oneOf: [
+        { type: "number" },
+        {
+          type: "object",
+          required: ["ref"],
+          additionalProperties: false,
+          properties: { ref: { type: "string", description: "key the resolver understands" } }
+        }
+      ]
+    },
     flow: {
       type: "object",
       required: ["resource_ref", "qty_per_unit"],
@@ -6984,14 +7020,14 @@ var measure_schema_default = {
       type: "object",
       required: ["technology_ref"],
       additionalProperties: false,
-      description: "CAPEX = capex_musd ?? capacity \xD7 tech.capex_ud \xD7 (capex_ud_factor ?? 1) / 1e6.",
+      description: "CAPEX = capex_musd ?? capacity \xD7 tech.capex_ud \xD7 (capex_ud_factor ?? 1) / 1e6. Scalar fields accept numberOrRef so a measure can point at the registry/inputs instead of carrying a duplicated copy.",
       properties: {
         technology_ref: { type: "string", description: "library object id" },
-        capacity: { type: "number" },
+        capacity: { $ref: "#/$defs/numberOrRef" },
         unit: { type: "string" },
-        capex_ud_factor: { type: "number", description: "capacity unit \u2192 capex_ud denominator (e.g. MW\u2192kW = 1000)" },
-        capex_musd: { type: "number", description: "explicit CAPEX when not capacity-driven" },
-        opex_musd: { type: "number", description: "annual OPEX line, signed" }
+        capex_ud_factor: { $ref: "#/$defs/numberOrRef", description: "capacity unit \u2192 capex_ud denominator (e.g. MW\u2192kW = 1000)" },
+        capex_musd: { $ref: "#/$defs/numberOrRef", description: "explicit CAPEX when not capacity-driven" },
+        opex_musd: { $ref: "#/$defs/numberOrRef", description: "annual OPEX line, signed" }
       }
     },
     retiredObject: {
@@ -7000,11 +7036,11 @@ var measure_schema_default = {
       additionalProperties: false,
       properties: {
         technology_ref: { type: "string" },
-        capacity: { type: "number" },
+        capacity: { $ref: "#/$defs/numberOrRef" },
         unit: { type: "string" },
-        capex_ud_factor: { type: "number" },
-        maintenance_capex_musd: { type: "number", description: "avoided maintenance CAPEX (subtracted)" },
-        opex_musd: { type: "number", description: "avoided OPEX (signed)" }
+        capex_ud_factor: { $ref: "#/$defs/numberOrRef" },
+        maintenance_capex_musd: { $ref: "#/$defs/numberOrRef", description: "avoided maintenance CAPEX (subtracted)" },
+        opex_musd: { $ref: "#/$defs/numberOrRef", description: "avoided OPEX (signed)" }
       }
     },
     material: {
@@ -7014,9 +7050,9 @@ var measure_schema_default = {
       properties: {
         resource_ref: { type: "string" },
         side: { enum: ["new", "retired"], description: "new = consumed (cost +); retired = freed (saving \u2212)" },
-        qty: { type: "number" },
-        price: { type: "number" },
-        cost_musd: { type: "number", description: "explicit cost when qty/price aren't both known" },
+        qty: { $ref: "#/$defs/numberOrRef" },
+        price: { $ref: "#/$defs/numberOrRef" },
+        cost_musd: { $ref: "#/$defs/numberOrRef", description: "explicit cost when qty/price aren't both known" },
         unit: { type: "string" }
       }
     },

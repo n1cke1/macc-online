@@ -11,7 +11,7 @@ import { fmt, fmtMac, fmtInt } from '@/lib/format';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
-import type { BuiltTechnology, Library, Localized, UiHelp, Provenance, RetiredTechnology, ValueSource } from '@/lib/measure/schema';
+import type { BuiltTechnology, Library, Localized, NumberOrRef, UiHelp, Provenance, RetiredTechnology, ValueSource } from '@/lib/measure/schema';
 import type { CheckId, CheckStatus, PanelKey, PanelStatus } from '@/lib/measure/validate';
 import { useMeasureDraft } from './useMeasureDraft';
 import { useDraftOverlay } from '@/store';
@@ -64,6 +64,28 @@ function NumberField({ value, onCommit, input }: { value: number; onCommit: (v: 
       onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
       className={`w-24 rounded border px-2 py-1 text-right text-sm tabular-nums focus:border-sky-500 focus:outline-none ${input ? 'border-sky-300 bg-sky-50/70' : 'border-line'}`} />
   );
+}
+
+/** §C — narrow a NumberOrRef to its literal-number part (refs are out-of-band for the UI editor). */
+const numOf = (v: NumberOrRef | undefined): number | undefined => (typeof v === 'number' ? v : undefined);
+const refOf = (v: NumberOrRef | undefined): string | undefined =>
+  typeof v === 'object' && v !== null && typeof (v as { ref?: unknown }).ref === 'string' ? (v as { ref: string }).ref : undefined;
+
+/** Render a `{ref}`-form scalar as a non-editable chip — the UI editor authors literal numbers only;
+ *  `{ref}` fields are introduced via MCP/agents and edited in JSON for now. */
+function RefChip({ refKey, title }: { refKey: string; title?: string }) {
+  return (
+    <span title={title ?? `live ref → ${refKey}`} className="inline-flex w-24 items-center justify-end gap-1 rounded border border-sky-200 bg-sky-50 px-2 py-1 text-right font-mono text-[11px] tabular-nums text-sky-700">
+      → {refKey}
+    </span>
+  );
+}
+
+/** NumberField that gracefully shows a chip when the field holds a `{ref}` instead of a number. */
+function NumberOrRefField({ value, onCommit, input }: { value: NumberOrRef | undefined; onCommit: (v: number) => void; input?: boolean }) {
+  const r = refOf(value);
+  if (r) return <RefChip refKey={r} />;
+  return <NumberField input={input} value={numOf(value) ?? 0} onCommit={onCommit} />;
 }
 
 function Panel({ pkey, title, status, help, children }: { pkey: PanelKey; title: string; status?: PanelStatus; help?: string; children: ReactNode }) {
@@ -239,12 +261,12 @@ export default function MeasureEditor() {
       </div>
     );
   };
-  const objCapex = (o: { technology_ref: string; capacity?: number; capex_ud_factor?: number; capex_musd?: number }) =>
-    o.capex_musd ?? (o.capacity ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (o.capex_ud_factor ?? 1) / 1e6;
-  const matCost = (m: { price?: number; cost_musd?: number; side: string }, i: number) => {
-    const qty = cval(`materials[${i}].qty`) ?? (m as { qty?: number }).qty ?? 0;
-    const price = cval(`materials[${i}].price`) ?? m.price ?? 0;
-    return (m.cost_musd ?? qty * price / 1e6) * (m.side === 'retired' ? -1 : 1);
+  const objCapex = (o: { technology_ref: string; capacity?: NumberOrRef; capex_ud_factor?: NumberOrRef; capex_musd?: NumberOrRef }) =>
+    numOf(o.capex_musd) ?? (numOf(o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (numOf(o.capex_ud_factor) ?? 1) / 1e6;
+  const matCost = (m: { qty?: NumberOrRef; price?: NumberOrRef; cost_musd?: NumberOrRef; side: string }, i: number) => {
+    const qty = cval(`materials[${i}].qty`) ?? numOf(m.qty) ?? 0;
+    const price = cval(`materials[${i}].price`) ?? numOf(m.price) ?? 0;
+    return (numOf(m.cost_musd) ?? qty * price / 1e6) * (m.side === 'retired' ? -1 : 1);
   };
 
   function ReductionFormula() {
@@ -316,7 +338,7 @@ export default function MeasureEditor() {
               </div>
               {tc?.description && <p className="mt-0.5 text-xs text-muted">{pick(tc.description, locale)}</p>}
               <Row label={`${t('field.capacity')}${o.unit ? `, ${o.unit}` : ''}`} help={<><div>{gh(nt.fields.capacity)}</div>{srcNode(`${kind}_objects[${i}].capacity`)}</>}>
-                <NumberField input value={o.capacity ?? 0} onCommit={(val) => mutate(i, (x) => { x.capacity = val; })} />
+                <NumberOrRefField input value={o.capacity} onCommit={(val) => mutate(i, (x) => { x.capacity = val; })} />
               </Row>
               <Row label={kind === 'created' ? t('field.capexUd') : t('field.maintCapexUd')} help={<><div>{gh(nt.fields.capexUd)}</div><div className="mt-1">{t('help.objectSource')}: <ProvText p={tc?.provenance} /></div></>}>
                 <span className="tabular-nums">{ud != null ? `${num(ud, 0)} ${tc?.capex_ud_unit ?? ''}` : '—'}</span>
@@ -438,20 +460,20 @@ export default function MeasureEditor() {
             <Row key={`c${i}`} label={`+ ${tc ? pick(tc.name, locale) : o.technology_ref}`}
               help={o.capex_musd != null ? srcNode(`created_technologies[${i}].capex_musd`) ?? <ProvText p={tc?.provenance} /> : <>{t('help.formula')}: [{t('field.capacity').toLowerCase()}] × [{t('field.capexUd').toLowerCase()}]{o.capex_ud_factor ? ` × ${o.capex_ud_factor}` : ''} / 10⁶</>}>
               {o.capex_musd != null
-                ? <NumberField input value={o.capex_musd} onCommit={(val) => update((m) => { m.created_technologies![i].capex_musd = val; })} />
+                ? <NumberOrRefField input value={o.capex_musd} onCommit={(val) => update((m) => { m.created_technologies![i].capex_musd = val; })} />
                 : <span className="tabular-nums">{num(objCapex(o))} mUSD</span>}
             </Row>
           );
         })}
         {(measure.retired_technologies ?? []).map((o, i) => (
-          <Row key={`rc${i}`} label={`− ${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref}`}><span className="tabular-nums">{num(o.maintenance_capex_musd ?? 0)} mUSD</span></Row>
+          <Row key={`rc${i}`} label={`− ${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref}`}><span className="tabular-nums">{num(numOf(o.maintenance_capex_musd) ?? 0)} mUSD</span></Row>
         ))}
         <Row label="Σ CAPEX"><b className="tabular-nums">{computed ? num(computed.capex) : '—'} mUSD</b></Row>
 
         <div className="mb-1 mt-3 text-xs font-semibold text-slate-500">OPEX</div>
         {(measure.created_technologies ?? []).map((o, i) => o.opex_musd == null ? null : (
           <Row key={`co${i}`} label={`${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref} · OPEX`} help={srcNode(`created_technologies[${i}].opex_musd`)}>
-            <NumberField input value={o.opex_musd ?? 0} onCommit={(val) => update((m) => { m.created_technologies![i].opex_musd = val; })} />
+            <NumberOrRefField input value={o.opex_musd} onCommit={(val) => update((m) => { m.created_technologies![i].opex_musd = val; })} />
           </Row>
         ))}
         {(measure.materials ?? []).map((mat, i) => {
@@ -469,8 +491,8 @@ export default function MeasureEditor() {
                         className="flex w-24 items-center justify-end gap-1 rounded border border-line bg-slate-50 px-2 py-1 text-right text-sm tabular-nums text-slate-600 hover:bg-slate-100">
                         <span className="text-slate-400">{open ? '▾' : '▸'} ƒ</span> {num(qtyComputed, 0)}
                       </button>
-                    : (mat.qty != null && <NumberField input value={mat.qty} onCommit={(val) => update((m) => { m.materials![i].qty = val; })} />)}
-                  {mat.price != null && <>× <NumberField input value={mat.price} onCommit={(val) => update((m) => { m.materials![i].price = val; })} /></>}
+                    : (mat.qty != null && <NumberOrRefField input value={mat.qty} onCommit={(val) => update((m) => { m.materials![i].qty = val; })} />)}
+                  {mat.price != null && <>× <NumberOrRefField input value={mat.price} onCommit={(val) => update((m) => { m.materials![i].price = val; })} /></>}
                   <span className="tabular-nums text-slate-500">= {num(matCost(mat, i))} mUSD</span>
                   <QHelp><><div>{gh(nt.fields.materialSide)}</div><div className="mt-1">{gh(nt.fields.qty)}</div>{qtyComputed == null && srcNode(qtyPath)}{mat.price != null && <div className="mt-1">{gh(nt.fields.price)}</div>}{srcNode(`materials[${i}].price`)}</></QHelp>
                 </span>

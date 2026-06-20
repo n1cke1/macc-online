@@ -8,7 +8,18 @@ import type { Localized, SectorCode } from '@data/schema';
 import { economicCore, evalAst, type RefResolver } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import { economicsRollup } from './guardrails';
-import type { IndicatorOwnerKind, Library, Measure } from './schema';
+import type { IndicatorOwnerKind, Library, Measure, NumberOrRef } from './schema';
+
+/** §C — turn a `NumberOrRef` into a number, resolving `{ref}` through `resolve`. */
+export const isRef = (v: NumberOrRef | undefined): v is { ref: string } =>
+  typeof v === 'object' && v !== null && typeof (v as { ref?: unknown }).ref === 'string';
+
+export function unboxNumber(v: NumberOrRef | undefined, resolve: RefResolver): number | undefined {
+  if (v == null) return undefined;
+  if (typeof v === 'number') return v;
+  if (isRef(v)) return resolve(v.ref);
+  return undefined;
+}
 
 /** Plottable result of a measure — `MaccPoint`-compatible plus authoring extras. */
 export interface ComputedMeasure {
