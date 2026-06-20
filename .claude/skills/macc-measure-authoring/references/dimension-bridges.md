@@ -20,6 +20,24 @@ A missing/unknown unit, an `add`/`sub` of incompatible dimensions, or a result t
 CO₂ quantity is a **hard gate**: the reduction panel goes incomplete and the measure stays
 `draft`. So give every input a `unit` drawn from the library vocabulary.
 
+## Units come from a fixed vocabulary
+
+The dimensional fold only understands a **closed vocabulary** of unit strings (each mapped to a
+dimension — МВт, тыс. Гкал/год, tCO₂/MWh, тыс. голов, …). Every `unit` you put on an input — and
+every library indicator you reference in an abatement formula — must be one of those strings.
+
+- **Reuse an existing unit.** Before inventing a unit string, pick the one already in the
+  vocabulary that matches the physical quantity (look at what comparable measures/indicators
+  use). A near-miss spelling counts as *unknown* and trips the gate.
+- **A genuinely new unit is a maintainer change, not yours.** The vocabulary lives in code and
+  is pinned by a test; you cannot add a unit from the authoring path, and an unmapped unit will
+  always fail the gate. If a measure truly needs a physical unit the vocabulary lacks, **flag it
+  for a maintainer to add** (the unit string, its dimension, and the conversion scale) rather
+  than working around the gate. Until it is added, express the quantity with an existing unit.
+
+This is the only place library usage is constrained: bridges and indicators are otherwise free
+to use — the gate only insists their **units are known and their dimensions reduce to CO₂**.
+
 ## Bridges (the atomic conversions)
 
 | bridge | from | × via | → to |
