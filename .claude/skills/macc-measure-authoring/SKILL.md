@@ -173,7 +173,8 @@ are the full spec: `references/formula-ast.md`.
   `energy_to_co2`, fuel switch) from what you hold to CO₂/year, taking each EF from the **right
   resource** (`res:R#…`). `validate_measure` folds the formula over the dimensions and gates it
   to `draft` if it does not reduce to CO₂ or crosses resource carriers (the kz-27 class of
-  error). Give every input a `unit`. → `references/dimension-bridges.md`.
+  error). Give every input a `unit`. **Prefer computing from the fuel** (mass × LHV × fuel EF)
+  over a coarse output-EF — it is auditable and carrier-safe. → `references/dimension-bridges.md`.
 
 ---
 

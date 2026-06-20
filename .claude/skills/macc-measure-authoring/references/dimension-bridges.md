@@ -54,7 +54,23 @@ fold accepts "some EF" — only YOU guarantee it is the EF of the resource the e
 > ресурса (`res:R#…`) — единицы проверят структуру, но «тот ли это ресурс» отвечаешь ты.
 > Топливный свитч = CO₂(замещаемого) − CO₂(нового), две цепочки своих ресурсов.
 
-To go finer, **decompose a coarse EF**: replace `res:R#ef` (tCO₂/MWh) with `res:R#lhv` (energy
-per mass) and a fuel EF — `mass × LHV = energy`, `energy × EF = CO₂`. The finer the chain, the
-less room for a carrier slip: dropping to fuel-level indicators, you physically cannot put an
-electric output-EF onto a thermal chain.
+## Prefer computing from the fuel
+
+When a measure burns or displaces a fuel, **compute the abatement from the fuel, not from a
+coarse output-EF.** Start at the fuel quantity and chain up:
+
+> `mass of fuel × res:R#lhv → energy of R`, then `energy of R × res:R#ef → CO₂`.
+
+Why the fuel chain is better than `output × (tCO₂/MWh output-EF)`:
+
+- **Auditable** — every tonne of CO₂ traces to a physical quantity of a named fuel and that
+  fuel's own LHV/EF, not to a lumped "per-MWh-of-product" number whose assumptions are hidden.
+- **Carrier-safe** — the fuel chain carries the resource explicitly, so the carrier lock
+  guarantees the EF belongs to the fuel you actually burn. A coarse output-EF carries only a
+  product; mis-attributing it (an electricity output-EF on a heat chain) is the kz-27 error.
+- **Less slip** — the finer the decomposition, the less room to put the wrong number in. If you
+  only have a coarse `res:R#ef` (tCO₂/MWh), **decompose it** into `res:R#lhv` (energy per mass)
+  + a fuel EF and compute from the fuel mass.
+
+Use a coarse output-EF (`prd:P#carbon_footprint`) only when there is genuinely no fuel to
+attribute to (a grid-average displacement), and then its product MUST be this measure's product.
