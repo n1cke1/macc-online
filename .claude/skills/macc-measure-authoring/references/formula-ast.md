@@ -33,13 +33,26 @@ A `{slot}` is a template slot bound per-measure via bindings before evaluation.
 
 ## Namespace
 
-How a `{ref:<key>}` resolves: `res:<id>` → that resource's emission factor (EF); a key that
-has its own `computed` entry on the measure → that formula, evaluated recursively
-(drill-down to primary sources); otherwise a local measure input (`measure.inputs[key]`).
-Literals are `{const:<n>}` or a bare number — both allowed. No other namespaces.
+How a `{ref:<key>}` resolves. All prefixed forms hit the registry directly — editing the
+indicator there propagates to every measure that names it:
+
+| Prefix             | Resolves to                                                                  |
+|--------------------|------------------------------------------------------------------------------|
+| `res:<id>`         | resource's EF (shortcut for `res:<id>#ef`; honors year-series EFs)            |
+| `res:<id>#<key>`   | resource indicator (`price`, `lhv`, `comb_factor`, …) from `library.indicators` |
+| `obj:<id>#<key>`   | object/technology indicator (`capex_ud`, `eff`, `maintenance_capex_ud`, …)    |
+| `prd:<id>#<key>`   | product indicator (`carbon_footprint`, …)                                    |
+| `sub:<id>#<key>`   | subsector indicator (`max_emissions`, `max_capacity`, …)                     |
+| `glb:<key>`        | `library.globals[<key>]` (`discountRate`, `year`, …)                          |
+| `in:<key>`         | measure input `measure.inputs[<key>].value` (explicit form)                  |
+| bare `<key>`       | `measure.computed[<key>]` if present (recurses), else `measure.inputs[<key>]` |
+
+Literals are `{const:<n>}` or a bare number — both allowed.
 
 ## Example
 
 Example (coal→gas conversion): `mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal,
 ref:res:gas), 1e-3)` = installed capacity × capacity factor × hours/yr × (EF coal − EF gas)
-× 10⁻³. EF leaves use the `res:` namespace; `8760` and `1e-3` are literals.
+× 10⁻³. EF leaves use the `res:` namespace; `8760` and `1e-3` are literals. A formula
+that needs a non-EF resource indicator (say gas LHV) writes `ref:res:gas#lhv` — same
+shape, different indicator key.

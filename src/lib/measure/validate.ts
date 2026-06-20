@@ -251,30 +251,26 @@ function readPath(measure: Measure, path: string): unknown {
   return cur;
 }
 
-const PATH_REF = /^[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?(\.[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?)*$/;
-
 /**
- * Resolve a `binding.ref` to its source value for drift comparison. Phase A
- * understands `in:<key>` (or bare `<key>`) → measure input value, and JS paths
- * into the measure document. Refs the current `makeResolver` knows
- * (`res:<id>` → resource EF) come through it. Anything else — including the
- * `res:<id>#<key>` indicator syntax not yet recognized by the resolver —
- * returns undefined and is skipped silently; Phase B's wider resolver will
- * surface those.
+ * Resolve a `binding.ref` to its source value for drift comparison. The shared
+ * `makeResolver` knows every prefix (`res:<id>#<key>`, `obj:<id>#<key>`,
+ * `prd:<id>#<key>`, `sub:<id>#<key>`, `glb:<key>`, `in:<key>` plus bare keys);
+ * what it does not know is JS paths into the measure document
+ * (`created_technologies[0].capacity`), so we fall back to a path-walk for
+ * refs containing `.` or `[`. Anything still unresolved returns undefined and
+ * the drift check is silently skipped.
  */
 function resolveBindingRef(
   ref: string,
   measure: Measure,
   resolve: RefResolver,
 ): number | undefined {
-  const inKey = ref.startsWith('in:') ? ref.slice(3) : ref;
-  const inp = measure.inputs?.[inKey];
-  if (inp && typeof inp.value === 'number') return inp.value;
-  if (PATH_REF.test(ref)) {
+  try { return resolve(ref); } catch { /* fall through */ }
+  if (ref.includes('.') || ref.includes('[')) {
     const v = readPath(measure, ref);
     if (typeof v === 'number') return v;
   }
-  try { return resolve(ref); } catch { return undefined; }
+  return undefined;
 }
 
 /** Find every `binding.mode='reuse'` whose local value disagrees with its bound source. */

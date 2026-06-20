@@ -32,3 +32,24 @@ reflect the full payload, so the history stays searchable.
   corpus surfaces immediately — `kz-16.materials[0].qty` (9791) vs
   `created_technologies[0].capacity` (9.79), a 1000× scale mismatch that
   should be re-tagged `mode='alt'` with a unit-scaling `divergence_reason`.
+
+### Resolver
+
+- **Phase B — unified resolver + registry-wide `#` syntax.** The shared
+  `makeResolver` (compute.ts) now understands every namespace a measure can
+  legitimately point at: `res:<id>#<key>` (resource indicators — price, lhv,
+  comb_factor, …), `obj:<id>#<key>` (technology — capex_ud, eff, …),
+  `prd:<id>#<key>` (product — carbon_footprint), `sub:<id>#<key>` (subsector
+  ceilings), `glb:<key>` (`library.globals`), `in:<key>` (measure input,
+  explicit form). `res:<id>` keeps its year-series EF fast path as the
+  shortcut for `res:<id>#ef`. Unknown indicators throw a descriptive error
+  pointing at `(owner_kind, owner_ref, key)`. Indicator lookup is the §1
+  Indicator-hub, so a registry edit reaches every formula that names the
+  indicator — `binding.reuse` becomes a live link instead of just provenance.
+- The duplicated `makeResolver` in `guardrails.ts` is gone; both `compute()`
+  and the guardrails import the same definition. The drift detector's helper
+  (`resolveBindingRef`) delegates everything to it and only keeps the JS-path
+  fallback (`created_technologies[0].capacity`) the resolver doesn't know.
+- No new drift surfaces in the seed corpus — all `res:<id>#price` bindings on
+  kz-2/kz-20 happen to match the registry value, so kz-16's existing 1000×
+  scale mismatch is still the only drift after Phase B.

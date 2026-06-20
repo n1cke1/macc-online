@@ -10,6 +10,11 @@ import { type RefResolver as Resolver, evalAst as evalJs, economicCore } from '.
 import { bindTemplate, getTemplate } from './templates';
 import type { Library, Measure } from './schema';
 import type { CheckId, CheckStatus } from './validate';
+// One shared resolver: compute() and the guardrails must agree on what a {ref}
+// means. Imported lazily-bound through ESM cycle (compute → guardrails for
+// economicsRollup; guardrails → compute for makeResolver) — safe because both
+// call sites are runtime, not module-init.
+import { makeResolver } from './compute';
 
 function bindSlots(ast: Ast, slots: Record<string, number>): Ast {
   if (isLeafSlot(ast)) {
@@ -24,26 +29,6 @@ function bindSlots(ast: Ast, slots: Record<string, number>): Ast {
 const noRef: Resolver = () => {
   throw new Error('check formulas must not contain {ref} leaves');
 };
-
-/** Resolve a `{ref}`: `res:<id>` → resource EF; a key with a `computed` entry →
- * evaluate it (recursive); else a measure input value. */
-function makeResolver(measure: Measure, library: Library): Resolver {
-  const resolve: Resolver = (key) => {
-    if (key.startsWith('res:')) {
-      const r = library.resources[key.slice(4)];
-      if (!r) throw new Error(`unresolved ref '${key}': resource not in the library (registry not hydrated?)`);
-      const ef = typeof r.ef === 'number' ? r.ef : r.ef[library.globals.year ?? ''];
-      if (typeof ef !== 'number') throw new Error(`unresolved ref '${key}': resource has no scalar EF`);
-      return ef;
-    }
-    const c = measure.computed?.[key];
-    if (c) return evalJs(c.formula, resolve);
-    const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no such input`);
-    return inp.value;
-  };
-  return resolve;
-}
 
 /** Abatement (kt/yr) by maturity stage — pure-TS mirror of compute.ts. */
 export function abatementJs(measure: Measure, library: Library): number {
