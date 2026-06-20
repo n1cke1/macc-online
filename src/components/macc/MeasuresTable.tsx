@@ -8,11 +8,11 @@ import { useUi, useScenario } from '@/store';
 export default function MeasuresTable() {
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('table');
-  const { selectedId, select, hiddenSectors } = useUi();
+  const { selectedId, select, hiddenSectors, showDisplaced } = useUi();
   const projects = useScenario((s) => s.projects);
   const [open, setOpen] = useState(true);
 
-  const visible = projects.filter((p) => !hiddenSectors.has(p.sector));
+  const visible = projects.filter((p) => !hiddenSectors.has(p.sector) && (showDisplaced || !p.displaced));
 
   return (
     <div className="overflow-hidden rounded-lg border border-line bg-white">

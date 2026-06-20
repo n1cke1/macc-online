@@ -10,9 +10,13 @@
 import type { Levers, MaccPoint, SectorCode } from '@data/schema';
 import { getSupabase } from '@/lib/supabase/client';
 import { loadLibrary, loadMeasures } from '@/lib/measure/load-supabase';
-import { compute } from '@/lib/measure/compute';
+import { compute, type ComputedMeasure } from '@/lib/measure/compute';
+import { stackPools } from '@/lib/measure/validate';
 import type { Library, Measure } from '@/lib/measure/schema';
 
+/** `measures` = ALL published measures (canonical + extras): the full set is needed so pool
+ *  stacking sees the canonical measures' claims when deciding which extras are displaced.
+ *  Only the non-canonical ones are plotted (see computeExtras). */
 export interface CommunityData { measures: Measure[]; library: Library }
 
 /** The canonical file curve owns kz-1…kz-26; only ids beyond that are "extras". */
@@ -26,8 +30,10 @@ export async function loadCommunityExtras(): Promise<CommunityData | null> {
   try {
     const db = getSupabase();
     const [library, all] = await Promise.all([loadLibrary(db), loadMeasures(db)]);
-    const measures = all.filter((m) => !FILE_IDS.has(m.id)); // published, minus the canonical 26
-    return measures.length ? { measures, library } : null;
+    // Keep the full published set (canonical + extras) for pool stacking; gate only on
+    // whether any non-canonical extra exists (else the curve stays the file dataset).
+    const hasExtras = all.some((m) => !FILE_IDS.has(m.id));
+    return hasExtras ? { measures: all, library } : null;
   } catch {
     return null; // backend down / not configured → the curve stays the file dataset
   }
@@ -44,35 +50,56 @@ function leveredLibrary(library: Library, levers: Levers): Library {
   return { ...library, resources, globals: { ...library.globals, discountRate: levers.discountRate } };
 }
 
-/** Compute the extras into plottable MaccPoints at the given levers (skips any that error). */
+/** Compute the extras into plottable MaccPoints at the given levers (skips any that error).
+ *  Pool displacement is decided over the FULL published set so an extra is marked
+ *  `displaced` when cheaper peers (incl. the canonical measures) already claim its pool
+ *  ceiling; only the non-canonical extras are returned for plotting. */
 export function computeExtras(data: CommunityData, levers: Levers): MaccPoint[] {
   const lib = leveredLibrary(data.library, levers);
-  const out: MaccPoint[] = [];
+
+  // Compute every measure once; a malformed/unresolvable one is skipped (never breaks the curve).
+  const computed: ComputedMeasure[] = [];
+  const computedById = new Map<string, ComputedMeasure>();
+  const measureById = new Map<string, Measure>();
   for (const m of data.measures) {
     try {
       const c = compute(m, lib);
-      out.push({
-        id: extraPointId(m.id),
-        sector: c.sector as SectorCode,
-        variant: null,
-        name: c.name,
-        capex: c.capex,
-        opex: c.opex,
-        durationYrs: c.durationYrs,
-        abatementKt: c.abatementKt,
-        npv: c.npv,
-        discCo2Kt: c.discCo2Kt,
-        mac: c.mac,
-        cumAbatementStartKt: 0, // the chart recomputes the cumulative span from merit order
-        cumAbatementEndKt: c.abatementKt,
-        capexItems: [],
-        opexItems: [],
-        physicalItems: [],
-        localInputs: [],
-      });
+      computed.push(c);
+      computedById.set(m.id, c);
+      measureById.set(m.id, m);
     } catch {
-      // a malformed/unresolvable extra is skipped rather than breaking the whole curve
+      // skip — see above
     }
+  }
+
+  // Render-time pool allocation over the full set (canonical + extras); scenario-dependent.
+  const alloc = stackPools(computed, measureById, lib);
+
+  const out: MaccPoint[] = [];
+  for (const m of data.measures) {
+    if (FILE_IDS.has(m.id)) continue; // canonical ids are already plotted from the file curve
+    const c = computedById.get(m.id);
+    if (!c) continue;
+    out.push({
+      id: extraPointId(m.id),
+      sector: c.sector as SectorCode,
+      variant: null,
+      name: c.name,
+      capex: c.capex,
+      opex: c.opex,
+      durationYrs: c.durationYrs,
+      abatementKt: c.abatementKt,
+      npv: c.npv,
+      discCo2Kt: c.discCo2Kt,
+      mac: c.mac,
+      cumAbatementStartKt: 0, // the chart recomputes the cumulative span from merit order
+      cumAbatementEndKt: c.abatementKt,
+      displaced: alloc.get(m.id)?.clipped ?? false,
+      capexItems: [],
+      opexItems: [],
+      physicalItems: [],
+      localInputs: [],
+    });
   }
   return out;
 }

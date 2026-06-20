@@ -75,6 +75,11 @@ export interface MaccPoint {
   // Pre-computed cumulative span (ascending-MAC order) for a ready-to-plot baseline.
   cumAbatementStartKt: number;
   cumAbatementEndKt: number;
+  // Render-time: this (community) measure's pool share is clipped by cheaper peers
+  // competing for the same ceiling — a scenario-dependent allocation outcome, not a
+  // quality verdict. Hidden from the curve unless the user opts to show displaced
+  // measures. Undefined on the canonical file points (never displaced).
+  displaced?: boolean;
   // Provenance: the Расчёты source cell feeding each MACC output.
   sourceCells?: { capex: string; opex: string; durationYrs: string; abatementKt: string };
   // Breakdown of CAPEX / OPEX into their main line items (from the Расчёты block).

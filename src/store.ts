@@ -12,6 +12,10 @@ interface UiState {
   select: (id: number | null) => void;
   hiddenSectors: Set<string>;
   toggleSector: (code: string) => void;
+  /** Show measures whose pool share is displaced (clipped by cheaper peers). Off by
+   *  default — displaced measures don't make the trusted curve until capacity frees up. */
+  showDisplaced: boolean;
+  toggleDisplaced: () => void;
 }
 
 export const useUi = create<UiState>((set) => ({
@@ -24,6 +28,8 @@ export const useUi = create<UiState>((set) => ({
       next.has(code) ? next.delete(code) : next.add(code);
       return { hiddenSectors: next };
     }),
+  showDisplaced: false,
+  toggleDisplaced: () => set((s) => ({ showDisplaced: !s.showDisplaced })),
 }));
 
 // ── Draft-overlay bridge (lightweight; safe to import in the static core) ────

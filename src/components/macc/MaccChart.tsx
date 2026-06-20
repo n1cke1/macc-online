@@ -27,7 +27,7 @@ interface Bar {
 function ChartInner({ width, height }: { width: number; height: number }) {
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('chart');
-  const { selectedId, select, hiddenSectors } = useUi();
+  const { selectedId, select, hiddenSectors, showDisplaced } = useUi();
   const projects = useScenario((s) => s.projects);
   // Lightweight overlay bridge — null unless the authoring layer pushed a draft AND
   // the editor is expanded (a collapsed editor leaves the curve untouched).
@@ -40,7 +40,9 @@ function ChartInner({ width, height }: { width: number; height: number }) {
     // Build the point list; when an authoring draft is active, drop the measure it
     // edits (so it isn't double-plotted), splice the draft in, and re-sort by MAC
     // so it lands in its true merit-order position.
-    let points: MaccPoint[] = projects;
+    // Displaced measures (pool share clipped by cheaper peers) are kept off the curve
+    // unless the user opts in — they aren't part of the trusted merit order at capacity.
+    let points: MaccPoint[] = showDisplaced ? projects : projects.filter((p) => !p.displaced);
     const overlay = authoringEnabled && draft;
     if (overlay) {
       const synthetic = {
@@ -62,7 +64,7 @@ function ChartInner({ width, height }: { width: number; height: number }) {
       out.push({ p, startMt, endMt: ktToMt(cum) });
     }
     return out;
-  }, [projects, hiddenSectors, draft]);
+  }, [projects, hiddenSectors, draft, showDisplaced]);
 
   const innerW = Math.max(0, width - MARGIN.left - MARGIN.right);
   const innerH = Math.max(0, height - MARGIN.top - MARGIN.bottom);
