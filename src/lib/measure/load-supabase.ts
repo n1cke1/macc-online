@@ -21,6 +21,11 @@ export async function loadLibrary(db: SupabaseClient): Promise<Library> {
   for (const [i, r] of [objects, resources, products, refs, pools, subsectors, indicators].entries()) {
     if (r.error) throw new Error(`load ${tables[i]}: ${r.error.message}`);
   }
+  // L3 — the dimensional vocabulary + bridge overlay. Tolerate the tables not existing yet
+  // (pre-migration): an error → empty overlay, so the code seed still provides the base set.
+  const [units, bridges] = await Promise.all([db.from('units').select('*'), db.from('bridges').select('*')]);
+  const unitRows = units.error ? [] : (units.data ?? []);
+  const bridgeRows = bridges.error ? [] : (bridges.data ?? []);
   const graph: Graph = {
     objects: (objects.data ?? []).map((o) => ({
       id: o.id, name: o.name, kind: o.kind, description: o.description ?? undefined,
@@ -42,6 +47,11 @@ export async function loadLibrary(db: SupabaseClient): Promise<Library> {
     indicators: (indicators.data ?? []).map((i) => ({
       id: i.id, key: i.key, owner_kind: i.owner_kind, owner_ref: i.owner_ref,
       value: num(i.value), unit: i.unit ?? undefined, reference_ref: i.reference_ref ?? undefined, provenance: i.provenance ?? undefined,
+    })),
+    units: unitRows.map((u) => ({ id: u.id, dim: u.dim ?? {}, scale: num(u.scale) })),
+    bridges: bridgeRows.map((b) => ({
+      id: b.id, from: b.from, via: b.via ?? [], to: b.to, expr: b.expr,
+      carrier_rule: b.carrier_rule ?? undefined, authoring: b.authoring ?? '',
     })),
   };
   return assembleLibrary(graph);

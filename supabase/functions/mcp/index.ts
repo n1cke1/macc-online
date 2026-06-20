@@ -1300,6 +1300,32 @@ var graph_seed_default = {
         confidence: "high",
         geo_applicability: "kz_specific"
       }
+    },
+    {
+      id: "ind_coal_lhv",
+      key: "lhv",
+      owner_kind: "resource",
+      owner_ref: "coal",
+      value: 20,
+      unit: "\u0413\u0414\u0436/\u0442",
+      provenance: {
+        source_type: "literature",
+        citation: "Ekibastuz steam coal LHV ~20 GJ/t (low-grade)",
+        confidence: "medium"
+      }
+    },
+    {
+      id: "ind_gas_lhv",
+      key: "lhv",
+      owner_kind: "resource",
+      owner_ref: "gas",
+      value: 34,
+      unit: "\u0413\u0414\u0436/\u0442\u044B\u0441. \u043C\xB3",
+      provenance: {
+        source_type: "literature",
+        citation: "Natural gas LHV ~34 GJ per 1000 m\xB3",
+        confidence: "medium"
+      }
     }
   ],
   pools: [
@@ -2393,6 +2419,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 135.3,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -2402,6 +2429,7 @@ var measures_seed_default = {
         },
         eff_gain: {
           value: 0.02,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -2579,16 +2607,6 @@ var measures_seed_default = {
             confidence: "medium",
             geo_applicability: "kz_specific"
           }
-        },
-        ef_coal: {
-          value: 1,
-          unit: "\u0442CO\u2082/\u041C\u0412\u0442\xB7\u0447",
-          provenance: {
-            citation: "\u0423\u0434\u0435\u043B\u044C\u043D\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u0435\u043C\u043E\u0439 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0439 \u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438 (globals \u043C\u043E\u0434\u0435\u043B\u0438, \u043B\u0438\u0441\u0442 MACC)",
-            source_type: "standard",
-            confidence: "high",
-            geo_applicability: "kz_specific"
-          }
         }
       },
       abatement: {
@@ -2612,7 +2630,7 @@ var measures_seed_default = {
               ]
             },
             {
-              ref: "ef_coal"
+              ref: "res:coal#ef"
             },
             1e-3
           ]
@@ -2733,37 +2751,21 @@ var measures_seed_default = {
         },
         gen_displaced_gwh: {
           value: 33726,
+          unit: "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_coal: {
-          value: 1,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         },
         gen_gas_gwh: {
           value: 12264,
+          unit: "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_gas: {
-          value: 0.45,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         }
@@ -2779,7 +2781,7 @@ var measures_seed_default = {
                   ref: "gen_displaced_gwh"
                 },
                 {
-                  ref: "ef_coal"
+                  ref: "res:coal#ef"
                 }
               ]
             },
@@ -2790,7 +2792,7 @@ var measures_seed_default = {
                   ref: "gen_gas_gwh"
                 },
                 {
-                  ref: "ef_gas"
+                  ref: "res:gas#ef"
                 }
               ]
             }
@@ -2974,19 +2976,11 @@ var measures_seed_default = {
         },
         gen_mwh: {
           value: 26805600,
+          unit: "\u041C\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_coal: {
-          value: 1,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         }
@@ -2999,7 +2993,7 @@ var measures_seed_default = {
               ref: "gen_mwh"
             },
             {
-              ref: "ef_coal"
+              ref: "res:coal#ef"
             },
             1e-3
           ]
@@ -3121,6 +3115,7 @@ var measures_seed_default = {
         },
         heat_kgcal: {
           value: 9500,
+          unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -3130,6 +3125,7 @@ var measures_seed_default = {
         },
         ef_boiler: {
           value: 0.55,
+          unit: "\u0442CO\u2082/\u0413\u043A\u0430\u043B",
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
@@ -3290,6 +3286,7 @@ var measures_seed_default = {
         },
         heat_kgcal: {
           value: 51300,
+          unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -3299,6 +3296,7 @@ var measures_seed_default = {
         },
         ef_boiler: {
           value: 0.55,
+          unit: "\u0442CO\u2082/\u0413\u043A\u0430\u043B",
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
@@ -3447,37 +3445,21 @@ var measures_seed_default = {
         },
         gen_displaced_gwh: {
           value: 4818,
+          unit: "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_coal: {
-          value: 1,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         },
         gen_gas_gwh: {
           value: 1752,
+          unit: "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_gas: {
-          value: 0.45,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         }
@@ -3493,7 +3475,7 @@ var measures_seed_default = {
                   ref: "gen_displaced_gwh"
                 },
                 {
-                  ref: "ef_coal"
+                  ref: "res:coal#ef"
                 }
               ]
             },
@@ -3504,7 +3486,7 @@ var measures_seed_default = {
                   ref: "gen_gas_gwh"
                 },
                 {
-                  ref: "ef_gas"
+                  ref: "res:gas#ef"
                 }
               ]
             }
@@ -3699,6 +3681,7 @@ var measures_seed_default = {
         },
         cap_mw: {
           value: 2500,
+          unit: "\u041C\u0412\u0442",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -3708,19 +3691,11 @@ var measures_seed_default = {
         },
         cf: {
           value: 0.8,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
             confidence: "medium",
-            geo_applicability: "kz_specific"
-          }
-        },
-        ef_coal: {
-          value: 1,
-          provenance: {
-            source_type: "standard",
-            citation: "Emission factor (workbook globals, MACC sheet)",
-            confidence: "high",
             geo_applicability: "kz_specific"
           }
         }
@@ -3737,7 +3712,7 @@ var measures_seed_default = {
               ref: "cf"
             },
             {
-              ref: "ef_coal"
+              ref: "res:coal#ef"
             },
             1e-3
           ]
@@ -3854,6 +3829,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 27.1,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -3863,6 +3839,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -3872,6 +3849,7 @@ var measures_seed_default = {
         },
         grid_growth_kt: {
           value: 1880.7224025974,
+          unit: "kt CO\u2082eq/yr",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -4020,6 +3998,7 @@ var measures_seed_default = {
         },
         heat_before_kgcal: {
           value: 41896.5517241379,
+          unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -4029,6 +4008,7 @@ var measures_seed_default = {
         },
         heat_after_kgcal: {
           value: 20948.275862069,
+          unit: "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -4038,6 +4018,7 @@ var measures_seed_default = {
         },
         ef_boiler: {
           value: 0.55,
+          unit: "\u0442CO\u2082/\u0413\u043A\u0430\u043B",
           provenance: {
             source_type: "standard",
             citation: "Emission factor (workbook globals, MACC sheet)",
@@ -4047,6 +4028,7 @@ var measures_seed_default = {
         },
         derating: {
           value: 0.2,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -4223,6 +4205,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 46.5,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -4232,6 +4215,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -4378,6 +4362,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 46.5,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -4387,6 +4372,7 @@ var measures_seed_default = {
         },
         tech_potential: {
           value: 0.5,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -4396,6 +4382,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.5,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -4576,6 +4563,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 34.2,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -4585,6 +4573,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.25,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -4718,6 +4707,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 34.2,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -4727,6 +4717,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.2,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -4860,6 +4851,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 34.2,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -4869,6 +4861,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.15,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5002,6 +4995,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 8.6,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5011,6 +5005,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5133,6 +5128,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 27,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5142,6 +5138,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.08,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5263,6 +5260,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 3.3,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5272,6 +5270,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.08,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5405,6 +5404,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 11.6,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5414,6 +5414,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5547,6 +5548,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 11.6,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5556,6 +5558,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.05,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5689,6 +5692,7 @@ var measures_seed_default = {
         },
         area_kha: {
           value: 1e3,
+          unit: "\u0442\u044B\u0441. \u0433\u0430",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -5698,6 +5702,7 @@ var measures_seed_default = {
         },
         survival: {
           value: 0.7,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -5707,6 +5712,7 @@ var measures_seed_default = {
         },
         seq_rate: {
           value: 3,
+          unit: "\u0442CO\u2082/(\u0433\u0430\xB7\u0433\u043E\u0434)",
           provenance: {
             source_type: "expert_estimate",
             citation: "Engineering premise (workbook \xAB\u0420\u0430\u0441\u0447\u0451\u0442\u044B\xBB)",
@@ -5850,6 +5856,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 3.6,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -5859,6 +5866,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -5992,6 +6000,7 @@ var measures_seed_default = {
         },
         base_emissions: {
           value: 3.2,
+          unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
           provenance: {
             source_type: "official_stat",
             citation: "UNFCCC BTR1 Kazakhstan \u2014 sector/sub-category baseline (Mt CO\u2082eq)",
@@ -6001,6 +6010,7 @@ var measures_seed_default = {
         },
         share: {
           value: 0.1,
+          unit: "\u0434\u043E\u043B\u044F",
           provenance: {
             source_type: "official_stat",
             citation: "\u041B\u0438\u0441\u0442 \xAB\u041C\u0435\u0440\u043E\u043F\u0440\u0438\u044F\u0442\u0438\u044F\xBB \u2014 coverage share",
@@ -6184,6 +6194,244 @@ function bindTemplateSymbolic(template, bindings) {
   return walk(template.expr);
 }
 
+// src/lib/measure/dimensions.ts
+var YEAR_H = 8760;
+var GJ_MWH = 1 / 3.6;
+var GCAL_MWH = 1.163;
+var power = (scale) => ({ dim: { energy: 1, time: -1 }, scale });
+var energy = (scale) => ({ dim: { energy: 1 }, scale });
+var co2Rate = (scale) => ({ dim: { mass_co2: 1, time: -1 }, scale });
+var ef = (scale) => ({ dim: { mass_co2: 1, energy: -1 }, scale });
+var UNIT_TABLE = {
+  // power (energy·time⁻¹)
+  "\u041C\u0412\u0442": power(1),
+  "\u043A\u0412\u0442": power(1e-3),
+  "\u041C\u0412\u0442\xB7\u0447/\u0433\u043E\u0434": power(1 / YEAR_H),
+  // MWh per year = energy·time⁻¹
+  "\u0413\u0412\u0442\xB7\u0447/\u0433\u043E\u0434": power(1e3 / YEAR_H),
+  // energy
+  "MWh": energy(1),
+  "\u0413\u043A\u0430\u043B": energy(GCAL_MWH),
+  "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B": energy(1e3 * GCAL_MWH),
+  "\u0442\u044B\u0441. \u0413\u043A\u0430\u043B/\u0433\u043E\u0434": { dim: { energy: 1, time: -1 }, scale: 1e3 * GCAL_MWH / YEAR_H },
+  // mass
+  "\u0442": { dim: { mass: 1 }, scale: 1 },
+  // mass_co2 (stock + rate)
+  "kt CO\u2082eq/yr": co2Rate(1e3 / YEAR_H),
+  "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434": co2Rate(1e6 / YEAR_H),
+  // emission factor (mass_co2·energy⁻¹)
+  "tCO\u2082/MWh": ef(1),
+  "\u0442CO\u2082/\u041C\u0412\u0442\xB7\u0447": ef(1),
+  "tCO\u2082/MWh (coal baseline)": ef(1),
+  // (carrier annotation parsed in a later slice)
+  "\u0442CO\u2082/\u0413\u043A\u0430\u043B": ef(1 / GCAL_MWH),
+  // boiler EF stated per Гкал of heat (1 Гкал = 1.163 MWh)
+  // sequestration rate (mass_co2·area⁻¹·time⁻¹) — afforestation tCO₂ per ha per year
+  "\u0442CO\u2082/(\u0433\u0430\xB7\u0433\u043E\u0434)": { dim: { mass_co2: 1, area: -1, time: -1 }, scale: 1 / YEAR_H },
+  // energy intensity (energy·mass⁻¹ / energy·volume⁻¹)
+  "\u0413\u0414\u0436/\u0442": { dim: { energy: 1, mass: -1 }, scale: GJ_MWH },
+  "\u0413\u0414\u0436/\u0442\u044B\u0441. \u043C\xB3": { dim: { energy: 1, volume: -1 }, scale: GJ_MWH / 1e3 },
+  // co2 per volume / per head·yr (agriculture, fugitive)
+  "kt CO\u2082eq/(million m\xB3)": { dim: { mass_co2: 1, volume: -1 }, scale: 1e3 / 1e6 },
+  "kt CO\u2082eq/(\u043C\u043B\u043D \u043C\xB3)": { dim: { mass_co2: 1, volume: -1 }, scale: 1e3 / 1e6 },
+  "kt CO\u2082eq/(thousand head\xB7yr)": { dim: { mass_co2: 1, count: -1, time: -1 }, scale: 1e3 / (1e3 * YEAR_H) },
+  "kt CO\u2082eq/(\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432\xB7\u0433\u043E\u0434)": { dim: { mass_co2: 1, count: -1, time: -1 }, scale: 1e3 / (1e3 * YEAR_H) },
+  // currency (per unit / per yr)
+  "$/kW": { dim: { currency: 1, energy: -1, time: 1 }, scale: 1e3 },
+  // $/kW = $·(energy·time⁻¹)⁻¹, kW→MW
+  "$/t": { dim: { currency: 1, mass: -1 }, scale: 1 },
+  "$/head": { dim: { currency: 1, count: -1 }, scale: 1 },
+  "$/farm": { dim: { currency: 1, count: -1 }, scale: 1 },
+  "$/head\xB7yr": { dim: { currency: 1, count: -1, time: -1 }, scale: 1 / YEAR_H },
+  "$/thousand m\xB3": { dim: { currency: 1, volume: -1 }, scale: 1 / 1e3 },
+  "mUSD/yr": { dim: { currency: 1, time: -1 }, scale: 1e6 / YEAR_H },
+  // count
+  "\u0433\u043E\u043B\u043E\u0432": { dim: { count: 1 }, scale: 1 },
+  "\u0442\u044B\u0441. \u0433\u043E\u043B\u043E\u0432": { dim: { count: 1 }, scale: 1e3 },
+  "\u0445\u043E\u0437\u044F\u0439\u0441\u0442\u0432": { dim: { count: 1 }, scale: 1 },
+  // farms (conflated with count for now)
+  // area
+  "\u0442\u044B\u0441. \u0433\u0430": { dim: { area: 1 }, scale: 1e3 },
+  // volume
+  "\u043C\u043B\u043D \u043C\xB3": { dim: { volume: 1 }, scale: 1e6 },
+  "\u0442\u044B\u0441. \u043C\xB3": { dim: { volume: 1 }, scale: 1e3 },
+  "\u0443\u0441\u043B. \u0435\u0434. (\u043E\u0431\u044A\u0451\u043C \u043C\u0435\u0442\u0430\u043D\u0430)": { dim: { volume: 1 }, scale: 1 },
+  // conventional methane volume (opaque scale)
+  // time
+  "\u043B\u0435\u0442": { dim: { time: 1 }, scale: YEAR_H },
+  // scalar
+  "\u0434\u043E\u043B\u044F": { dim: {}, scale: 1 },
+  "fraction": { dim: {}, scale: 1 }
+};
+function prune(d) {
+  const out = {};
+  for (const [k, v] of Object.entries(d)) if (v) out[k] = v;
+  return out;
+}
+function mulDim(a, b) {
+  const out = { ...a };
+  for (const [k, v] of Object.entries(b)) out[k] = (out[k] ?? 0) + (v ?? 0);
+  return prune(out);
+}
+function divDim(a, b) {
+  const neg = {};
+  for (const [k, v] of Object.entries(b)) neg[k] = -(v ?? 0);
+  return mulDim(a, neg);
+}
+function dimEqual(a, b) {
+  const x = prune(a), y = prune(b);
+  const keys = /* @__PURE__ */ new Set([...Object.keys(x), ...Object.keys(y)]);
+  for (const k of keys) if ((x[k] ?? 0) !== (y[k] ?? 0)) return false;
+  return true;
+}
+var BASE_DIMS = [
+  "energy",
+  "mass",
+  "mass_co2",
+  "time",
+  "currency",
+  "count",
+  "area",
+  "volume"
+];
+function validateUnit(u) {
+  const errors = [];
+  if (!u.id || !u.id.trim()) errors.push("unit needs a non-empty id (the unit string)");
+  if (typeof u.scale !== "number" || !Number.isFinite(u.scale) || u.scale === 0) {
+    errors.push("unit needs a finite non-zero `scale` to its canonical base unit");
+  }
+  if (!u.dim || typeof u.dim !== "object") {
+    errors.push("unit needs a `dim` object (exponent vector; {} for a scalar)");
+  } else {
+    for (const [k, v] of Object.entries(u.dim)) {
+      if (!BASE_DIMS.includes(k)) errors.push(`unknown base dimension '${k}' (allowed: ${BASE_DIMS.join(", ")})`);
+      if (!Number.isInteger(v)) errors.push(`exponent for '${k}' must be an integer, got ${v}`);
+    }
+  }
+  return errors;
+}
+function mergeUnits(overlay = []) {
+  const out = { ...UNIT_TABLE };
+  for (const u of overlay) out[u.id.trim()] = { dim: u.dim, scale: u.scale };
+  return out;
+}
+
+// src/lib/measure/bridges.ts
+var POWER = { energy: 1, time: -1 };
+var ENERGY = { energy: 1 };
+var MASS = { mass: 1 };
+var TIME = { time: 1 };
+var SCALAR = {};
+var EF = { mass_co2: 1, energy: -1 };
+var LHV = { energy: 1, mass: -1 };
+var CO2 = { mass_co2: 1 };
+var ATOMIC_BRIDGES = {
+  // installed power × hours/yr × capacity factor = annual energy of the same resource.
+  power_to_energy: {
+    id: "power_to_energy",
+    from: { dim: POWER, carrier: "$R" },
+    via: [
+      { name: "hours", dim: TIME },
+      { name: "cf", dim: SCALAR }
+    ],
+    to: { dim: ENERGY, carrier: "$R" },
+    expr: { op: "mul", args: [{ slot: "from" }, { slot: "hours" }, { slot: "cf" }] },
+    authoring: "\u0423\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u0430\u044F \u043C\u043E\u0449\u043D\u043E\u0441\u0442\u044C \xD7 \u0447\u0430\u0441\u044B \u0432 \u0433\u043E\u0434\u0443 \xD7 \u041A\u0418\u0423\u041C = \u0433\u043E\u0434\u043E\u0432\u0430\u044F \u0432\u044B\u0440\u0430\u0431\u043E\u0442\u043A\u0430 \u044D\u043D\u0435\u0440\u0433\u0438\u0438 \u0442\u043E\u0433\u043E \u0436\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u0430."
+  },
+  // mass of fuel × its LHV = energy content of that fuel (carries the fuel as its resource).
+  fuel_to_energy: {
+    id: "fuel_to_energy",
+    from: { dim: MASS, carrier: "$R" },
+    via: [{ name: "lhv", dim: LHV, indicator: "res:$R#lhv" }],
+    to: { dim: ENERGY, carrier: "$R" },
+    expr: { op: "mul", args: [{ slot: "from" }, { slot: "lhv" }] },
+    carrier_rule: "lhv \u041E\u0411\u042F\u0417\u0410\u041D \u0431\u044B\u0442\u044C res:$R#lhv \u2014 LHV \u0442\u043E\u0433\u043E \u0436\u0435 \u0440\u0435\u0441\u0443\u0440\u0441\u0430, \u0447\u0442\u043E \u0438 \u043C\u0430\u0441\u0441\u0430 \u0442\u043E\u043F\u043B\u0438\u0432\u0430.",
+    authoring: "\u041C\u0430\u0441\u0441\u0430 \u0442\u043E\u043F\u043B\u0438\u0432\u0430 \xD7 \u0435\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0442\u0432\u043E\u0440\u043D\u043E\u0441\u0442\u044C (LHV) = \u044D\u043D\u0435\u0440\u0433\u043E\u0441\u043E\u0434\u0435\u0440\u0436\u0430\u043D\u0438\u0435; LHV \u0431\u0435\u0440\u0451\u0442\u0441\u044F \u0438\u0437 \u0440\u0435\u0435\u0441\u0442\u0440\u0430 \u0440\u0435\u0441\u0443\u0440\u0441\u0430."
+  },
+  // energy of resource R × EF of R = CO₂. The carrier lock forbids an EF of a different resource.
+  energy_to_co2: {
+    id: "energy_to_co2",
+    from: { dim: ENERGY, carrier: "$R" },
+    via: [{ name: "ef", dim: EF, indicator: "res:$R#ef" }],
+    to: { dim: CO2 },
+    expr: { op: "mul", args: [{ slot: "from" }, { slot: "ef" }] },
+    carrier_rule: "ef \u041E\u0411\u042F\u0417\u0410\u041D \u0431\u044B\u0442\u044C res:$R#ef \u2014 \u0442\u043E\u0442 \u0436\u0435 \u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044C R, \u0447\u0442\u043E \u0443 \u044D\u043D\u0435\u0440\u0433\u0438\u0438 (\u0438\u043D\u0430\u0447\u0435 \u043E\u0448\u0438\u0431\u043A\u0430 \u043A\u043B\u0430\u0441\u0441\u0430 kz-27).",
+    authoring: "\u042D\u043D\u0435\u0440\u0433\u0438\u044F \u0440\u0435\u0441\u0443\u0440\u0441\u0430 R \xD7 EF \u0422\u041E\u0413\u041E \u0416\u0415 R = CO\u2082. \u0412\u0437\u044F\u0442\u044C EF \u0434\u0440\u0443\u0433\u043E\u0433\u043E \u0440\u0435\u0441\u0443\u0440\u0441\u0430 \u2014 \u044D\u0442\u043E \u043E\u0448\u0438\u0431\u043A\u0430 \u043D\u043E\u0441\u0438\u0442\u0435\u043B\u044F."
+  }
+};
+var COMPOSITE_BRIDGES = {
+  // fuel switch: energy of the displaced fuel × (its EF − the new fuel's EF) = avoided CO₂.
+  fuel_switch_abatement: {
+    id: "fuel_switch_abatement",
+    from: { dim: ENERGY, carrier: "$R_old" },
+    via: [
+      { name: "ef_old", dim: EF, indicator: "res:$R_old#ef" },
+      { name: "ef_new", dim: EF, indicator: "res:$R_new#ef" }
+    ],
+    to: { dim: CO2 },
+    expr: {
+      op: "mul",
+      args: [{ slot: "from" }, { op: "sub", args: [{ slot: "ef_old" }, { slot: "ef_new" }] }]
+    },
+    carrier_rule: "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; from \u2014 \u044D\u043D\u0435\u0440\u0433\u0438\u044F R_old. \u0414\u0432\u0435 \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u0441\u0432\u043E\u0438\u0445 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432.",
+    authoring: "\u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 = \u044D\u043D\u0435\u0440\u0433\u0438\u044F \u0437\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0433\u043E \u0442\u043E\u043F\u043B\u0438\u0432\u0430 \xD7 (EF \u0437\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0433\u043E \u2212 EF \u043D\u043E\u0432\u043E\u0433\u043E). \u041E\u0431\u0430 EF \u2014 \u0441\u0432\u043E\u0438\u0445 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432."
+  }
+};
+var BRIDGES = { ...ATOMIC_BRIDGES, ...COMPOSITE_BRIDGES };
+function foldBridgeDim(expr, slotDims) {
+  if (typeof expr === "number" || isLeafConst(expr)) return {};
+  if (isLeafSlot(expr)) {
+    const d = slotDims[expr.slot];
+    if (d === void 0) throw new Error(`expr references slot '${expr.slot}' which is neither 'from' nor a via`);
+    return d;
+  }
+  if (isNode(expr)) {
+    const kids = expr.args.map((a) => foldBridgeDim(a, slotDims));
+    switch (expr.op) {
+      case "mul":
+        return kids.reduce((acc, d) => mulDim(acc, d), {});
+      case "div":
+        return kids.slice(1).reduce((acc, d) => divDim(acc, d), kids[0]);
+      case "add":
+      case "sub":
+      case "sum": {
+        for (const d of kids.slice(1)) {
+          if (!dimEqual(d, kids[0])) throw new Error(`${expr.op} mixes incompatible dimensions`);
+        }
+        return kids[0];
+      }
+      default:
+        return {};
+    }
+  }
+  throw new Error(`unrecognized expr node ${JSON.stringify(expr)}`);
+}
+function validateBridge(b) {
+  const errors = [];
+  if (!b.id || !b.id.trim()) errors.push("bridge needs a non-empty id");
+  if (!b.from?.dim) errors.push("bridge needs `from.dim`");
+  if (!b.to?.dim) errors.push("bridge needs `to.dim`");
+  if (!b.expr) errors.push("bridge needs an `expr` (AST over the `from` + via slots)");
+  if (errors.length) return errors;
+  const slotDims = { from: b.from.dim };
+  for (const v of b.via ?? []) slotDims[v.name] = v.dim;
+  let folded;
+  try {
+    folded = foldBridgeDim(b.expr, slotDims);
+  } catch (e) {
+    return [`bridge expr does not fold: ${e.message}`];
+  }
+  if (!dimEqual(folded, b.to.dim)) {
+    errors.push(`bridge expr folds to ${JSON.stringify(folded)} but declares to.dim=${JSON.stringify(b.to.dim)}`);
+  }
+  return errors;
+}
+function mergeBridges(overlay = []) {
+  const out = { ...BRIDGES };
+  for (const b of overlay) out[b.id] = b;
+  return out;
+}
+
 // src/lib/measure/library.ts
 var L = (en) => ({ ru: en, en });
 function assembleLibrary(g) {
@@ -6248,7 +6496,10 @@ function assembleLibrary(g) {
     uiHelp: measure_ui_help_default,
     // Templates live in code (the engine uses them); formula-templates.json mirrors them publicly.
     formulaTemplates: BUILTIN_TEMPLATES,
-    globals: globals_default
+    globals: globals_default,
+    // L3 — vocabulary + bridges: code seed merged with the graph's data overlay (author additions).
+    units: mergeUnits(g.units),
+    bridges: mergeBridges(g.bridges)
   };
 }
 var library = assembleLibrary(graph_seed_default);
@@ -6306,8 +6557,19 @@ var LIBRARY_TABLES = {
   indicator: "indicators",
   ref: "refs",
   pool: "pools",
-  subsector: "subsectors"
+  subsector: "subsectors",
+  unit: "units",
+  bridge: "bridges"
 };
+function assertLibraryEntityValid(kind, entity) {
+  if (kind === "unit") {
+    const errs = validateUnit(entity);
+    if (errs.length) throw new Error(`invalid unit: ${errs.join("; ")}`);
+  } else if (kind === "bridge") {
+    const errs = validateBridge(entity);
+    if (errs.length) throw new Error(`invalid bridge: ${errs.join("; ")}`);
+  }
+}
 async function dbListLibrary(user) {
   const out = {};
   for (const t of Object.values(LIBRARY_TABLES)) {
@@ -6321,6 +6583,7 @@ async function dbUpsertLibraryEntity(user, kind, entity) {
   const table = LIBRARY_TABLES[kind];
   if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
   if (!entity || typeof entity.id !== "string") throw new Error(`library ${kind}: 'id' (string) is required`);
+  assertLibraryEntityValid(kind, entity);
   const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
   const { error } = await user.client.from(table).upsert(row);
   if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
@@ -6523,9 +6786,9 @@ function makeResolver(measure, library2) {
         if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
           const r = library2.resources[id];
           if (!r) throw new Error(`unresolved ref '${key}': resource '${id}' not in library (registry not hydrated?)`);
-          const ef = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
-          if (typeof ef !== "number") throw new Error(`unresolved ref '${key}': resource '${id}' has no scalar EF for the active year`);
-          return ef;
+          const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
+          if (typeof ef2 !== "number") throw new Error(`unresolved ref '${key}': resource '${id}' has no scalar EF for the active year`);
+          return ef2;
         }
         if (indKey === void 0) {
           throw new Error(`unresolved ref '${key}': '${prefix}:' refs require '#<indicator-key>' (e.g. '${prefix}:${id}#capex_ud')`);
@@ -6613,6 +6876,141 @@ function compute(measure, library2) {
     mac,
     impliedFactor
   };
+}
+
+// src/lib/measure/dimension-check.ts
+var CO2_RATE = { mass_co2: 1, time: -1 };
+var CO2_STOCK = { mass_co2: 1 };
+var isCO2 = (d) => dimEqual(d, CO2_RATE) || dimEqual(d, CO2_STOCK);
+var DimensionError = class extends Error {
+};
+var INDICATOR_PREFIX2 = {
+  res: "resource",
+  obj: "object",
+  prd: "product",
+  sub: "subsector"
+};
+function fmtDim(d) {
+  const sup = (n) => String(n).replace(/-/g, "\u207B").replace(/\d/g, (c) => "\u2070\xB9\xB2\xB3\u2074\u2075\u2076\u2077\u2078\u2079"[+c]);
+  const parts = Object.entries(d).filter(([, v]) => v).map(([k, v]) => v === 1 ? k : `${k}${sup(v)}`);
+  return parts.length ? parts.join("\xB7") : "scalar";
+}
+function dimOfUnit(unit, ref, units) {
+  if (!unit) throw new DimensionError(`'${ref}' has no unit`);
+  const info = units[unit.trim()];
+  if (!info) throw new DimensionError(`unknown unit '${unit}' on '${ref}' (not in the library vocabulary)`);
+  return info.dim;
+}
+function dimOfRef(ref, ctx) {
+  const { measure, library: library2 } = ctx;
+  const m = ref.match(/^([a-z]+):(.+)$/);
+  if (m) {
+    const [, prefix, rest] = m;
+    if (prefix === "glb") return { dim: {} };
+    if (prefix === "in") return { dim: dimOfBareKey(rest, ctx, ref) };
+    const owner_kind = INDICATOR_PREFIX2[prefix];
+    if (owner_kind) {
+      const hashAt = rest.indexOf("#");
+      const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
+      const key = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
+      if (prefix === "res" && (key === void 0 || key === "ef")) {
+        const ind2 = library2.indicators.find((i) => i.owner_kind === "resource" && i.owner_ref === id && i.key === "ef");
+        return { dim: ind2?.unit ? dimOfUnit(ind2.unit, ref, library2.units) : { mass_co2: 1, energy: -1 }, carrier: id };
+      }
+      const ind = library2.indicators.find(
+        (i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === key
+      );
+      if (!ind) throw new DimensionError(`indicator '${ref}' absent from library.indicators`);
+      if (prefix === "prd" && key === "carbon_footprint") ctx.outputEfProducts.add(id);
+      const carrier = prefix === "res" ? id : void 0;
+      return { dim: dimOfUnit(ind.unit, ref, library2.units), carrier };
+    }
+  }
+  return { dim: dimOfBareKey(ref, ctx, ref) };
+}
+function dimOfBareKey(key, ctx, ref) {
+  const computed = ctx.measure.computed?.[key];
+  if (computed) return fold(computed.formula, ctx).dim;
+  const input = ctx.measure.inputs?.[key];
+  if (!input) throw new DimensionError(`'${ref}' resolves to no input/computed on measure '${ctx.measure.id}'`);
+  return dimOfUnit(input.unit, `input '${key}'`, ctx.library.units);
+}
+function fold(ast, ctx) {
+  if (typeof ast === "number" || isLeafConst(ast)) return { dim: {} };
+  if (isLeafRef(ast)) return dimOfRef(ast.ref, ctx);
+  if (isNode(ast)) {
+    const kids = ast.args.map((a) => fold(a, ctx));
+    switch (ast.op) {
+      case "mul": {
+        const dim = kids.reduce((acc, k) => mulDim(acc, k.dim), {});
+        const carriers = [...new Set(kids.filter((k) => k.carrier && !isCO2(k.dim)).map((k) => k.carrier))];
+        if (carriers.length > 1) {
+          ctx.issues.push(`carrier mismatch in product: ${carriers.join(" \xD7 ")} (an EF must match the resource it multiplies)`);
+        }
+        return { dim, carrier: isCO2(dim) ? void 0 : carriers[0] };
+      }
+      case "div": {
+        const dim = kids.slice(1).reduce((acc, k) => divDim(acc, k.dim), kids[0].dim);
+        return { dim, carrier: isCO2(dim) ? void 0 : kids[0].carrier };
+      }
+      case "add":
+      case "sub":
+      case "sum": {
+        for (const k of kids.slice(1)) {
+          if (!dimEqual(k.dim, kids[0].dim)) {
+            throw new DimensionError(`${ast.op} of incompatible dimensions ${fmtDim(kids[0].dim)} vs ${fmtDim(k.dim)}`);
+          }
+        }
+        const carriers = new Set(kids.map((k) => k.carrier));
+        return { dim: kids[0].dim, carrier: carriers.size === 1 ? kids[0].carrier : void 0 };
+      }
+      case "pv":
+        return kids[2] ?? { dim: {} };
+      // present value carries the payment's dimension
+      default:
+        return { dim: {} };
+    }
+  }
+  throw new DimensionError(`unrecognized AST node ${JSON.stringify(ast)}`);
+}
+function checkOutputEfProducts(ctx) {
+  const myRef = ctx.measure.product_ref;
+  const myUnit = myRef ? ctx.library.products[myRef]?.service_unit : void 0;
+  for (const p of ctx.outputEfProducts) {
+    const efUnit = ctx.library.products[p]?.service_unit;
+    if (myUnit && efUnit && efUnit !== myUnit) {
+      ctx.issues.push(
+        `output-EF is per '${efUnit}' (product '${p}') but the measure's product is per '${myUnit}' \u2014 an EF stated per a different product cannot price this measure's abatement`
+      );
+    }
+  }
+}
+function dimensionCheck(measure, library2) {
+  const a = measure.abatement;
+  let ast;
+  if (a?.formula) {
+    ast = a.formula;
+  } else if (a?.computed) {
+    const template = getTemplate(a.computed.formula_ref);
+    if (!template) {
+      return { status: "warn", dim: null, issues: [`unknown formula template '${a.computed.formula_ref}'`] };
+    }
+    ast = bindTemplateSymbolic(template, a.computed.bindings);
+  } else {
+    return { status: "na", dim: null, issues: [] };
+  }
+  const ctx = { measure, library: library2, issues: [], outputEfProducts: /* @__PURE__ */ new Set() };
+  let dim;
+  try {
+    dim = fold(ast, ctx).dim;
+  } catch (e) {
+    return { status: "warn", dim: null, issues: [e.message] };
+  }
+  checkOutputEfProducts(ctx);
+  if (!isCO2(dim)) {
+    ctx.issues.push(`abatement reduces to ${fmtDim(dim)}, expected CO\u2082/year (mass_co2\xB7time\u207B\xB9)`);
+  }
+  return { status: ctx.issues.length ? "warn" : "ok", dim, issues: ctx.issues };
 }
 
 // src/lib/measure/validate.ts
@@ -6823,6 +7221,17 @@ function validate(measure, library2, peers = []) {
   if (drift.length) {
     missing.push(...drift.map((d) => `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" \u2192 ${d.bound}`));
   }
+  const DEGENERATE_EPS = 1e-9;
+  const buildsButFree = (measure.created_technologies?.length ?? 0) > 0 && (measure.retired_technologies?.length ?? 0) === 0 && Math.abs(c.capex) < DEGENERATE_EPS;
+  if (buildsButFree) {
+    missing.push("degenerate: builds objects (created_technologies) but CAPEX rolls to 0");
+    if (panels.economics !== "warn") panels.economics = "incomplete";
+  }
+  const dimension = dimensionCheck(measure, library2);
+  if (dimension.status === "warn") {
+    missing.push(...dimension.issues.map((s) => `dimension: ${s}`));
+    if (panels.reduction !== "warn") panels.reduction = "incomplete";
+  }
   const GATING_CHECKS = ["factor", "economics", "sector", "limit"];
   const noWarn = GATING_CHECKS.every((k) => checks[k] !== "warn");
   const panelsComplete = Object.values(panels).every((s) => s !== "incomplete");
@@ -6840,14 +7249,15 @@ function validate(measure, library2, peers = []) {
     displaced: alloc.clipped,
     panels,
     checks,
-    details
+    details,
+    dimension
   };
 }
 
 // src/lib/measure/skill.generated.ts
 var SKILL_GUIDE = {
-  version: "97ae7dd6d576",
-  markdown: '# MACC measure authoring\n\nThis skill is the **judgment layer (L3)**: how to author a *good* measure. Two other\nlayers carry the rest, and this file never restates them:\n\n- **L1 \u2014 the shape (contract).** The measure-document JSON and the library entity\n  shapes. Read them from the MCP resource `schema://measure` and a live example via\n  `get_measure(\'kz-2\')`. Do not paraphrase field lists here.\n- **L2 \u2014 the machine checks.** `validate_measure` runs the \xA77 guardrails and the \xA73/\xA76\n  notation rule. It is **advisory** \u2014 it informs, it never blocks.\n\nThis file is the part neither encodes: the **model** of what a measure is, the **quality\nbar**, and the **workflow** \u2014 choosing the right modeling stance, reusing the registry\ninstead of duplicating it, and being honest about data quality before publishing.\n\nA measure is **data, not code**: processed by the engine but licensed CC-BY-4.0 and\nreviewed by domain experts. Author it so a reviewer can audit every number.\n\nThese are the **requirements a measure must meet**. Because `validate_measure` is advisory,\nmeeting them is the author\'s responsibility, not the engine\'s.\n\n## The one rule that defines the notation (\xA73/\xA76)\n\n**Every number is either an input or computed from inputs \u2014 never a bare literal.**\nEach quantity is either:\n- an entry in `inputs` (a leaf value with a unit and provenance), or\n- a `computed` node whose `formula` derives it from `ref`s to inputs / other computed\n  nodes, with `const` only for genuine mathematical constants (e.g. `3.6`, `8760`).\n\nA number just pasted in \u2014 neither an input nor derived by a formula \u2014 breaks this rule;\n`validate_measure` lists it as `untagged`. Fix it: make it an input, or compute it in a\nformula. That traceability is what lets a reviewer audit every number.\n\n---\n\n# A. The measure model\n\nWhat a measure *is*, before you author it.\n\n## Terms\n\n- **Technology** \u2014 the entity a measure builds on: a capital **structure**, an\n  **infrastructure** system, an asset **retrofit**, or an operational **practice** (its\n  **class**). A measure reuses one from the library or creates it \u2014 never invents one inline.\n- **Indicator** \u2014 one number (capex, EF, price, lifetime, a limiting factor\u2026) owned by a\n  technology / product / resource / industry, with units and provenance.\n- **Library entity** \u2014 a registry row: technology \xB7 product \xB7 resource \xB7 indicator \xB7\n  reference \xB7 pool \xB7 subsector.\n\n## Mechanism & baseline \u2014 two axes\n\nTwo independent axes classify a measure (sector is a separate third dimension, already in the\nmodel \u2014 not folded in here).\n\n**Axis 1 \u2014 mechanism** (what it does to emissions):\n- **reduction** \u2014 cuts or avoids GHG at source, against a baseline that still emits. Nearly\n  every Kazakhstan measure: efficiency, coal\u2192gas/RES switch, electrification, industrial\n  process change, methane leak/flaring reduction, demand reduction \u2014 **and fossil-CO\u2082 capture\n  (CCS/CCU)**. *(Optional subtype tag: efficiency \xB7 fuel/feedstock switch \xB7 electrification \xB7\n  process change \xB7 demand reduction \xB7 non-CO\u2082.)*\n- **removal** (CDR) \u2014 deliberately takes CO\u2082 out of the atmosphere and stores it durably:\n  afforestation, soil carbon, wetland restoration, biochar (nature-based); BECCS, DACCS,\n  enhanced weathering (engineered). Removal *counterbalances* residual emissions \u2014 it is not a\n  substitute for reduction. *(Optional attribute: permanence \u2014 short-lived nature-based vs\n  durable geological.)*\n\n> **The line that trips people up:** capturing **fossil** CO\u2082 (CCS/CCU on a coal plant or a\n> gas-processing flue) is **reduction**, not removal \u2014 it only prevents fossil emissions. Only\n> **biogenic** (BECCS) or **ambient-air** (DACCS) capture is removal.\n\n**Axis 2 \u2014 baseline basis** (how abatement is measured \u2014 the modeling-decisive choice):\n- **comparison** \u2014 the same product delivered a different way; abatement = (baseline-technology\n  emissions \u2212 measure emissions) \xD7 activity, per the product\'s service unit (MWh, t steel,\n  tonne-km). The baseline is the displaced technology.\n- **standalone** \u2014 no displaced product; abatement = tonnes removed or avoided vs an\n  activity-scenario baseline. Use for all removals, agricultural practices, methane\n  leak/flaring reduction, waste capture.\n\nAuthor rules: every measure declares **(mechanism, baseline basis)**; every **removal is\nstandalone**; **fossil-CO\u2082 capture is reduction**. Define the baseline *before* computing\nanything. Grounding: IPCC AR6 WGIII (mechanism) \xB7 World Bank MACC & GHG Protocol (baseline\nbasis) \u2014 see `references/measure-types.md`.\n\n## Calculation basis\n\n- **The product** \u2014 every measure except a pure removal has exactly one: what it produces or\n  operates on (electricity, steel, gas, a crop), invariant across the before/after variants.\n  In a **comparison** measure it is also the comparison basis \u2014 baseline and project are\n  compared per unit of it (its **service unit**, e.g. MWh). In a **standalone** measure it\n  just anchors the measure and may limit it. A pure removal has no product.\n- **New technologies** the measure creates \u2014 with their products and feedstock. Build\n  CAPEX/OPEX arise here (sign **+**).\n- **Closed technologies** the measure retires \u2014 their maintenance CAPEX and OPEX become\n  **avoided cost** (sign **\u2212**).\n\nField shapes: `schema://measure`. Sign/unit/MAC conventions: `references/conventions.md`.\n\n## Sector & measure interaction\n\n- Each technology maps to an **industry**, which maps to an **IPCC sector** (a measure may\n  span several). This drives curve colour and the double-count backstops.\n- Measures interact three ways: **complementary** (independent) \xB7 **competing** for one\n  emission source (RES vs nuclear) \xB7 **potential-reducing** (RES shrinks CCUS potential).\n- Today the engine computes only **shared-resource competition** (measures sharing a\n  resource pool are clipped by MAC order on oversubscription). Broader competitor /\n  potential-reducing links are not computed \u2014 **record them as tags on the measure**.\n  See `references/sectors.md`.\n\n## The project library\n\nThe shared registry that makes measures comparable: industries/subsectors, **technologies**\n(a capital **structure**, **infrastructure**, a **retrofit**, or a **practice** \u2014 the *class*),\n**products**, **feedstock/resources**, and **indicators** (every number, tied to a technology\n/ product / resource / industry).\n\n- Every measure is **built on library entities**. If a needed technology \u2014 or an\n  indicator \u2014 is missing, **create it**; never type a free name into the measure.\n- **Reuse before creating.** Before adding a new entry, search for an existing one that\n  matches *what it is* \u2014 class, unit, cost structure, lifetime \u2014 not just its name (names\n  vary, so the same thing is easily duplicated). Create a new entry only when nothing\n  existing genuinely fits.\n\n---\n\n# B. Data quality\n\nEach library **indicator** carries: a name, a short description, a value with units, a\n**traceable source** (web link or other unambiguous citation), and optionally a realistic\nrange.\n\n- **Geo-applicability** \u2014 classify each number as **global** (low geo-sensitivity) \xB7\n  **KZ-specific** (economics, climate, construction cost & lead times) \xB7\n  **other-country-based**, and state its **reliability for assessing the measure in\n  Kazakhstan**. A number can rest on real-project benchmarks, authoritative research, or\n  official sources \u2014 but its KZ-applicability must be characterised.\n- **Provenance discipline** \u2014 every number declares its source type and confidence, and\n  whether it reuses a library value or diverges (with a reason). Details:\n  `references/sourcing.md`.\n- A guess / placeholder is a visible TODO in a **draft**, never in a **published** measure\n  (see the publish gate, step 6).\n\n---\n\n# C. Formulas\n\nA measure carries one or more formulas in the **MACC formula AST** \u2014 a small, closed,\nauditable notation that compiles to the same engine as the Excel model (parity-exact). The\noperator set, the leaf kinds, and how a formula renders in the UI vs compiles for the engine\nare the full spec: `references/formula-ast.md`.\n\n- Formulas must compute the measure\'s **abatement** \u2014 the emissions change in **CO\u2082e**\n  (non-CO\u2082 gases converted via their GWP) \u2014 and its **\u0394CAPEX** / **\u0394OPEX**, derived from the\n  **quantities of fuel, energy and carbon-bearing feedstock/product** in scope.\n- **Complexity** \u2014 nesting **\u2264 2 levels** and **\u2264 5 terms/factors** per node; if deeper,\n  **expand** each complex value on the next level in the same notation rather than inlining it.\n- Every value in a formula resolves to a library indicator, a measure input, or another\n  computed value \u2014 no bare literals (\xA73/\xA76).\n\n---\n\n# D. Workflow\n\nFollow in order. Step 2 (build on the library) and step 6 (publish gate) are the ones most\noften skipped \u2014 and skipping them is what produces a messy registry and a measure that\n"passes" but is wrong.\n\n1. **Classify** \u2014 is it a *reduction* or a *removal*? Does it deliver a comparable product\n   (compared on a service unit) or not? This decides what the measure needs.\n2. **Build on the library** \u2014 resolve every value to a library entity *first*: reuse one that\n   already fits, or create the missing one. Never inline a name.\n3. **Compute the unit measure (bottom-up)** \u2014 write the formulas so every number is an input\n   or computed from inputs (\xA73/\xA76), then read off the first CAPEX / OPEX / abatement and MAC.\n   \u2192 `references/formula-ast.md`.\n4. **Find and declare the limiting factor** \u2014 assess what bounds the measure (resource\n   available, product output, max capacity, number of installations) and record it as a **library indicator**\n   for the industry. Declare it on the measure as a **mandatory constraint**: it does *not*\n   enter the bottom-up formulas and does *not* change the MAC. `validate_measure` checks the\n   consumption you computed against it \u2014 if the measure would exceed the limit, lower the\n   scale (an input) until it fits. The limit bounds the **volume**, nothing else.\n   \u2192 `references/potential.md`.\n5. **Validate** \u2014 run `validate_measure`; it advises, it never blocks. How to read its\n   output: \u2192 `references/checks.md`.\n6. **Publish gate** \u2014 make a measure part of the shared curve only when the numbers that\n   matter rest on real sources. If a number that materially moves the MAC or the volume is\n   still a guess/placeholder, keep it a **draft** and note what is missing.\n\n---\n\n## Conventions \xB7 field shapes\n\n- Units, signs, time, the MAC definition: `references/conventions.md`.\n- The measure-document shape and library entity shapes are **L1** \u2014 read them from\n  `schema://measure` and a live example via `get_measure(\'kz-2\')`. This skill does not\n  restate them.\n\n## Learn from the library and existing measures\n\nBefore authoring, browse what already exists over MCP \u2014 `list_library` for the registry\n(technologies, products, resources, indicators\u2026) and `list_measures` / `get_measure` for the\nexisting measures. Reuse their entities and patterns instead of inventing.\n\n---\n\n# References\n\n## reference: measure-types\n\n# Measure types \u2014 the classification and its authoritative basis\n\n> Grounding for the **Mechanism & baseline** section of `SKILL.md`. This file is the *why*\n> behind the two classification axes \u2014 the authoritative sources, the MACC mapping, and the\n> Kazakhstan picture. It is conceptual: it survives schema/field renames. Synthesized from a\n> verified literature pass (IPCC AR6 WGIII, World Bank MACC methodology, GHG Protocol,\n> UNFCCC CDM, peer-reviewed CDR work); see **Sources** and **Caveats** at the end.\n\nA measure is classified on **two independent axes**, with **sector** as a separate third\ndimension that already exists in the data model. Keep all three orthogonal \u2014 do not fold one\ninto another.\n\n---\n\n## Axis 1 \u2014 Mechanism: `reduction` vs `removal`\n\nThe cleanest, best-grounded top-level split. IPCC AR6 WGIII treats emission **reductions**\nand **carbon dioxide removal (CDR)** as separate, complementary, **non-substitutable**\ncategories: net change = emissions reduced *plus* sinks enhanced, and CDR "cannot serve as a\nsubstitute for deep emissions reductions" \u2014 it counterbalances hard-to-abate residual\nemissions. [IPCC AR6 WGIII SPM / TS / Ch.12 / CDR Factsheet]\n\n- **`reduction`** \u2014 cuts or avoids GHG **at source**, against a baseline that still emits.\n- **`removal`** (CDR) \u2014 a deliberate human activity that **removes CO\u2082 from the atmosphere\n  AND stores it durably**. Natural forest growth with no human intervention does not count.\n\n### The boundary that matters most: fossil capture is *reduction*, not removal\n\nIPCC AR6 WGIII Ch.12, verbatim: *"CCS and CCU applied to fossil CO\u2082 do not count as removal\ntechnologies. CCS and CCU can only be part of CDR methods if the CO\u2082 is biogenic or directly\ncaptured from ambient air, and stored durably."*\n\n- CCS/CCU on a **coal plant or gas-processing flue** \u2192 **`reduction`** (baseline = the same\n  plant without capture; it only prevents fossil emissions).\n- Only **BECCS** (biogenic) and **DACCS** (ambient air), plus other genuine CDR, \u2192 `removal`.\n\nThis corrected the original working hypothesis, which loosely put all engineered capture\nunder removal. It is materially important for Kazakhstan (CCS on coal/gas is a real measure\ntype, and it is reduction).\n\n### Subtypes (use as soft, optional tags \u2014 not a strict enum)\n\nIPCC does **not** publish a single mutually-exclusive "mechanism enum"; these are recurring\ncross-sector levers named in AR6 TS, packaged for practicality. Tag when useful; don\'t force.\n\n- **reduction** subtypes: `efficiency` \xB7 `fuel/feedstock switch` \xB7 `electrification` \xB7\n  `process change` \xB7 `demand reduction` \xB7 `non-CO\u2082` (CH\u2084/N\u2082O abatement).\n- **removal** subtypes: **nature-based** (afforestation/reforestation, improved forest\n  management, soil carbon, wetland/peatland restoration, biochar) vs **engineered** (BECCS,\n  DACCS, enhanced weathering). Ocean methods exist but are irrelevant for landlocked\n  Kazakhstan. *(Note: IPCC technically classifies BECCS as land-based biological CDR \u2014 only\n  the CCS step is engineered; the nature/engineered split is a usability simplification.)*\n\n### Permanence \u2014 an attribute of removals, not a class\n\nStorage durability is a material, orthogonal property. A peer-reviewed result finds storage\nshorter than ~1000 years is insufficient to neutralize residual fossil CO\u2082 under net zero;\nIPCC\'s own CDR taxonomy carries storage-timescale as a second axis. Treat permanence as a\n**flag** (short-lived nature-based vs durable geological), **not** a hard class boundary \u2014\nthe exact threshold is an active research question. [Nature Comms Earth & Environment 2024;\nIPCC AR6 WGIII Ch.12]\n\n---\n\n## Axis 2 \u2014 Baseline basis: `comparison` vs `standalone`\n\nThe **modeling-decisive** axis \u2014 it tells the author HOW to compute abatement and WHAT to\nset as the baseline. Grounded in the World Bank MACC methodology (two baseline\nconstructions) and the GHG Protocol avoided-emissions framing.\n\n- **`comparison`** \u2014 the measure delivers the **same product/service a different way**.\n  Abatement = (baseline-technology emissions \u2212 measure emissions) \xD7 activity, measured per\n  the product\'s **service unit** (MWh, t steel, tonne-km). The baseline is the **displaced\n  technology**. Use for power, industry, transport, fuel switching.\n- **`standalone`** \u2014 **no displaced product**. Abatement = tonnes **removed or avoided** vs\n  an activity-scenario baseline. Use for all removals, agricultural practices, methane\n  leak/flaring reduction, and waste capture.\n\n> Renamed from the hypothesis\'s "substitution" to **`standalone`** \u2014 clearer, and tied to the\n> World Bank "technology-specific vs sector-wide baseline" distinction. The schema carries this\n> as the `baseline_basis` axis (`comparison` | `standalone`), parallel to `mechanism`.\n\nBoth cost and abatement are **always computed marginally to the baseline**, so the baseline\nmust be defined and documented **before** modeling. [World Bank MACC note; GHG Protocol]\n\n---\n\n## Sector \u2014 the third, independent dimension (already in the model)\n\nSector is the IPCC inventory category (2006/2019 Guidelines): **Energy, IPPU, Agriculture,\nAFOLU/LULUCF, Waste**. AR6 organizes mitigation assessment by sector and presents\ncost-vs-potential bars \u2014 confirming sector and mechanism are orthogonal. The macc-online\nworkbook already carries sector (col A). **Keep sector as the existing field; add the two new\naxes \u2014 do not overload sector with mechanism.** [IPCC 2006 Guidelines; IPCC AR6 WGIII SPM Fig\nSPM.7]\n\n---\n\n## How each class maps to MACC modeling\n\nMACC mechanics (World Bank, verbatim): bar **height** = unit cost per tonne CO\u2082e in\n**present-value** terms, **net of benefits, marginal over the replaced technology\'s cost**;\nbar **width** = the GHG reduction potential. This matches the macc-online engine exactly\n(MAC = NPV / discounted-abatement \xD7 1000; width = annual abatement).\n\n| class | baseline | what is displaced | how abatement is measured |\n|---|---|---|---|\n| reduction \xB7 comparison | the displaced technology | the conventional product/service | (baseline EF \u2212 measure EF) \xD7 activity, per service unit |\n| reduction \xB7 standalone | an activity scenario | nothing (source improvement) | tonnes avoided vs the scenario (e.g. captured/destroyed CH\u2084 \xD7 GWP) |\n| removal \xB7 standalone | an activity scenario | nothing | tonnes CO\u2082 removed and durably stored |\n\nEvery removal is `standalone`. `reduction` can be either `comparison` or `standalone`.\n\n---\n\n## Kazakhstan relevance\n\nThe portfolio skews **heavily to `reduction` / `comparison`**, because emissions are\ndominated by coal power, oil & gas, and metals/IPPU. Removal is a minor branch.\n\n- **Coal power** \u2192 efficiency / coal\u2192gas / RES \u2014 reduction, comparison (per MWh).\n- **Oil & gas (methane)** \u2192 leak/flaring reduction \u2014 reduction, standalone, `non-CO\u2082` subtype.\n- **Metals / mining / IPPU** \u2192 process change \u2014 reduction, mostly comparison.\n- **Agriculture** \u2192 soil/livestock/nutrient practices \u2014 reduction or removal, standalone.\n- **LULUCF** \u2192 afforestation/restoration \u2014 removal, standalone (nature-based).\n- **Waste** \u2192 landfill-gas / methane capture \u2014 reduction, standalone.\n\nThe existing 26-measure workbook is almost entirely reduction/comparison; agriculture and any\nland measures are the standalone exceptions. *(This per-sector mapping is inferred from\nproject context, not independently sourced per measure \u2014 treat as orientation.)*\n[KZ Carbon Neutrality Strategy 2024; KZ BR4]\n\n---\n\n## Open design questions (carried into the schema/migration plan)\n\n- **Hybrid measures** that both reduce and remove (BECCS displaces fossil power *and* removes\n  CO\u2082; afforestation that also displaces fuelwood). Recommended: a **primary mechanism** field\n  + an optional **co-benefit** flag. A measure that has a product *and* removal is the marker.\n- **Per-gas / GWP tagging** for the large KZ methane component \u2014 the model has no carbon price\n  or per-gas split yet; `non-CO\u2082` is a subtype tag for now.\n- **Permanence buckets** for removals \u2014 flag only, given the unsettled threshold and the small\n  KZ removal portfolio.\n\n---\n\n## Sources\n\nPrimary (verified, high-confidence):\n- IPCC AR6 WGIII SPM \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/summary-for-policymakers/\n- IPCC AR6 WGIII Technical Summary \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/technical-summary/\n- IPCC AR6 WGIII Ch.12 (CDR / cross-sectoral) \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/\n- IPCC AR6 WGIII CDR Factsheet \u2014 https://www.ipcc.ch/report/ar6/wg3/downloads/outreach/IPCC_AR6_WGIII_Factsheet_CDR.pdf\n- IPCC AR6 WGIII Ch.7 (AFOLU) \u2014 https://www.ipcc.ch/report/ar6/wg3/downloads/report/IPCC_AR6_WGIII_Chapter_07.pdf\n- World Bank, MACC Analysis dissemination note \u2014 https://documents1.worldbank.org/curated/en/859881468197634735/pdf/103914-WP-P145943-PUBLIC-Dissemination-Note-Marginal-Abatement-Cost-Curve-Analysis.pdf\n- GHG Protocol, estimating & reporting avoided emissions \u2014 https://ghgprotocol.org/estimating-and-reporting-avoided-emissions\n- Nature Comms Earth & Environment (2024), CDR permanence \u2014 https://www.nature.com/articles/s43247-024-01808-7\n- UNFCCC CDM project scopes \u2014 https://cdm.unfccc.int/DOE/scopelst.pdf\n- KZ Carbon Neutrality Strategy 2024 \u2014 https://unfccc.int/sites/default/files/resource/Carbon_Neutrlaity_Strategy_Kazakhstan_Eng_Oct2024.pdf\n- KZ Fourth Biennial Report (BR4) \u2014 https://unfccc.int/sites/default/files/resource/Report_BR4_Updated.pdf\n\n---\n\n## Caveats (read before extending this)\n\n1. The **two-axis enum is a synthesis for tooling**, not a verbatim IPCC taxonomy. Axis 1\n   (reduction vs removal) is firmly IPCC-grounded; Axis 2 (baseline basis) is firmly\n   World Bank/GHG Protocol-grounded. IPCC does **not** publish the reduction-subtype enum \u2014\n   keep those as soft tags.\n2. The grounding for reduction-vs-removal is the **SPM / TS / Ch.12 / CDR Factsheet**, not\n   Chapter 3 \u2014 several over-attributed "top-level partition" phrasings were refuted during\n   verification.\n3. **BECCS** is technically land-based biological CDR (only the CCS step is engineered); the\n   clean nature/engineered split is a usability simplification.\n4. The **~1000-year permanence** figure is from a single 2024 Nature paper and is an active\n   research question \u2014 a flag, not a hard boundary.\n5. The **Kazakhstan per-sector mapping** is inferred from project context, not independently\n   sourced per measure.\n\n## reference: sectors\n\n# Sector conventions & registry hygiene\n\nDomain conventions kept out of SKILL.md so the main file stays stable. Read when a\nmeasure\'s sector, pool, or factor placement matters.\n\n## Sector codes (IPCC-style)\n\n| Code | Domain |\n|---|---|\n| `1.A.1` | Energy industries (power & heat) |\n| `1.B` | Fugitive emissions (e.g. coal-mine methane) |\n| `2` | Industrial processes (cement, metallurgy, CCS) |\n| `3` | Agriculture / AFOLU |\n\n> TODO (expert): complete the code list and map each measure family to its subsector id\n> (e.g. `1.A.1.coal_power`, `1.B.coal_methane`, `2.cement`, `3.enteric`).\n\n## Pools and ceilings\n\nA `pool` caps the total abatement available to the measures that share it\n(`{id, caps_ref, annual_flow, unit, sector_ref, baseline_emissions_kt?}`). When a measure\nsets `potential.pool_ref`, its contribution counts against that pool\'s `ceiling`, checked\nby `checks.pool`. Measures competing for the same physical resource MUST share a pool, or\nthe model will double-count their potential.\n\n> TODO (expert): list the canonical pools, their ceilings, and which measures belong to\n> each. Note the simplification: pools do not model deployment-order interactions between\n> measures \u2014 state this limitation in the tool\'s methodology page.\n\n## Registry hygiene (anti-duplication)\n\nBefore `upsert_library_entity`, search `list_library` for an existing match.\n\n- Reuse an `id` when unit + cost structure + lifetime match.\n- A new entity needs a descriptive `id`, plus `description` and `rules` filled in.\n- Indicators (`capex_ud`, `eff`, `ef`, `price`, \u2026) attach to an owner via\n  `owner_kind` + `owner_ref`; reuse the owner rather than cloning it.\n\n> TODO (expert): curate the "preferred entities" list \u2014 the canonical object/resource for\n> each common concept (one "Renewables" object, one shared "O&M" resource pattern, etc.) \u2014\n> and fold a duplicate-id warning into validate/upsert over time (move this rule L3 \u2192 L2).\n\n## reference: conventions\n\n# Conventions \u2014 units, signs, time, MAC\n\n> Mechanically extracted (verbatim) from the `conventions` block of\n> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).\n> Reference facts, not judgment \u2014 safe to read as the canonical reading rules.\n\n**Principle.** Shared conventions for units, signs, time and the MAC definition. The\nnumbers themselves live elsewhere \u2014 here are the rules for reading them. All unit\nconversions are explicit (like `capexUdFactor`); no implicit multipliers.\n\n## Units\n\nCanonical units: reduction \u2014 kt CO\u2082e/yr; MAC \u2014 USD/t CO\u2082e; CAPEX \u2014 m USD; OPEX \u2014\nm USD/yr (signed); material price \u2014 USD per resource unit; emission factor \u2014 t CO\u2082e per\nresource unit; unit CAPEX \u2014 in the library\'s own unit ($/kW, $/head\u2026). A field in another\nunit is converted by an explicit factor (e.g. `capexUdFactor`).\n\n## Signs\n\nOne sign rule: cost +, avoided cost / saving / revenue \u2212. By panel: build \u2014 CAPEX/OPEX +;\nproject (closed) \u2014 maintenance CAPEX and OPEX \u2212. By flow: `materialSide` new +, retired \u2212.\nEmissions reduction is always positive.\n\n## Time\n\nLifetime and the discount rate are model parameters, not measure fields: the discount\nrate is a global (`library.globals.discountRate`); lifetime comes from the object\'s\n`technology.lifetimeYrs` (or measure `inputs.lifetime`). CAPEX is incurred in year 0;\nOPEX and reduction are annual streams over the lifetime; `pv` discounts a stream to year 0\nat the rate.\n\n## MAC\n\nMAC (USD/t CO\u2082e) = NPV / discounted-reduction \xD7 1000, where NPV = CAPEX \u2212\nPV(rate, lifetime, OPEX) and discounted-reduction = \u2212PV(rate, lifetime, annual reduction),\nin kt (\xD71000 converts kt\u2192t). Evaluated by the same HyperFormula PV as the Excel model, so\nthe result is parity-exact.\n\n## Footprint unit\n\n`carbonFootprint` \u2014 t CO\u2082e per unit of the `produce` product (the same unit as the service\nunit for comparison). Keep consistent with the `produce` unit.\n\n## Language\n\nThe notation is English-base (single language); a separate translations layer adds other\nlocales later. Free-text measure fields (name, citation, divergence_reason) may be in any\nlanguage. Numeric format: dot as the decimal separator; dates ISO 8601 (YYYY-MM-DD).\n\n## reference: sourcing\n\n# Sourcing \u2014 provenance & binding discipline\n\n> Mechanically extracted (verbatim) from the `sourcing` block of\n> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).\n> This block straddles fact and judgment \u2014 to be reconciled with SKILL.md \xA73 in the\n> collaborative skill pass.\n\n**Principle.** Every number in a measure carries a source (provenance) and, if it is an\nassumption, a library binding. Rule for the LLM: do not invent numbers \u2014 reuse the library,\nexplain divergence, or admit it is local. Attach a source via `measure.sources` keyed by the\nvalue\'s path (e.g. `\'created_objects[0].capacity\'`, `\'materials[1].price\'`); a DERIVED number instead goes in `measure.computed` at the\nsame path (a formula) \u2014 a path is in `sources` XOR `computed`, never both, never a bare\npasted number.\n\n## Provenance\n\nA number\'s source: `source_type` (official_stat/literature/standard/expert_estimate/\nassumption/placeholder), `confidence` (high/medium/low), citation/url/date. With no source\nit is treated as a placeholder (low confidence, flagged).\n\n## Binding\n\nAssumption discipline: `reuse` (take the library value by ref), `alt` (a custom value + a\nrequired `divergence_reason`), `new` (local, no analogue \u2014 flagged for review). The goal is\nreuse and explainability.\n\n## Divergence reason\n\nMandatory note for `binding=alt`: why the value diverges from the library reference.\n\n## Reference (corridor)\n\nA `[min, max]` corridor with a unit a check anchors to: `factor` \u2014 the reduction factor,\n`capex_ud` \u2014 the object unit CAPEX. Set `reference_ref` on the back-calc and on the object;\nthe corridor\'s own source lives in its `source` field.\n\n## reference: formula-ast\n\n# Formula AST \u2014 the closed expression language\n\n> Mechanically extracted (verbatim) from the `formulas` block of\n> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).\n> Reference spec, not judgment \u2014 an author needs this in full to write a `computed` node.\n\n**Principle.** A formula is data, not code: stored as an AST over named keys (`ref`), not\ncell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel\nparity is bit-for-bit.\n\n## Operators\n\nAllowed arithmetic operators: `add`, `sub`, `mul`, `div`, `sum`, `pv` (present value),\n`lookup`. The set is closed for auditability \u2014 no other functions.\n\n## Predicates\n\nPredicate operators for the checks (return true/false): `lte` (\u2264), `gte` (\u2265), `between`\n(in corridor). Used by the factor/economics/pool/sector checks.\n\n## Signatures\n\nOperator arity: `add`/`sub`/`mul`/`div` are variadic (\u22652 args, folded left-to-right;\n`sub`/`div` as a running difference/quotient); `sum(\u2026)` sums its args; `pv(rate, nper,\npayment)` is the Excel present value of a constant stream; `lookup(table, key)` selects\nfrom a table (reserved, unused in the prototype). Predicates: `lte(a,b)`/`gte(a,b)` binary;\n`between(x,min,max)` ternary.\n\n## Leaves\n\nTree leaves: `{ref:<key>}`, `{slot:<name>}`, `{const:<number>}`, or a bare number literal.\nA `{slot}` is a template slot bound per-measure via bindings before evaluation.\n\n## Namespace\n\nHow a `{ref:<key>}` resolves. All prefixed forms hit the registry directly \u2014 editing the\nindicator there propagates to every measure that names it:\n\n| Prefix             | Resolves to                                                                  |\n|--------------------|------------------------------------------------------------------------------|\n| `res:<id>`         | resource\'s EF (shortcut for `res:<id>#ef`; honors year-series EFs)            |\n| `res:<id>#<key>`   | resource indicator (`price`, `lhv`, `comb_factor`, \u2026) from `library.indicators` |\n| `obj:<id>#<key>`   | object/technology indicator (`capex_ud`, `eff`, `maintenance_capex_ud`, \u2026)    |\n| `prd:<id>#<key>`   | product indicator (`carbon_footprint`, \u2026)                                    |\n| `sub:<id>#<key>`   | subsector indicator (`max_emissions`, `max_capacity`, \u2026)                     |\n| `glb:<key>`        | `library.globals[<key>]` (`discountRate`, `year`, \u2026)                          |\n| `in:<key>`         | measure input `measure.inputs[<key>].value` (explicit form)                  |\n| bare `<key>`       | `measure.computed[<key>]` if present (recurses), else `measure.inputs[<key>]` |\n\nLiterals are `{const:<n>}` or a bare number \u2014 both allowed.\n\n## Example\n\nExample (coal\u2192gas conversion): `mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal,\nref:res:gas), 1e-3)` = installed capacity \xD7 capacity factor \xD7 hours/yr \xD7 (EF coal \u2212 EF gas)\n\xD7 10\u207B\xB3. EF leaves use the `res:` namespace; `8760` and `1e-3` are literals. A formula\nthat needs a non-EF resource indicator (say gas LHV) writes `ref:res:gas#lhv` \u2014 same\nshape, different indicator key.\n\n## reference: abatement-modes\n\n# Choosing the abatement mode\n\nRead this when deciding `maturity_stage` and the shape of the `abatement` block.\n\n## Decision tree\n\n1. Is there a credible bottom-up chain \u2014 known capacity/activity, emission factors, and\n   costs \u2014 that derives abatement from `inputs`?\n   - **Yes \u2192** `computed`. Either a `formula_ref` (e.g. `delta_ef`) with explicit `bindings`,\n     or an inline `abatement.formula` AST over the measure\'s inputs.\n   - **No, but a credible top-down total (kt/yr) exists \u2192** still `computed`: write it as\n     `activity \xD7 factor` where the per-unit `factor` is an input whose value back-fills the\n     total. Tag that input with a `reference_ref` corridor and point `abatement.factor_ref`\n     at it, so the `factor` guardrail sanity-checks it (\u26A0 if implausible \u2192 keep `draft`).\n   - **Neither \u2192** the measure is not ready; keep it a `draft` and record what\'s missing.\n\n2. How is the baseline constructed \u2014 against a displaced service (`comparison`) or as an\n   absolute project footprint (`standalone`)?\n   - Set `baseline_basis` accordingly; for `comparison`, also set `comparison.service_unit_ref`.\n   - `comparison` measures are scored project vs. a moving baseline \u2014 say so in provenance.\n\n## `computed` shape (reference: kz-2)\n\n- `abatement.computed.bindings` map roles to refs: `cf`, `ef_in`, `ef_out`, `capacity`.\n- `abatement.computed.formula_ref` names the engine formula (e.g. `delta_ef`).\n- Intensities and quantities live in `computed{}` as formulas over `inputs`.\n\n## Top-down total via a checked factor (reference: kz-20, kz-16)\n\nWhen the credible figure is a total rather than a full bottom-up chain, still author a\n`computed` measure with `abatement.formula = activity \xD7 factor`:\n\n- Make the per-unit `factor` a measure input and tag it with a `reference_ref` corridor\n  (e.g. `ref_enteric_factor`, `ref_degas_factor`); point `abatement.factor_ref` at it.\n- The `checks.factor` guardrail confirms that factor sits inside the ref range; \u26A0 (out of\n  corridor) blocks promotion and the measure stays `draft` (see kz-16).\n- Provenance must state plainly that the factor is an anchor/assumption, not a derivation.\n\n> The legacy `back_calc` maturity stage (baseline \xD7 share, with an *implied* factor) is\n> **retired** \u2014 express the same thing bottom-up as `activity \xD7 factor` instead.\n\nThe available `formula_ref`s and their required bindings are exposed in the\n`get_measure` MCP response: for any measure on a `formula_ref`, the answer\ninlines `abatement.computed.formula` (the template body \u2014 `expr` AST + `slots`),\na slot-substituted `resolved_ast`, and a `human` rendering, so the audit chain\nreaches the leaves from one call. Engine source of truth is\n`src/lib/measure/templates.ts` \u2192 `BUILTIN_TEMPLATES` (mirrored as a published\ntrust anchor at `data/kz/library/formula-templates.json`).\n\n> TODO (expert): document each `factor:*` ref type and its accepted range source.\n\n## reference: potential\n\n# Potential \u2014 the two ceilings on a measure\'s volume\n\nA measure\'s annual abatement is the *unit measure* (one installation / one batch, computed\nbottom-up in \xA73/\xA76) **times its scale** \u2014 and the scale is not free. Two independent ceilings\nbound it. Both live under `potential`; neither touches the MAC (the MAC is set by the unit\neconomics, \xA70). They cap **volume only**.\n\n```jsonc\n"potential": {\n  "ceiling_dim": "n_objects",          // which dimension caps this measure\n  "pool_ref": "pool_coal_power",       // shared ceiling \u2014 measures in the pool COMBINE\n  "limit": {                            // per-measure ceiling \u2014 THIS measure\'s own scale\n    "indicator_ref": "ind_coal_power_capacity",\n    "consumption_ref": "cap_mw"\n  }\n}\n```\n\n## `ceiling_dim` \u2014 what is being counted\n\nThe physical dimension the ceiling is expressed in: `cut_resource` (a feedstock/fuel freed or\nconsumed), `output_product` (product delivered), `n_objects` (installed units / capacity), or\n`activity` (an activity level). It names the axis both ceilings below measure against \u2014 keep the\nindicator\'s unit and the consumed value in *that same* dimension.\n\n## The pool \u2014 a **shared** ceiling (measures combine)\n\n`pool_ref` points at a library pool with an `annual_flow` ceiling (kt CO\u2082eq/yr). Measures that\nshare a pool **compete for the same headroom**: `validate` sorts the group ascending by MAC, the\ncheapest claims the pool first, and the rest are **clipped** to what remains (`stackPools` in\n`validate.ts`). The `pool` check \u26A0 flags any measure whose share is clipped. A measure with **no\npool is `incomplete`** on the potential panel \u2014 the pool is required.\n\nThis is about *not double-counting across measures*. It is the engine\'s job (auto-clip), not the\nauthor\'s.\n\n## The limit \u2014 a **per-measure** ceiling (this measure\'s own scale)\n\nThe pool stops measures from collectively overcounting; the limit stops **one** measure from\nclaiming more of the industry than physically exists. It is the **limiting factor**: the resource\navailable, the product the market absorbs, the max capacity, the number of installations \u2014 the\nthing that runs out first as you scale this measure up.\n\nHow to declare it (workflow step 4):\n\n1. **Find what bounds the measure.** What is the most you could deploy before you run out of the\n   scarce thing? That scarce thing, in the `ceiling_dim` dimension, is the limit.\n2. **Record it as a library indicator** for the *industry* \u2014 typically `owner_kind: "subsector"`,\n   a `max_capacity`/availability `key`, a `value` + `unit`, and a real `provenance` (a guess keeps\n   the measure a draft). Reuse an existing indicator if one already states this ceiling.\n3. **Point the measure at it:** `limit.indicator_ref` \u2192 that indicator; `limit.consumption_ref` \u2192\n   the measure\'s own input/computed key whose value is *how much of that dimension the unit measure\n   consumes at its declared scale* (e.g. the capacity input `cap_mw`).\n\nWhat the engine does (`limit` check, `checks.json`): resolves `consumption = resolve(consumption_ref)`\nbottom-up, reads `ceiling = indicator.value`, and asserts `consumption \u2264 ceiling`.\n\n- **It does NOT enter the bottom-up formulas and does NOT change the MAC.** It is a guardrail on a\n  number you already computed.\n- **It does NOT auto-clip** (unlike the pool). On overflow the check \u26A0 and the potential panel\n  warns. The fix is the author\'s: **lower the scale input** (an input feeding `consumption_ref`)\n  until the measure fits. The limit bounds the volume; nothing else moves.\n- A warn folds into `eligibleForModel` (a measure over its own limit is not curve-ready).\n\n## Worked example \u2014 kz-2 (coal CHP/boilers \u2192 gas)\n\nThe limiting factor is the coal-fired capacity there is to convert. Indicator\n`ind_coal_power_capacity` (`subsector` `1.A.1.coal_power`, `max_capacity` = 12000 \u041C\u0412\u0442). The\nmeasure\'s scale is `cap_mw` = 5000 \u041C\u0412\u0442. So `limit = {indicator_ref: ind_coal_power_capacity,\nconsumption_ref: cap_mw}`; the check reads 5000 \u2264 12000 \u2192 \u2713. Raise `cap_mw` past 12000 and the\ncheck \u26A0, the potential panel warns, and the measure drops out of `eligibleForModel` until the\nscale is lowered. The MAC (193.76) is unchanged either way \u2014 the limit never touches it.\n\n## Status\n\n`limit` is **optional** while the 26 measures are migrated onto it (mirroring `baseline_basis`).\nOnce every measure carries one it is promoted to **required**, and a missing limit makes the\npotential panel `incomplete`. Until then a measure without a limit simply skips the check.\n\n## reference: checks\n\n# Checks \u2014 the advisory guardrails\n\nHow to read `validate_measure`\'s output.\n\n**Principle.** Automatic checks on predicates (`lte`/`gte`/`between`), surfaced by\n`validate()`: \u2713 pass, \u26A0 warn. They are ADVISORY \u2014 they do NOT block publishing (publishing\nis direct). They inform the author and drive `eligibleForModel` (= all checks \u2713 and panels\ncomplete), shown as a badge. IMPLEMENTED: the \xA73/\xA76 notation rule (`provenance`, below) plus\nthe five predicate checks factor, economics, pool, sector, limit. The remaining two\n(`serviceUnitMatch`, `doubleCountReduction`) are rules the author follows but are NOT yet automated.\n\n## factor \u2014 [implemented]\n\n`between(factor, reference.min, reference.max)` \u2014 the per-unit factor named by\n`abatement.factor_ref` (= reduction / activity) vs its input\'s `reference_ref` corridor. The\nquality signal for the raw\u2192computed ladder; \u26A0 when out of corridor \u2192 stays `draft`.\n\n## economics \u2014 [implemented]\n\n`between(implied unit CAPEX, capex_ud.min, capex_ud.max)` per object. \u26A0 out of corridor\n(add a `divergence_reason` if `binding=alt`).\n\n## pool \u2014 [implemented]\n\n`lte(sum of pool annual allocations, pool.ceiling)`. On oversubscription the cheaper\n(lower-MAC) claim first, the rest are clipped; a \u26A0 on any measure whose share is clipped.\n\n## sector \u2014 [implemented]\n\n`lte(sum of sector reductions, the sector backstop)`. A coarse double-count check for the\nsector; a \u26A0.\n\n## limit \u2014 [implemented]\n\n`lte(consumption, ceiling)` \u2014 the unit measure\'s own consumption in its limiting dimension\n(`potential.limit.consumption_ref`, an input/computed value resolved bottom-up) vs an industry\nceiling stored as a library indicator (`potential.limit.indicator_ref`). Per-measure and\nindependent of the pool; bounds the **volume**, never the MAC. \u26A0 on overflow \u2192 lower the scale\ninput until it fits (the engine does **not** auto-clip here). See `references/potential.md`.\n\n## serviceUnitMatch \u2014 [rule, not yet automated]\n\n`type=comparison` only: `flows.baseline` and `flows.project` products should match on\n`serviceUnit`; a mismatch should be a \u26A0.\n\n## provenance \u2014 [implemented]\n\nThe \xA73/\xA76 notation rule: every number must be an `input` (in `sources`) or `computed`\n(a formula) \u2014 never a bare literal. `validate()` surfaces the gaps as `untagged` /\n`computedNoFormula` and folds them into `missing`, so they hold a measure back from\n`eligibleForModel`. Source *quality* is a separate, non-automated judgment for the publish\ngate: before a number joins the shared curve it should rest on `source_type \u2260 placeholder`\nand (for an assumption) `binding \u2260 new` \u2014 see the publish gate in the workflow (SKILL.md, step 6).\n\n## doubleCountReduction \u2014 [rule, not yet automated]\n\nReduction is set by exactly one method per maturity: raw \u2014 baseline \xD7 share;\ncomputed \u2014 activity \xD7 factor; comparison \u2014 \u0394flow \xD7 EF. Mixing methods on one\nmeasure should be a \u26A0.\n'
+  version: "a5445147b3c6",
+  markdown: "# MACC measure authoring\n\nThis skill is the **judgment layer (L3)**: how to author a *good* measure. Two other\nlayers carry the rest, and this file never restates them:\n\n- **L1 \u2014 the shape (contract).** The measure-document JSON and the library entity\n  shapes. Read them from the MCP resource `schema://measure` and a live example via\n  `get_measure('kz-2')`. Do not paraphrase field lists here.\n- **L2 \u2014 the machine checks.** `validate_measure` runs the \xA77 guardrails and the \xA73/\xA76\n  notation rule. It is **advisory** \u2014 it informs, it never blocks.\n\nThis file is the part neither encodes: the **model** of what a measure is, the **quality\nbar**, and the **workflow** \u2014 choosing the right modeling stance, reusing the registry\ninstead of duplicating it, and being honest about data quality before publishing.\n\nA measure is **data, not code**: processed by the engine but licensed CC-BY-4.0 and\nreviewed by domain experts. Author it so a reviewer can audit every number.\n\nThese are the **requirements a measure must meet**. Because `validate_measure` is advisory,\nmeeting them is the author's responsibility, not the engine's.\n\n## The one rule that defines the notation (\xA73/\xA76)\n\n**Every number is either an input or computed from inputs \u2014 never a bare literal.**\nEach quantity is either:\n- an entry in `inputs` (a leaf value with a unit and provenance), or\n- a `computed` node whose `formula` derives it from `ref`s to inputs / other computed\n  nodes, with `const` only for genuine mathematical constants (e.g. `3.6`, `8760`).\n\nA number just pasted in \u2014 neither an input nor derived by a formula \u2014 breaks this rule;\n`validate_measure` lists it as `untagged`. Fix it: make it an input, or compute it in a\nformula. That traceability is what lets a reviewer audit every number.\n\n---\n\n# A. The measure model\n\nWhat a measure *is*, before you author it.\n\n## Terms\n\n- **Technology** \u2014 the entity a measure builds on: a capital **structure**, an\n  **infrastructure** system, an asset **retrofit**, or an operational **practice** (its\n  **class**). A measure reuses one from the library or creates it \u2014 never invents one inline.\n- **Indicator** \u2014 one number (capex, EF, price, lifetime, a limiting factor\u2026) owned by a\n  technology / product / resource / industry, with units and provenance.\n- **Library entity** \u2014 a registry row: technology \xB7 product \xB7 resource \xB7 indicator \xB7\n  reference \xB7 pool \xB7 subsector.\n\n## Mechanism & baseline \u2014 two axes\n\nTwo independent axes classify a measure (sector is a separate third dimension, already in the\nmodel \u2014 not folded in here).\n\n**Axis 1 \u2014 mechanism** (what it does to emissions):\n- **reduction** \u2014 cuts or avoids GHG at source, against a baseline that still emits. Nearly\n  every Kazakhstan measure: efficiency, coal\u2192gas/RES switch, electrification, industrial\n  process change, methane leak/flaring reduction, demand reduction \u2014 **and fossil-CO\u2082 capture\n  (CCS/CCU)**. *(Optional subtype tag: efficiency \xB7 fuel/feedstock switch \xB7 electrification \xB7\n  process change \xB7 demand reduction \xB7 non-CO\u2082.)*\n- **removal** (CDR) \u2014 deliberately takes CO\u2082 out of the atmosphere and stores it durably:\n  afforestation, soil carbon, wetland restoration, biochar (nature-based); BECCS, DACCS,\n  enhanced weathering (engineered). Removal *counterbalances* residual emissions \u2014 it is not a\n  substitute for reduction. *(Optional attribute: permanence \u2014 short-lived nature-based vs\n  durable geological.)*\n\n> **The line that trips people up:** capturing **fossil** CO\u2082 (CCS/CCU on a coal plant or a\n> gas-processing flue) is **reduction**, not removal \u2014 it only prevents fossil emissions. Only\n> **biogenic** (BECCS) or **ambient-air** (DACCS) capture is removal.\n\n**Axis 2 \u2014 baseline basis** (how abatement is measured \u2014 the modeling-decisive choice):\n- **comparison** \u2014 the same product delivered a different way; abatement = (baseline-technology\n  emissions \u2212 measure emissions) \xD7 activity, per the product's service unit (MWh, t steel,\n  tonne-km). The baseline is the displaced technology.\n- **standalone** \u2014 no displaced product; abatement = tonnes removed or avoided vs an\n  activity-scenario baseline. Use for all removals, agricultural practices, methane\n  leak/flaring reduction, waste capture.\n\nAuthor rules: every measure declares **(mechanism, baseline basis)**; every **removal is\nstandalone**; **fossil-CO\u2082 capture is reduction**. Define the baseline *before* computing\nanything. Grounding: IPCC AR6 WGIII (mechanism) \xB7 World Bank MACC & GHG Protocol (baseline\nbasis) \u2014 see `references/measure-types.md`.\n\n## Calculation basis\n\n- **The product** \u2014 every measure except a pure removal has exactly one: what it produces or\n  operates on (electricity, steel, gas, a crop), invariant across the before/after variants.\n  In a **comparison** measure it is also the comparison basis \u2014 baseline and project are\n  compared per unit of it (its **service unit**, e.g. MWh). In a **standalone** measure it\n  just anchors the measure and may limit it. A pure removal has no product.\n- **New technologies** the measure creates \u2014 with their products and feedstock. Build\n  CAPEX/OPEX arise here (sign **+**).\n- **Closed technologies** the measure retires \u2014 their maintenance CAPEX and OPEX become\n  **avoided cost** (sign **\u2212**).\n\nField shapes: `schema://measure`. Sign/unit/MAC conventions: `references/conventions.md`.\n\n## Sector & measure interaction\n\n- Each technology maps to an **industry**, which maps to an **IPCC sector** (a measure may\n  span several). This drives curve colour and the double-count backstops.\n- Measures interact three ways: **complementary** (independent) \xB7 **competing** for one\n  emission source (RES vs nuclear) \xB7 **potential-reducing** (RES shrinks CCUS potential).\n- Today the engine computes only **shared-resource competition** (measures sharing a\n  resource pool are clipped by MAC order on oversubscription). Broader competitor /\n  potential-reducing links are not computed \u2014 **record them as tags on the measure**.\n  See `references/sectors.md`.\n\n## The project library\n\nThe shared registry that makes measures comparable: industries/subsectors, **technologies**\n(a capital **structure**, **infrastructure**, a **retrofit**, or a **practice** \u2014 the *class*),\n**products**, **feedstock/resources**, and **indicators** (every number, tied to a technology\n/ product / resource / industry).\n\n- Every measure is **built on library entities**. If a needed technology \u2014 or an\n  indicator \u2014 is missing, **create it**; never type a free name into the measure.\n- **Reuse before creating.** Before adding a new entry, search for an existing one that\n  matches *what it is* \u2014 class, unit, cost structure, lifetime \u2014 not just its name (names\n  vary, so the same thing is easily duplicated). Create a new entry only when nothing\n  existing genuinely fits.\n\n---\n\n# B. Data quality\n\nEach library **indicator** carries: a name, a short description, a value with units, a\n**traceable source** (web link or other unambiguous citation), and optionally a realistic\nrange.\n\n- **Geo-applicability** \u2014 classify each number as **global** (low geo-sensitivity) \xB7\n  **KZ-specific** (economics, climate, construction cost & lead times) \xB7\n  **other-country-based**, and state its **reliability for assessing the measure in\n  Kazakhstan**. A number can rest on real-project benchmarks, authoritative research, or\n  official sources \u2014 but its KZ-applicability must be characterised.\n- **Provenance discipline** \u2014 every number declares its source type and confidence, and\n  whether it reuses a library value or diverges (with a reason). Details:\n  `references/sourcing.md`.\n- A guess / placeholder is a visible TODO in a **draft**, never in a **published** measure\n  (see the publish gate, step 6).\n\n---\n\n# C. Formulas\n\nA measure carries one or more formulas in the **MACC formula AST** \u2014 a small, closed,\nauditable notation that compiles to the same engine as the Excel model (parity-exact). The\noperator set, the leaf kinds, and how a formula renders in the UI vs compiles for the engine\nare the full spec: `references/formula-ast.md`.\n\n- Formulas must compute the measure's **abatement** \u2014 the emissions change in **CO\u2082e**\n  (non-CO\u2082 gases converted via their GWP) \u2014 and its **\u0394CAPEX** / **\u0394OPEX**, derived from the\n  **quantities of fuel, energy and carbon-bearing feedstock/product** in scope.\n- **Complexity** \u2014 nesting **\u2264 2 levels** and **\u2264 5 terms/factors** per node; if deeper,\n  **expand** each complex value on the next level in the same notation rather than inlining it.\n- Every value in a formula resolves to a library indicator, a measure input, or another\n  computed value \u2014 no bare literals (\xA73/\xA76).\n- **Build the reduction by units** \u2014 chain unit *bridges* (`power_to_energy`, `fuel_to_energy`,\n  `energy_to_co2`, fuel switch) from what you hold to CO\u2082/year, taking each EF from the **right\n  resource** (`res:R#\u2026`). `validate_measure` folds the formula over the dimensions and gates it\n  to `draft` if it does not reduce to CO\u2082 or crosses resource carriers (e.g. an electricity EF\n  on a thermal chain). Give every input a `unit`. **Prefer computing from the fuel** (mass \xD7 LHV \xD7 fuel EF)\n  over a coarse output-EF \u2014 it is auditable and carrier-safe. \u2192 `references/dimension-bridges.md`.\n\n---\n\n# D. Workflow\n\nFollow in order. Step 2 (build on the library) and step 6 (publish gate) are the ones most\noften skipped \u2014 and skipping them is what produces a messy registry and a measure that\n\"passes\" but is wrong.\n\n1. **Classify** \u2014 is it a *reduction* or a *removal*? Does it deliver a comparable product\n   (compared on a service unit) or not? This decides what the measure needs.\n2. **Build on the library** \u2014 resolve every value to a library entity *first*: reuse one that\n   already fits, or create the missing one. Never inline a name.\n3. **Compute the unit measure (bottom-up)** \u2014 write the formulas so every number is an input\n   or computed from inputs (\xA73/\xA76), then read off the first CAPEX / OPEX / abatement and MAC.\n   \u2192 `references/formula-ast.md`.\n4. **Find and declare the limiting factor** \u2014 assess what bounds the measure (resource\n   available, product output, max capacity, number of installations) and record it as a **library indicator**\n   for the industry. Declare it on the measure as a **mandatory constraint**: it does *not*\n   enter the bottom-up formulas and does *not* change the MAC. `validate_measure` checks the\n   consumption you computed against it \u2014 if the measure would exceed the limit, lower the\n   scale (an input) until it fits. The limit bounds the **volume**, nothing else.\n   \u2192 `references/potential.md`.\n5. **Validate** \u2014 run `validate_measure`; it advises, it never blocks. How to read its\n   output: \u2192 `references/checks.md`.\n6. **Publish gate** \u2014 whether a measure joins the shared curve (`published` vs `draft`) is a\n   **server-side verdict**, not a flag you set: validation promotes it only when its gating\n   checks pass and its panels are complete. Your job is to make the numbers that move the MAC\n   or volume rest on real sources (not a guess/placeholder), so validation *can* promote it;\n   until then it stays `draft`.\n\n---\n\n## Conventions \xB7 field shapes\n\n- Units, signs, time, the MAC definition: `references/conventions.md`.\n- The measure-document shape and library entity shapes are **L1** \u2014 read them from\n  `schema://measure` and a live example via `get_measure('kz-2')`. This skill does not\n  restate them.\n\n## Learn from the library and existing measures\n\nBefore authoring, browse what already exists over MCP \u2014 `list_library` for the registry\n(technologies, products, resources, indicators\u2026) and `list_measures` / `get_measure` for the\nexisting measures. Reuse their entities and patterns instead of inventing.\n\n---\n\n# References\n\n## reference: measure-types\n\n# Measure types \u2014 the classification and its authoritative basis\n\n> Grounding for the **Mechanism & baseline** section of `SKILL.md`. This file is the *why*\n> behind the two classification axes \u2014 the authoritative sources, the MACC mapping, and the\n> Kazakhstan picture. It is conceptual: it survives schema/field renames. Synthesized from a\n> verified literature pass (IPCC AR6 WGIII, World Bank MACC methodology, GHG Protocol,\n> UNFCCC CDM, peer-reviewed CDR work); see **Sources** and **Caveats** at the end.\n\nA measure is classified on **two independent axes**, with **sector** as a separate third\ndimension that already exists in the data model. Keep all three orthogonal \u2014 do not fold one\ninto another.\n\n---\n\n## Axis 1 \u2014 Mechanism: `reduction` vs `removal`\n\nThe cleanest, best-grounded top-level split. IPCC AR6 WGIII treats emission **reductions**\nand **carbon dioxide removal (CDR)** as separate, complementary, **non-substitutable**\ncategories: net change = emissions reduced *plus* sinks enhanced, and CDR \"cannot serve as a\nsubstitute for deep emissions reductions\" \u2014 it counterbalances hard-to-abate residual\nemissions. [IPCC AR6 WGIII SPM / TS / Ch.12 / CDR Factsheet]\n\n- **`reduction`** \u2014 cuts or avoids GHG **at source**, against a baseline that still emits.\n- **`removal`** (CDR) \u2014 a deliberate human activity that **removes CO\u2082 from the atmosphere\n  AND stores it durably**. Natural forest growth with no human intervention does not count.\n\n### The boundary that matters most: fossil capture is *reduction*, not removal\n\nIPCC AR6 WGIII Ch.12, verbatim: *\"CCS and CCU applied to fossil CO\u2082 do not count as removal\ntechnologies. CCS and CCU can only be part of CDR methods if the CO\u2082 is biogenic or directly\ncaptured from ambient air, and stored durably.\"*\n\n- CCS/CCU on a **coal plant or gas-processing flue** \u2192 **`reduction`** (baseline = the same\n  plant without capture; it only prevents fossil emissions).\n- Only **BECCS** (biogenic) and **DACCS** (ambient air), plus other genuine CDR, \u2192 `removal`.\n\nThis corrected the original working hypothesis, which loosely put all engineered capture\nunder removal. It is materially important for Kazakhstan (CCS on coal/gas is a real measure\ntype, and it is reduction).\n\n### Subtypes (use as soft, optional tags \u2014 not a strict enum)\n\nIPCC does **not** publish a single mutually-exclusive \"mechanism enum\"; these are recurring\ncross-sector levers named in AR6 TS, packaged for practicality. Tag when useful; don't force.\n\n- **reduction** subtypes: `efficiency` \xB7 `fuel/feedstock switch` \xB7 `electrification` \xB7\n  `process change` \xB7 `demand reduction` \xB7 `non-CO\u2082` (CH\u2084/N\u2082O abatement).\n- **removal** subtypes: **nature-based** (afforestation/reforestation, improved forest\n  management, soil carbon, wetland/peatland restoration, biochar) vs **engineered** (BECCS,\n  DACCS, enhanced weathering). Ocean methods exist but are irrelevant for landlocked\n  Kazakhstan. *(Note: IPCC technically classifies BECCS as land-based biological CDR \u2014 only\n  the CCS step is engineered; the nature/engineered split is a usability simplification.)*\n\n### Permanence \u2014 an attribute of removals, not a class\n\nStorage durability is a material, orthogonal property. A peer-reviewed result finds storage\nshorter than ~1000 years is insufficient to neutralize residual fossil CO\u2082 under net zero;\nIPCC's own CDR taxonomy carries storage-timescale as a second axis. Treat permanence as a\n**flag** (short-lived nature-based vs durable geological), **not** a hard class boundary \u2014\nthe exact threshold is an active research question. [Nature Comms Earth & Environment 2024;\nIPCC AR6 WGIII Ch.12]\n\n---\n\n## Axis 2 \u2014 Baseline basis: `comparison` vs `standalone`\n\nThe **modeling-decisive** axis \u2014 it tells the author HOW to compute abatement and WHAT to\nset as the baseline. Grounded in the World Bank MACC methodology (two baseline\nconstructions) and the GHG Protocol avoided-emissions framing.\n\n- **`comparison`** \u2014 the measure delivers the **same product/service a different way**.\n  Abatement = (baseline-technology emissions \u2212 measure emissions) \xD7 activity, measured per\n  the product's **service unit** (MWh, t steel, tonne-km). The baseline is the **displaced\n  technology**. Use for power, industry, transport, fuel switching.\n- **`standalone`** \u2014 **no displaced product**. Abatement = tonnes **removed or avoided** vs\n  an activity-scenario baseline. Use for all removals, agricultural practices, methane\n  leak/flaring reduction, and waste capture.\n\n> Renamed from the hypothesis's \"substitution\" to **`standalone`** \u2014 clearer, and tied to the\n> World Bank \"technology-specific vs sector-wide baseline\" distinction. The schema carries this\n> as the `baseline_basis` axis (`comparison` | `standalone`), parallel to `mechanism`.\n\nBoth cost and abatement are **always computed marginally to the baseline**, so the baseline\nmust be defined and documented **before** modeling. [World Bank MACC note; GHG Protocol]\n\n---\n\n## Sector \u2014 the third, independent dimension (already in the model)\n\nSector is the IPCC inventory category (2006/2019 Guidelines): **Energy, IPPU, Agriculture,\nAFOLU/LULUCF, Waste**. AR6 organizes mitigation assessment by sector and presents\ncost-vs-potential bars \u2014 confirming sector and mechanism are orthogonal. The macc-online\nworkbook already carries sector (col A). **Keep sector as the existing field; add the two new\naxes \u2014 do not overload sector with mechanism.** [IPCC 2006 Guidelines; IPCC AR6 WGIII SPM Fig\nSPM.7]\n\n---\n\n## How each class maps to MACC modeling\n\nMACC mechanics (World Bank, verbatim): bar **height** = unit cost per tonne CO\u2082e in\n**present-value** terms, **net of benefits, marginal over the replaced technology's cost**;\nbar **width** = the GHG reduction potential. This matches the macc-online engine exactly\n(MAC = NPV / discounted-abatement \xD7 1000; width = annual abatement).\n\n| class | baseline | what is displaced | how abatement is measured |\n|---|---|---|---|\n| reduction \xB7 comparison | the displaced technology | the conventional product/service | (baseline EF \u2212 measure EF) \xD7 activity, per service unit |\n| reduction \xB7 standalone | an activity scenario | nothing (source improvement) | tonnes avoided vs the scenario (e.g. captured/destroyed CH\u2084 \xD7 GWP) |\n| removal \xB7 standalone | an activity scenario | nothing | tonnes CO\u2082 removed and durably stored |\n\nEvery removal is `standalone`. `reduction` can be either `comparison` or `standalone`.\n\n---\n\n## Kazakhstan relevance\n\nThe portfolio skews **heavily to `reduction` / `comparison`**, because emissions are\ndominated by coal power, oil & gas, and metals/IPPU. Removal is a minor branch.\n\n- **Coal power** \u2192 efficiency / coal\u2192gas / RES \u2014 reduction, comparison (per MWh).\n- **Oil & gas (methane)** \u2192 leak/flaring reduction \u2014 reduction, standalone, `non-CO\u2082` subtype.\n- **Metals / mining / IPPU** \u2192 process change \u2014 reduction, mostly comparison.\n- **Agriculture** \u2192 soil/livestock/nutrient practices \u2014 reduction or removal, standalone.\n- **LULUCF** \u2192 afforestation/restoration \u2014 removal, standalone (nature-based).\n- **Waste** \u2192 landfill-gas / methane capture \u2014 reduction, standalone.\n\nThe existing 26-measure workbook is almost entirely reduction/comparison; agriculture and any\nland measures are the standalone exceptions. *(This per-sector mapping is inferred from\nproject context, not independently sourced per measure \u2014 treat as orientation.)*\n[KZ Carbon Neutrality Strategy 2024; KZ BR4]\n\n---\n\n## Sources\n\nPrimary (verified, high-confidence):\n- IPCC AR6 WGIII SPM \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/summary-for-policymakers/\n- IPCC AR6 WGIII Technical Summary \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/technical-summary/\n- IPCC AR6 WGIII Ch.12 (CDR / cross-sectoral) \u2014 https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-12/\n- IPCC AR6 WGIII CDR Factsheet \u2014 https://www.ipcc.ch/report/ar6/wg3/downloads/outreach/IPCC_AR6_WGIII_Factsheet_CDR.pdf\n- IPCC AR6 WGIII Ch.7 (AFOLU) \u2014 https://www.ipcc.ch/report/ar6/wg3/downloads/report/IPCC_AR6_WGIII_Chapter_07.pdf\n- World Bank, MACC Analysis dissemination note \u2014 https://documents1.worldbank.org/curated/en/859881468197634735/pdf/103914-WP-P145943-PUBLIC-Dissemination-Note-Marginal-Abatement-Cost-Curve-Analysis.pdf\n- GHG Protocol, estimating & reporting avoided emissions \u2014 https://ghgprotocol.org/estimating-and-reporting-avoided-emissions\n- Nature Comms Earth & Environment (2024), CDR permanence \u2014 https://www.nature.com/articles/s43247-024-01808-7\n- UNFCCC CDM project scopes \u2014 https://cdm.unfccc.int/DOE/scopelst.pdf\n- KZ Carbon Neutrality Strategy 2024 \u2014 https://unfccc.int/sites/default/files/resource/Carbon_Neutrlaity_Strategy_Kazakhstan_Eng_Oct2024.pdf\n- KZ Fourth Biennial Report (BR4) \u2014 https://unfccc.int/sites/default/files/resource/Report_BR4_Updated.pdf\n\n---\n\n## Caveats\n\n1. The **two-axis enum is a synthesis for tooling**, not a verbatim IPCC taxonomy. Axis 1\n   (reduction vs removal) is firmly IPCC-grounded; Axis 2 (baseline basis) is firmly\n   World Bank/GHG Protocol-grounded. IPCC does **not** publish the reduction-subtype enum \u2014\n   keep those as soft tags.\n2. The grounding for reduction-vs-removal is the **SPM / TS / Ch.12 / CDR Factsheet**.\n3. **BECCS** is technically land-based biological CDR (only the CCS step is engineered); the\n   clean nature/engineered split is a usability simplification.\n4. The **~1000-year permanence** figure is from a single 2024 Nature paper and is an active\n   research question \u2014 a flag, not a hard boundary.\n5. The **Kazakhstan per-sector mapping** is inferred from project context, not independently\n   sourced per measure.\n\n## reference: sectors\n\n# Sector conventions & registry hygiene\n\nDomain conventions kept out of SKILL.md so the main file stays stable. Read when a\nmeasure's sector, pool, or factor placement matters.\n\n## Sector codes (IPCC-style)\n\n| Code | Domain |\n|---|---|\n| `1.A.1` | Energy industries (power & heat) |\n| `1.B` | Fugitive emissions (e.g. coal-mine methane) |\n| `2` | Industrial processes (cement, metallurgy, CCS) |\n| `3` | Agriculture / AFOLU |\n\nMap each measure to the subsector id under its sector code (e.g. `1.A.1.coal_power`,\n`1.B.coal_methane`, `2.cement`, `3.enteric`).\n\n## Pools and ceilings\n\nA `pool` caps the total abatement available to the measures that share it\n(`{id, caps_ref, annual_flow, unit, sector_ref, baseline_emissions_kt?}`). When a measure\nsets `potential.pool_ref`, its contribution counts against that pool's `ceiling`, checked\nby `checks.pool`. Measures competing for the same physical resource MUST share a pool, or\nthe model will double-count their potential. Note the simplification: pools do not model\ndeployment-order interactions between measures.\n\n## Registry hygiene (anti-duplication)\n\nBefore `upsert_library_entity`, search `list_library` for an existing match.\n\n- Reuse an `id` when unit + cost structure + lifetime match.\n- A new entity needs a descriptive `id`, plus `description` and `rules` filled in.\n- Indicators (`capex_ud`, `eff`, `ef`, `price`, \u2026) attach to an owner via\n  `owner_kind` + `owner_ref`; reuse the owner rather than cloning it.\n- Prefer a canonical entity per common concept \u2014 one \"Renewables\" object, one shared\n  \"O&M\" resource pattern \u2014 rather than minting a near-duplicate.\n\n## reference: conventions\n\n# Conventions \u2014 units, signs, time, MAC\n\n**Principle.** Shared conventions for units, signs, time and the MAC definition. The\nnumbers themselves live elsewhere \u2014 here are the rules for reading them. All unit\nconversions are explicit (like `capexUdFactor`); no implicit multipliers.\n\n## Units\n\nCanonical units: reduction \u2014 kt CO\u2082e/yr; MAC \u2014 USD/t CO\u2082e; CAPEX \u2014 m USD; OPEX \u2014\nm USD/yr (signed); material price \u2014 USD per resource unit; emission factor \u2014 t CO\u2082e per\nresource unit; unit CAPEX \u2014 in the library's own unit ($/kW, $/head\u2026). A field in another\nunit is converted by an explicit factor (e.g. `capexUdFactor`).\n\n## Signs\n\nOne sign rule: cost +, avoided cost / saving / revenue \u2212. By panel: build \u2014 CAPEX/OPEX +;\nproject (closed) \u2014 maintenance CAPEX and OPEX \u2212. By flow: `materialSide` new +, retired \u2212.\nEmissions reduction is always positive.\n\n## Time\n\nLifetime and the discount rate are model parameters, not measure fields: the discount\nrate is a global (`library.globals.discountRate`); lifetime comes from the object's\n`technology.lifetimeYrs` (or measure `inputs.lifetime`). CAPEX is incurred in year 0;\nOPEX and reduction are annual streams over the lifetime; `pv` discounts a stream to year 0\nat the rate.\n\n## MAC\n\nMAC (USD/t CO\u2082e) = NPV / discounted-reduction \xD7 1000, where NPV = CAPEX \u2212\nPV(rate, lifetime, OPEX) and discounted-reduction = \u2212PV(rate, lifetime, annual reduction),\nin kt (\xD71000 converts kt\u2192t). Evaluated by the same HyperFormula PV as the Excel model, so\nthe result is parity-exact.\n\n## Footprint unit\n\n`carbonFootprint` \u2014 t CO\u2082e per unit of the `produce` product (the same unit as the service\nunit for comparison). Keep consistent with the `produce` unit.\n\n## Language\n\nThe notation is English-base (single language); a separate translations layer adds other\nlocales later. Free-text measure fields (name, citation, divergence_reason) may be in any\nlanguage. Numeric format: dot as the decimal separator; dates ISO 8601 (YYYY-MM-DD).\n\n## reference: sourcing\n\n# Sourcing \u2014 provenance & binding discipline\n\n**Principle.** Every number in a measure carries a source (provenance) and, if it is an\nassumption, a library binding. Rule for the LLM: do not invent numbers \u2014 reuse the library,\nexplain divergence, or admit it is local. Attach a source via `measure.sources` keyed by the\nvalue's path (e.g. `'created_objects[0].capacity'`, `'materials[1].price'`); a DERIVED number instead goes in `measure.computed` at the\nsame path (a formula) \u2014 a path is in `sources` XOR `computed`, never both, never a bare\npasted number.\n\n## Provenance\n\nA number's source: `source_type` (official_stat/literature/standard/expert_estimate/\nassumption/placeholder), `confidence` (high/medium/low), citation/url/date. With no source\nit is treated as a placeholder (low confidence, flagged).\n\n## Binding\n\nAssumption discipline: `reuse` (take the library value by ref), `alt` (a custom value + a\nrequired `divergence_reason`), `new` (local, no analogue \u2014 flagged for review). The goal is\nreuse and explainability.\n\n## Divergence reason\n\nMandatory note for `binding=alt`: why the value diverges from the library reference.\n\n## Reference (corridor)\n\nA `[min, max]` corridor with a unit a check anchors to: `factor` \u2014 the reduction factor,\n`capex_ud` \u2014 the object unit CAPEX. Set `reference_ref` on the back-calc and on the object;\nthe corridor's own source lives in its `source` field.\n\n## reference: formula-ast\n\n# Formula AST \u2014 the closed expression language\n\n**Principle.** A formula is data, not code: stored as an AST over named keys (`ref`), not\ncell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel\nparity is bit-for-bit.\n\n## Operators\n\nAllowed arithmetic operators: `add`, `sub`, `mul`, `div`, `sum`, `pv` (present value),\n`lookup`. The set is closed for auditability \u2014 no other functions.\n\n## Predicates\n\nPredicate operators for the checks (return true/false): `lte` (\u2264), `gte` (\u2265), `between`\n(in corridor). Used by the factor/economics/pool/sector checks.\n\n## Signatures\n\nOperator arity: `add`/`sub`/`mul`/`div` are variadic (\u22652 args, folded left-to-right;\n`sub`/`div` as a running difference/quotient); `sum(\u2026)` sums its args; `pv(rate, nper,\npayment)` is the Excel present value of a constant stream; `lookup(table, key)` selects\nfrom a table (reserved). Predicates: `lte(a,b)`/`gte(a,b)` binary;\n`between(x,min,max)` ternary.\n\n## Leaves\n\nTree leaves: `{ref:<key>}`, `{slot:<name>}`, `{const:<number>}`, or a bare number literal.\nA `{slot}` is a template slot bound per-measure via bindings before evaluation.\n\n## Namespace\n\nHow a `{ref:<key>}` resolves. All prefixed forms hit the registry directly \u2014 editing the\nindicator there propagates to every measure that names it:\n\n| Prefix             | Resolves to                                                                  |\n|--------------------|------------------------------------------------------------------------------|\n| `res:<id>`         | resource's EF (shortcut for `res:<id>#ef`; honors year-series EFs)            |\n| `res:<id>#<key>`   | resource indicator (`price`, `lhv`, `comb_factor`, \u2026) from `library.indicators` |\n| `obj:<id>#<key>`   | object/technology indicator (`capex_ud`, `eff`, `maintenance_capex_ud`, \u2026)    |\n| `prd:<id>#<key>`   | product indicator (`carbon_footprint`, \u2026)                                    |\n| `sub:<id>#<key>`   | subsector indicator (`max_emissions`, `max_capacity`, \u2026)                     |\n| `glb:<key>`        | `library.globals[<key>]` (`discountRate`, `year`, \u2026)                          |\n| `in:<key>`         | measure input `measure.inputs[<key>].value` (explicit form)                  |\n| bare `<key>`       | `measure.computed[<key>]` if present (recurses), else `measure.inputs[<key>]` |\n\nLiterals are `{const:<n>}` or a bare number \u2014 both allowed.\n\n## Example\n\nExample (coal\u2192gas conversion): `mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal,\nref:res:gas), 1e-3)` = installed capacity \xD7 capacity factor \xD7 hours/yr \xD7 (EF coal \u2212 EF gas)\n\xD7 10\u207B\xB3. EF leaves use the `res:` namespace; `8760` and `1e-3` are literals. A formula\nthat needs a non-EF resource indicator (say gas LHV) writes `ref:res:gas#lhv` \u2014 same\nshape, different indicator key.\n\n## reference: dimension-bridges\n\n# Dimension bridges \u2014 build the abatement formula by units\n\n**Principle.** Units are TYPES; bridges are typed combinators. Grow the abatement formula by\nchaining bridges \u2014 at each step pick the bridge whose `from` matches the unit you already hold\n\u2014 until the chain reduces to **CO\u2082 per year**. A formula built this way is correct by\nconstruction: `validate_measure` folds it over the dimension vocabulary, and the reduction\nstays `draft` if it does not reduce to CO\u2082 or if it crosses resource carriers.\n\n## The dimensional gate\n\n`validate_measure` folds your `abatement` formula bottom-up over the unit vocabulary:\n\n- every leaf gets a dimension \u2014 from its `unit` (an input), from the resource (`res:R#ef` \u2192 an\n  emission factor), or scalar (a literal / unit-conversion constant like `8760` or `1e-3`);\n- `mul`/`div` multiply/divide dimensions; `add`/`sub`/`sum` require the operands to agree;\n- the whole formula MUST reduce to `mass_co2\xB7time\u207B\xB9` (CO\u2082/year) \u2014 or `mass_co2` when the year\n  is already integrated inside.\n\nA missing/unknown unit, an `add`/`sub` of incompatible dimensions, or a result that is not a\nCO\u2082 quantity is a **hard gate**: the reduction panel goes incomplete and the measure stays\n`draft`. So give every input a `unit` drawn from the library vocabulary.\n\n## Units and bridges are library entities \u2014 add what you need\n\nThe dimensional fold reads its **vocabulary** (unit string \u2192 dimension) and its **bridges** from\nthe library, and you can extend BOTH like any other library entity \u2014 `upsert_library_entity` with\n`kind: 'unit'` or `kind: 'bridge'`. They are validated server-side, so a malformed one is rejected\nrather than silently breaking the gate.\n\n- **Reuse first.** Check `list_library` for an existing unit/bridge before adding one \u2014 a\n  near-miss spelling is a *different* (unknown) unit and trips the gate.\n- **A new unit** \u2014 `{ id: '<the unit string>', dim: <exponent vector over the base dims\n  energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar>, scale: <to the canonical\n  base unit> }`. The base dimensions are fixed; you compose units over them. Rejected if the\n  vector names an unknown base or the scale is zero/non-finite.\n- **A new bridge** \u2014 `{ id, from:{dim,carrier?}, via:[{name,dim,indicator?}], to:{dim,carrier?},\n  expr, carrier_rule?, authoring }`. The `expr` (an AST over the `from` + via slots) MUST fold to\n  the declared `to` \u2014 a bridge whose math does not add up is rejected, so any bridge you add is\n  correct by construction.\n\nPrefer adding the right unit/bridge over forcing a quantity into an ill-fitting existing one.\nBeyond \xABunits must be known and dimensions must reduce to CO\u2082\xBB, library use is unconstrained.\n\n## Bridges (the atomic conversions)\n\n| bridge | from | \xD7 via | \u2192 to |\n|--------|------|-------|------|\n| `power_to_energy` | power (\u041C\u0412\u0442) | hours/yr \xD7 \u041A\u0418\u0423\u041C | energy of resource R |\n| `fuel_to_energy`  | mass of fuel R (\u0442) | `res:R#lhv` (LHV) | energy of resource R |\n| `energy_to_co2`   | energy of R | `res:R#ef` (EF) | CO\u2082 |\n\nComposite \u2014 **fuel switch**: energy of the displaced fuel \xD7 (`res:R_old#ef` \u2212 `res:R_new#ef`) =\navoided CO\u2082; two chains, each of its own resource. Full registry (the trust anchor):\n`data/kz/library/bridges.json`.\n\n## Carrier \u2014 take the indicator of the RIGHT resource\n\nUnits do not distinguish resources: coal EF and gas EF are both `tCO\u2082/MWh`. The dimensional\nfold accepts \"some EF\" \u2014 only YOU guarantee it is the EF of the resource the energy belongs to.\n\n- Multiply an energy of resource R by `res:R#ef` \u2014 the **same** R. Putting a different\n  resource's EF on that energy (an electricity EF on a coal/heat chain) is a wrong-resource\n  error; the carrier lock flags it as a *carrier mismatch* and the measure stays `draft`. A\n  fuel switch is exempt \u2014 it *subtracts* two resources' EFs (`EF_old \u2212 EF_new`), it does not\n  multiply across them.\n- A coarse **output-EF** \u2014 a product's `carbon_footprint`, stated per the product's service\n  unit \u2014 must be the EF of THIS measure's product. An EF per MWh-electricity cannot price a\n  measure whose product is \u0413\u043A\u0430\u043B-heat (service-unit mismatch \u2192 `draft`).\n\n## How to write the reduction\n\n> \u0421\u043D\u0438\u0436\u0435\u043D\u0438\u0435 \u2014 \u0446\u0435\u043F\u043E\u0447\u043A\u0430 \u043C\u043E\u0441\u0442\u043E\u0432 \u043E\u0442 \u0442\u043E\u0433\u043E, \u0447\u0442\u043E \u0443 \u0442\u0435\u0431\u044F \u0435\u0441\u0442\u044C (\u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438/\u0432\u0445\u043E\u0434\u044B \u0441 \u0438\u0445 \u0435\u0434\u0438\u043D\u0438\u0446\u0430\u043C\u0438) \u0434\u043E\n> CO\u2082/\u0433\u043E\u0434. \u041D\u0430 \u043A\u0430\u0436\u0434\u043E\u043C \u0448\u0430\u0433\u0435 \u0438\u0449\u0438 \u043C\u043E\u0441\u0442 \u043F\u043E \u0435\u0434\u0438\u043D\u0438\u0446\u0435 \u0442\u043E\u0433\u043E, \u0447\u0442\u043E \u0434\u0435\u0440\u0436\u0438\u0448\u044C (\xAB\u0435\u0441\u0442\u044C \u0442 \u0442\u043E\u043F\u043B\u0438\u0432\u0430 \u2192 \u043D\u0443\u0436\u043D\u0430\n> \u044D\u043D\u0435\u0440\u0433\u0438\u044F\xBB \u2192 `fuel_to_energy`). \u0422\u044F\u043D\u0438, \u043F\u043E\u043A\u0430 \u043D\u0435 \u0434\u043E\u0439\u0434\u0451\u0448\u044C \u0434\u043E CO\u2082/\u0432\u0440\u0435\u043C\u044F. \u0411\u0435\u0440\u0438 \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u0438 \u041D\u0423\u0416\u041D\u041E\u0413\u041E\n> \u0440\u0435\u0441\u0443\u0440\u0441\u0430 (`res:R#\u2026`) \u2014 \u0435\u0434\u0438\u043D\u0438\u0446\u044B \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u0442 \u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440\u0443, \u043D\u043E \xAB\u0442\u043E\u0442 \u043B\u0438 \u044D\u0442\u043E \u0440\u0435\u0441\u0443\u0440\u0441\xBB \u043E\u0442\u0432\u0435\u0447\u0430\u0435\u0448\u044C \u0442\u044B.\n> \u0422\u043E\u043F\u043B\u0438\u0432\u043D\u044B\u0439 \u0441\u0432\u0438\u0442\u0447 = CO\u2082(\u0437\u0430\u043C\u0435\u0449\u0430\u0435\u043C\u043E\u0433\u043E) \u2212 CO\u2082(\u043D\u043E\u0432\u043E\u0433\u043E), \u0434\u0432\u0435 \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u0441\u0432\u043E\u0438\u0445 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432.\n\n## Prefer computing from the fuel\n\nWhen a measure burns or displaces a fuel, **compute the abatement from the fuel, not from a\ncoarse output-EF.** Start at the fuel quantity and chain up:\n\n> `mass of fuel \xD7 res:R#lhv \u2192 energy of R`, then `energy of R \xD7 res:R#ef \u2192 CO\u2082`.\n\nWhy the fuel chain is better than `output \xD7 (tCO\u2082/MWh output-EF)`:\n\n- **Auditable** \u2014 every tonne of CO\u2082 traces to a physical quantity of a named fuel and that\n  fuel's own LHV/EF, not to a lumped \"per-MWh-of-product\" number whose assumptions are hidden.\n- **Carrier-safe** \u2014 the fuel chain carries the resource explicitly, so the carrier lock\n  guarantees the EF belongs to the fuel you actually burn. A coarse output-EF carries only a\n  product; mis-attributing it (an electricity output-EF on a heat chain) is the carrier error to avoid.\n- **Less slip** \u2014 the finer the decomposition, the less room to put the wrong number in. If you\n  only have a coarse `res:R#ef` (tCO\u2082/MWh), **decompose it** into `res:R#lhv` (energy per mass)\n  + a fuel EF and compute from the fuel mass.\n\nUse a coarse output-EF (`prd:P#carbon_footprint`) only when there is genuinely no fuel to\nattribute to (a grid-average displacement), and then its product MUST be this measure's product.\n\n## reference: abatement-modes\n\n# Choosing the abatement mode\n\nRead this when deciding `maturity_stage` and the shape of the `abatement` block.\n\n## Decision tree\n\n1. Is there a credible bottom-up chain \u2014 known capacity/activity, emission factors, and\n   costs \u2014 that derives abatement from `inputs`?\n   - **Yes \u2192** `computed`. Either a `formula_ref` (e.g. `delta_ef`) with explicit `bindings`,\n     or an inline `abatement.formula` AST over the measure's inputs.\n   - **No, but a credible top-down total (kt/yr) exists \u2192** still `computed`: write it as\n     `activity \xD7 factor` where the per-unit `factor` is an input whose value back-fills the\n     total. Tag that input with a `reference_ref` corridor and point `abatement.factor_ref`\n     at it, so the `factor` guardrail sanity-checks it (\u26A0 if implausible \u2192 keep `draft`).\n   - **Neither \u2192** the measure is not ready; keep it a `draft` and record what's missing.\n\n2. How is the baseline constructed \u2014 against a displaced service (`comparison`) or as an\n   absolute project footprint (`standalone`)?\n   - Set `baseline_basis` accordingly; for `comparison`, also set `comparison.service_unit_ref`.\n   - `comparison` measures are scored project vs. a moving baseline \u2014 say so in provenance.\n\n## `computed` shape (reference: kz-2)\n\n- `abatement.computed.bindings` map roles to refs: `cf`, `ef_in`, `ef_out`, `capacity`.\n- `abatement.computed.formula_ref` names the engine formula (e.g. `delta_ef`).\n- Intensities and quantities live in `computed{}` as formulas over `inputs`.\n\n## Top-down total via a checked factor (reference: kz-20, kz-16)\n\nWhen the credible figure is a total rather than a full bottom-up chain, still author a\n`computed` measure with `abatement.formula = activity \xD7 factor`:\n\n- Make the per-unit `factor` a measure input and tag it with a `reference_ref` corridor\n  (e.g. `ref_enteric_factor`, `ref_degas_factor`); point `abatement.factor_ref` at it.\n- The `checks.factor` guardrail confirms that factor sits inside the ref range; \u26A0 (out of\n  corridor) blocks promotion and the measure stays `draft` (see kz-16).\n- Provenance must state plainly that the factor is an anchor/assumption, not a derivation.\n\n> The legacy `back_calc` maturity stage (baseline \xD7 share, with an *implied* factor) is\n> **retired** \u2014 express the same thing bottom-up as `activity \xD7 factor` instead.\n\nThe available `formula_ref`s and their required bindings are exposed in the\n`get_measure` MCP response: for any measure on a `formula_ref`, the answer\ninlines `abatement.computed.formula` (the template body \u2014 `expr` AST + `slots`),\na slot-substituted `resolved_ast`, and a `human` rendering, so the audit chain\nreaches the leaves from one call. Engine source of truth is\n`src/lib/measure/templates.ts` \u2192 `BUILTIN_TEMPLATES` (mirrored as a published\ntrust anchor at `data/kz/library/formula-templates.json`).\n\n## reference: potential\n\n# Potential \u2014 the two ceilings on a measure's volume\n\nA measure's annual abatement is the *unit measure* (one installation / one batch, computed\nbottom-up in \xA73/\xA76) **times its scale** \u2014 and the scale is not free. Two independent ceilings\nbound it. Both live under `potential`; neither touches the MAC (the MAC is set by the unit\neconomics, \xA70). They cap **volume only**.\n\n```jsonc\n\"potential\": {\n  \"ceiling_dim\": \"n_objects\",          // which dimension caps this measure\n  \"pool_ref\": \"pool_coal_power\",       // shared ceiling \u2014 measures in the pool COMBINE\n  \"limit\": {                            // per-measure ceiling \u2014 THIS measure's own scale\n    \"indicator_ref\": \"ind_coal_power_capacity\",\n    \"consumption_ref\": \"cap_mw\"\n  }\n}\n```\n\n## `ceiling_dim` \u2014 what is being counted\n\nThe physical dimension the ceiling is expressed in: `cut_resource` (a feedstock/fuel freed or\nconsumed), `output_product` (product delivered), `n_objects` (installed units / capacity), or\n`activity` (an activity level). It names the axis both ceilings below measure against \u2014 keep the\nindicator's unit and the consumed value in *that same* dimension.\n\n## The pool \u2014 a **shared** ceiling (measures combine)\n\n`pool_ref` points at a library pool with an `annual_flow` ceiling (kt CO\u2082eq/yr). Measures that\nshare a pool **compete for the same headroom**: `validate` sorts the group ascending by MAC, the\ncheapest claims the pool first, and the rest are **clipped** to what remains (`stackPools` in\n`validate.ts`). The `pool` check \u26A0 flags any measure whose share is clipped. A measure with **no\npool is `incomplete`** on the potential panel \u2014 the pool is required.\n\nThis is about *not double-counting across measures*. It is the engine's job (auto-clip), not the\nauthor's.\n\n## The limit \u2014 a **per-measure** ceiling (this measure's own scale)\n\nThe pool stops measures from collectively overcounting; the limit stops **one** measure from\nclaiming more of the industry than physically exists. It is the **limiting factor**: the resource\navailable, the product the market absorbs, the max capacity, the number of installations \u2014 the\nthing that runs out first as you scale this measure up.\n\nHow to declare it (workflow step 4):\n\n1. **Find what bounds the measure.** What is the most you could deploy before you run out of the\n   scarce thing? That scarce thing, in the `ceiling_dim` dimension, is the limit.\n2. **Record it as a library indicator** for the *industry* \u2014 typically `owner_kind: \"subsector\"`,\n   a `max_capacity`/availability `key`, a `value` + `unit`, and a real `provenance` (a guess keeps\n   the measure a draft). Reuse an existing indicator if one already states this ceiling.\n3. **Point the measure at it:** `limit.indicator_ref` \u2192 that indicator; `limit.consumption_ref` \u2192\n   the measure's own input/computed key whose value is *how much of that dimension the unit measure\n   consumes at its declared scale* (e.g. the capacity input `cap_mw`).\n\nWhat the engine does (`limit` check, `checks.json`): resolves `consumption = resolve(consumption_ref)`\nbottom-up, reads `ceiling = indicator.value`, and asserts `consumption \u2264 ceiling`.\n\n- **It does NOT enter the bottom-up formulas and does NOT change the MAC.** It is a guardrail on a\n  number you already computed.\n- **It does NOT auto-clip** (unlike the pool). On overflow the check \u26A0 and the potential panel\n  warns. The fix is the author's: **lower the scale input** (an input feeding `consumption_ref`)\n  until the measure fits. The limit bounds the volume; nothing else moves.\n- A warn folds into `eligibleForModel` (a measure over its own limit is not curve-ready).\n\n## Worked example \u2014 kz-2 (coal CHP/boilers \u2192 gas)\n\nThe limiting factor is the coal-fired capacity there is to convert. Indicator\n`ind_coal_power_capacity` (`subsector` `1.A.1.coal_power`, `max_capacity` = 12000 \u041C\u0412\u0442). The\nmeasure's scale is `cap_mw` = 5000 \u041C\u0412\u0442. So `limit = {indicator_ref: ind_coal_power_capacity,\nconsumption_ref: cap_mw}`; the check reads 5000 \u2264 12000 \u2192 \u2713. Raise `cap_mw` past 12000 and the\ncheck \u26A0, the potential panel warns, and the measure drops out of `eligibleForModel` until the\nscale is lowered. The MAC (193.76) is unchanged either way \u2014 the limit never touches it.\n\n## Status\n\nA `limit` is **required** for model eligibility: a measure without one has its potential panel\nmarked `incomplete` and stays `draft`. Declare the limiting factor for every measure.\n\n## reference: checks\n\n# Checks \u2014 the advisory guardrails\n\nHow to read `validate_measure`'s output.\n\n**Principle.** `validate()` runs two kinds of check, all driving `eligibleForModel` (the\n\"\u0433\u043E\u0442\u043E\u0432\u043E\" badge = all checks \u2713 and panels complete). **Predicate checks** (`lte`/`gte`/`between`)\nare advisory: \u2713 pass / \u26A0 warn \u2014 a \u26A0 does not block publishing (publishing is direct) but holds\na measure back from eligibility. **Gating checks** \u2014 the \xA73/\xA76 notation rule and the `dimension`\nfold \u2014 are stricter: a failure marks the holding panel incomplete, so the measure stays `draft`.\nImplemented: the predicate checks factor, economics, pool, sector, limit; the notation rule;\nand the dimension/carrier fold. `serviceUnitMatch` and `doubleCountReduction` are rules you\napply yourself \u2014 keep them in mind while authoring.\n\n## factor \u2014 [implemented]\n\n`between(factor, reference.min, reference.max)` \u2014 the per-unit factor named by\n`abatement.factor_ref` (= reduction / activity) vs its input's `reference_ref` corridor. The\nquality signal for the raw\u2192computed ladder; \u26A0 when out of corridor \u2192 stays `draft`.\n\n## economics \u2014 [implemented]\n\n`between(implied unit CAPEX, capex_ud.min, capex_ud.max)` per object. \u26A0 out of corridor\n(add a `divergence_reason` if `binding=alt`).\n\n## pool \u2014 [implemented]\n\n`lte(sum of pool annual allocations, pool.ceiling)`. On oversubscription the cheaper\n(lower-MAC) claim first, the rest are clipped; a \u26A0 on any measure whose share is clipped.\n\n## sector \u2014 [implemented]\n\n`lte(sum of sector reductions, the sector backstop)`. A coarse double-count check for the\nsector; a \u26A0.\n\n## limit \u2014 [implemented]\n\n`lte(consumption, ceiling)` \u2014 the unit measure's own consumption in its limiting dimension\n(`potential.limit.consumption_ref`, an input/computed value resolved bottom-up) vs an industry\nceiling stored as a library indicator (`potential.limit.indicator_ref`). Per-measure and\nindependent of the pool; bounds the **volume**, never the MAC. \u26A0 on overflow \u2192 lower the scale\ninput until it fits (the engine does **not** auto-clip here). See `references/potential.md`.\n\n## dimension \u2014 [implemented, gating]\n\nThe abatement formula is folded over the unit vocabulary and must reduce to **CO\u2082/year**\n(`mass_co2\xB7time\u207B\xB9`, or `mass_co2` if the year is inside). A missing/unknown unit, an\n`add`/`sub` of incompatible dimensions, a result that is not CO\u2082, a product that crosses two\nresource carriers, or an output-EF priced per the wrong product \u2192 the **reduction panel goes\nincomplete** and the measure stays `draft` (a hard gate, not a soft \u26A0). The carrier layer\n(resource identity from `res:R#\u2026` refs) catches a wrong-resource EF the bare units cannot see.\nFull discipline: `references/dimension-bridges.md`.\n\n## serviceUnitMatch \u2014 [author-applied rule]\n\n`type=comparison` only: `flows.baseline` and `flows.project` products should match on\n`serviceUnit`; a mismatch should be a \u26A0.\n\n## provenance \u2014 [implemented]\n\nThe \xA73/\xA76 notation rule: every number must be an `input` (in `sources`) or `computed`\n(a formula) \u2014 never a bare literal. `validate()` surfaces the gaps as `untagged` /\n`computedNoFormula` and folds them into `missing`, so they hold a measure back from\n`eligibleForModel`. Source *quality* is a separate, non-automated judgment for the publish\ngate: before a number joins the shared curve it should rest on `source_type \u2260 placeholder`\nand (for an assumption) `binding \u2260 new` \u2014 see the publish gate in the workflow (SKILL.md, step 6).\n\n## doubleCountReduction \u2014 [author-applied rule]\n\nReduction is set by exactly one method per maturity: raw \u2014 baseline \xD7 share;\ncomputed \u2014 activity \xD7 factor; comparison \u2014 \u0394flow \xD7 EF. Mixing methods on one\nmeasure should be a \u26A0.\n"
 };
 
 // data/measure.schema.json
@@ -7371,9 +7781,9 @@ ${JSON.stringify(library2.uiHelp)}
     "upsert_library_entity",
     {
       title: "Upsert library entity",
-      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}.",
+      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` \u2014 an inconsistent one is rejected.",
       inputSchema: {
-        kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | pool | subsector"),
+        kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | pool | subsector | unit | bridge"),
         entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)")
       }
     },
@@ -7439,6 +7849,9 @@ async function loadLibrary(db) {
   for (const [i, r] of [objects, resources, products, refs, pools, subsectors, indicators].entries()) {
     if (r.error) throw new Error(`load ${tables[i]}: ${r.error.message}`);
   }
+  const [units, bridges] = await Promise.all([db.from("units").select("*"), db.from("bridges").select("*")]);
+  const unitRows = units.error ? [] : units.data ?? [];
+  const bridgeRows = bridges.error ? [] : bridges.data ?? [];
   const graph = {
     objects: (objects.data ?? []).map((o) => ({
       id: o.id,
@@ -7482,6 +7895,16 @@ async function loadLibrary(db) {
       unit: i.unit ?? void 0,
       reference_ref: i.reference_ref ?? void 0,
       provenance: i.provenance ?? void 0
+    })),
+    units: unitRows.map((u) => ({ id: u.id, dim: u.dim ?? {}, scale: num(u.scale) })),
+    bridges: bridgeRows.map((b) => ({
+      id: b.id,
+      from: b.from,
+      via: b.via ?? [],
+      to: b.to,
+      expr: b.expr,
+      carrier_rule: b.carrier_rule ?? void 0,
+      authoring: b.authoring ?? ""
     }))
   };
   return assembleLibrary(graph);

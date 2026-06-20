@@ -11,6 +11,9 @@
 // Setting `serviceRole: true` selects the second mode; otherwise the first.
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Measure } from '../src/lib/measure/schema';
+import { validateUnit } from '../src/lib/measure/dimensions';
+import { validateBridge } from '../src/lib/measure/bridges';
+import type { Bridge } from '../src/lib/measure/bridges';
 
 /** A resolved caller: their id + a Supabase client. `serviceRole` → the client bypasses
  * RLS, so scope by `userId` explicitly (see the two modes above). */
@@ -96,7 +99,23 @@ export async function dbMeasureHistory(user: AuthedUser, id: string): Promise<Ar
 export const LIBRARY_TABLES: Record<string, string> = {
   object: 'objects', resource: 'resources', product: 'products',
   indicator: 'indicators', ref: 'refs', pool: 'pools', subsector: 'subsectors',
+  unit: 'units', bridge: 'bridges',
 };
+
+/**
+ * Server-side semantic validation before a write — the dimensional entities must be sound or
+ * the upsert is rejected (an agent cannot poison the vocabulary/registry). A `unit` needs a
+ * base-dim vector + finite scale; a `bridge`'s `expr` must fold to its declared `to`.
+ */
+function assertLibraryEntityValid(kind: string, entity: Record<string, unknown>): void {
+  if (kind === 'unit') {
+    const errs = validateUnit(entity as { id?: string; dim?: Record<string, number>; scale?: number });
+    if (errs.length) throw new Error(`invalid unit: ${errs.join('; ')}`);
+  } else if (kind === 'bridge') {
+    const errs = validateBridge(entity as unknown as Partial<Bridge>);
+    if (errs.length) throw new Error(`invalid bridge: ${errs.join('; ')}`);
+  }
+}
 
 /** Read the whole registry (raw rows per table) — what an author needs to reuse ids/shapes. */
 export async function dbListLibrary(user: AuthedUser): Promise<Record<string, unknown[]>> {
@@ -120,6 +139,7 @@ export async function dbUpsertLibraryEntity(
   const table = LIBRARY_TABLES[kind];
   if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(', ')})`);
   if (!entity || typeof entity.id !== 'string') throw new Error(`library ${kind}: 'id' (string) is required`);
+  assertLibraryEntityValid(kind, entity);
   const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
   const { error } = await user.client.from(table).upsert(row);
   if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);

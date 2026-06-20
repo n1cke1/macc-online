@@ -20,23 +20,26 @@ A missing/unknown unit, an `add`/`sub` of incompatible dimensions, or a result t
 CO₂ quantity is a **hard gate**: the reduction panel goes incomplete and the measure stays
 `draft`. So give every input a `unit` drawn from the library vocabulary.
 
-## Units come from a fixed vocabulary
+## Units and bridges are library entities — add what you need
 
-The dimensional fold only understands a **closed vocabulary** of unit strings (each mapped to a
-dimension — МВт, тыс. Гкал/год, tCO₂/MWh, тыс. голов, …). Every `unit` you put on an input — and
-every library indicator you reference in an abatement formula — must be one of those strings.
+The dimensional fold reads its **vocabulary** (unit string → dimension) and its **bridges** from
+the library, and you can extend BOTH like any other library entity — `upsert_library_entity` with
+`kind: 'unit'` or `kind: 'bridge'`. They are validated server-side, so a malformed one is rejected
+rather than silently breaking the gate.
 
-- **Reuse an existing unit.** Before inventing a unit string, pick the one already in the
-  vocabulary that matches the physical quantity (look at what comparable measures/indicators
-  use). A near-miss spelling counts as *unknown* and trips the gate.
-- **A genuinely new unit is a maintainer change, not yours.** The vocabulary lives in code and
-  is pinned by a test; you cannot add a unit from the authoring path, and an unmapped unit will
-  always fail the gate. If a measure truly needs a physical unit the vocabulary lacks, **flag it
-  for a maintainer to add** (the unit string, its dimension, and the conversion scale) rather
-  than working around the gate. Until it is added, express the quantity with an existing unit.
+- **Reuse first.** Check `list_library` for an existing unit/bridge before adding one — a
+  near-miss spelling is a *different* (unknown) unit and trips the gate.
+- **A new unit** — `{ id: '<the unit string>', dim: <exponent vector over the base dims
+  energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar>, scale: <to the canonical
+  base unit> }`. The base dimensions are fixed; you compose units over them. Rejected if the
+  vector names an unknown base or the scale is zero/non-finite.
+- **A new bridge** — `{ id, from:{dim,carrier?}, via:[{name,dim,indicator?}], to:{dim,carrier?},
+  expr, carrier_rule?, authoring }`. The `expr` (an AST over the `from` + via slots) MUST fold to
+  the declared `to` — a bridge whose math does not add up is rejected, so any bridge you add is
+  correct by construction.
 
-This is the only place library usage is constrained: bridges and indicators are otherwise free
-to use — the gate only insists their **units are known and their dimensions reduce to CO₂**.
+Prefer adding the right unit/bridge over forcing a quantity into an ill-fitting existing one.
+Beyond «units must be known and dimensions must reduce to CO₂», library use is unconstrained.
 
 ## Bridges (the atomic conversions)
 
