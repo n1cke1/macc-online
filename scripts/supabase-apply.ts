@@ -20,7 +20,7 @@ function loadDbUrl(): string {
   return line.slice('SUPABASE_DB_URL='.length).trim();
 }
 
-const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql', '0013_indicator_subsector.sql', '0014_products_technology_ref.sql'];
+const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql', '0013_indicator_subsector.sql', '0014_products_technology_ref.sql', '0015_dimensional_library.sql'];
 const mode = process.argv[2] ?? '--check';
 
 interface Graph {
