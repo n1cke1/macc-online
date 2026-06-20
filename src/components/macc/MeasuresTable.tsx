@@ -8,7 +8,7 @@ import { useUi, useScenario } from '@/store';
 export default function MeasuresTable() {
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('table');
-  const { selectedId, select, hiddenSectors, showDisplaced } = useUi();
+  const { selectedId, rightOpen, select, hiddenSectors, showDisplaced } = useUi();
   const projects = useScenario((s) => s.projects);
   const [open, setOpen] = useState(true);
 
@@ -50,7 +50,7 @@ export default function MeasuresTable() {
             return (
               <tr
                 key={p.id}
-                onClick={() => select(sel ? null : p.id)}
+                onClick={() => select(sel && rightOpen ? null : p.id)}
                 className={`cursor-pointer border-t border-line transition hover:bg-slate-50 ${
                   sel ? 'bg-sky-50' : ''
                 }`}

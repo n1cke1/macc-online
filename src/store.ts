@@ -9,7 +9,12 @@ import { BASELINE_LEVERS, isBaseline } from '@/lib/scenario';
 // ── View state (selection + sector filter) ───────────────────────────────────
 interface UiState {
   selectedId: number | null;
+  /** The right-hand summary panel is shown for the selection. Decoupled from
+   *  `selectedId` so its ✕ can hide just that panel while the (full-width) measure
+   *  drill-down below the table keeps the selection. Re-selecting a bar reopens it. */
+  rightOpen: boolean;
   select: (id: number | null) => void;
+  closeRight: () => void;
   hiddenSectors: Set<string>;
   toggleSector: (code: string) => void;
   /** Show measures whose pool share is displaced (clipped by cheaper peers). Off by
@@ -20,7 +25,9 @@ interface UiState {
 
 export const useUi = create<UiState>((set) => ({
   selectedId: null,
-  select: (id) => set({ selectedId: id }),
+  rightOpen: false,
+  select: (id) => set({ selectedId: id, rightOpen: id != null }),
+  closeRight: () => set({ rightOpen: false }),
   hiddenSectors: new Set<string>(),
   toggleSector: (code) =>
     set((s) => {

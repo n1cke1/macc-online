@@ -27,7 +27,7 @@ interface Bar {
 function ChartInner({ width, height }: { width: number; height: number }) {
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('chart');
-  const { selectedId, select, hiddenSectors, showDisplaced } = useUi();
+  const { selectedId, rightOpen, select, hiddenSectors, showDisplaced } = useUi();
   const projects = useScenario((s) => s.projects);
   // Lightweight overlay bridge — null unless the authoring layer pushed a draft AND
   // the editor is expanded (a collapsed editor leaves the curve untouched).
@@ -111,7 +111,7 @@ function ChartInner({ width, height }: { width: number; height: number }) {
                 strokeWidth={isDraft ? 2 : selected ? 1.5 : 0.5}
                 strokeDasharray={isDraft ? '4 2' : undefined}
                 cursor={isDraft ? 'default' : 'pointer'}
-                onClick={() => { if (!isDraft) select(selected ? null : b.p.id); }}
+                onClick={() => { if (!isDraft) select(selected && rightOpen ? null : b.p.id); }}
                 onMouseMove={(e) => {
                   const pt = localPoint(e) ?? { x: bx, y: top };
                   tip.showTooltip({ tooltipData: b.p, tooltipLeft: pt.x, tooltipTop: pt.y });

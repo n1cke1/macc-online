@@ -11,10 +11,10 @@ import Commentable from '@/components/collab/Commentable';
 export default function ProjectDrilldown() {
   const locale = useLocale() as 'ru' | 'en';
   const t = useTranslations('drilldown');
-  const { selectedId, select } = useUi();
+  const { selectedId, rightOpen, closeRight } = useUi();
   const projects = useScenario((s) => s.projects);
   const p = projects.find((x) => x.id === selectedId);
-  if (!p) return null;
+  if (!p || !rightOpen) return null;
 
   const totalEmissionsKt = dataset.meta.totalEmissionsMt * 1000;
   const rows: { key: string; label: string; value: string }[] = [
@@ -33,7 +33,7 @@ export default function ProjectDrilldown() {
       <div className="mb-4 flex items-start justify-between gap-3">
         <h2 className="text-base font-semibold leading-snug">{pick(p.name, locale)}</h2>
         <button
-          onClick={() => select(null)}
+          onClick={() => closeRight()}
           className="shrink-0 rounded-md border border-line px-2 py-1 text-xs text-muted hover:bg-slate-50"
         >
           {t('close')} ✕
