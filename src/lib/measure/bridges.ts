@@ -10,8 +10,8 @@
 // The engine is unchanged: `composeBridges` reassembles the existing `delta_ef` AST exactly
 // (parity-exact, pinned by measure-golden §11) — what changes is the way a formula is
 // ENTERED and verified, not how it is evaluated.
-import { type Ast, isNode, isLeafSlot } from './ast';
-import type { Dimension } from './dimensions';
+import { type Ast, isNode, isLeafSlot, isLeafConst } from './ast';
+import { type Dimension, mulDim, divDim, dimEqual } from './dimensions';
 
 // Named dimensions, aligned with the vectors in `dimensions.ts` (power & EF are derived).
 const POWER: Dimension = { energy: 1, time: -1 };
@@ -141,4 +141,65 @@ export function deltaEfFromBridges(leaves: {
     from: energy, ef_old: leaves.efIn, ef_new: leaves.efOut,
   });
   return { op: 'mul', args: [co2, leaves.scale] };
+}
+
+// ── library-authored bridges: validation + merge (the registry is data) ──────────
+
+/** Fold a bridge's `expr` to a dimension, given each slot's dimension (`from` + each `via`). */
+function foldBridgeDim(expr: Ast, slotDims: Record<string, Dimension>): Dimension {
+  if (typeof expr === 'number' || isLeafConst(expr)) return {};
+  if (isLeafSlot(expr)) {
+    const d = slotDims[expr.slot];
+    if (d === undefined) throw new Error(`expr references slot '${expr.slot}' which is neither 'from' nor a via`);
+    return d;
+  }
+  if (isNode(expr)) {
+    const kids = expr.args.map((a) => foldBridgeDim(a, slotDims));
+    switch (expr.op) {
+      case 'mul': return kids.reduce((acc, d) => mulDim(acc, d), {} as Dimension);
+      case 'div': return kids.slice(1).reduce((acc, d) => divDim(acc, d), kids[0]);
+      case 'add': case 'sub': case 'sum': {
+        for (const d of kids.slice(1)) {
+          if (!dimEqual(d, kids[0])) throw new Error(`${expr.op} mixes incompatible dimensions`);
+        }
+        return kids[0];
+      }
+      default: return {};
+    }
+  }
+  throw new Error(`unrecognized expr node ${JSON.stringify(expr)}`);
+}
+
+/**
+ * Validate a library-authored bridge before it joins the registry: its `expr`, folded over the
+ * declared slot dimensions (`from` + each `via`), MUST equal the declared `to` dimension. A
+ * bridge is thus correct-by-construction — the upsert path rejects one whose math does not add
+ * up. Returns the list of problems (empty = valid).
+ */
+export function validateBridge(b: Partial<Bridge>): string[] {
+  const errors: string[] = [];
+  if (!b.id || !b.id.trim()) errors.push('bridge needs a non-empty id');
+  if (!b.from?.dim) errors.push('bridge needs `from.dim`');
+  if (!b.to?.dim) errors.push('bridge needs `to.dim`');
+  if (!b.expr) errors.push('bridge needs an `expr` (AST over the `from` + via slots)');
+  if (errors.length) return errors;
+  const slotDims: Record<string, Dimension> = { from: b.from!.dim };
+  for (const v of b.via ?? []) slotDims[v.name] = v.dim;
+  let folded: Dimension;
+  try {
+    folded = foldBridgeDim(b.expr!, slotDims);
+  } catch (e) {
+    return [`bridge expr does not fold: ${(e as Error).message}`];
+  }
+  if (!dimEqual(folded, b.to!.dim)) {
+    errors.push(`bridge expr folds to ${JSON.stringify(folded)} but declares to.dim=${JSON.stringify(b.to!.dim)}`);
+  }
+  return errors;
+}
+
+/** Build the bridge registry from the code seed plus a data overlay (overlay wins by id). */
+export function mergeBridges(overlay: Bridge[] = []): Record<string, Bridge> {
+  const out: Record<string, Bridge> = { ...BRIDGES };
+  for (const b of overlay) out[b.id] = b;
+  return out;
 }

@@ -130,3 +130,43 @@ export function isScalar(d: Dimension): boolean {
 export function lookupUnit(unit: string): UnitInfo | undefined {
   return UNIT_TABLE[unit.trim()];
 }
+
+// ── library-defined units (the vocabulary is data; the algebra above stays code) ──
+
+/** The fixed physical basis. A library unit is a vector over THESE — new bases are not authorable. */
+export const BASE_DIMS: readonly BaseDim[] = [
+  'energy', 'mass', 'mass_co2', 'time', 'currency', 'count', 'area', 'volume',
+];
+
+/** A unit as a library entity: the unit string + its dimension vector + canonical scale. */
+export interface LibraryUnit extends UnitInfo { id: string }
+
+/**
+ * Validate a library-authored unit before it joins the vocabulary. A unit is a name, a
+ * dimension over the FIXED base dims (integer exponents), and a finite non-zero scale to the
+ * canonical unit. Returns the list of problems (empty = valid). Used by the upsert path so an
+ * agent cannot add a unit the dimensional fold would choke on.
+ */
+export function validateUnit(u: { id?: string; dim?: Dimension; scale?: number }): string[] {
+  const errors: string[] = [];
+  if (!u.id || !u.id.trim()) errors.push('unit needs a non-empty id (the unit string)');
+  if (typeof u.scale !== 'number' || !Number.isFinite(u.scale) || u.scale === 0) {
+    errors.push('unit needs a finite non-zero `scale` to its canonical base unit');
+  }
+  if (!u.dim || typeof u.dim !== 'object') {
+    errors.push('unit needs a `dim` object (exponent vector; {} for a scalar)');
+  } else {
+    for (const [k, v] of Object.entries(u.dim)) {
+      if (!BASE_DIMS.includes(k as BaseDim)) errors.push(`unknown base dimension '${k}' (allowed: ${BASE_DIMS.join(', ')})`);
+      if (!Number.isInteger(v)) errors.push(`exponent for '${k}' must be an integer, got ${v}`);
+    }
+  }
+  return errors;
+}
+
+/** Build a unit lookup table from the code seed plus a data overlay (overlay wins by id). */
+export function mergeUnits(overlay: LibraryUnit[] = []): Record<string, UnitInfo> {
+  const out: Record<string, UnitInfo> = { ...UNIT_TABLE };
+  for (const u of overlay) out[u.id.trim()] = { dim: u.dim, scale: u.scale };
+  return out;
+}

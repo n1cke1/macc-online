@@ -9,16 +9,17 @@
 //      shared coal-power pool by cheaper peers — both stay draft, never auto-promoted.
 //   3. Pool stacking clips potential by MAC order, independent of input order.
 import baselineJson from '../data/kz/model.data.json';
-import { library, getSeedMeasure, seedMeasures } from '../src/lib/measure/library';
+import { library, getSeedMeasure, seedMeasures, assembleLibrary, type Graph } from '../src/lib/measure/library';
+import graphSeed from '../data/kz/library/graph.seed.json';
 import { compute, makeResolver, type ComputedMeasure } from '../src/lib/measure/compute';
 import { evalAst } from '../src/lib/measure/eval';
 import { validate, stackPools, findDrift } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
 // HyperFormula twins — the parity oracle the shipped pure-TS core is pinned against.
 import { economicCore as economicCoreHF } from '../src/lib/measure/compile';
-import { lookupUnit, mulDim, divDim, dimEqual, isScalar } from '../src/lib/measure/dimensions';
+import { lookupUnit, mulDim, divDim, dimEqual, isScalar, validateUnit } from '../src/lib/measure/dimensions';
 import { dimensionCheck } from '../src/lib/measure/dimension-check';
-import { BRIDGES, deltaEfFromBridges } from '../src/lib/measure/bridges';
+import { BRIDGES, deltaEfFromBridges, validateBridge } from '../src/lib/measure/bridges';
 import bridgesJson from '../data/kz/library/bridges.json';
 import type { Measure, NumberOrRef } from '../src/lib/measure/schema';
 
@@ -382,6 +383,51 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
   const mis = dimensionCheck(fuelChain('res:gas#ef'), library);
   expect(mis.status === 'warn' && mis.issues.some((s) => s.includes('carrier mismatch')), 'bridges',
     'coal energy × GAS EF — fuel_to_energy carried the coal carrier, so the wrong EF is caught');
+}
+
+// ── 12. Library-authored units & bridges (L3) — extendable vocabulary + registry, validated ──
+// Units and bridges are first-class in `library` (code seed + data overlay), so an author can
+// add or correct them. The upsert path validates each: a unit needs a base-dim vector + scale,
+// a bridge's expr must fold to its declared `to`. Demonstrated with a data-overlay extension.
+{
+  expect(!!library.units['МВт'] && !!library.units['tCO₂/MWh'], 'library',
+    'library.units exposes the dimensional vocabulary');
+  expect(!!library.bridges['energy_to_co2'] && !!library.bridges['fuel_switch_abatement'], 'library',
+    'library.bridges exposes the bridge registry');
+
+  // validateUnit: a sound unit passes; an unknown base dim or a zero scale is rejected.
+  expect(validateUnit({ id: 'тCO₂/т', dim: { mass_co2: 1, mass: -1 }, scale: 1 }).length === 0,
+    'library', 'a well-formed new unit validates');
+  expect(validateUnit({ id: 'bad', dim: { luminosity: 1 } as unknown as Record<string, number>, scale: 1 }).length > 0,
+    'library', 'a unit over an unknown base dimension is rejected');
+  expect(validateUnit({ id: 'bad2', dim: {}, scale: 0 }).length > 0,
+    'library', 'a unit with a zero scale is rejected');
+
+  // A measure using a NEW overlay unit folds — proves the vocabulary is genuinely data-driven.
+  const extended = assembleLibrary({
+    ...(graphSeed as unknown as Graph),
+    units: [{ id: 'ктCO₂/год', dim: { mass_co2: 1, time: -1 }, scale: 1000 / 8760 }],
+  });
+  expect(!!extended.units['ктCO₂/год'], 'library', 'a data-overlay unit lands in library.units');
+  const synthetic = {
+    id: 'syn-new-unit',
+    abatement: { formula: { ref: 'x' } },
+    inputs: { x: { value: 1, unit: 'ктCO₂/год', provenance: { source_type: 'assumption', confidence: 'low' } } },
+  } as unknown as Measure;
+  expect(dimensionCheck(synthetic, extended).status === 'ok', 'library',
+    'a measure using an author-added unit folds to CO₂ (vocabulary is data-driven)');
+
+  // validateBridge: a consistent bridge passes; one whose expr does not fold to `to` is rejected.
+  expect(validateBridge(library.bridges['energy_to_co2']).length === 0, 'library',
+    'a consistent bridge validates (expr folds to its declared `to`)');
+  const broken = {
+    id: 'broken', from: { dim: { energy: 1 } }, via: [{ name: 'ef', dim: { mass_co2: 1, energy: -1 } }],
+    to: { dim: { mass: 1 } }, // wrong: energy × EF = mass_co2, not mass
+    expr: { op: 'mul', args: [{ slot: 'from' }, { slot: 'ef' }] }, authoring: 'x',
+  };
+  const brokenErrs = validateBridge(broken as unknown as Parameters<typeof validateBridge>[0]);
+  expect(brokenErrs.length > 0 && brokenErrs[0].includes('folds to'), 'library',
+    'a bridge whose expr does not fold to its declared `to` is rejected');
 }
 
 // ── report ────────────────────────────────────────────────────────────────────

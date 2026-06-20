@@ -12,6 +12,8 @@
 // docs/measure-authoring-prototype.md, risk #2 «isomorphic calc core»).
 import type { Localized, SectorCode } from '@data/schema';
 import type { Ast } from './ast';
+import type { UnitInfo } from './dimensions';
+import type { Bridge } from './bridges';
 
 export type { Localized, SectorCode };
 
@@ -518,4 +520,9 @@ export interface Library {
    *  the MCP `schema://measure` resource. The authoring judgment lives in `guide://measure`. */
   uiHelp: UiHelp;
   globals: GlobalParams;
+  /** L3 — the dimensional vocabulary (unit string → dimension + scale): code seed + data
+   *  overlay, so an author can add/correct a unit. Read by the dimensional check. */
+  units: Record<string, UnitInfo>;
+  /** L3 — the typed unit-conversion bridges (code seed + data overlay; author-extendable). */
+  bridges: Record<string, Bridge>;
 }

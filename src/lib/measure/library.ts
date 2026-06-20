@@ -15,6 +15,8 @@ import uiHelp from '../../../data/kz/library/measure-ui-help.json';
 import globals from '../../../data/kz/library/globals.json';
 import measuresSeed from '../../../data/kz/library/measures.seed.json';
 import { BUILTIN_TEMPLATES } from './templates';
+import { mergeUnits, type LibraryUnit } from './dimensions';
+import { mergeBridges, type Bridge } from './bridges';
 import type {
   Indicator, Library, Localized, Measure, Pool, Product, Reference, Resource, Subsector, Technology,
 } from './schema';
@@ -28,6 +30,9 @@ export interface Graph {
   references: Array<Reference>;
   indicators: Array<Indicator>;
   pools: Array<{ id: string; caps_ref: string; annual_flow: number; unit: string; sector_ref: string; baselineEmissionsKt?: number }>;
+  /** L3 — author-extendable dimensional vocabulary + bridge registry (overlay the code seed). */
+  units?: LibraryUnit[];
+  bridges?: Bridge[];
 }
 
 /** Lift an English string into the {ru,en} shape (English in both until translations land). */
@@ -99,6 +104,9 @@ export function assembleLibrary(g: Graph): Library {
     // Templates live in code (the engine uses them); formula-templates.json mirrors them publicly.
     formulaTemplates: BUILTIN_TEMPLATES,
     globals: globals as unknown as Library['globals'],
+    // L3 — vocabulary + bridges: code seed merged with the graph's data overlay (author additions).
+    units: mergeUnits(g.units),
+    bridges: mergeBridges(g.bridges),
   };
 }
 

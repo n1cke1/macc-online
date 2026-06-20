@@ -23,7 +23,7 @@
 import { type Ast, isLeafConst, isLeafRef, isNode } from './ast';
 import {
   type Dimension,
-  lookupUnit,
+  type UnitInfo,
   mulDim,
   divDim,
   dimEqual,
@@ -78,11 +78,11 @@ function fmtDim(d: Dimension): string {
   return parts.length ? parts.join('·') : 'scalar';
 }
 
-/** Resolve one library/measure unit string to a dimension, or fail with a reason. */
-function dimOfUnit(unit: string | undefined, ref: string): Dimension {
+/** Resolve one library/measure unit string to a dimension via the library vocabulary. */
+function dimOfUnit(unit: string | undefined, ref: string, units: Record<string, UnitInfo>): Dimension {
   if (!unit) throw new DimensionError(`'${ref}' has no unit`);
-  const info = lookupUnit(unit);
-  if (!info) throw new DimensionError(`unknown unit '${unit}' on '${ref}'`);
+  const info = units[unit.trim()];
+  if (!info) throw new DimensionError(`unknown unit '${unit}' on '${ref}' (not in the library vocabulary)`);
   return info.dim;
 }
 
@@ -102,7 +102,7 @@ function dimOfRef(ref: string, ctx: Ctx): Tagged {
       // res:<id> ≡ res:<id>#ef — the fuel EF shortcut; the resource id IS the carrier.
       if (prefix === 'res' && (key === undefined || key === 'ef')) {
         const ind = library.indicators.find((i) => i.owner_kind === 'resource' && i.owner_ref === id && i.key === 'ef');
-        return { dim: ind?.unit ? dimOfUnit(ind.unit, ref) : { mass_co2: 1, energy: -1 }, carrier: id };
+        return { dim: ind?.unit ? dimOfUnit(ind.unit, ref, library.units) : { mass_co2: 1, energy: -1 }, carrier: id };
       }
       const ind = library.indicators.find(
         (i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === key,
@@ -113,7 +113,7 @@ function dimOfRef(ref: string, ctx: Ctx): Tagged {
       if (prefix === 'prd' && key === 'carbon_footprint') ctx.outputEfProducts.add(id);
       // Other resource indicators (lhv, …) carry the resource as their carrier too.
       const carrier = prefix === 'res' ? id : undefined;
-      return { dim: dimOfUnit(ind.unit, ref), carrier };
+      return { dim: dimOfUnit(ind.unit, ref, library.units), carrier };
     }
     // Unknown prefix — fall through to the bare-key path.
   }
@@ -126,7 +126,7 @@ function dimOfBareKey(key: string, ctx: Ctx, ref: string): Dimension {
   if (computed) return fold(computed.formula, ctx).dim;
   const input = ctx.measure.inputs?.[key];
   if (!input) throw new DimensionError(`'${ref}' resolves to no input/computed on measure '${ctx.measure.id}'`);
-  return dimOfUnit(input.unit, `input '${key}'`);
+  return dimOfUnit(input.unit, `input '${key}'`, ctx.library.units);
 }
 
 /** Fold an AST to a tagged dimension. `add`/`sub`/`sum` require agreement; `mul` locks carriers. */
