@@ -156,7 +156,17 @@ function MeasureBody({
     return c ? evalAst(c.formula, resolve) : undefined;
   };
   const refName = (key: string): string => {
-    if (key.startsWith('res:')) { const r = library.resources[key.slice(4)]; return r ? pick(r.name, locale) : key.slice(4); }
+    const ind = key.match(/^(res|obj|prd|sub):([^#]+)(?:#(.+))?$/);
+    if (ind) {
+      const [, prefix, id, k] = ind;
+      const owner =
+        prefix === 'res' ? library.resources[id]?.name
+        : prefix === 'obj' ? library.technologies[id]?.name
+        : prefix === 'prd' ? library.products[id]?.name
+        : undefined;
+      const base = owner ? pick(owner, locale) : id;
+      return k && k !== 'ef' ? `${base} · ${k}` : base;
+    }
     const c = measure.computed?.[key];
     return c?.label ? pick(c.label, locale) : key;
   };
@@ -209,13 +219,45 @@ function MeasureBody({
       </div>
     );
   };
-  const objCapex = (o: { technology_ref: string; capacity?: NumberOrRef; capex_ud_factor?: NumberOrRef; capex_musd?: NumberOrRef }) =>
-    numOf(o.capex_musd) ?? (numOf(o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (numOf(o.capex_ud_factor) ?? 1) / 1e6;
+  const resolveNum = (x: NumberOrRef | undefined): number | undefined =>
+    numOf(x) ?? (x != null && typeof x === 'object' && 'ref' in x ? safeResolve((x as { ref: string }).ref) : undefined);
+  // Mirror of guardrails.economicsRollup: a computed formula wins, then the inline
+  // scalar, then capacity × capex_ud × factor (capacity/factor may be {ref}s).
+  const objCapex = (o: { technology_ref: string; capacity?: NumberOrRef; capex_ud_factor?: NumberOrRef; capex_musd?: NumberOrRef }, i: number) =>
+    cval(`created_technologies[${i}].capex_musd`)
+    ?? numOf(o.capex_musd)
+    ?? (resolveNum(o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (resolveNum(o.capex_ud_factor) ?? 1) / 1e6;
   const matCost = (m: { qty?: NumberOrRef; price?: NumberOrRef; cost_musd?: NumberOrRef; side: string }, i: number) => {
     const qty = cval(`materials[${i}].qty`) ?? numOf(m.qty) ?? 0;
     const price = cval(`materials[${i}].price`) ?? numOf(m.price) ?? 0;
     return (numOf(m.cost_musd) ?? qty * price / 1e6) * (m.side === 'retired' ? -1 : 1);
   };
+
+  // A labelled value that, when a computed formula lives at `path`, gets a ƒ toggle
+  // expanding the full derivation (formula + leaves) — the same affordance as materials.
+  function FLine({ label, path, value, unit }: { label: ReactNode; path?: string; value: string; unit?: string }) {
+    const hasF = path != null && cval(path) != null;
+    const isOpen = path != null && expanded.has(path);
+    return (
+      <>
+        <Row label={label}>
+          {hasF ? (
+            <button
+              onClick={() => toggle(path!)}
+              title={locale === 'en' ? 'show calculation' : 'показать расчёт'}
+              className="flex items-center gap-1.5 rounded border border-line bg-slate-50 px-2 py-0.5 text-sm tabular-nums text-slate-600 hover:bg-slate-100"
+            >
+              <span className="text-slate-400">{isOpen ? '▾' : '▸'} ƒ</span> {value}
+            </button>
+          ) : (
+            <span className="tabular-nums">{value}</span>
+          )}
+          {unit ? <span className="text-slate-500">{unit}</span> : null}
+        </Row>
+        {path != null && breakdown(path)}
+      </>
+    );
+  }
 
   function ReductionFormula() {
     if (ab.computed) {
@@ -305,7 +347,7 @@ function MeasureBody({
                 {tc && <Badge>{t(`techKind.${tc.kind}`)}</Badge>}
               </div>
               {tc?.description && <p className="mt-0.5 text-xs text-muted">{pick(tc.description, locale)}</p>}
-              <Row label={`${t('field.capacity')}${o.unit ? `, ${o.unit}` : ''}`}><span className="tabular-nums">{o.capacity != null ? num(numOf(o.capacity) ?? safeResolve(String((o.capacity as { ref?: string }).ref)) ?? 0, 2) : '—'}</span></Row>
+              <FLine label={`${t('field.capacity')}${o.unit ? `, ${o.unit}` : ''}`} path={`created_technologies[${i}].capacity`} value={o.capacity != null ? num(resolveNum(o.capacity) ?? 0, 2) : '—'} />
               <Row label={t('field.capexUd')}><span className="tabular-nums">{tc?.capex_ud != null ? `${num(tc.capex_ud, 0)} ${tc.capex_ud_unit ?? ''}` : '—'}</span></Row>
               {tc?.indicators?.map((ind) => <Row key={ind.key} label={pick(ind.label, locale)}><span className="tabular-nums">{num(ind.value, 3)} {ind.unit ?? ''}</span></Row>)}
             </div>
@@ -359,17 +401,21 @@ function MeasureBody({
         <div className="mb-1 text-xs font-semibold text-slate-500">CAPEX</div>
         {(measure.created_technologies ?? []).map((o, i) => {
           const tc = tech(o.technology_ref);
-          return <Row key={`c${i}`} label={`+ ${tc ? pick(tc.name, locale) : o.technology_ref}`}><span className="tabular-nums">{num(objCapex(o))} mUSD</span></Row>;
+          return <FLine key={`c${i}`} label={`+ ${tc ? pick(tc.name, locale) : o.technology_ref}`} path={`created_technologies[${i}].capex_musd`} value={`${num(objCapex(o, i))} mUSD`} />;
         })}
-        {(measure.retired_technologies ?? []).map((o, i) => (
-          <Row key={`rc${i}`} label={`− ${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref}`}><span className="tabular-nums">{num(numOf(o.maintenance_capex_musd) ?? 0)} mUSD</span></Row>
-        ))}
+        {(measure.retired_technologies ?? []).map((o, i) => {
+          const path = `retired_technologies[${i}].maintenance_capex_musd`;
+          return <FLine key={`rc${i}`} label={`− ${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref}`} path={path} value={`${num(cval(path) ?? resolveNum(o.maintenance_capex_musd) ?? 0)} mUSD`} />;
+        })}
         <Row label="Σ CAPEX"><b className="tabular-nums">{num(computed.capex)} mUSD</b></Row>
 
         <div className="mb-1 mt-3 text-xs font-semibold text-slate-500">OPEX</div>
-        {(measure.created_technologies ?? []).map((o, i) => o.opex_musd == null ? null : (
-          <Row key={`co${i}`} label={`${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref} · OPEX`}><span className="tabular-nums">{num(numOf(o.opex_musd) ?? 0)} mUSD</span></Row>
-        ))}
+        {(measure.created_technologies ?? []).map((o, i) => {
+          const path = `created_technologies[${i}].opex_musd`;
+          const val = cval(path) ?? resolveNum(o.opex_musd);
+          if (val == null) return null;
+          return <FLine key={`co${i}`} label={`${tech(o.technology_ref) ? pick(tech(o.technology_ref).name, locale) : o.technology_ref} · OPEX`} path={path} value={`${num(val)} mUSD`} />;
+        })}
         {(measure.materials ?? []).map((mat, i) => {
           const r = library.resources[mat.resource_ref];
           const qtyPath = `materials[${i}].qty`;

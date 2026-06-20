@@ -1316,6 +1316,19 @@
         "citation": "Natural gas LHV ~34 GJ per 1000 m³",
         "confidence": "medium"
       }
+    },
+    {
+      "id": "ind_nuclear_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz5_0",
+      "value": 7700,
+      "unit": "$/kW",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Удельный CAPEX АЭС (capexNuclear, лист «Допущения») — 7700 $/кВт",
+        "confidence": "medium"
+      }
     }
   ],
   "pools": [

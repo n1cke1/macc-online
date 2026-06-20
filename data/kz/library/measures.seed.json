@@ -1211,14 +1211,80 @@
             "geo_applicability": "global"
           }
         },
-        "gen_mwh": {
-          "value": 26805600,
-          "unit": "МВт·ч/год",
+        "cap_mw": {
+          "value": 3600,
+          "unit": "МВт",
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
+            "citation": "Установленная мощность АЭС (Расчёты!C191)",
             "confidence": "medium",
             "geo_applicability": "kz_specific"
+          }
+        },
+        "kium": {
+          "value": 0.85,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "standard",
+            "citation": "КИУМ АЭС — типовой для PWR (Расчёты!C183)",
+            "confidence": "high",
+            "geo_applicability": "global"
+          }
+        },
+        "escalation": {
+          "value": 1.3,
+          "unit": "",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Эскалация CAPEX (Расчёты!C182)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        }
+      },
+      "computed": {
+        "gen_mwh": {
+          "label": {
+            "ru": "Выработка АЭС",
+            "en": "Nuclear generation"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "cap_mw"
+              },
+              8760,
+              {
+                "ref": "kium"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX строительства АЭС",
+            "en": "Nuclear plant CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "cap_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz5_0#capex_ud"
+                  },
+                  {
+                    "ref": "escalation"
+                  }
+                ]
+              },
+              1000
+            ]
           }
         }
       },
@@ -1243,7 +1309,10 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz5_0",
-          "capex_musd": 36036
+          "capacity": {
+            "ref": "cap_mw"
+          },
+          "unit": "МВт"
         }
       ],
       "materials": [
@@ -1264,10 +1333,14 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Строительство АЭС",
+            "citation": "Установленная мощность АЭС, 3600 МВт (Расчёты!C191)",
             "confidence": "medium"
           }
         },
@@ -1290,20 +1363,6 @@
             "source_type": "expert_estimate",
             "citation": "Экономия угля",
             "confidence": "medium"
-          }
-        },
-        "inputs.gen_mwh": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
           }
         }
       },
