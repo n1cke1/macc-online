@@ -1329,6 +1329,481 @@
         "citation": "Удельный CAPEX АЭС (capexNuclear, лист «Допущения») — 7700 $/кВт",
         "confidence": "medium"
       }
+    },
+    {
+      "id": "ind_kz1_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz1_0",
+      "value": 500,
+      "unit": "$/kW",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Модернизация угольной ТЭЦ (capexCoalChpEfficiency, лист «Допущения») — 500 $/кВт",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "ind_kz3_0_solar",
+      "key": "capex_ud_solar",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz3_0",
+      "value": 500,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA Renewable Power Generation Costs 2023 — solar PV utility-scale ~500 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz3_0_wind",
+      "key": "capex_ud_wind",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz3_0",
+      "value": 900,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA Renewable Power Generation Costs 2023 — onshore wind ~900 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_coal_carbon",
+      "key": "carbon_content",
+      "owner_kind": "resource",
+      "owner_ref": "coal",
+      "value": 0.4,
+      "unit": "tC/t",
+      "provenance": {
+        "source_type": "standard",
+        "citation": "IPCC default carbon content of coal (≈0.4 tC/t for sub-bituminous)",
+        "confidence": "high",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz4_0_solar",
+      "key": "capex_ud_solar",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz4_0",
+      "value": 500,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA Renewable Power Generation Costs 2023 — solar PV ~500 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz4_0_wind",
+      "key": "capex_ud_wind",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz4_0",
+      "value": 900,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA Renewable Power Generation Costs 2023 — onshore wind ~900 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz4_1_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz4_1",
+      "value": 1000,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX газовый пикер CCGT/OCGT (MACC!E49)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz4_2_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz4_2",
+      "value": 1000,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX модернизации угольной ТЭЦ — избегаемый (Расчёты in_4_1)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz4_3_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz4_3",
+      "value": 100,
+      "unit": "$/кВт(т)",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX переоборудования в котельную (Расчёты in_4_2)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz6_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz6_0",
+      "value": 1750,
+      "unit": "$/кВт(э)",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Уд. CAPEX промышленного теплового насоса >1МВт (MACC!E51)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz7_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz7_0",
+      "value": 150,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Уд. CAPEX электрокотла (Euroheat & Power; MACC!E52)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz8_0_solar",
+      "key": "capex_ud_solar",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz8_0",
+      "value": 500,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA 2023 — solar PV ~500 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz8_0_wind",
+      "key": "capex_ud_wind",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz8_0",
+      "value": 900,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "IRENA 2023 — onshore wind ~900 $/кВт",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz8_3_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz8_3",
+      "value": 1000,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX газовый пикер (MACC!E49)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz8_4_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz8_4",
+      "value": 200,
+      "unit": "$/кВт(т)",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX электрокотельной (Расчёты in_8_3)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz8_2_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz8_2",
+      "value": 3000,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX избегаемой угольной ТЭЦ (Расчёты in_8_1)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz9_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz9_0",
+      "value": 2500,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Уд. CAPEX генератора ВЭР, промышл. теплообменники (MACC!E53)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz10_0_capex",
+      "key": "capex_per_vehicle",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz10_0",
+      "value": 5000,
+      "unit": "$/авто",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Разница CAPEX EV vs ДВС, IEA EV Outlook 2024 (MACC!E54)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz11_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz11_0",
+      "value": 100,
+      "unit": "$/м²",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Уд. CAPEX утепления (фасад+окна+кровля, MACC!E55)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz12_0_capex",
+      "key": "capex_ud_km",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz12_0",
+      "value": 0.5,
+      "unit": "mUSD/км",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX газопровода, программа газификации (Расчёты in_12_3)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz12_1_capex",
+      "key": "capex_ud_conn",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz12_1",
+      "value": 2,
+      "unit": "тыс. $/шт",
+      "provenance": {
+        "source_type": "expert_estimate",
+        "citation": "Уд. CAPEX подключения потребителя (Расчёты in_12_5)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz13_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz13_0",
+      "value": 150,
+      "unit": "$/кВт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "MACC!E52 — Euroheat & Power, уд. CAPEX электрокотла",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz14_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz14_0",
+      "value": 8,
+      "unit": "тыс. $/объект",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "EPA LDAR cost — обследование+ремонт (in_14_3)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz14_1_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz14_1",
+      "value": 3,
+      "unit": "тыс. $/объект",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "FLIR GF320 OGI оборудование (in_14_4)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz15_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz15_0",
+      "value": 500,
+      "unit": "$/тыс.м³/год",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Малые ГТУ — уд. CAPEX ГТЭС/компрессии (in_15_3)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz17_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz17_0",
+      "value": 0.1,
+      "unit": "mUSD/км",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Замена уплотнений, КС — уд. CAPEX модернизации (in_17_4)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz18_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz18_0",
+      "value": 50,
+      "unit": "mUSD/завод",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Помольные мощности, силосы — уд. CAPEX модернизации завода (in_18_3)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz19_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz19_0",
+      "value": 300,
+      "unit": "$/т CO₂/год",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "MACC!E56 capexCcus — TRL 6-7, первые проекты",
+        "confidence": "low",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz21_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz21_0",
+      "value": 0.5,
+      "unit": "mUSD/установку",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "500-1000 м³/сут — уд. CAPEX биогазовой установки (in_21_3)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz22_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz22_0",
+      "value": 30,
+      "unit": "$/га",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Variable rate application — уд. CAPEX GPS/датчики (in_22_3)",
+        "confidence": "medium",
+        "geo_applicability": "global"
+      }
+    },
+    {
+      "id": "ind_kz23_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz23_0",
+      "value": 20,
+      "unit": "$/га",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Подсев, огораживание — уд. CAPEX восстановления (in_23_3)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz24_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz24_0",
+      "value": 2000,
+      "unit": "$/га",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "MACC!E57 capexAfforestation — FAO Forestry, адаптировано для КЗ + полив",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz25_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz25_0",
+      "value": 5,
+      "unit": "mUSD/полигон",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Крупные города — уд. CAPEX системы дегазации (in_25_3)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
+    },
+    {
+      "id": "ind_kz26_0_capex",
+      "key": "capex_ud",
+      "owner_kind": "object",
+      "owner_ref": "obj_kz26_0",
+      "value": 10,
+      "unit": "mUSD/шт",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Аэробная обработка + биогаз — уд. CAPEX модернизации КОС (in_26_3)",
+        "confidence": "medium",
+        "geo_applicability": "kz_specific"
+      }
     }
   ],
   "pools": [

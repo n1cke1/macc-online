@@ -525,6 +525,36 @@
             "confidence": "low",
             "geo_applicability": "kz_specific"
           }
+        },
+        "program_capex": {
+          "value": 300,
+          "unit": "mUSD",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Караганда, 10-15 шахт — CAPEX программы дегазации (in_16_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "om_rate": {
+          "value": 0.04,
+          "unit": "доля от CAPEX/год",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "ТОиР (in_16_7)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "methane_price": {
+          "value": 150,
+          "unit": "$/тыс. м³",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Выгода от продажи метана (in_16_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -548,18 +578,22 @@
       "created_technologies": [
         {
           "technology_ref": "tech_mine_degas",
-          "capacity": 9.791795506081222,
+          "capacity": {
+            "ref": "activity"
+          },
           "unit": "млн м³",
-          "capex_musd": 300,
-          "opex_musd": 12
+          "capex_musd": {
+            "ref": "program_capex"
+          }
         }
       ],
       "materials": [
         {
           "resource_ref": "methane",
           "side": "retired",
-          "qty": 9791.795506081224,
-          "price": 150,
+          "price": {
+            "ref": "methane_price"
+          },
           "unit": "тыс. м³"
         }
       ],
@@ -584,47 +618,92 @@
         },
         "created_technologies[0].capex_musd": {
           "provenance": {
-            "source_type": "placeholder",
-            "citation": "Оценка CAPEX установки дегазации — требует проверки",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "new"
+            "source_type": "expert_estimate",
+            "citation": "CAPEX программы дегазации = вход in_16_2",
+            "confidence": "medium"
           }
         },
         "created_technologies[0].opex_musd": {
           "provenance": {
-            "source_type": "placeholder",
-            "citation": "Оценка OPEX — требует проверки",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "new"
+            "source_type": "expert_estimate",
+            "citation": "ТОиР = CAPEX × доля in_16_7",
+            "confidence": "medium"
           }
         },
         "materials[0].qty": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Высвобождаемый метан",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "reuse",
-            "ref": "created_technologies[0].capacity"
+            "citation": "Объём метана = активность × 1000 (млн→тыс. м³)",
+            "confidence": "medium"
           }
         },
         "materials[0].price": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Цена метана 150 $/тыс. м³",
-            "confidence": "low"
-          },
-          "binding": {
-            "mode": "new"
+            "citation": "Выгода от продажи метана = in_16_3",
+            "confidence": "medium"
+          }
+        },
+        "inputs.program_capex": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_16_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.om_rate": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_16_7",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.methane_price": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_16_3",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         }
       },
-      "mechanism_subtype": "non_co2"
+      "mechanism_subtype": "non_co2",
+      "computed": {
+        "created_technologies[0].opex_musd": {
+          "label": {
+            "ru": "ТОиР систем дегазации",
+            "en": "Degas O&M"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "program_capex"
+              },
+              {
+                "ref": "om_rate"
+              }
+            ]
+          }
+        },
+        "materials[0].qty": {
+          "label": {
+            "ru": "Объём утилизированного метана, тыс. м³",
+            "en": "Recovered methane, k m³"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "activity"
+              },
+              1000
+            ]
+          }
+        }
+      }
     },
     {
       "id": "kz-1",
@@ -673,6 +752,26 @@
             "confidence": "medium",
             "geo_applicability": "global"
           }
+        },
+        "cap_mw": {
+          "value": 15000,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность, оценка действующей генерации (Расчёты!C14)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "project_factor": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля проектных и пусконаладочных работ — 30% от оборудования (Расчёты in_1_5)",
+            "confidence": "medium",
+            "geo_applicability": "global"
+          }
         }
       },
       "abatement": {
@@ -696,11 +795,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz1_0",
-          "capex_musd": 7500
+          "capacity": {
+            "ref": "cap_mw"
+          },
+          "unit": "МВт"
         },
         {
-          "technology_ref": "obj_kz1_1",
-          "capex_musd": 2250
+          "technology_ref": "obj_kz1_1"
         }
       ],
       "materials": [
@@ -716,20 +817,6 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Модернизация турбин и котлов",
-            "confidence": "medium"
-          }
-        },
-        "created_technologies[1].capex_musd": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Проектные и пусконаладочные работы",
-            "confidence": "medium"
-          }
-        },
         "materials[0].cost_musd": {
           "provenance": {
             "source_type": "expert_estimate",
@@ -757,6 +844,24 @@
             "citation": "Engineering premise (workbook «Расчёты»)",
             "confidence": "medium"
           }
+        },
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_mw",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность, 15000 МВт (Расчёты!C14)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.project_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "30% от оборудования (Расчёты in_1_5)",
+            "confidence": "medium"
+          }
         }
       },
       "mechanism_subtype": "efficiency",
@@ -768,6 +873,48 @@
         "limit": {
           "indicator_ref": "ind_coal_fleet_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX модернизации турбин и котлов",
+            "en": "Turbine & boiler upgrade CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "cap_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz1_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX проектных и ПНР",
+            "en": "Engineering & commissioning CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "project_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -844,33 +991,31 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "solar_share": {
+          "value": 0.25,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в ВИЭ-миксе (Расчёты in_3_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "grid_factor": {
+          "value": 0.15,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Затраты на сети и подключение, % от CAPEX оборудования (Расчёты in_3_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
         "formula": {
-          "op": "mul",
-          "args": [
-            {
-              "ref": "cap_mw"
-            },
-            8760,
-            {
-              "ref": "cf"
-            },
-            {
-              "op": "sub",
-              "args": [
-                1,
-                {
-                  "ref": "curtailment"
-                }
-              ]
-            },
-            {
-              "ref": "res:coal#ef"
-            },
-            0.001
-          ]
+          "ref": "abatement_kt"
         },
         "formula_label": {
           "ru": "мощность × 8760 × КИУМ × (1−curtailment) × EF_угля × 10⁻³",
@@ -880,11 +1025,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz3_0",
-          "capex_musd": 8000
+          "capacity": {
+            "ref": "cap_mw"
+          },
+          "unit": "МВт"
         },
         {
-          "technology_ref": "obj_kz3_1",
-          "capex_musd": 1200
+          "technology_ref": "obj_kz3_1"
         }
       ],
       "materials": [
@@ -900,60 +1047,196 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "ВИЭ",
+            "citation": "Вводимая мощность ВИЭ, 10000 МВт (Расчёты in_3_6)",
+            "confidence": "medium"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Уд. CAPEX солнце/ветер (IRENA 2023, MACC!E47/E48) × мощность",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Сети и подключение",
+            "citation": "Сети и подключение = grid_factor × CAPEX ВИЭ",
             "confidence": "medium"
           }
         },
         "materials[0].cost_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "ТОиР ВИЭ",
+            "citation": "ТОиР ВИЭ, 1.5% от CAPEX (Расчёты in_3_9)",
             "confidence": "medium"
           }
         },
         "materials[1].cost_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Экономия угля",
+            "citation": "Экономия угля (снижение CO₂ → т угля × цена)",
             "confidence": "medium"
           }
         },
         "inputs.cap_mw": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
+            "citation": "Вводимая мощность ВИЭ (Расчёты in_3_6)",
             "confidence": "medium"
           }
         },
         "inputs.cf": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
+            "citation": "Средневзвешенный КИУМ ВИЭ РК ≈0.35",
             "confidence": "medium"
           }
         },
         "inputs.curtailment": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
+            "citation": "Доля curtailment ВИЭ (Расчёты in_3_2)",
             "confidence": "medium"
           }
         },
-        "inputs.ef_coal": {
+        "inputs.solar_share": {
           "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в миксе (Расчёты in_3_3)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.grid_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Затраты на сети, % от CAPEX (Расчёты in_3_4)",
+            "confidence": "medium"
+          }
+        }
+      },
+      "computed": {
+        "abatement_kt": {
+          "label": {
+            "ru": "Снижение выбросов ВИЭ",
+            "en": "Renewables abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "cap_mw"
+              },
+              8760,
+              {
+                "ref": "cf"
+              },
+              {
+                "op": "sub",
+                "args": [
+                  1,
+                  {
+                    "ref": "curtailment"
+                  }
+                ]
+              },
+              {
+                "ref": "res:coal#ef"
+              },
+              0.001
+            ]
+          }
+        },
+        "blended_capex_ud": {
+          "label": {
+            "ru": "Средневзвешенный уд. CAPEX ВИЭ",
+            "en": "Blended renewables capex/kW"
+          },
+          "formula": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz3_0#capex_ud_wind"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "ref": "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz3_0#capex_ud_solar"
+                  },
+                  {
+                    "ref": "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX ВИЭ (генерация)",
+            "en": "Renewables generation CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "blended_capex_ud"
+                  },
+                  {
+                    "ref": "cap_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX сетей и подключения",
+            "en": "Grid & connection CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "grid_factor"
+              }
+            ]
           }
         }
       }
@@ -1005,6 +1288,46 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "cap_res_mw": {
+          "value": 7000,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C156)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "cap_chp_mw": {
+          "value": 7000,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность угольной ТЭЦ (Расчёты in_4_8)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "cap_boiler_mw": {
+          "value": 2800,
+          "unit": "МВт(т)",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Тепловая мощность котельной (Расчёты C144)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "solar_share": {
+          "value": 0.25,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в ВИЭ-миксе",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -1043,21 +1366,33 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz4_0",
-          "capex_musd": 5600
+          "capacity": {
+            "ref": "cap_res_mw"
+          },
+          "unit": "МВт"
         },
         {
           "technology_ref": "obj_kz4_1",
-          "capex_musd": 7000
+          "capacity": {
+            "ref": "cap_chp_mw"
+          },
+          "unit": "МВт"
         },
         {
           "technology_ref": "obj_kz4_3",
-          "capex_musd": 280.00000000000006
+          "capacity": {
+            "ref": "cap_boiler_mw"
+          },
+          "unit": "МВт(т)"
         }
       ],
       "retired_technologies": [
         {
           "technology_ref": "obj_kz4_2",
-          "maintenance_capex_musd": 7000
+          "capacity": {
+            "ref": "cap_chp_mw"
+          },
+          "unit": "МВт"
         }
       ],
       "materials": [
@@ -1083,31 +1418,122 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_res_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "ВИЭ (солнце+ветер)",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C156)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Blended уд. CAPEX ВИЭ × мощность",
             "confidence": "medium"
+          }
+        },
+        "created_technologies[1].capacity": {
+          "binding": {
+            "ref": "in:cap_chp_mw",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мощность пикера = мощность ТЭЦ (Расчёты C157)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Газотурбинный пикер",
+            "citation": "Уд. CAPEX пикера × мощность",
             "confidence": "medium"
           }
         },
-        "retired_technologies[0].maintenance_capex_musd": {
+        "created_technologies[2].capacity": {
+          "binding": {
+            "ref": "in:cap_boiler_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Отказ от модернизации ТЭЦ",
-            "confidence": "medium"
+            "citation": "Тепловая мощность котельной (Расчёты C144)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "created_technologies[2].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Котельная",
+            "citation": "Уд. CAPEX котельной × тепл. мощность",
+            "confidence": "medium"
+          }
+        },
+        "retired_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_chp_mw",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность ТЭЦ (Расчёты in_4_8)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Избегаемый уд. CAPEX модернизации × мощность",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cap_res_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C156)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.cap_chp_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мощность угольной ТЭЦ (Расчёты in_4_8)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.cap_boiler_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Тепловая мощность котельной (Расчёты C144)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.solar_share": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в ВИЭ-миксе",
             "confidence": "medium"
           }
         },
@@ -1138,34 +1564,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.gen_displaced_gwh": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
-        },
-        "inputs.gen_gas_gwh": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_gas": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
         }
       },
       "mechanism_subtype": "fuel_switch",
@@ -1180,6 +1578,139 @@
         "limit": {
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
+        }
+      },
+      "computed": {
+        "blended_capex_ud": {
+          "label": {
+            "ru": "Средневзвешенный уд. CAPEX ВИЭ",
+            "en": "Blended renewables capex/kW"
+          },
+          "formula": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz4_0#capex_ud_wind"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "ref": "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz4_0#capex_ud_solar"
+                  },
+                  {
+                    "ref": "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX ВИЭ (солнце+ветер)",
+            "en": "Renewables CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "blended_capex_ud"
+                  },
+                  {
+                    "ref": "cap_res_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX газового пикера",
+            "en": "Gas peaker CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz4_1#capex_ud"
+                  },
+                  {
+                    "ref": "cap_chp_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          "label": {
+            "ru": "CAPEX котельной",
+            "en": "Boiler house CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz4_3#capex_ud"
+                  },
+                  {
+                    "ref": "cap_boiler_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          "label": {
+            "ru": "Избегаемый CAPEX модернизации ТЭЦ",
+            "en": "Avoided CHP upgrade CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz4_2#capex_ud"
+                  },
+                  {
+                    "ref": "cap_chp_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -1428,19 +1959,51 @@
             "confidence": "high",
             "geo_applicability": "kz_specific"
           }
+        },
+        "heat_cf": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "КИУМ по теплу, отопительный сезон (Расчёты in_6_5)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "loss_reduction": {
+          "value": 0.1,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение потерь в теплосетях (Расчёты in_6_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "cop": {
+          "value": 3.5,
+          "unit": "COP",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "COP промышленного ТН, зимний режим (Расчёты in_6_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "net_factor": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация теплосетей, % от CAPEX ТН (Расчёты in_6_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
         "formula": {
-          "op": "mul",
-          "args": [
-            {
-              "ref": "heat_kgcal"
-            },
-            {
-              "ref": "ef_boiler"
-            }
-          ]
+          "ref": "abatement_kt"
         },
         "formula_label": {
           "ru": "замещённое тепло × EF_угольной_котельной",
@@ -1450,11 +2013,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz6_0",
-          "capex_musd": 1040.5265410958903
+          "capacity": {
+            "ref": "hp_elec_mw"
+          },
+          "unit": "МВт(э)"
         },
         {
-          "technology_ref": "obj_kz6_1",
-          "capex_musd": 312.15796232876704
+          "technology_ref": "obj_kz6_1"
         }
       ],
       "materials": [
@@ -1480,18 +2045,82 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "hp_elec_mw",
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Тепловые насосы",
+            "citation": "Электрическая мощность ТН (Расчёты C231)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Уд. CAPEX ТН × электр. мощность",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Модернизация сетей теплоснабжения",
+            "citation": "Модернизация теплосетей = net_factor × CAPEX ТН",
             "confidence": "medium"
+          }
+        },
+        "inputs.heat_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потенциал замещения тепловыми насосами (Расчёты C214)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "EF угольной котельной/ТЭЦ (MACC!E41)",
+            "confidence": "high"
+          }
+        },
+        "inputs.heat_cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "КИУМ по теплу (Расчёты in_6_5)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.loss_reduction": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение потерь в теплосетях (Расчёты in_6_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.cop": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "COP промышленного ТН (Расчёты in_6_2)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.net_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Модернизация теплосетей, % CAPEX (Расчёты in_6_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -1521,20 +2150,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.heat_kgcal": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
         }
       },
       "mechanism_subtype": "electrification",
@@ -1549,6 +2164,126 @@
         "limit": {
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
+        }
+      },
+      "computed": {
+        "abatement_kt": {
+          "label": {
+            "ru": "Снижение выбросов ТН",
+            "en": "Heat-pump abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "heat_kgcal"
+              },
+              {
+                "ref": "ef_boiler"
+              }
+            ]
+          }
+        },
+        "hp_thermal_mw": {
+          "label": {
+            "ru": "Тепловая мощность ТН",
+            "en": "HP thermal capacity"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "op": "div",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "ref": "abatement_kt"
+                      },
+                      1000,
+                      1.163
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      8760,
+                      {
+                        "ref": "heat_cf"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "sub",
+                "args": [
+                  1,
+                  {
+                    "ref": "loss_reduction"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "hp_elec_mw": {
+          "label": {
+            "ru": "Электрическая мощность ТН",
+            "en": "HP electric capacity"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "ref": "hp_thermal_mw"
+              },
+              {
+                "ref": "cop"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX тепловых насосов",
+            "en": "Heat pumps CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "hp_elec_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz6_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX модернизации теплосетей",
+            "en": "Heat-network upgrade CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "net_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -1580,12 +2315,12 @@
             "geo_applicability": "global"
           }
         },
-        "heat_kgcal": {
-          "value": 51300,
+        "heat_total_kgcal": {
+          "value": 95000,
           "unit": "тыс. Гкал/год",
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
+            "citation": "Общий объём производства тепла (Расчёты in_7_1)",
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
@@ -1595,23 +2330,55 @@
           "unit": "тCO₂/Гкал",
           "provenance": {
             "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
+            "citation": "EF угольной котельной/ТЭЦ (MACC!E41)",
             "confidence": "high",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "heat_cf": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "КИУМ по теплу (Расчёты in_7_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "loss_reduction": {
+          "value": 0.1,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение потерь (Расчёты in_7_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "transition_share": {
+          "value": 0.6,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля перехода (Расчёты in_7_7)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "grid_factor": {
+          "value": 0.4,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Затраты на сети, % CAPEX котла (Расчёты in_7_2)",
+            "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
         }
       },
       "abatement": {
         "formula": {
-          "op": "mul",
-          "args": [
-            {
-              "ref": "heat_kgcal"
-            },
-            {
-              "ref": "ef_boiler"
-            }
-          ]
+          "ref": "abatement_kt"
         },
         "formula_label": {
           "ru": "замещённое тепло × EF_угольной_котельной",
@@ -1621,11 +2388,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz7_0",
-          "capex_musd": 3405.359589041096
+          "capacity": {
+            "ref": "eb_power_mw"
+          },
+          "unit": "МВт"
         },
         {
-          "technology_ref": "obj_kz7_1",
-          "capex_musd": 1362.1438356164385
+          "technology_ref": "obj_kz7_1"
         }
       ],
       "materials": [
@@ -1646,18 +2415,83 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "eb_power_mw",
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Электрокотлы",
+            "citation": "Мощность электрокотлов (Расчёты C271)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Уд. CAPEX электрокотла × мощность",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Расширение электросетей",
+            "citation": "Расширение электросетей = grid_factor × CAPEX котлов",
             "confidence": "medium"
+          }
+        },
+        "inputs.heat_total_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Общий объём тепла (Расчёты in_7_1)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "EF угольной котельной (MACC!E41)",
+            "confidence": "high"
+          }
+        },
+        "inputs.heat_cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "КИУМ по теплу (Расчёты in_7_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.loss_reduction": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Снижение потерь (Расчёты in_7_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.transition_share": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля перехода (Расчёты in_7_7)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.grid_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Затраты на сети (Расчёты in_7_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -1680,20 +2514,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.heat_kgcal": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
         }
       },
       "mechanism_subtype": "electrification",
@@ -1708,6 +2528,151 @@
         "limit": {
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
+        }
+      },
+      "computed": {
+        "total_thermal_mw": {
+          "label": {
+            "ru": "Общие тепловые мощности",
+            "en": "Total thermal capacity"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "heat_total_kgcal"
+                  },
+                  1.163,
+                  1000
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  8760,
+                  {
+                    "ref": "heat_cf"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "eb_power_mw": {
+          "label": {
+            "ru": "Мощность электрокотлов",
+            "en": "Electric boiler capacity"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "total_thermal_mw"
+              },
+              {
+                "op": "sub",
+                "args": [
+                  1,
+                  {
+                    "ref": "loss_reduction"
+                  }
+                ]
+              },
+              {
+                "ref": "transition_share"
+              }
+            ]
+          }
+        },
+        "heat_replaced_kgcal": {
+          "label": {
+            "ru": "Замещаемое тепло",
+            "en": "Displaced heat"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "op": "div",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "ref": "eb_power_mw"
+                      },
+                      8760,
+                      {
+                        "ref": "heat_cf"
+                      }
+                    ]
+                  },
+                  1.163
+                ]
+              },
+              0.001
+            ]
+          }
+        },
+        "abatement_kt": {
+          "label": {
+            "ru": "Снижение выбросов",
+            "en": "Abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "heat_replaced_kgcal"
+              },
+              {
+                "ref": "ef_boiler"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX электрокотлов",
+            "en": "Electric boilers CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "eb_power_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz7_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX расширения электросетей",
+            "en": "Grid expansion CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "grid_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -1758,6 +2723,56 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "cap_res_mw": {
+          "value": 1342.857142857143,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C113)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "cap_chp_mw": {
+          "value": 1000,
+          "unit": "МВт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мощность замещаемой ТЭЦ (Расчёты in_8_10)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "cap_boiler_mw": {
+          "value": 400,
+          "unit": "МВт(т)",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Тепловая мощность котельной (Расчёты C100)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "solar_share": {
+          "value": 0.25,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в ВИЭ-миксе",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "grid_attach": {
+          "value": 0.15,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Присоединение пикеров к сетям, % CAPEX (Расчёты in_8_8)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -1796,25 +2811,36 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz8_0",
-          "capex_musd": 1074.285714285714
+          "capacity": {
+            "ref": "cap_res_mw"
+          },
+          "unit": "МВт"
         },
         {
-          "technology_ref": "obj_kz8_1",
-          "capex_musd": 150
+          "technology_ref": "obj_kz8_1"
         },
         {
           "technology_ref": "obj_kz8_3",
-          "capex_musd": 1000
+          "capacity": {
+            "ref": "cap_chp_mw"
+          },
+          "unit": "МВт"
         },
         {
           "technology_ref": "obj_kz8_4",
-          "capex_musd": 80
+          "capacity": {
+            "ref": "cap_boiler_mw"
+          },
+          "unit": "МВт(т)"
         }
       ],
       "retired_technologies": [
         {
           "technology_ref": "obj_kz8_2",
-          "maintenance_capex_musd": 3000
+          "capacity": {
+            "ref": "cap_chp_mw"
+          },
+          "unit": "МВт"
         }
       ],
       "materials": [
@@ -1840,39 +2866,141 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_res_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "ВИЭ (солнце+ветер)",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C113)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Blended уд. CAPEX ВИЭ × мощность",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Развитие электросетей (на пикеры)",
+            "citation": "Электросети = grid_attach × CAPEX пикера",
             "confidence": "medium"
           }
         },
-        "retired_technologies[0].maintenance_capex_musd": {
+        "created_technologies[2].capacity": {
+          "binding": {
+            "ref": "in:cap_chp_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Отказ от строительства ТЭЦ",
-            "confidence": "medium"
+            "citation": "Мощность пикера = мощность ТЭЦ (Расчёты C120)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "created_technologies[2].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Газотурбинный пикер",
+            "citation": "Уд. CAPEX пикера × мощность",
             "confidence": "medium"
           }
         },
-        "created_technologies[3].capex_musd": {
+        "created_technologies[3].capacity": {
+          "binding": {
+            "ref": "in:cap_boiler_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Котельная",
+            "citation": "Тепловая мощность котельной (Расчёты C100)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[3].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Уд. CAPEX котельной × тепл. мощность",
             "confidence": "medium"
+          }
+        },
+        "retired_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_chp_mw",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замещаемая мощность ТЭЦ (Расчёты in_8_10)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Избегаемый уд. CAPEX ТЭЦ × мощность",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cap_res_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Эквивалентная мощность ВИЭ (Расчёты C113)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.cap_chp_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Мощность ТЭЦ (Расчёты in_8_10)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.cap_boiler_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Тепловая мощность котельной (Расчёты C100)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.solar_share": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля солнца в ВИЭ-миксе",
+            "confidence": "medium"
+          }
+        },
+        "inputs.grid_attach": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Присоединение пикеров к сетям (Расчёты in_8_8)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -1902,34 +3030,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.gen_displaced_gwh": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
-        },
-        "inputs.gen_gas_gwh": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_gas": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
         }
       },
       "mechanism_subtype": "fuel_switch",
@@ -1944,6 +3044,156 @@
         "limit": {
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
+        }
+      },
+      "computed": {
+        "blended_capex_ud": {
+          "label": {
+            "ru": "Средневзвешенный уд. CAPEX ВИЭ",
+            "en": "Blended renewables capex/kW"
+          },
+          "formula": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz8_0#capex_ud_wind"
+                  },
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "ref": "solar_share"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz8_0#capex_ud_solar"
+                  },
+                  {
+                    "ref": "solar_share"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX ВИЭ (солнце+ветер)",
+            "en": "Renewables CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "blended_capex_ud"
+                  },
+                  {
+                    "ref": "cap_res_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          "label": {
+            "ru": "CAPEX газового пикера",
+            "en": "Gas peaker CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz8_3#capex_ud"
+                  },
+                  {
+                    "ref": "cap_chp_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX развития электросетей",
+            "en": "Grid expansion CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[2].capex_musd"
+              },
+              {
+                "ref": "grid_attach"
+              }
+            ]
+          }
+        },
+        "created_technologies[3].capex_musd": {
+          "label": {
+            "ru": "CAPEX котельной",
+            "en": "Boiler house CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz8_4#capex_ud"
+                  },
+                  {
+                    "ref": "cap_boiler_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          "label": {
+            "ru": "Избегаемый CAPEX строительства ТЭЦ",
+            "en": "Avoided CHP construction CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "obj:obj_kz8_2#capex_ud"
+                  },
+                  {
+                    "ref": "cap_chp_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -2021,7 +3271,10 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz9_0",
-          "capex_musd": 6250
+          "capacity": {
+            "ref": "cap_mw"
+          },
+          "unit": "МВт"
         }
       ],
       "materials": [
@@ -2037,10 +3290,39 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:cap_mw",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Генераторы",
+            "citation": "Потенциальная электрическая мощность ВЭР (Расчёты in_9_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Уд. CAPEX генератора × мощность",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cap_mw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потенциальная мощность ВЭР (Расчёты in_9_2)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Ожидаемый КИУМ (Расчёты in_9_1)",
             "confidence": "medium"
           }
         },
@@ -2057,27 +3339,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.cap_mw": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.cf": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_coal": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
         }
       },
       "mechanism_subtype": "efficiency",
@@ -2092,6 +3353,31 @@
         "limit": {
           "indicator_ref": "ind_whr_capacity",
           "consumption_ref": "cap_mw"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX генераторов ВЭР",
+            "en": "Waste-heat generators CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "cap_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz9_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -2152,6 +3438,46 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "mileage": {
+          "value": 15000,
+          "unit": "км/год",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Средний пробег (Расчёты in_10_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "consumption": {
+          "value": 8,
+          "unit": "л/100км",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Расход ДВС (Расчёты in_10_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "ef_gasoline": {
+          "value": 2.31,
+          "unit": "кгCO₂/л",
+          "provenance": {
+            "source_type": "standard",
+            "citation": "EF бензина, IPCC (Расчёты in_10_7)",
+            "confidence": "high",
+            "geo_applicability": "global"
+          }
+        },
+        "infra_per_car": {
+          "value": 1000,
+          "unit": "$/авто",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Стоимость зарядной инфраструктуры на 1 авто (Расчёты in_10_11)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -2159,16 +3485,7 @@
           "op": "sub",
           "args": [
             {
-              "op": "mul",
-              "args": [
-                {
-                  "ref": "base_emissions"
-                },
-                {
-                  "ref": "share"
-                },
-                1000
-              ]
+              "ref": "gasoline_abate_kt"
             },
             {
               "ref": "grid_growth_kt"
@@ -2183,11 +3500,17 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz10_0",
-          "capex_musd": 7332.251082251083
+          "capacity": {
+            "ref": "num_ev_k"
+          },
+          "unit": "тыс. шт"
         },
         {
           "technology_ref": "obj_kz10_1",
-          "capex_musd": 1466.4502164502167
+          "capacity": {
+            "ref": "num_ev_k"
+          },
+          "unit": "тыс. шт"
         }
       ],
       "materials": [
@@ -2203,18 +3526,101 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "num_ev_k",
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Инкрементальная стоимость EV парка",
+            "citation": "Количество EV (Расчёты C331)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "literature",
+            "citation": "Разница CAPEX EV/ДВС × число авто",
             "confidence": "medium"
           }
         },
-        "created_technologies[1].capex_musd": {
+        "created_technologies[1].capacity": {
+          "binding": {
+            "ref": "num_ev_k",
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Зарядная инфраструктура",
+            "citation": "Количество EV (Расчёты C331)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Инфраструктура на авто × число авто",
             "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 — baseline сектора 1.A.3",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Доля мероприятия (Расчёты in_10_1)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.grid_growth_kt": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Рост выбросов энергосистемы от EV (Расчёты C330)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.mileage": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Средний пробег (Расчёты in_10_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.consumption": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Расход ДВС (Расчёты in_10_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.ef_gasoline": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "EF бензина IPCC (Расчёты in_10_7)",
+            "confidence": "high"
+          }
+        },
+        "inputs.infra_per_car": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Инфраструктура на авто (Расчёты in_10_11)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -2230,27 +3636,6 @@
             "citation": "Экономия бензина",
             "confidence": "medium"
           }
-        },
-        "inputs.base_emissions": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
-          }
-        },
-        "inputs.share": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
-          }
-        },
-        "inputs.grid_growth_kt": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
         }
       },
       "mechanism_subtype": "electrification",
@@ -2261,6 +3646,112 @@
         "limit": {
           "indicator_ref": "ind_road_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "gasoline_abate_kt": {
+          "label": {
+            "ru": "Снижение выбросов за счёт бензина",
+            "en": "Gasoline-side abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "base_emissions"
+              },
+              {
+                "ref": "share"
+              },
+              1000
+            ]
+          }
+        },
+        "num_ev_k": {
+          "label": {
+            "ru": "Количество EV, тыс. шт",
+            "en": "EV count, thousand"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "gasoline_abate_kt"
+                  },
+                  1000
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "mileage"
+                  },
+                  {
+                    "op": "div",
+                    "args": [
+                      {
+                        "ref": "consumption"
+                      },
+                      100
+                    ]
+                  },
+                  {
+                    "ref": "ef_gasoline"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "Инкрементальная стоимость парка EV",
+            "en": "Incremental EV fleet cost"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "num_ev_k"
+                  },
+                  {
+                    "ref": "obj:obj_kz10_0#capex_per_vehicle"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX зарядной инфраструктуры",
+            "en": "Charging infrastructure CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "num_ev_k"
+                  },
+                  {
+                    "ref": "infra_per_car"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -2331,6 +3822,56 @@
             "confidence": "medium",
             "geo_applicability": "global"
           }
+        },
+        "num_buildings_k": {
+          "value": 50,
+          "unit": "тыс. шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Кол-во зданий, жилфонд сов. постройки (Расчёты in_11_1)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "building_width": {
+          "value": 15,
+          "unit": "м",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Ширина типового МКД (Расчёты L361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "building_length": {
+          "value": 45,
+          "unit": "м",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Длина типового МКД (Расчёты M361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "floors": {
+          "value": 5,
+          "unit": "эт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Этажность типового МКД (Расчёты O361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "window_factor": {
+          "value": 0.2,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Замена окон/дверей, 20% от утепления (Расчёты in_11_11)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -2369,12 +3910,10 @@
       },
       "created_technologies": [
         {
-          "technology_ref": "obj_kz11_0",
-          "capex_musd": 9000
+          "technology_ref": "obj_kz11_0"
         },
         {
-          "technology_ref": "obj_kz11_1",
-          "capex_musd": 1800
+          "technology_ref": "obj_kz11_1"
         }
       ],
       "materials": [
@@ -2396,17 +3935,94 @@
       ],
       "sources": {
         "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Утепление фасадов и кровли",
+            "source_type": "literature",
+            "citation": "Число зданий × площадь × уд. CAPEX × доля фасада",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Замена окон и дверей",
+            "citation": "Окна/двери = window_factor × CAPEX утепления",
             "confidence": "medium"
+          }
+        },
+        "inputs.heat_before_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потребление тепла до проекта (Расчёты C355)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.heat_after_kgcal": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Потребление тепла после (Расчёты C357)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "standard",
+            "citation": "EF угольной котельной (MACC!E41)",
+            "confidence": "high"
+          }
+        },
+        "inputs.derating": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Просадка КПД ТЭЦ (Расчёты in_11_5)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.num_buildings_k": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Кол-во зданий (Расчёты in_11_1)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.building_width": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Геометрия типового МКД (Расчёты L361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.building_length": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Геометрия типового МКД (Расчёты M361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.floors": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Этажность типового МКД (Расчёты O361)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.window_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля окон/дверей (Расчёты in_11_11)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -2429,34 +4045,6 @@
             "citation": "Снижение потребления угля",
             "confidence": "medium"
           }
-        },
-        "inputs.heat_before_kgcal": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.heat_after_kgcal": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
-        },
-        "inputs.ef_boiler": {
-          "provenance": {
-            "source_type": "standard",
-            "citation": "Emission factor (workbook globals, MACC sheet)",
-            "confidence": "high"
-          }
-        },
-        "inputs.derating": {
-          "provenance": {
-            "source_type": "expert_estimate",
-            "citation": "Engineering premise (workbook «Расчёты»)",
-            "confidence": "medium"
-          }
         }
       },
       "mechanism_subtype": "demand_reduction",
@@ -2468,6 +4056,126 @@
         "limit": {
           "indicator_ref": "ind_residential_heat",
           "consumption_ref": "heat_before_kgcal"
+        }
+      },
+      "computed": {
+        "avg_area_m2": {
+          "label": {
+            "ru": "Средняя площадь здания",
+            "en": "Average building floor area"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "building_width"
+              },
+              {
+                "ref": "building_length"
+              },
+              {
+                "ref": "floors"
+              }
+            ]
+          }
+        },
+        "facade_ratio": {
+          "label": {
+            "ru": "Площадь фасада к площади дома",
+            "en": "Facade-to-floor area ratio"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "ref": "building_width"
+                      },
+                      {
+                        "ref": "building_length"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      3,
+                      {
+                        "ref": "floors"
+                      }
+                    ]
+                  },
+                  2
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "building_width"
+                  },
+                  {
+                    "ref": "building_length"
+                  },
+                  {
+                    "ref": "floors"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX утепления фасадов и кровли",
+            "en": "Facade & roof insulation CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "num_buildings_k"
+                  },
+                  1000,
+                  {
+                    "ref": "avg_area_m2"
+                  },
+                  {
+                    "ref": "obj:obj_kz11_0#capex_ud"
+                  },
+                  {
+                    "ref": "facade_ratio"
+                  }
+                ]
+              },
+              1000000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX замены окон и дверей",
+            "en": "Window & door replacement CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "window_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -2518,6 +4226,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "pipeline_km": {
+          "value": 5000,
+          "unit": "км",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Протяжённость газопроводов (Расчёты in_12_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "connections_k": {
+          "value": 300,
+          "unit": "тыс. шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Кол-во подключений (Расчёты in_12_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -2541,11 +4269,17 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz12_0",
-          "capex_musd": 2500
+          "capacity": {
+            "ref": "pipeline_km"
+          },
+          "unit": "км"
         },
         {
           "technology_ref": "obj_kz12_1",
-          "capex_musd": 0.6
+          "capacity": {
+            "ref": "connections_k"
+          },
+          "unit": "тыс. шт"
         }
       ],
       "materials": [
@@ -2566,18 +4300,78 @@
         }
       ],
       "sources": {
-        "created_technologies[0].capex_musd": {
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:pipeline_km",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Магистральные и распред. газопроводы",
+            "citation": "Протяжённость газопроводов (Расчёты in_12_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Уд. CAPEX/км × протяжённость",
             "confidence": "medium"
           }
         },
-        "created_technologies[1].capex_musd": {
+        "created_technologies[1].capacity": {
+          "binding": {
+            "ref": "in:connections_k",
+            "mode": "reuse"
+          },
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Подключение потребителей",
+            "citation": "Кол-во подключений (Расчёты in_12_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "binding": {
+            "mode": "derived"
+          },
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Уд. CAPEX/подключение × число",
             "confidence": "medium"
+          }
+        },
+        "inputs.base_emissions": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "UNFCCC BTR1 — baseline сектора 1.A.4",
+            "confidence": "high"
+          }
+        },
+        "inputs.share": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Доля мероприятия (Расчёты in_12_1)",
+            "confidence": "medium"
+          }
+        },
+        "inputs.pipeline_km": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Протяжённость газопроводов (Расчёты in_12_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.connections_k": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Кол-во подключений (Расчёты in_12_4)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
           }
         },
         "materials[0].cost_musd": {
@@ -2600,20 +4394,6 @@
             "citation": "Экономия угля",
             "confidence": "medium"
           }
-        },
-        "inputs.base_emissions": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "UNFCCC BTR1 Kazakhstan — sector/sub-category baseline (Mt CO₂eq)",
-            "confidence": "high"
-          }
-        },
-        "inputs.share": {
-          "provenance": {
-            "source_type": "official_stat",
-            "citation": "Лист «Мероприятия» — coverage share",
-            "confidence": "medium"
-          }
         }
       },
       "mechanism_subtype": "fuel_switch",
@@ -2625,6 +4405,48 @@
         "limit": {
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX газопроводов",
+            "en": "Gas pipelines CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "pipeline_km"
+              },
+              {
+                "ref": "obj:obj_kz12_0#capex_ud_km"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX подключений потребителей",
+            "en": "Consumer connections CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "connections_k"
+                  },
+                  {
+                    "ref": "obj:obj_kz12_1#capex_ud_conn"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -2685,6 +4507,56 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "ef_boiler": {
+          "value": 0.55,
+          "unit": "tCO₂/Гкал",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "MACC!E41 — EF угольной котельной/ТЭЦ",
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "heat_cf": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Лист «Допущения» in_13_7 — КИУМ по теплу",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "grid_factor": {
+          "value": 0.4,
+          "unit": "доля от CAPEX котла",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Лист «Допущения» in_13_3 — затраты на электросети",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "smr_factor": {
+          "value": 0.3,
+          "unit": "доля от CAPEX котла",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Лист «Допущения» in_13_4 — СМР/тепловые сети",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "avoided_om_per_kw": {
+          "value": 30,
+          "unit": "$/кВт/год",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Лист «Допущения» in_13_5 — avoided поддержание котельных",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -2711,21 +4583,21 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz13_0",
-          "capex_musd": 1403.0588418430887
+          "capacity": {
+            "ref": "eb_power_mw"
+          },
+          "unit": "МВт"
         },
         {
-          "technology_ref": "obj_kz13_1",
-          "capex_musd": 561.2235367372355
+          "technology_ref": "obj_kz13_1"
         },
         {
-          "technology_ref": "obj_kz13_2",
-          "capex_musd": 420.9176525529266
+          "technology_ref": "obj_kz13_2"
         }
       ],
       "retired_technologies": [
         {
-          "technology_ref": "obj_kz13_3",
-          "maintenance_capex_musd": 2200.8771357975043
+          "technology_ref": "obj_kz13_3"
         }
       ],
       "materials": [
@@ -2749,28 +4621,28 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Электрокотлы",
+            "citation": "Электрокотлы = мощность × уд. CAPEX (MACC!E52) / 1000",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Расширение электросетей",
+            "citation": "Электросети = CAPEX котла × доля in_13_3",
             "confidence": "medium"
           }
         },
         "created_technologies[2].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "СМР и тепловые сети",
+            "citation": "СМР/тепловые сети = CAPEX котла × доля in_13_4",
             "confidence": "medium"
           }
         },
         "retired_technologies[0].maintenance_capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Экономия: закрытие котельных",
+            "citation": "Закрытие котельных = PV(WACC, срок, avoided O&M × мощность)",
             "confidence": "medium"
           }
         },
@@ -2815,6 +4687,46 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.ef_boiler": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "MACC!E41 — EF угольной котельной/ТЭЦ",
+            "confidence": "high",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.heat_cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_13_7 — КИУМ по теплу",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.grid_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_13_3",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.smr_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_13_4",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.avoided_om_per_kw": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_13_5",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "electrification",
@@ -2826,6 +4738,182 @@
         "limit": {
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "abatement_kt": {
+          "label": {
+            "ru": "Снижение выбросов",
+            "en": "Abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "base_emissions"
+              },
+              {
+                "ref": "tech_potential"
+              },
+              {
+                "ref": "share"
+              },
+              1000
+            ]
+          }
+        },
+        "heat_replaced": {
+          "label": {
+            "ru": "Замещаемое тепло, тыс. Гкал",
+            "en": "Heat replaced, k Gcal"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "ref": "abatement_kt"
+              },
+              {
+                "ref": "ef_boiler"
+              }
+            ]
+          }
+        },
+        "eb_power_mw": {
+          "label": {
+            "ru": "Мощность электрокотлов, МВт",
+            "en": "Electric-boiler capacity, MW"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "heat_replaced"
+                  },
+                  1000,
+                  1.163
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  8760,
+                  {
+                    "ref": "heat_cf"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX электрокотлов",
+            "en": "Electric boilers CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "eb_power_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz13_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX расширения электросетей",
+            "en": "Grid-expansion CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "grid_factor"
+              }
+            ]
+          }
+        },
+        "created_technologies[2].capex_musd": {
+          "label": {
+            "ru": "CAPEX СМР и тепловых сетей",
+            "en": "Civil works & heat-network CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "smr_factor"
+              }
+            ]
+          }
+        },
+        "avoided_pmt": {
+          "label": {
+            "ru": "Годовая экономия на закрытии котельных",
+            "en": "Annual avoided boiler O&M"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "avoided_om_per_kw"
+                  },
+                  {
+                    "ref": "eb_power_mw"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "retired_technologies[0].maintenance_capex_musd": {
+          "label": {
+            "ru": "Экономия CAPEX: закрытие котельных (PV)",
+            "en": "Avoided CAPEX: boiler closure (PV)"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "op": "pv",
+                "args": [
+                  {
+                    "ref": "glb:discountRate"
+                  },
+                  {
+                    "ref": "lifetime"
+                  },
+                  {
+                    "ref": "avoided_pmt"
+                  }
+                ]
+              },
+              -1
+            ]
+          }
         }
       }
     },
@@ -2876,6 +4964,16 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "n_objects": {
+          "value": 5000,
+          "unit": "шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Скважины, КС, НПЗ — оценка МЭ РК (in_14_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -2899,11 +4997,17 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz14_0",
-          "capex_musd": 40
+          "capacity": {
+            "ref": "n_objects"
+          },
+          "unit": "шт"
         },
         {
           "technology_ref": "obj_kz14_1",
-          "capex_musd": 15
+          "capacity": {
+            "ref": "n_objects"
+          },
+          "unit": "шт"
         }
       ],
       "materials": [
@@ -2922,14 +5026,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Обследование и ремонт",
+            "citation": "Обследование+ремонт = кол-во объектов × уд. CAPEX / 1000",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "OGI камеры и оборудование",
+            "citation": "OGI оборудование = кол-во объектов × уд. CAPEX / 1000",
             "confidence": "medium"
           }
         },
@@ -2960,6 +5064,14 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.n_objects": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_14_2 — кол-во объектов",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -2970,6 +5082,54 @@
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX обследования и ремонта",
+            "en": "Survey & repair CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "n_objects"
+                  },
+                  {
+                    "ref": "obj:obj_kz14_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX OGI-оборудования",
+            "en": "OGI equipment CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "n_objects"
+                  },
+                  {
+                    "ref": "obj:obj_kz14_1#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
         }
       }
     },
@@ -3020,6 +5180,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "png_volume": {
+          "value": 3,
+          "unit": "млрд м³/год",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "МЭ РК, World Bank GGFR — объём сжигаемого ПНГ (in_15_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "infra_factor": {
+          "value": 0.25,
+          "unit": "доля от CAPEX ГТЭС",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Подводящая инфраструктура (in_15_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3043,11 +5223,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz15_0",
-          "capex_musd": 1500
+          "capacity": {
+            "ref": "png_volume"
+          },
+          "unit": "млрд м³/год"
         },
         {
-          "technology_ref": "obj_kz15_1",
-          "capex_musd": 375
+          "technology_ref": "obj_kz15_1"
         }
       ],
       "materials": [
@@ -3066,14 +5248,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "ГТЭС и компрессорное оборудование",
+            "citation": "ГТЭС = объём ПНГ × уд. CAPEX (нормировка млрд→тыс. м³ и $→mUSD)",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Подводящая инфраструктура",
+            "citation": "Инфраструктура = CAPEX ГТЭС × доля in_15_6",
             "confidence": "medium"
           }
         },
@@ -3104,6 +5286,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.png_volume": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "in_15_2 — объём сжигаемого ПНГ",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.infra_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_15_6",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -3114,6 +5312,49 @@
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX ГТЭС и компрессии",
+            "en": "Gas-turbine & compression CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "png_volume"
+                  },
+                  1000000,
+                  {
+                    "ref": "obj:obj_kz15_0#capex_ud"
+                  }
+                ]
+              },
+              1000000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX подводящей инфраструктуры",
+            "en": "Feed-in infrastructure CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "infra_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -3164,6 +5405,36 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "pipeline_km": {
+          "value": 20000,
+          "unit": "км",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "КазТрансГаз — протяжённость газопроводов (in_17_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "retrofit_share": {
+          "value": 0.3,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Доля подлежащих модернизации (in_17_3)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "satellite_capex": {
+          "value": 30,
+          "unit": "mUSD",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Спутниковый мониторинг (in_17_7)",
+            "confidence": "medium",
+            "geo_applicability": "global"
+          }
         }
       },
       "abatement": {
@@ -3187,11 +5458,16 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz17_0",
-          "capex_musd": 600
+          "capacity": {
+            "ref": "pipeline_km"
+          },
+          "unit": "км"
         },
         {
           "technology_ref": "obj_kz17_1",
-          "capex_musd": 30
+          "capex_musd": {
+            "ref": "satellite_capex"
+          }
         }
       ],
       "materials": [
@@ -3210,14 +5486,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Модернизация газопроводов и КС",
+            "citation": "Модернизация = протяжённость × доля × уд. CAPEX",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Спутниковый мониторинг",
+            "citation": "Спутниковый мониторинг = вход in_17_7",
             "confidence": "medium"
           }
         },
@@ -3248,6 +5524,30 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.pipeline_km": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "in_17_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.retrofit_share": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_17_3",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.satellite_capex": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_17_7",
+            "confidence": "medium",
+            "geo_applicability": "global"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -3258,6 +5558,28 @@
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX модернизации газопроводов и КС",
+            "en": "Pipeline & compressor retrofit CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "pipeline_km"
+              },
+              {
+                "ref": "retrofit_share"
+              },
+              {
+                "ref": "obj:obj_kz17_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     },
@@ -3308,6 +5630,16 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "n_plants": {
+          "value": 4,
+          "unit": "шт",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Кол-во цементных заводов КЗ (in_18_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3331,7 +5663,10 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz18_0",
-          "capex_musd": 200
+          "capacity": {
+            "ref": "n_plants"
+          },
+          "unit": "шт"
         }
       ],
       "materials": [
@@ -3350,7 +5685,7 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Модернизация заводов",
+            "citation": "Модернизация = кол-во заводов × уд. CAPEX",
             "confidence": "medium"
           }
         },
@@ -3381,6 +5716,14 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.n_plants": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "in_18_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "process_change",
@@ -3391,6 +5734,25 @@
         "limit": {
           "indicator_ref": "ind_cement_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX модернизации заводов",
+            "en": "Plant retrofit CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "n_plants"
+              },
+              {
+                "ref": "obj:obj_kz18_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     },
@@ -3441,6 +5803,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "cf": {
+          "value": 0.7,
+          "unit": "доля",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Коэффициент использования установки улавливания (in_19_2)",
+            "confidence": "medium",
+            "geo_applicability": "global"
+          }
+        },
+        "transport_factor": {
+          "value": 0.3,
+          "unit": "доля от CAPEX улавливания",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Транспорт и хранение CO₂ (in_19_5)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3464,11 +5846,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz19_0",
-          "capex_musd": 925.7142857142857
+          "capacity": {
+            "ref": "capture_capacity"
+          },
+          "unit": "тыс. т CO₂/год"
         },
         {
-          "technology_ref": "obj_kz19_1",
-          "capex_musd": 277.71428571428567
+          "technology_ref": "obj_kz19_1"
         }
       ],
       "materials": [
@@ -3482,14 +5866,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Установки улавливания CO₂",
+            "citation": "Улавливание = мощность × уд. CAPEX (capexCcus) / 1000",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Транспорт и хранение",
+            "citation": "Транспорт/хранение = CAPEX улавливания × доля in_19_5",
             "confidence": "medium"
           }
         },
@@ -3513,6 +5897,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.cf": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_19_2",
+            "confidence": "medium",
+            "geo_applicability": "global"
+          }
+        },
+        "inputs.transport_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_19_5",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "process_change",
@@ -3523,6 +5923,83 @@
         "limit": {
           "indicator_ref": "ind_metals_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "abatement_kt": {
+          "label": {
+            "ru": "Снижение выбросов",
+            "en": "Abatement"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "base_emissions"
+              },
+              {
+                "ref": "share"
+              },
+              1000
+            ]
+          }
+        },
+        "capture_capacity": {
+          "label": {
+            "ru": "Мощность улавливания, тыс. т CO₂/год",
+            "en": "Capture capacity, kt CO₂/yr"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "ref": "abatement_kt"
+              },
+              {
+                "ref": "cf"
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX установок улавливания",
+            "en": "Capture units CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "capture_capacity"
+                  },
+                  {
+                    "ref": "obj:obj_kz19_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX транспорта и хранения",
+            "en": "Transport & storage CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "transport_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -3573,6 +6050,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "n_units": {
+          "value": 500,
+          "unit": "шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Крупные фермы — кол-во биогазовых установок (in_21_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "lagoon_factor": {
+          "value": 0.2,
+          "unit": "доля от CAPEX установки",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Покрытие лагун и инфраструктура (in_21_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3596,11 +6093,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz21_0",
-          "capex_musd": 250
+          "capacity": {
+            "ref": "n_units"
+          },
+          "unit": "шт"
         },
         {
-          "technology_ref": "obj_kz21_1",
-          "capex_musd": 50
+          "technology_ref": "obj_kz21_1"
         }
       ],
       "materials": [
@@ -3619,14 +6118,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Биогазовые установки",
+            "citation": "Биогазовые установки = кол-во × уд. CAPEX",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Покрытие лагун и инфраструктура",
+            "citation": "Покрытие лагун = CAPEX установок × доля in_21_6",
             "confidence": "medium"
           }
         },
@@ -3657,6 +6156,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.n_units": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_21_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.lagoon_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_21_6",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -3667,6 +6182,42 @@
         "limit": {
           "indicator_ref": "ind_manure_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX биогазовых установок",
+            "en": "Biogas plants CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "n_units"
+              },
+              {
+                "ref": "obj:obj_kz21_0#capex_ud"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX покрытия лагун и инфраструктуры",
+            "en": "Lagoon cover & infrastructure CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "lagoon_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -3717,6 +6268,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "area_kha": {
+          "value": 5000,
+          "unit": "тыс. га",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Зерновой пояс — площадь под точное земледелие (in_22_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "training_capex": {
+          "value": 30,
+          "unit": "mUSD",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Обучение и агрономическая поддержка (in_22_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3740,11 +6311,16 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz22_0",
-          "capex_musd": 150
+          "capacity": {
+            "ref": "area_kha"
+          },
+          "unit": "тыс. га"
         },
         {
           "technology_ref": "obj_kz22_1",
-          "capex_musd": 30
+          "capex_musd": {
+            "ref": "training_capex"
+          }
         }
       ],
       "materials": [
@@ -3763,14 +6339,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "GPS-навигация и датчики",
+            "citation": "GPS/датчики = площадь × уд. CAPEX (нормировка тыс. га→га, $→mUSD)",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Обучение и агрономическая поддержка",
+            "citation": "Обучение = вход in_22_6",
             "confidence": "medium"
           }
         },
@@ -3801,6 +6377,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.area_kha": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "in_22_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.training_capex": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_22_6",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -3811,6 +6403,32 @@
         "limit": {
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX GPS-навигации и датчиков",
+            "en": "GPS & sensors CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "area_kha"
+                  },
+                  {
+                    "ref": "obj:obj_kz22_0#capex_ud"
+                  },
+                  1000
+                ]
+              },
+              1000000
+            ]
+          }
         }
       }
     },
@@ -3861,6 +6479,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "area_kha": {
+          "value": 10000,
+          "unit": "тыс. га",
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "Деградированные пастбища — площадь восстановления (in_23_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "rotation_factor": {
+          "value": 0.15,
+          "unit": "доля от CAPEX восстановления",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Инфраструктура ротационного выпаса (in_23_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -3884,11 +6522,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz23_0",
-          "capex_musd": 200
+          "capacity": {
+            "ref": "area_kha"
+          },
+          "unit": "тыс. га"
         },
         {
-          "technology_ref": "obj_kz23_1",
-          "capex_musd": 30
+          "technology_ref": "obj_kz23_1"
         }
       ],
       "materials": [
@@ -3907,14 +6547,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Восстановление пастбищ",
+            "citation": "Восстановление = площадь × уд. CAPEX (нормировка тыс. га→га, $→mUSD)",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Инфраструктура ротационного выпаса",
+            "citation": "Ротационный выпас = CAPEX восстановления × доля in_23_6",
             "confidence": "medium"
           }
         },
@@ -3945,6 +6585,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.area_kha": {
+          "provenance": {
+            "source_type": "official_stat",
+            "citation": "in_23_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.rotation_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_23_6",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "process_change",
@@ -3955,6 +6611,49 @@
         "limit": {
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX восстановления пастбищ",
+            "en": "Pasture restoration CAPEX"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "area_kha"
+                  },
+                  {
+                    "ref": "obj:obj_kz23_0#capex_ud"
+                  },
+                  1000
+                ]
+              },
+              1000000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX инфраструктуры ротационного выпаса",
+            "en": "Rotational grazing infrastructure CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "rotation_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -4015,6 +6714,16 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "nursery_factor": {
+          "value": 0.1,
+          "unit": "доля от основного CAPEX",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Питомники и логистика (in_24_6)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -4040,11 +6749,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz24_0",
-          "capex_musd": 2000
+          "capacity": {
+            "ref": "area_kha"
+          },
+          "unit": "тыс. га"
         },
         {
-          "technology_ref": "obj_kz24_1",
-          "capex_musd": 200
+          "technology_ref": "obj_kz24_1"
         }
       ],
       "materials": [
@@ -4063,14 +6774,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Саженцы, подготовка почвы, посадка",
+            "citation": "Посадка = площадь × уд. CAPEX (capexAfforestation) / 1000",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Питомники и логистика",
+            "citation": "Питомники = основной CAPEX × доля in_24_6",
             "confidence": "medium"
           }
         },
@@ -4108,6 +6819,14 @@
             "citation": "Engineering premise (workbook «Расчёты»)",
             "confidence": "medium"
           }
+        },
+        "inputs.nursery_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_24_6",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "nature_based",
@@ -4119,6 +6838,48 @@
         "limit": {
           "indicator_ref": "ind_afforestation_area",
           "consumption_ref": "area_kha"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX посадки (саженцы, подготовка, посадка)",
+            "en": "Planting CAPEX (seedlings, prep, planting)"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "area_kha"
+                  },
+                  {
+                    "ref": "obj:obj_kz24_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX питомников и логистики",
+            "en": "Nurseries & logistics CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "nursery_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -4169,6 +6930,26 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "n_sites": {
+          "value": 20,
+          "unit": "шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Крупные города — кол-во полигонов под дегазацию (in_25_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "generator_factor": {
+          "value": 0.4,
+          "unit": "доля от CAPEX дегазации",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Газопоршневые генераторы (in_25_7)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -4192,11 +6973,13 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz25_0",
-          "capex_musd": 100
+          "capacity": {
+            "ref": "n_sites"
+          },
+          "unit": "шт"
         },
         {
-          "technology_ref": "obj_kz25_1",
-          "capex_musd": 40
+          "technology_ref": "obj_kz25_1"
         }
       ],
       "materials": [
@@ -4215,14 +6998,14 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Системы дегазации",
+            "citation": "Системы дегазации = кол-во полигонов × уд. CAPEX",
             "confidence": "medium"
           }
         },
         "created_technologies[1].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Газопоршневые генераторы",
+            "citation": "Генераторы = CAPEX дегазации × доля in_25_7",
             "confidence": "medium"
           }
         },
@@ -4253,6 +7036,22 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.n_sites": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_25_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "inputs.generator_factor": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_25_7",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -4263,6 +7062,42 @@
         "limit": {
           "indicator_ref": "ind_swaste_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX систем дегазации",
+            "en": "Degassing systems CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "n_sites"
+              },
+              {
+                "ref": "obj:obj_kz25_0#capex_ud"
+              }
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "ru": "CAPEX газопоршневых генераторов",
+            "en": "Gas-engine generators CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "generator_factor"
+              }
+            ]
+          }
         }
       }
     },
@@ -4313,6 +7148,16 @@
             "confidence": "medium",
             "geo_applicability": "kz_specific"
           }
+        },
+        "n_plants": {
+          "value": 15,
+          "unit": "шт",
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "Крупные города — кол-во КОС под модернизацию (in_26_2)",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "abatement": {
@@ -4336,7 +7181,10 @@
       "created_technologies": [
         {
           "technology_ref": "obj_kz26_0",
-          "capex_musd": 150
+          "capacity": {
+            "ref": "n_plants"
+          },
+          "unit": "шт"
         }
       ],
       "materials": [
@@ -4355,7 +7203,7 @@
         "created_technologies[0].capex_musd": {
           "provenance": {
             "source_type": "expert_estimate",
-            "citation": "Модернизация КОС",
+            "citation": "Модернизация КОС = кол-во × уд. CAPEX",
             "confidence": "medium"
           }
         },
@@ -4386,6 +7234,14 @@
             "citation": "Лист «Мероприятия» — coverage share",
             "confidence": "medium"
           }
+        },
+        "inputs.n_plants": {
+          "provenance": {
+            "source_type": "expert_estimate",
+            "citation": "in_26_2",
+            "confidence": "medium",
+            "geo_applicability": "kz_specific"
+          }
         }
       },
       "mechanism_subtype": "non_co2",
@@ -4396,6 +7252,25 @@
         "limit": {
           "indicator_ref": "ind_wastewater_emissions",
           "consumption_ref": "base_emissions"
+        }
+      },
+      "computed": {
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX модернизации КОС",
+            "en": "WWTP retrofit CAPEX"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "n_plants"
+              },
+              {
+                "ref": "obj:obj_kz26_0#capex_ud"
+              }
+            ]
+          }
         }
       }
     }
