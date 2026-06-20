@@ -10,12 +10,16 @@
 //   3. Pool stacking clips potential by MAC order, independent of input order.
 import baselineJson from '../data/kz/model.data.json';
 import { library, getSeedMeasure, seedMeasures } from '../src/lib/measure/library';
-import { compute, type ComputedMeasure } from '../src/lib/measure/compute';
+import { compute, makeResolver, type ComputedMeasure } from '../src/lib/measure/compute';
+import { evalAst } from '../src/lib/measure/eval';
 import { validate, stackPools, findDrift } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
 // HyperFormula twins — the parity oracle the shipped pure-TS core is pinned against.
 import { economicCore as economicCoreHF } from '../src/lib/measure/compile';
 import { lookupUnit, mulDim, divDim, dimEqual, isScalar } from '../src/lib/measure/dimensions';
+import { dimensionCheck } from '../src/lib/measure/dimension-check';
+import { BRIDGES, deltaEfFromBridges } from '../src/lib/measure/bridges';
+import bridgesJson from '../data/kz/library/bridges.json';
 import type { Measure, NumberOrRef } from '../src/lib/measure/schema';
 
 interface ExcelRow { id: number; mac: number; abatementKt: number; capex: number; opex: number; durationYrs: number }
@@ -241,8 +245,8 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
     'kt CO₂eq/(million m³)', 'kt CO₂eq/(thousand head·yr)', 'kt CO₂eq/(млн м³)',
     'kt CO₂eq/(тыс. голов·год)', 'kt CO₂eq/yr', 'mUSD/yr', 'tCO₂/MWh', 'tCO₂/MWh (coal baseline)',
     'ГВт·ч/год', 'ГДж/т', 'ГДж/тыс. м³', 'Гкал', 'МВт', 'МВт·ч/год', 'Мт CO₂eq/год', 'голов',
-    'доля', 'кВт', 'лет', 'млн м³', 'т', 'тCO₂/МВт·ч', 'тыс. Гкал', 'тыс. Гкал/год', 'тыс. га',
-    'тыс. голов', 'тыс. м³', 'усл. ед. (объём метана)', 'хозяйств',
+    'доля', 'кВт', 'лет', 'млн м³', 'т', 'тCO₂/Гкал', 'тCO₂/МВт·ч', 'тCO₂/(га·год)', 'тыс. Гкал',
+    'тыс. Гкал/год', 'тыс. га', 'тыс. голов', 'тыс. м³', 'усл. ед. (объём метана)', 'хозяйств',
   ];
   const unresolved = REAL_UNITS.filter((u) => !lookupUnit(u));
   expect(unresolved.length === 0, 'dimensions', `every real library unit resolves (unresolved: ${JSON.stringify(unresolved)})`);
@@ -269,6 +273,115 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
   // Fractions are scalar (dimensionless).
   expect(isScalar(lookupUnit('доля')!.dim) && isScalar(lookupUnit('fraction')!.dim),
     'dimensions', 'доля / fraction are dimensionless');
+}
+
+// ── 9. Dimensional gate (L3 slice 2) — every measure folds to CO₂; garbage trips the gate ──
+// The check folds each abatement AST over the slice-1 vocabulary and asserts it reduces to a
+// CO₂ quantity. The gate is hard (draft on failure), so all 26 published measures MUST pass —
+// a flip is a real finding to triage (like kz-16/kz-27), never a reason to weaken the check.
+{
+  for (const m of seedMeasures) {
+    const d = dimensionCheck(m, library);
+    expect(d.status !== 'warn', 'dimension',
+      `${m.id}: abatement folds to CO₂ (status=${d.status}${d.issues.length ? ' — ' + d.issues.join('; ') : ''})`);
+  }
+
+  // Corrupt one EF input into a mass unit: the formula now reduces to non-CO₂ → the gate fires
+  // and validate() withholds promotion (reduction panel incomplete, not eligible). kz-6's boiler
+  // EF is still an input (only fuel EFs were migrated to res-refs), so it is the corruption probe.
+  const bad = JSON.parse(JSON.stringify(getSeedMeasure('kz-6')!)) as Measure;
+  bad.inputs!.ef_boiler.unit = 'т'; // mass, not an emission factor
+  const dBad = dimensionCheck(bad, library);
+  expect(dBad.status === 'warn', 'dimension', `corrupted EF unit trips the dimensional gate — got ${dBad.status}`);
+  const vBad = validate(bad, library, seedMeasures.filter((m) => m.id !== 'kz-6'));
+  expect(
+    vBad.missing.some((s) => s.startsWith('dimension:'))
+      && vBad.panels.reduction === 'incomplete' && vBad.eligibleForModel === false,
+    'dimension',
+    `dimensional failure gates to draft (reduction=${vBad.panels.reduction}, eligible=${vBad.eligibleForModel})`,
+  );
+
+  // A missing unit is equally a gate failure (the B-path made units mandatory).
+  const noUnit = JSON.parse(JSON.stringify(getSeedMeasure('kz-9')!)) as Measure;
+  delete noUnit.inputs!.cap_mw.unit;
+  expect(dimensionCheck(noUnit, library).status === 'warn', 'dimension',
+    'a missing input unit trips the dimensional gate');
+}
+
+// ── 10. Carrier layer (L3 slice 3) — kz-27 class: a wrong-resource EF trips the gate ──
+// Units alone fold to CO₂; only the carrier layer (resource identity from the ref) sees that
+// the EF belongs to a different resource/product than the measure. Inert on the real 26 (the
+// fuel EFs were migrated to res-refs, but no measure crosses carriers in a product).
+{
+  // Lock 1 (backbone): a product may not cross two fuel carriers. coal EF × gas EF → mismatch.
+  const crossCarrier = {
+    id: 'synthetic-cross-carrier',
+    abatement: { formula: { op: 'mul', args: [{ ref: 'res:coal#ef' }, { ref: 'res:gas#ef' }] } },
+  } as unknown as Measure;
+  expect(dimensionCheck(crossCarrier, library).issues.some((s) => s.includes('carrier mismatch')),
+    'carrier', 'multiplying coal EF × gas EF trips the carrier-mismatch lock');
+
+  // A fuel switch subtracts EF_coal − EF_gas (a sub, not a mul) — exempt, kz-2 stays ok.
+  const kz2dim = dimensionCheck(getSeedMeasure('kz-2')!, library);
+  expect(kz2dim.status === 'ok' && !kz2dim.issues.some((s) => s.includes('carrier')),
+    'carrier', 'fuel switch (EF_coal − EF_gas) is exempt — kz-2 stays ok');
+
+  // Lock 2 (the literal kz-27): a coarse output-EF priced per MWh-electricity used on a measure
+  // whose product is Гкал-heat. The dimensions fold to CO₂/yr fine — only the carrier catches it.
+  const kz27 = JSON.parse(JSON.stringify(getSeedMeasure('kz-6')!)) as Measure;
+  kz27.product_ref = 'prod_heat';
+  kz27.abatement = {
+    formula: { op: 'mul', args: [{ ref: 'heat_kgcal' }, { ref: 'prd:prod_mwh#carbon_footprint' }] },
+  } as Measure['abatement'];
+  const d27 = dimensionCheck(kz27, library);
+  expect(d27.dim != null && dimEqual(d27.dim, { mass_co2: 1, time: -1 }), 'carrier',
+    'kz-27 synthetic is dimensionally CO₂/yr — units alone see nothing wrong');
+  expect(d27.status === 'warn' && d27.issues.some((s) => s.includes('output-EF')), 'carrier',
+    `electric output-EF on a heat product trips the carrier gate — got ${d27.status} (${d27.issues.join('; ')})`);
+  const v27 = validate(kz27, library, []);
+  expect(v27.panels.reduction === 'incomplete' && v27.eligibleForModel === false, 'carrier',
+    `kz-27 synthetic gated to draft (reduction=${v27.panels.reduction}, eligible=${v27.eligibleForModel})`);
+
+  // Same measure, product corrected to electricity (matches the output-EF) → carrier layer clears.
+  const fixed = JSON.parse(JSON.stringify(kz27)) as Measure;
+  fixed.product_ref = 'prod_mwh';
+  expect(dimensionCheck(fixed, library).status === 'ok', 'carrier',
+    'matching the product to the output-EF (prod_mwh) clears the carrier gate');
+}
+
+// ── 11. Bridge registry + composition (L3 slice 4) — delta_ef recomposed parity-exact ──
+// Bridges are the typed unit-conversion layer (`bridges.ts`). The composite delta_ef reassembled
+// from power_to_energy ∘ fuel_switch evaluates bit-for-bit to the engine's template (the engine
+// is unchanged), and — with the LHV indicators now in the library — the carrier lock catches a
+// real mis-composed fuel chain, not just a synthetic one.
+{
+  // The published mirror equals the code registry (trust anchor cannot silently drift).
+  const mirror = { ...(bridgesJson as Record<string, unknown>) };
+  delete mirror._comment;
+  expect(JSON.stringify(mirror) === JSON.stringify(BRIDGES), 'bridges',
+    'bridges.json published mirror equals the code registry');
+
+  // Composition parity: delta_ef rebuilt from bridges == the engine's delta_ef template (kz-2).
+  const kz2 = getSeedMeasure('kz-2')!;
+  const resolve = makeResolver(kz2, library);
+  const composed = deltaEfFromBridges({
+    capacity: { ref: 'cap_mw' }, hours: 8760, cf: { ref: 'kium' },
+    efIn: { ref: 'res:coal#ef' }, efOut: { ref: 'res:gas#ef' }, scale: 1e-3,
+  });
+  near('abatement', 'bridges', evalAst(composed, resolve), compute(kz2, library).abatementKt);
+
+  // Carrier lock alive on a REAL composed chain: fuel_to_energy (mass × res:coal#lhv) makes the
+  // energy carry "coal", so energy_to_co2 with a gas EF is now a detectable cross-carrier error.
+  const fuelChain = (efRef: string) => ({
+    id: `synthetic-fuelchain-${efRef}`,
+    inputs: { fuel_t: { value: 1, unit: 'т', provenance: { source_type: 'assumption', confidence: 'low' } } },
+    abatement: { formula: { op: 'mul', args: [{ ref: 'fuel_t' }, { ref: 'res:coal#lhv' }, { ref: efRef }] } },
+  } as unknown as Measure);
+  expect(dimensionCheck(fuelChain('res:coal#ef'), library).status === 'ok', 'bridges',
+    'coal mass × coal LHV × coal EF folds clean (carrier consistent)');
+  const mis = dimensionCheck(fuelChain('res:gas#ef'), library);
+  expect(mis.status === 'warn' && mis.issues.some((s) => s.includes('carrier mismatch')), 'bridges',
+    'coal energy × GAS EF — fuel_to_energy carried the coal carrier, so the wrong EF is caught');
 }
 
 // ── report ────────────────────────────────────────────────────────────────────

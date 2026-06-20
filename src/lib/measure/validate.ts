@@ -16,6 +16,7 @@
 import { type Ast, isNode, isLeafSlot } from './ast';
 import { evalAst, evalPredicate, type RefResolver } from './eval';
 import { compute, makeResolver, type ComputedMeasure } from './compute';
+import { dimensionCheck, type DimensionResult } from './dimension-check';
 import type { Binding, Library, CheckDef, Measure, Scope } from './schema';
 
 export type CheckStatus = 'ok' | 'warn' | 'na';
@@ -62,6 +63,8 @@ export interface ValidateResult {
   panels: Record<PanelKey, PanelStatus>;
   checks: Record<CheckId, CheckStatus>;
   details: Record<CheckId, CheckDetail | null>;
+  /** L3 slice 2 — dimensional verdict on the abatement formula (gates the reduction panel). */
+  dimension: DimensionResult;
 }
 
 /** Economics tolerance: implied unit cost within [0.5×, 2×] of the technology point estimate. */
@@ -411,6 +414,17 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     if (panels.economics !== 'warn') panels.economics = 'incomplete';
   }
 
+  // L3 slice 2 — dimensional gate: the abatement formula must reduce to a CO₂ quantity
+  // when its units are folded over the bridge vocabulary. A missing/unknown unit, an
+  // add/sub of incompatible dimensions, or a final dimension that is not CO₂/year is a
+  // hard gate — it degrades the reduction panel to incomplete (so the measure stays draft).
+  // `na` (a raw-share measure with no foldable AST) is a pass.
+  const dimension = dimensionCheck(measure, library);
+  if (dimension.status === 'warn') {
+    missing.push(...dimension.issues.map((s) => `dimension: ${s}`));
+    if (panels.reduction !== 'warn') panels.reduction = 'incomplete';
+  }
+
   // §7 precondition: belongs to a published pool, no failing INTRINSIC guardrail, no
   // incomplete panel, no drift. The `pool` check is EXCLUDED here — being clipped by
   // cheaper peers (pool oversubscription) is a render-time allocation outcome, not a
@@ -435,5 +449,6 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     panels,
     checks,
     details,
+    dimension,
   };
 }

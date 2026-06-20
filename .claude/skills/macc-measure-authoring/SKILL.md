@@ -169,6 +169,11 @@ are the full spec: `references/formula-ast.md`.
   **expand** each complex value on the next level in the same notation rather than inlining it.
 - Every value in a formula resolves to a library indicator, a measure input, or another
   computed value — no bare literals (§3/§6).
+- **Build the reduction by units** — chain unit *bridges* (`power_to_energy`, `fuel_to_energy`,
+  `energy_to_co2`, fuel switch) from what you hold to CO₂/year, taking each EF from the **right
+  resource** (`res:R#…`). `validate_measure` folds the formula over the dimensions and gates it
+  to `draft` if it does not reduce to CO₂ or crosses resource carriers (the kz-27 class of
+  error). Give every input a `unit`. → `references/dimension-bridges.md`.
 
 ---
 

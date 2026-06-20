@@ -1290,6 +1290,32 @@
         "confidence": "high",
         "geo_applicability": "kz_specific"
       }
+    },
+    {
+      "id": "ind_coal_lhv",
+      "key": "lhv",
+      "owner_kind": "resource",
+      "owner_ref": "coal",
+      "value": 20.0,
+      "unit": "ГДж/т",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Ekibastuz steam coal LHV ~20 GJ/t (low-grade)",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "ind_gas_lhv",
+      "key": "lhv",
+      "owner_kind": "resource",
+      "owner_ref": "gas",
+      "value": 34.0,
+      "unit": "ГДж/тыс. м³",
+      "provenance": {
+        "source_type": "literature",
+        "citation": "Natural gas LHV ~34 GJ per 1000 m³",
+        "confidence": "medium"
+      }
     }
   ],
   "pools": [

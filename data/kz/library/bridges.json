@@ -1,0 +1,174 @@
+{
+  "_comment": "Published mirror of src/lib/measure/bridges.ts BRIDGES (trust anchor). The engine uses the code definitions; regenerate with `npx tsx scripts/gen-bridges.ts`.",
+  "power_to_energy": {
+    "id": "power_to_energy",
+    "from": {
+      "dim": {
+        "energy": 1,
+        "time": -1
+      },
+      "carrier": "$R"
+    },
+    "via": [
+      {
+        "name": "hours",
+        "dim": {
+          "time": 1
+        }
+      },
+      {
+        "name": "cf",
+        "dim": {}
+      }
+    ],
+    "to": {
+      "dim": {
+        "energy": 1
+      },
+      "carrier": "$R"
+    },
+    "expr": {
+      "op": "mul",
+      "args": [
+        {
+          "slot": "from"
+        },
+        {
+          "slot": "hours"
+        },
+        {
+          "slot": "cf"
+        }
+      ]
+    },
+    "authoring": "Установленная мощность × часы в году × КИУМ = годовая выработка энергии того же ресурса."
+  },
+  "fuel_to_energy": {
+    "id": "fuel_to_energy",
+    "from": {
+      "dim": {
+        "mass": 1
+      },
+      "carrier": "$R"
+    },
+    "via": [
+      {
+        "name": "lhv",
+        "dim": {
+          "energy": 1,
+          "mass": -1
+        },
+        "indicator": "res:$R#lhv"
+      }
+    ],
+    "to": {
+      "dim": {
+        "energy": 1
+      },
+      "carrier": "$R"
+    },
+    "expr": {
+      "op": "mul",
+      "args": [
+        {
+          "slot": "from"
+        },
+        {
+          "slot": "lhv"
+        }
+      ]
+    },
+    "carrier_rule": "lhv ОБЯЗАН быть res:$R#lhv — LHV того же ресурса, что и масса топлива.",
+    "authoring": "Масса топлива × его теплотворность (LHV) = энергосодержание; LHV берётся из реестра ресурса."
+  },
+  "energy_to_co2": {
+    "id": "energy_to_co2",
+    "from": {
+      "dim": {
+        "energy": 1
+      },
+      "carrier": "$R"
+    },
+    "via": [
+      {
+        "name": "ef",
+        "dim": {
+          "mass_co2": 1,
+          "energy": -1
+        },
+        "indicator": "res:$R#ef"
+      }
+    ],
+    "to": {
+      "dim": {
+        "mass_co2": 1
+      }
+    },
+    "expr": {
+      "op": "mul",
+      "args": [
+        {
+          "slot": "from"
+        },
+        {
+          "slot": "ef"
+        }
+      ]
+    },
+    "carrier_rule": "ef ОБЯЗАН быть res:$R#ef — тот же носитель R, что у энергии (иначе ошибка класса kz-27).",
+    "authoring": "Энергия ресурса R × EF ТОГО ЖЕ R = CO₂. Взять EF другого ресурса — это ошибка носителя."
+  },
+  "fuel_switch_abatement": {
+    "id": "fuel_switch_abatement",
+    "from": {
+      "dim": {
+        "energy": 1
+      },
+      "carrier": "$R_old"
+    },
+    "via": [
+      {
+        "name": "ef_old",
+        "dim": {
+          "mass_co2": 1,
+          "energy": -1
+        },
+        "indicator": "res:$R_old#ef"
+      },
+      {
+        "name": "ef_new",
+        "dim": {
+          "mass_co2": 1,
+          "energy": -1
+        },
+        "indicator": "res:$R_new#ef"
+      }
+    ],
+    "to": {
+      "dim": {
+        "mass_co2": 1
+      }
+    },
+    "expr": {
+      "op": "mul",
+      "args": [
+        {
+          "slot": "from"
+        },
+        {
+          "op": "sub",
+          "args": [
+            {
+              "slot": "ef_old"
+            },
+            {
+              "slot": "ef_new"
+            }
+          ]
+        }
+      ]
+    },
+    "carrier_rule": "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; from — энергия R_old. Две цепочки своих ресурсов.",
+    "authoring": "Снижение = энергия замещаемого топлива × (EF замещаемого − EF нового). Оба EF — своих ресурсов."
+  }
+}

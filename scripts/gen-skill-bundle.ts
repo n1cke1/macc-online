@@ -26,6 +26,7 @@ const REFERENCES = [
   'conventions',
   'sourcing',
   'formula-ast',
+  'dimension-bridges',
   'abatement-modes',
   'potential',
   'checks',

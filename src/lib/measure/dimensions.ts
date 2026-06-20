@@ -54,6 +54,9 @@ export const UNIT_TABLE: Record<string, UnitInfo> = {
   'tCO₂/MWh': ef(1),
   'тCO₂/МВт·ч': ef(1),
   'tCO₂/MWh (coal baseline)': ef(1), // (carrier annotation parsed in a later slice)
+  'тCO₂/Гкал': ef(1 / GCAL_MWH),     // boiler EF stated per Гкал of heat (1 Гкал = 1.163 MWh)
+  // sequestration rate (mass_co2·area⁻¹·time⁻¹) — afforestation tCO₂ per ha per year
+  'тCO₂/(га·год)': { dim: { mass_co2: 1, area: -1, time: -1 }, scale: 1 / YEAR_H },
   // energy intensity (energy·mass⁻¹ / energy·volume⁻¹)
   'ГДж/т': { dim: { energy: 1, mass: -1 }, scale: GJ_MWH },
   'ГДж/тыс. м³': { dim: { energy: 1, volume: -1 }, scale: GJ_MWH / 1000 },

@@ -38,6 +38,16 @@ ceiling stored as a library indicator (`potential.limit.indicator_ref`). Per-mea
 independent of the pool; bounds the **volume**, never the MAC. ⚠ on overflow → lower the scale
 input until it fits (the engine does **not** auto-clip here). See `references/potential.md`.
 
+## dimension — [implemented, gating]
+
+The abatement formula is folded over the unit vocabulary and must reduce to **CO₂/year**
+(`mass_co2·time⁻¹`, or `mass_co2` if the year is inside). A missing/unknown unit, an
+`add`/`sub` of incompatible dimensions, a result that is not CO₂, a product that crosses two
+resource carriers, or an output-EF priced per the wrong product → the **reduction panel goes
+incomplete** and the measure stays `draft` (a hard gate, not a soft ⚠). The carrier layer
+(resource identity from `res:R#…` refs) catches a wrong-resource EF the bare units cannot see.
+Full discipline: `references/dimension-bridges.md`.
+
 ## serviceUnitMatch — [rule, not yet automated]
 
 `type=comparison` only: `flows.baseline` and `flows.project` products should match on
