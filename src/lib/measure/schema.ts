@@ -110,10 +110,12 @@ export interface ComputedValue {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // `published` = passed every automatic guardrail and belongs to the trusted model
-// curve; `draft` = a personal work-in-progress; `scenario` = a what-if. Promotion
-// to `published` is server-authoritative (the «canon» jargon was dropped —
-// jargon — the UI shows it as a green automatic-check status).
-export type Scope = 'published' | 'draft' | 'scenario';
+// curve (UI label «Готово»); `draft` = not yet passing the automatic checks. The
+// status is PLATFORM-decided, never author-set: validate() derives it from the
+// script (`published` ⟺ eligibleForModel), so there is no manual «mark as ready».
+// `archived` (soft-delete) is the only author/governance lifecycle action and lives
+// at the DB/MCP layer, not in this core outcome type.
+export type Scope = 'published' | 'draft';
 export type MaturityStage = 'raw' | 'computed';
 export type ReviewStatus = 'open' | 'accepted' | 'rejected' | 'wontfix';
 

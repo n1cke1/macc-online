@@ -243,7 +243,7 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: lifecycle — publish / unpublish / archive a measure ────────────────────
   server.registerTool(
     'set_measure_scope',
-    { title: 'Set measure scope', description: 'Change a measure\'s lifecycle scope: "published" (live in the shared curve), "draft" (private to the owner), "scenario" (a what-if), or "archived" (soft-delete — hidden from the curve, but the row + full history are kept; there is no hard delete). Versioned + attributed.', inputSchema: { id: z.string().describe('measure id'), scope: z.enum(['published', 'draft', 'scenario', 'archived']), note: z.string().optional() } },
+    { title: 'Archive measure', description: 'Soft-delete a measure: set scope to "archived" — hidden from the curve, but the row + full history are kept (there is no hard delete). The draft/published status is NOT settable here: it is platform-decided, derived automatically by validate() (published ⟺ the measure passes every check). Versioned + attributed.', inputSchema: { id: z.string().describe('measure id'), scope: z.enum(['archived']), note: z.string().optional() } },
     async ({ id, scope, note }) => {
       if (!user) return err(AUTH_ERR);
       try {

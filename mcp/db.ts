@@ -77,7 +77,8 @@ export async function dbUpdateMeasure(user: AuthedUser, id: string, patch: Recor
   return { id, finalScope: row?.scope ?? 'draft', version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id) };
 }
 
-/** Lifecycle: set a measure's scope (published / draft / scenario / archived). Versioned. */
+/** Lifecycle: set a measure's scope. Only `archived` (soft-delete) is set here;
+ *  draft/published are platform-decided (derived by validate()). Versioned. */
 export async function dbSetScope(user: AuthedUser, id: string, scope: string, note?: string): Promise<WriteResult> {
   return dbUpdateMeasure(user, id, { scope }, note ?? `scope → ${scope}`);
 }

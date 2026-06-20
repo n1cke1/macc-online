@@ -1605,10 +1605,7 @@ var measure_ui_help_default = {
         help: "In the trusted model curve. Published directly by any signed-in author \u2014 no server-side review \u2014 and every change is versioned and attributed."
       },
       draft: {
-        help: "A personal work-in-progress; stays out of the trusted curve."
-      },
-      scenario: {
-        help: "A what-if; stays out of the trusted curve."
+        help: "Not yet passing the automatic checks; stays out of the trusted curve. Platform-decided, not author-set."
       }
     },
     techKind: {
@@ -1724,7 +1721,7 @@ var measure_ui_help_default = {
       help: "Tree leaves: {ref:<key>}, {slot:<name>}, {const:<number>}, or a bare number literal. A {slot} is a template slot bound per-measure via bindings before evaluation."
     },
     namespace: {
-      help: "How a {ref:<key>} resolves: `res:<id>` \u2192 that resource's emission factor (EF); a key that has its own `computed` entry on the measure \u2192 that formula, evaluated recursively (drill-down to primary sources); otherwise a local measure input (measure.inputs[key]). Literals are {const:<n>} or a bare number \u2014 both allowed. No other namespaces."
+      help: "How a {ref:<key>} resolves (prefixed forms hit the library registry directly, so editing the indicator there propagates to every measure that names it): `res:<id>` \u2192 that resource's emission factor (EF, honors year-series); `res:<id>#<key>` \u2192 a resource indicator (price, lhv, comb_factor, \u2026); `obj:<id>#<key>` \u2192 an object/technology indicator (capex_ud, eff, \u2026); `prd:<id>#<key>` \u2192 a product indicator (carbon_footprint, \u2026); `sub:<id>#<key>` \u2192 a subsector indicator; `glb:<key>` \u2192 a global (discountRate, year, \u2026); `in:<key>` \u2192 a measure input (explicit form of the bare key). A bare `<key>` resolves to that key's own `computed` formula (evaluated recursively, drill-down to primary sources) if present, else to the measure input `measure.inputs[<key>]`. Literals are {const:<n>} or a bare number \u2014 both allowed."
     },
     example: {
       help: "Example (coal\u2192gas conversion): mul(ref:cap_mw, ref:kium, 8760, sub(ref:res:coal, ref:res:gas), 1e-3) = installed capacity \xD7 capacity factor \xD7 hours/yr \xD7 (EF coal \u2212 EF gas) \xD7 10\u207B\xB3. EF leaves use the res: namespace; 8760 and 1e-3 are literals."
@@ -6835,7 +6832,7 @@ function validate(measure, library2, peers = []) {
     computedNoFormula,
     drift,
     maturity: measure.maturity_stage,
-    scope: eligibleForModel ? "published" : measure.scope === "scenario" ? "scenario" : "draft",
+    scope: eligibleForModel ? "published" : "draft",
     eligibleForModel,
     mac: c.mac,
     potential: alloc.potential,
@@ -6881,7 +6878,7 @@ var measure_schema_default = {
     mechanism_subtype: { enum: ["efficiency", "fuel_switch", "electrification", "process_change", "demand_reduction", "non_co2", "nature_based", "engineered"], description: "Soft subtype tag (optional)." },
     permanence: { enum: ["short_lived", "durable"], description: "Removal only: storage durability flag (optional)." },
     baseline_basis: { enum: ["comparison", "standalone"], description: "\xA7B axis (parallel to mechanism). comparison \u21D2 service-unit baseline + comparison.service_unit_ref; standalone \u21D2 absolute project footprint (CCS, agro). Optional until all measures are authored, then required." },
-    scope: { enum: ["published", "draft", "scenario"] },
+    scope: { enum: ["published", "draft"] },
     owner_ref: { type: "string", description: "Identity claim from the write path (\xA79); the creator. Set by the server." },
     maturity_stage: { enum: ["raw", "computed"] },
     review_status: { enum: ["open", "accepted", "rejected", "wontfix"] },
@@ -7332,7 +7329,7 @@ ${JSON.stringify(library2.uiHelp)}
   );
   server.registerTool(
     "set_measure_scope",
-    { title: "Set measure scope", description: `Change a measure's lifecycle scope: "published" (live in the shared curve), "draft" (private to the owner), "scenario" (a what-if), or "archived" (soft-delete \u2014 hidden from the curve, but the row + full history are kept; there is no hard delete). Versioned + attributed.`, inputSchema: { id: z.string().describe("measure id"), scope: z.enum(["published", "draft", "scenario", "archived"]), note: z.string().optional() } },
+    { title: "Archive measure", description: 'Soft-delete a measure: set scope to "archived" \u2014 hidden from the curve, but the row + full history are kept (there is no hard delete). The draft/published status is NOT settable here: it is platform-decided, derived automatically by validate() (published \u27FA the measure passes every check). Versioned + attributed.', inputSchema: { id: z.string().describe("measure id"), scope: z.enum(["archived"]), note: z.string().optional() } },
     async ({ id, scope, note }) => {
       if (!user) return err(AUTH_ERR);
       try {

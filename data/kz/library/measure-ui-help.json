@@ -119,10 +119,7 @@
         "help": "In the trusted model curve. Published directly by any signed-in author — no server-side review — and every change is versioned and attributed."
       },
       "draft": {
-        "help": "A personal work-in-progress; stays out of the trusted curve."
-      },
-      "scenario": {
-        "help": "A what-if; stays out of the trusted curve."
+        "help": "Not yet passing the automatic checks; stays out of the trusted curve. Platform-decided, not author-set."
       }
     },
     "techKind": {

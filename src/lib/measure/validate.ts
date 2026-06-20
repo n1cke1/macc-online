@@ -403,7 +403,7 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     computedNoFormula,
     drift,
     maturity: measure.maturity_stage,
-    scope: eligibleForModel ? 'published' : measure.scope === 'scenario' ? 'scenario' : 'draft',
+    scope: eligibleForModel ? 'published' : 'draft',
     eligibleForModel,
     mac: c.mac,
     potential: alloc.potential,
