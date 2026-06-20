@@ -73,6 +73,5 @@ scale is lowered. The MAC (193.76) is unchanged either way — the limit never t
 
 ## Status
 
-`limit` is **optional** while the 26 measures are migrated onto it (mirroring `baseline_basis`).
-Once every measure carries one it is promoted to **required**, and a missing limit makes the
-potential panel `incomplete`. Until then a measure without a limit simply skips the check.
+A `limit` is **required** for model eligibility: a measure without one has its potential panel
+marked `incomplete` and stays `draft`. Declare the limiting factor for every measure.

@@ -2,12 +2,14 @@
 
 How to read `validate_measure`'s output.
 
-**Principle.** Automatic checks on predicates (`lte`/`gte`/`between`), surfaced by
-`validate()`: ✓ pass, ⚠ warn. They are ADVISORY — they do NOT block publishing (publishing
-is direct). They inform the author and drive `eligibleForModel` (= all checks ✓ and panels
-complete), shown as a badge. IMPLEMENTED: the §3/§6 notation rule (`provenance`, below) plus
-the five predicate checks factor, economics, pool, sector, limit. The remaining two
-(`serviceUnitMatch`, `doubleCountReduction`) are rules the author follows but are NOT yet automated.
+**Principle.** `validate()` runs two kinds of check, all driving `eligibleForModel` (the
+"готово" badge = all checks ✓ and panels complete). **Predicate checks** (`lte`/`gte`/`between`)
+are advisory: ✓ pass / ⚠ warn — a ⚠ does not block publishing (publishing is direct) but holds
+a measure back from eligibility. **Gating checks** — the §3/§6 notation rule and the `dimension`
+fold — are stricter: a failure marks the holding panel incomplete, so the measure stays `draft`.
+Implemented: the predicate checks factor, economics, pool, sector, limit; the notation rule;
+and the dimension/carrier fold. `serviceUnitMatch` and `doubleCountReduction` are rules you
+apply yourself — keep them in mind while authoring.
 
 ## factor — [implemented]
 
@@ -48,7 +50,7 @@ incomplete** and the measure stays `draft` (a hard gate, not a soft ⚠). The ca
 (resource identity from `res:R#…` refs) catches a wrong-resource EF the bare units cannot see.
 Full discipline: `references/dimension-bridges.md`.
 
-## serviceUnitMatch — [rule, not yet automated]
+## serviceUnitMatch — [author-applied rule]
 
 `type=comparison` only: `flows.baseline` and `flows.project` products should match on
 `serviceUnit`; a mismatch should be a ⚠.
@@ -62,7 +64,7 @@ The §3/§6 notation rule: every number must be an `input` (in `sources`) or `co
 gate: before a number joins the shared curve it should rest on `source_type ≠ placeholder`
 and (for an assumption) `binding ≠ new` — see the publish gate in the workflow (SKILL.md, step 6).
 
-## doubleCountReduction — [rule, not yet automated]
+## doubleCountReduction — [author-applied rule]
 
 Reduction is set by exactly one method per maturity: raw — baseline × share;
 computed — activity × factor; comparison — Δflow × EF. Mixing methods on one

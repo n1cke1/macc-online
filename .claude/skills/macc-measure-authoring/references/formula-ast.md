@@ -1,9 +1,5 @@
 # Formula AST — the closed expression language
 
-> Mechanically extracted (verbatim) from the `formulas` block of
-> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).
-> Reference spec, not judgment — an author needs this in full to write a `computed` node.
-
 **Principle.** A formula is data, not code: stored as an AST over named keys (`ref`), not
 cell references. Keys survive row insertion; the AST compiles to HyperFormula, so Excel
 parity is bit-for-bit.
@@ -23,7 +19,7 @@ Predicate operators for the checks (return true/false): `lte` (≤), `gte` (≥)
 Operator arity: `add`/`sub`/`mul`/`div` are variadic (≥2 args, folded left-to-right;
 `sub`/`div` as a running difference/quotient); `sum(…)` sums its args; `pv(rate, nper,
 payment)` is the Excel present value of a constant stream; `lookup(table, key)` selects
-from a table (reserved, unused in the prototype). Predicates: `lte(a,b)`/`gte(a,b)` binary;
+from a table (reserved). Predicates: `lte(a,b)`/`gte(a,b)` binary;
 `between(x,min,max)` ternary.
 
 ## Leaves

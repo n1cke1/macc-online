@@ -1,9 +1,5 @@
 # Conventions — units, signs, time, MAC
 
-> Mechanically extracted (verbatim) from the `conventions` block of
-> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).
-> Reference facts, not judgment — safe to read as the canonical reading rules.
-
 **Principle.** Shared conventions for units, signs, time and the MAC definition. The
 numbers themselves live elsewhere — here are the rules for reading them. All unit
 conversions are explicit (like `capexUdFactor`); no implicit multipliers.

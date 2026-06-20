@@ -1,10 +1,5 @@
 # Sourcing — provenance & binding discipline
 
-> Mechanically extracted (verbatim) from the `sourcing` block of
-> `data/kz/library/measure-notation.json` during the notation/skill split (step 1).
-> This block straddles fact and judgment — to be reconciled with SKILL.md §3 in the
-> collaborative skill pass.
-
 **Principle.** Every number in a measure carries a source (provenance) and, if it is an
 assumption, a library binding. Rule for the LLM: do not invent numbers — reuse the library,
 explain divergence, or admit it is local. Attach a source via `measure.sources` keyed by the

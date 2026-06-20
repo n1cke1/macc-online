@@ -172,8 +172,8 @@ are the full spec: `references/formula-ast.md`.
 - **Build the reduction by units** — chain unit *bridges* (`power_to_energy`, `fuel_to_energy`,
   `energy_to_co2`, fuel switch) from what you hold to CO₂/year, taking each EF from the **right
   resource** (`res:R#…`). `validate_measure` folds the formula over the dimensions and gates it
-  to `draft` if it does not reduce to CO₂ or crosses resource carriers (the kz-27 class of
-  error). Give every input a `unit`. **Prefer computing from the fuel** (mass × LHV × fuel EF)
+  to `draft` if it does not reduce to CO₂ or crosses resource carriers (e.g. an electricity EF
+  on a thermal chain). Give every input a `unit`. **Prefer computing from the fuel** (mass × LHV × fuel EF)
   over a coarse output-EF — it is auditable and carrier-safe. → `references/dimension-bridges.md`.
 
 ---

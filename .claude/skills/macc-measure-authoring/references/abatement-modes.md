@@ -46,5 +46,3 @@ a slot-substituted `resolved_ast`, and a `human` rendering, so the audit chain
 reaches the leaves from one call. Engine source of truth is
 `src/lib/measure/templates.ts` → `BUILTIN_TEMPLATES` (mirrored as a published
 trust anchor at `data/kz/library/formula-templates.json`).
-
-> TODO (expert): document each `factor:*` ref type and its accepted range source.

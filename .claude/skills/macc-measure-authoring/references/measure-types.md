@@ -132,18 +132,6 @@ project context, not independently sourced per measure — treat as orientation.
 
 ---
 
-## Open design questions (carried into the schema/migration plan)
-
-- **Hybrid measures** that both reduce and remove (BECCS displaces fossil power *and* removes
-  CO₂; afforestation that also displaces fuelwood). Recommended: a **primary mechanism** field
-  + an optional **co-benefit** flag. A measure that has a product *and* removal is the marker.
-- **Per-gas / GWP tagging** for the large KZ methane component — the model has no carbon price
-  or per-gas split yet; `non-CO₂` is a subtype tag for now.
-- **Permanence buckets** for removals — flag only, given the unsettled threshold and the small
-  KZ removal portfolio.
-
----
-
 ## Sources
 
 Primary (verified, high-confidence):
@@ -161,15 +149,13 @@ Primary (verified, high-confidence):
 
 ---
 
-## Caveats (read before extending this)
+## Caveats
 
 1. The **two-axis enum is a synthesis for tooling**, not a verbatim IPCC taxonomy. Axis 1
    (reduction vs removal) is firmly IPCC-grounded; Axis 2 (baseline basis) is firmly
    World Bank/GHG Protocol-grounded. IPCC does **not** publish the reduction-subtype enum —
    keep those as soft tags.
-2. The grounding for reduction-vs-removal is the **SPM / TS / Ch.12 / CDR Factsheet**, not
-   Chapter 3 — several over-attributed "top-level partition" phrasings were refuted during
-   verification.
+2. The grounding for reduction-vs-removal is the **SPM / TS / Ch.12 / CDR Factsheet**.
 3. **BECCS** is technically land-based biological CDR (only the CCS step is engineered); the
    clean nature/engineered split is a usability simplification.
 4. The **~1000-year permanence** figure is from a single 2024 Nature paper and is an active

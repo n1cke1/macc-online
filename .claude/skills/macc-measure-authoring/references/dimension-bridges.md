@@ -38,7 +38,7 @@ Units do not distinguish resources: coal EF and gas EF are both `tCO₂/MWh`. Th
 fold accepts "some EF" — only YOU guarantee it is the EF of the resource the energy belongs to.
 
 - Multiply an energy of resource R by `res:R#ef` — the **same** R. Putting a different
-  resource's EF on that energy (an electricity EF on a coal/heat chain) is the kz-27 class of
+  resource's EF on that energy (an electricity EF on a coal/heat chain) is a wrong-resource
   error; the carrier lock flags it as a *carrier mismatch* and the measure stays `draft`. A
   fuel switch is exempt — it *subtracts* two resources' EFs (`EF_old − EF_new`), it does not
   multiply across them.
@@ -67,7 +67,7 @@ Why the fuel chain is better than `output × (tCO₂/MWh output-EF)`:
   fuel's own LHV/EF, not to a lumped "per-MWh-of-product" number whose assumptions are hidden.
 - **Carrier-safe** — the fuel chain carries the resource explicitly, so the carrier lock
   guarantees the EF belongs to the fuel you actually burn. A coarse output-EF carries only a
-  product; mis-attributing it (an electricity output-EF on a heat chain) is the kz-27 error.
+  product; mis-attributing it (an electricity output-EF on a heat chain) is the carrier error to avoid.
 - **Less slip** — the finer the decomposition, the less room to put the wrong number in. If you
   only have a coarse `res:R#ef` (tCO₂/MWh), **decompose it** into `res:R#lhv` (energy per mass)
   + a fuel EF and compute from the fuel mass.
