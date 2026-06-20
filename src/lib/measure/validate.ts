@@ -396,6 +396,21 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
       `drift: ${d.path} = ${d.local} but binding.ref="${d.ref}" → ${d.bound}`));
   }
 
+  // Non-degeneracy: a measure that declares created_technologies (claims to build capital
+  // objects) but whose net CAPEX rolls to ~0 is structurally broken — its MAC rests on
+  // nothing (kz-27: created_technologies present but capacity/capex_ud absent → CAPEX=0,
+  // and with no capex_denominator the economics corridor check stays 'na', so without this
+  // it could pass `готово`). A retirement can legitimately net the build CAPEX to ~0, so
+  // that case is exempt. Surfaced on `missing` + degrades the economics panel (which gates).
+  const DEGENERATE_EPS = 1e-9;
+  const buildsButFree = (measure.created_technologies?.length ?? 0) > 0
+    && (measure.retired_technologies?.length ?? 0) === 0
+    && Math.abs(c.capex) < DEGENERATE_EPS;
+  if (buildsButFree) {
+    missing.push('degenerate: builds objects (created_technologies) but CAPEX rolls to 0');
+    if (panels.economics !== 'warn') panels.economics = 'incomplete';
+  }
+
   // §7 precondition: belongs to a published pool, no failing INTRINSIC guardrail, no
   // incomplete panel, no drift. The `pool` check is EXCLUDED here — being clipped by
   // cheaper peers (pool oversubscription) is a render-time allocation outcome, not a

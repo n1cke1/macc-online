@@ -207,6 +207,28 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
     `injected reuse-drift blocks promotion (drift=${vt.drift.length}, eligible=${vt.eligibleForModel})`);
 }
 
+// ── 7. Non-degeneracy — "builds objects but CAPEX rolls to 0" must not pass готово ──
+// kz-27's class: created_technologies present but no capacity/capex_ud → CAPEX=0, and with
+// no capex_denominator the economics corridor stays 'na'. Without the non-degeneracy gate
+// such a hollow measure could reach `готово`. Pin it (+ a costed control that stays clean).
+{
+  const mk = (tech: Record<string, unknown>): Measure => ({
+    id: 'degen', schema_version: 1, name: { ru: '', en: '' }, sector_ref: '1.A.1',
+    scope: 'draft', maturity_stage: 'computed', mechanism: 'reduction',
+    abatement: { formula: { const: 100 } },
+    inputs: { lifetime: { value: 10, provenance: { source_type: 'assumption', confidence: 'low' } } },
+    created_technologies: [{ technology_ref: 'x', ...tech }],
+  } as unknown as Measure);
+
+  const vDegen = validate(mk({ capacity: 0 }), library, []);
+  expect(vDegen.missing.some((s) => s.startsWith('degenerate:')) && vDegen.eligibleForModel === false,
+    'degeneracy', `builds objects but CAPEX=0 → flagged degenerate & not готово (missing=${JSON.stringify(vDegen.missing)})`);
+
+  const vCosted = validate(mk({ capex_musd: 5 }), library, []);
+  expect(!vCosted.missing.some((s) => s.startsWith('degenerate:')),
+    'degeneracy', 'a costed build (capex_musd>0) is NOT flagged degenerate');
+}
+
 // ── report ────────────────────────────────────────────────────────────────────
 console.log('Measure-golden — §11 acceptance slice');
 console.log(log.join('\n'));

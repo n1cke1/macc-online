@@ -11,7 +11,7 @@ import type { Levers, MaccPoint, SectorCode } from '@data/schema';
 import { getSupabase } from '@/lib/supabase/client';
 import { loadLibrary, loadMeasures } from '@/lib/measure/load-supabase';
 import { compute, type ComputedMeasure } from '@/lib/measure/compute';
-import { stackPools } from '@/lib/measure/validate';
+import { stackPools, validate } from '@/lib/measure/validate';
 import type { Library, Measure } from '@/lib/measure/schema';
 
 /** `measures` = ALL published measures (canonical + extras): the full set is needed so pool
@@ -80,6 +80,12 @@ export function computeExtras(data: CommunityData, levers: Levers): MaccPoint[] 
     if (FILE_IDS.has(m.id)) continue; // canonical ids are already plotted from the file curve
     const c = computedById.get(m.id);
     if (!c) continue;
+    // Gate C: only `готово` measures (eligibleForModel) belong on the trusted curve — a
+    // DB row marked published but failing the script (e.g. kz-27's CAPEX=0) is never plotted.
+    // Eligibility is peer-independent (pool competition no longer gates), so no peers needed.
+    let eligible = false;
+    try { eligible = validate(m, lib, []).eligibleForModel; } catch { eligible = false; }
+    if (!eligible) continue;
     out.push({
       id: extraPointId(m.id),
       sector: c.sector as SectorCode,
