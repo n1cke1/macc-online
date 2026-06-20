@@ -1,5 +1,5 @@
 'use client';
-// «Connect the MCP to your chat» helper. The hosted MCP is an OAuth remote server (the
+// «Add your own measure with AI» helper. The hosted MCP is an OAuth remote server (the
 // Cloudflare Worker), so connecting is just adding ONE URL as a custom connector — the
 // app does the OAuth sign-in itself; no token to copy, nothing that expires. The URL is
 // public (the connector address), so this is shown to everyone (no auth gate).
@@ -29,7 +29,7 @@ export default function McpConnectPanel() {
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-2 text-left text-sm font-bold"
       >
-        <span>{tr('Подключить MCP к своему чату', 'Connect the MCP to your chat')}</span>
+        <span>{tr('Добавить свою меру вместе с AI', 'Add your own measure with AI')}</span>
         <span className="text-xs font-normal text-muted">{open ? '▲' : '▼'}</span>
       </button>
 
@@ -37,8 +37,8 @@ export default function McpConnectPanel() {
         <div className="mt-3 space-y-3 text-sm">
           <p className="text-xs text-muted">
             {tr(
-              'Добавьте этот адрес как «custom connector» в Claude (приложение или Claude Code). Вход под вашим аккаунтом произойдёт автоматически — копировать токен не нужно, ничего не протухает.',
-              'Add this URL as a custom connector in Claude (the app or Claude Code). Sign-in under your account happens automatically — no token to copy, nothing expires.',
+              'Подключите этот MCP-коннектор к Claude или ChatGPT — и предлагайте свои меры прямо из чата с AI. Вход под вашим аккаунтом произойдёт автоматически: копировать токен не нужно, ничего не протухает.',
+              'Connect this MCP connector to Claude or ChatGPT and propose your own measures right from the AI chat. Sign-in under your account happens automatically — no token to copy, nothing expires.',
             )}
           </p>
 
@@ -55,11 +55,23 @@ export default function McpConnectPanel() {
             </div>
           </div>
 
-          <ol className="list-decimal space-y-1 pl-4 text-xs text-muted">
-            <li>{tr('Claude → Settings → Connectors → Add custom connector', 'Claude → Settings → Connectors → Add custom connector')}</li>
-            <li>{tr('вставьте адрес выше', 'paste the URL above')}</li>
-            <li>{tr('войдите под своим аккаунтом — инструменты меры станут доступны', 'sign in with your account — the measure tools become available')}</li>
-          </ol>
+          <div>
+            <p className="mb-1 text-xs font-semibold">{tr('В Claude', 'In Claude')}</p>
+            <ol className="list-decimal space-y-1 pl-4 text-xs text-muted">
+              <li>{tr('Settings → Connectors → Add custom connector', 'Settings → Connectors → Add custom connector')}</li>
+              <li>{tr('вставьте адрес выше', 'paste the URL above')}</li>
+              <li>{tr('войдите под своим аккаунтом — инструменты меры станут доступны', 'sign in with your account — the measure tools become available')}</li>
+            </ol>
+          </div>
+
+          <div>
+            <p className="mb-1 text-xs font-semibold">{tr('В ChatGPT', 'In ChatGPT')}</p>
+            <ol className="list-decimal space-y-1 pl-4 text-xs text-muted">
+              <li>{tr('Settings → Connectors (включите режим разработчика, если потребуется)', 'Settings → Connectors (enable developer mode if prompted)')}</li>
+              <li>{tr('создайте custom connector (MCP) и вставьте адрес выше', 'create a custom connector (MCP) and paste the URL above')}</li>
+              <li>{tr('авторизуйтесь — инструменты меры появятся в чате', 'sign in — the measure tools appear in the chat')}</li>
+            </ol>
+          </div>
         </div>
       )}
     </section>

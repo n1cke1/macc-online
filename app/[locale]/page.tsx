@@ -17,6 +17,7 @@ import CommunityLoader from '@/components/macc/CommunityLoader';
 import AuthButtonGate from '@/components/collab/AuthButtonGate';
 import AllComments from '@/components/collab/AllComments';
 import MeasureDrilldownGate from '@/components/measure/MeasureDrilldownGate';
+import McpConnectPanel from '@/components/measure/McpConnectPanel';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -50,6 +51,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         <AssumptionsPanel />
         <GlobalAssumptionsPanel />
         <HowToRead />
+        <McpConnectPanel />
 
         <section className="space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
