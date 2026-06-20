@@ -200,9 +200,11 @@ often skipped — and skipping them is what produces a messy registry and a meas
    → `references/potential.md`.
 5. **Validate** — run `validate_measure`; it advises, it never blocks. How to read its
    output: → `references/checks.md`.
-6. **Publish gate** — make a measure part of the shared curve only when the numbers that
-   matter rest on real sources. If a number that materially moves the MAC or the volume is
-   still a guess/placeholder, keep it a **draft** and note what is missing.
+6. **Publish gate** — whether a measure joins the shared curve (`published` vs `draft`) is a
+   **server-side verdict**, not a flag you set: validation promotes it only when its gating
+   checks pass and its panels are complete. Your job is to make the numbers that move the MAC
+   or volume rest on real sources (not a guess/placeholder), so validation *can* promote it;
+   until then it stays `draft`.
 
 ---
 
