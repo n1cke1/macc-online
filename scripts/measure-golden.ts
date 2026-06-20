@@ -15,6 +15,7 @@ import { validate, stackPools, findDrift } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
 // HyperFormula twins — the parity oracle the shipped pure-TS core is pinned against.
 import { economicCore as economicCoreHF } from '../src/lib/measure/compile';
+import { lookupUnit, mulDim, divDim, dimEqual, isScalar } from '../src/lib/measure/dimensions';
 import type { Measure, NumberOrRef } from '../src/lib/measure/schema';
 
 interface ExcelRow { id: number; mac: number; abatementKt: number; capex: number; opex: number; durationYrs: number }
@@ -227,6 +228,47 @@ for (const id of ['kz-20', 'kz-2', 'kz-16'] as const) {
   const vCosted = validate(mk({ capex_musd: 5 }), library, []);
   expect(!vCosted.missing.some((s) => s.startsWith('degenerate:')),
     'degeneracy', 'a costed build (capex_musd>0) is NOT flagged degenerate');
+}
+
+// ── 8. Dimension vocabulary (L3 slice 1) — every real library unit resolves + algebra ──
+// Pins the bridge-registry foundation: each unit string actually used in the library maps to
+// a dimension, and the dimensional algebra (the checker will fold an AST over it) is sound.
+{
+  // Every distinct unit string found in the library data must resolve (else its measure would
+  // fail the dimensional gate). Keep in lockstep with the data extraction.
+  const REAL_UNITS = [
+    '$/farm', '$/head', '$/head·yr', '$/kW', '$/t', '$/thousand m³', 'MWh', 'fraction',
+    'kt CO₂eq/(million m³)', 'kt CO₂eq/(thousand head·yr)', 'kt CO₂eq/(млн м³)',
+    'kt CO₂eq/(тыс. голов·год)', 'kt CO₂eq/yr', 'mUSD/yr', 'tCO₂/MWh', 'tCO₂/MWh (coal baseline)',
+    'ГВт·ч/год', 'ГДж/т', 'ГДж/тыс. м³', 'Гкал', 'МВт', 'МВт·ч/год', 'Мт CO₂eq/год', 'голов',
+    'доля', 'кВт', 'лет', 'млн м³', 'т', 'тCO₂/МВт·ч', 'тыс. Гкал', 'тыс. Гкал/год', 'тыс. га',
+    'тыс. голов', 'тыс. м³', 'усл. ед. (объём метана)', 'хозяйств',
+  ];
+  const unresolved = REAL_UNITS.filter((u) => !lookupUnit(u));
+  expect(unresolved.length === 0, 'dimensions', `every real library unit resolves (unresolved: ${JSON.stringify(unresolved)})`);
+
+  // Power is derived (energy·time⁻¹): МВт and МВт·ч/год reduce to the SAME dimension.
+  expect(dimEqual(lookupUnit('МВт')!.dim, lookupUnit('МВт·ч/год')!.dim),
+    'dimensions', 'МВт ≡ МВт·ч/год (both energy·time⁻¹)');
+
+  // RU/EN spellings of the EF agree.
+  expect(dimEqual(lookupUnit('tCO₂/MWh')!.dim, lookupUnit('тCO₂/МВт·ч')!.dim),
+    'dimensions', 'tCO₂/MWh ≡ тCO₂/МВт·ч');
+
+  // Bridge math: energy × EF = CO₂ (mass_co2); power × time = energy.
+  const energyDim = lookupUnit('MWh')!.dim;
+  const efDim = lookupUnit('tCO₂/MWh')!.dim;
+  expect(dimEqual(mulDim(energyDim, efDim), { mass_co2: 1 }),
+    'dimensions', 'energy × EF = mass_co2 (the energy_to_co2 bridge)');
+  expect(dimEqual(mulDim(lookupUnit('МВт')!.dim, lookupUnit('лет')!.dim), energyDim),
+    'dimensions', 'power × time = energy');
+  // div is the inverse: co2 ÷ energy = EF.
+  expect(dimEqual(divDim({ mass_co2: 1 }, energyDim), efDim),
+    'dimensions', 'mass_co2 ÷ energy = EF');
+
+  // Fractions are scalar (dimensionless).
+  expect(isScalar(lookupUnit('доля')!.dim) && isScalar(lookupUnit('fraction')!.dim),
+    'dimensions', 'доля / fraction are dimensionless');
 }
 
 // ── report ────────────────────────────────────────────────────────────────────
