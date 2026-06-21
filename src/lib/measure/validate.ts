@@ -223,6 +223,9 @@ export function taggablePaths(m: Measure): string[] {
   (m.materials ?? []).forEach((mt, i) => {
     if (isLit(mt.qty) || m.computed?.[`materials[${i}].qty`]) p.push(`materials[${i}].qty`);
     if (isLit(mt.price) || m.computed?.[`materials[${i}].price`]) p.push(`materials[${i}].price`);
+    // §A1 — an explicit cost is a taggable number too (symmetry with qty/price); without
+    // this an inline `cost_musd` is a black-box value the notation rule never flags.
+    if (isLit(mt.cost_musd) || m.computed?.[`materials[${i}].cost_musd`]) p.push(`materials[${i}].cost_musd`);
   });
   if (m.abatement.raw) p.push('abatement.raw.share');
   return p;
