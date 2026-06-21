@@ -24,7 +24,7 @@ const OUT = resolve(ROOT, 'src/lib/measure/skill.generated.ts');
 
 const REFERENCES = [
   'measure-types', 'sectors', 'conventions', 'sourcing', 'formula-ast',
-  'dimension-bridges', 'abatement-modes', 'potential', 'checks',
+  'dimension-bridges', 'abatement-modes', 'potential', 'checks', 'issues',
 ];
 
 /** Drop a leading YAML frontmatter block (`---` … `---`). */

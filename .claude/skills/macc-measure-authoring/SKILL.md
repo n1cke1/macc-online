@@ -205,6 +205,9 @@ often skipped — and skipping them is what produces a messy registry and a meas
    checks pass and its panels are complete. Your job is to make the numbers that move the MAC
    or volume rest on real sources (not a guess/placeholder), so validation *can* promote it;
    until then it stays `draft`.
+7. **Hit a shared-truth problem?** A wrong/placeholder library number, a missing corridor, a
+   guardrail that fires wrongly, a disputed classification — these are not yours to silently
+   patch. Route them: → `references/issues.md` (when to file vs fix yourself, and how).
 
 ---
 
