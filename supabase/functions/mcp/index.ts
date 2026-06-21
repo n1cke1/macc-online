@@ -8958,150 +8958,76 @@ var graph_seed_default = {
         confidence: "medium",
         geo_applicability: "kz_specific"
       }
-    }
-  ],
-  pools: [
-    {
-      id: "pool_enteric",
-      caps_ref: "activity:cattle_enteric",
-      annual_flow: 5e3,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "3",
-      baselineEmissionsKt: 17800
     },
     {
-      id: "pool_coal_power",
-      caps_ref: "resource:coal_power",
-      annual_flow: 88e3,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.1",
-      baselineEmissionsKt: 13e4,
-      _source: "\u0423\u0433\u043E\u043B\u044C\u043D\u0430\u044F \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u044F \u0420\u041A \u224888 \u0422\u0412\u0442\xB7\u0447/\u0433\u043E\u0434 \xD7 EF\u22481 \u0442CO\u2082/\u041C\u0412\u0442\xB7\u0447 \u224888 \u041C\u0442 CO\u2082 \u2014 \u043F\u043E\u0442\u043E\u043B\u043E\u043A \u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u0438\u044F (Samruk-Energy 2024)"
+      id: "ind_coal_heat_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.A.1.coal_heat",
+      value: 42,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "placeholder",
+        citation: "Placeholder \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435-\u0441\u043E\u0440\u0441\u0438\u043D\u0433\u0430 UNFCCC BTR1. \u0417\u0430\u0441\u0435\u044F\u043D\u043E \u0438\u0437 \u043F\u0440\u0435\u0436\u043D\u0435\u0433\u043E pool.baselineEmissionsKt (42000 kt). R3.",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
     },
     {
-      id: "pool_coal_methane",
-      caps_ref: "resource:coal_mine_ch4",
-      annual_flow: 3e3,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.B",
-      baselineEmissionsKt: 9500
+      id: "ind_industry_energy_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.A.2.industry_energy",
+      value: 30,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "placeholder",
+        citation: "Placeholder \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435-\u0441\u043E\u0440\u0441\u0438\u043D\u0433\u0430 UNFCCC BTR1. \u0417\u0430\u0441\u0435\u044F\u043D\u043E \u0438\u0437 \u043F\u0440\u0435\u0436\u043D\u0435\u0433\u043E pool.baselineEmissionsKt (30000 kt). R3.",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
     },
     {
-      id: "pool_coal_efficiency",
-      caps_ref: "resource:coal_power",
-      annual_flow: 5e3,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.1",
-      baselineEmissionsKt: 13e4,
-      _source: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u0441\u043D\u0438\u0436\u0435\u043D\u0438\u044F \u0437\u0430 \u0441\u0447\u0451\u0442 \u0440\u043E\u0441\u0442\u0430 \u041A\u041F\u0414 \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u043F\u0430\u0440\u043A\u0430 (\u043D\u0435 \u0432\u044B\u0442\u0435\u0441\u043D\u0435\u043D\u0438\u0435 \u2014 \u043E\u0442\u0434\u0435\u043B\u044C\u043D\u044B\u0439 \u043F\u0443\u043B, \u0438\u043D\u0430\u0447\u0435 \u0434\u0432\u043E\u0439\u043D\u043E\u0439 \u0441\u0447\u0451\u0442 \u0441 \u0432\u044B\u0442\u0435\u0441\u043D\u044F\u044E\u0449\u0438\u043C\u0438 \u043C\u0435\u0440\u0430\u043C\u0438)"
+      id: "ind_coal_ch4_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "1.B.coal_methane",
+      value: 9.5,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "placeholder",
+        citation: "Placeholder \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435-\u0441\u043E\u0440\u0441\u0438\u043D\u0433\u0430 UNFCCC BTR1. \u0417\u0430\u0441\u0435\u044F\u043D\u043E \u0438\u0437 \u043F\u0440\u0435\u0436\u043D\u0435\u0433\u043E pool.baselineEmissionsKt (9500 kt). R3.",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
     },
     {
-      id: "pool_coal_heat",
-      caps_ref: "resource:coal_heat",
-      annual_flow: 4e4,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.1",
-      baselineEmissionsKt: 42e3,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0443\u0433\u043E\u043B\u044C\u043D\u043E\u0433\u043E \u0446\u0435\u043D\u0442\u0440\u0430\u043B\u0438\u0437\u043E\u0432\u0430\u043D\u043D\u043E\u0433\u043E \u0442\u0435\u043F\u043B\u043E\u0441\u043D\u0430\u0431\u0436\u0435\u043D\u0438\u044F \u0420\u041A (\u0422\u042D\u0426-\u0442\u0435\u043F\u043B\u043E + \u0443\u0433\u043E\u043B\u044C\u043D\u044B\u0435 \u043A\u043E\u0442\u0435\u043B\u044C\u043D\u044B\u0435) \u224842 \u041C\u0442 \u2014 \u043E\u0446\u0435\u043D\u043A\u0430 \u043A\u0430\u043A \u043E\u0441\u0442\u0430\u0442\u043E\u043A 1.A.1 \u0437\u0430 \u0432\u044B\u0447\u0435\u0442\u043E\u043C \u044D\u043B\u0435\u043A\u0442\u0440\u043E\u0433\u0435\u043D\u0435\u0440\u0430\u0446\u0438\u0438"
+      id: "ind_enteric_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "3.enteric",
+      value: 17.8,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "placeholder",
+        citation: "Placeholder \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435-\u0441\u043E\u0440\u0441\u0438\u043D\u0433\u0430 UNFCCC BTR1. \u0417\u0430\u0441\u0435\u044F\u043D\u043E \u0438\u0437 \u043F\u0440\u0435\u0436\u043D\u0435\u0433\u043E pool.baselineEmissionsKt (17800 kt). R3.",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
     },
     {
-      id: "pool_industry_energy",
-      caps_ref: "resource:industry_energy",
-      annual_flow: 3e4,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.2",
-      baselineEmissionsKt: 3e4,
-      _source: "\u042D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043E\u0431\u0440\u0430\u0431\u0430\u0442\u044B\u0432\u0430\u044E\u0449\u0435\u0439 \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0441\u0442\u0438 \u0420\u041A 1.A.2 (\u224830 \u041C\u0442, \u043E\u0446\u0435\u043D\u043A\u0430; \u043F\u0440\u043E\u043C\u044B\u0448\u043B\u0435\u043D\u043D\u043E\u0441\u0442\u044C ~21,6% \u0413\u0412\u0442-\u0432\u044B\u0431\u0440\u043E\u0441\u043E\u0432, \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u044F 70% \u2014 MDPI 2025)"
-    },
-    {
-      id: "pool_road_transport",
-      caps_ref: "activity:road_transport",
-      annual_flow: 27100,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.3",
-      baselineEmissionsKt: 27100,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0434\u043E\u0440\u043E\u0436\u043D\u043E\u0433\u043E \u0442\u0440\u0430\u043D\u0441\u043F\u043E\u0440\u0442\u0430 \u0420\u041A \u224827,1 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, BTR1)"
-    },
-    {
-      id: "pool_residential_heat",
-      caps_ref: "resource:residential_fuel",
-      annual_flow: 46500,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.A.4",
-      baselineEmissionsKt: 46500,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0416\u041A\u0425/\u043F\u0440\u043E\u0447\u0438\u0445 \u0441\u0435\u043A\u0442\u043E\u0440\u043E\u0432 \u0420\u041A \u224846,5 \u041C\u0442 (\u043B\u0438\u0441\u0442 \xAB\u0412\u044B\u0431\u0440\u043E\u0441\u044B\xBB, BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0446\u0438\u0438 \u0433\u0430\u0437\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438/\u044D\u043B\u0435\u043A\u0442\u0440\u0438\u0444\u0438\u043A\u0430\u0446\u0438\u0438/\u0442\u0435\u0440\u043C\u043E\u043C\u043E\u0434\u0435\u0440\u043D\u0438\u0437\u0430\u0446\u0438\u0438"
-    },
-    {
-      id: "pool_og_methane",
-      caps_ref: "resource:og_methane",
-      annual_flow: 34200,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "1.B",
-      baselineEmissionsKt: 34200,
-      _source: "\u041B\u0435\u0442\u0443\u0447\u0438\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043D\u0430 \u043D\u0435\u0444\u0442\u0435\u0433\u0430\u0437\u0430 \u0420\u041A \u224834,2 \u041C\u0442 (BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u043A\u043E\u043D\u043A\u0443\u0440\u0435\u043D\u0446\u0438\u0438 LDAR/\u041F\u041D\u0413/\u0443\u0442\u0435\u0447\u0435\u043A \u0413\u0422\u0421"
-    },
-    {
-      id: "pool_cement",
-      caps_ref: "resource:cement_process",
-      annual_flow: 8600,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "2",
-      baselineEmissionsKt: 8600,
-      _source: "\u041F\u0440\u043E\u0446\u0435\u0441\u0441\u043D\u044B\u0435 \u0432\u044B\u0431\u0440\u043E\u0441\u044B \u0446\u0435\u043C\u0435\u043D\u0442\u0430 \u0420\u041A \u22488,6 \u041C\u0442 (BTR1)"
-    },
-    {
-      id: "pool_industry_ccs",
-      caps_ref: "resource:industry_co2",
-      annual_flow: 27e3,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "2",
-      baselineEmissionsKt: 27e3,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u043C\u0435\u0442\u0430\u043B\u043B\u0443\u0440\u0433\u0438\u0438+\u0446\u0435\u043C\u0435\u043D\u0442\u0430 \u043F\u043E\u0434 CCS \u224827 \u041C\u0442 (BTR1)"
-    },
-    {
-      id: "pool_manure",
-      caps_ref: "activity:manure",
-      annual_flow: 3300,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "3",
-      baselineEmissionsKt: 3300,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0430\u0432\u043E\u0437\u043E\u043C \u22483,3 \u041C\u0442 (BTR1)"
-    },
-    {
-      id: "pool_ag_soils",
-      caps_ref: "activity:ag_soils",
-      annual_flow: 11600,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "3",
-      baselineEmissionsKt: 11600,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B \u0441/\u0445 \u043F\u043E\u0447\u0432+\u043F\u0430\u0441\u0442\u0431\u0438\u0449 \u224811,6 \u041C\u0442 (BTR1) \u2014 \u043E\u0431\u0449\u0438\u0439 \u043F\u0443\u043B \u0442\u043E\u0447\u043D\u043E\u0433\u043E \u0437\u0435\u043C\u043B\u0435\u0434\u0435\u043B\u0438\u044F \u0438 \u0443\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043F\u0430\u0441\u0442\u0431\u0438\u0449\u0430\u043C\u0438"
-    },
-    {
-      id: "pool_afforestation",
-      caps_ref: "activity:afforestation",
-      annual_flow: 1e4,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "4",
-      baselineEmissionsKt: 1e4,
-      _source: "\u041F\u043E\u0442\u0435\u043D\u0446\u0438\u0430\u043B \u043F\u043E\u0433\u043B\u043E\u0449\u0435\u043D\u0438\u044F \u043B\u0435\u0441\u043E\u043D\u0430\u0441\u0430\u0436\u0434\u0435\u043D\u0438\u0435\u043C \u0420\u041A (\u043E\u0446\u0435\u043D\u043A\u0430)"
-    },
-    {
-      id: "pool_solid_waste",
-      caps_ref: "resource:landfill_gas",
-      annual_flow: 3600,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "5",
-      baselineEmissionsKt: 3600,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0422\u0411\u041E \u22483,6 \u041C\u0442 (BTR1)"
-    },
-    {
-      id: "pool_wastewater",
-      caps_ref: "resource:wastewater_ch4",
-      annual_flow: 3200,
-      unit: "kt CO\u2082eq/yr",
-      sector_ref: "5",
-      baselineEmissionsKt: 3200,
-      _source: "\u0412\u044B\u0431\u0440\u043E\u0441\u044B CH\u2084 \u0441\u0442\u043E\u0447\u043D\u044B\u0445 \u0432\u043E\u0434 \u22483,2 \u041C\u0442 (BTR1)"
+      id: "ind_forestry_emissions",
+      key: "max_emissions",
+      owner_kind: "subsector",
+      owner_ref: "4.forestry",
+      value: 10,
+      unit: "\u041C\u0442 CO\u2082eq/\u0433\u043E\u0434",
+      provenance: {
+        source_type: "placeholder",
+        citation: "Placeholder \u2014 \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435-\u0441\u043E\u0440\u0441\u0438\u043D\u0433\u0430 UNFCCC BTR1. \u0417\u0430\u0441\u0435\u044F\u043D\u043E \u0438\u0437 \u043F\u0440\u0435\u0436\u043D\u0435\u0433\u043E pool.baselineEmissionsKt (10000 kt). R3.",
+        confidence: "low",
+        geo_applicability: "kz_specific"
+      }
     }
   ]
 };
@@ -9496,7 +9422,7 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_enteric",
+        pool_ref: "sub:3.enteric#max_emissions",
         limit: {
           indicator_ref: "ind_cattle_population",
           consumption_ref: "activity"
@@ -9715,7 +9641,7 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "n_objects",
-        pool_ref: "pool_coal_power",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_coal_power_capacity",
           consumption_ref: "cap_mw"
@@ -9994,7 +9920,7 @@ var measures_seed_default = {
       ],
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_coal_methane",
+        pool_ref: "sub:1.B.coal_methane#max_emissions",
         limit: {
           indicator_ref: "ind_cmm_volume",
           consumption_ref: "activity"
@@ -10264,7 +10190,7 @@ var measures_seed_default = {
       product_ref: "prod_mwh",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_coal_efficiency",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_coal_fleet_emissions",
           consumption_ref: "base_emissions"
@@ -10338,7 +10264,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "n_objects",
-        pool_ref: "pool_coal_power",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_res_potential",
           consumption_ref: "cap_mw"
@@ -10969,7 +10895,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_coal_power",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_coal_generation",
           consumption_ref: "gen_displaced_gwh"
@@ -11300,7 +11226,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_coal_power",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_nuclear_gen",
           consumption_ref: "gen_mwh"
@@ -11555,7 +11481,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_coal_heat",
+        pool_ref: "sub:1.A.1.coal_heat#max_emissions",
         limit: {
           indicator_ref: "ind_coal_heat_supply",
           consumption_ref: "heat_kgcal"
@@ -11919,7 +11845,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_coal_heat",
+        pool_ref: "sub:1.A.1.coal_heat#max_emissions",
         limit: {
           indicator_ref: "ind_coal_heat_supply",
           consumption_ref: "heat_kgcal"
@@ -12435,7 +12361,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_coal_power",
+        pool_ref: "sub:1.A.1.coal_power#max_emissions",
         limit: {
           indicator_ref: "ind_coal_generation",
           consumption_ref: "gen_displaced_gwh"
@@ -12744,7 +12670,7 @@ var measures_seed_default = {
       },
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_industry_energy",
+        pool_ref: "sub:1.A.2.industry_energy#max_emissions",
         limit: {
           indicator_ref: "ind_whr_capacity",
           consumption_ref: "cap_mw"
@@ -13037,7 +12963,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_road_transport",
+        pool_ref: "sub:1.A.3.road#max_emissions",
         limit: {
           indicator_ref: "ind_road_emissions",
           consumption_ref: "base_emissions"
@@ -13447,7 +13373,7 @@ var measures_seed_default = {
       product_ref: "prod_heat",
       potential: {
         ceiling_dim: "output_product",
-        pool_ref: "pool_residential_heat",
+        pool_ref: "sub:1.A.4.residential#max_emissions",
         limit: {
           indicator_ref: "ind_residential_heat",
           consumption_ref: "heat_before_kgcal"
@@ -13796,7 +13722,7 @@ var measures_seed_default = {
       product_ref: "prod_heat",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_residential_heat",
+        pool_ref: "sub:1.A.4.residential#max_emissions",
         limit: {
           indicator_ref: "ind_residential_emissions",
           consumption_ref: "base_emissions"
@@ -14129,7 +14055,7 @@ var measures_seed_default = {
       product_ref: "prod_heat",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_residential_heat",
+        pool_ref: "sub:1.A.4.residential#max_emissions",
         limit: {
           indicator_ref: "ind_residential_emissions",
           consumption_ref: "base_emissions"
@@ -14473,7 +14399,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_og_methane",
+        pool_ref: "sub:1.B.og_methane#max_emissions",
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
@@ -14703,7 +14629,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_og_methane",
+        pool_ref: "sub:1.B.og_methane#max_emissions",
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
@@ -14949,7 +14875,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_og_methane",
+        pool_ref: "sub:1.B.og_methane#max_emissions",
         limit: {
           indicator_ref: "ind_og_methane_emissions",
           consumption_ref: "base_emissions"
@@ -15125,7 +15051,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_cement",
+        pool_ref: "sub:2.cement#max_emissions",
         limit: {
           indicator_ref: "ind_cement_emissions",
           consumption_ref: "base_emissions"
@@ -15314,7 +15240,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_industry_ccs",
+        pool_ref: "sub:2.metallurgy#max_emissions",
         limit: {
           indicator_ref: "ind_metals_emissions",
           consumption_ref: "base_emissions"
@@ -15573,7 +15499,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_manure",
+        pool_ref: "sub:3.manure#max_emissions",
         limit: {
           indicator_ref: "ind_manure_emissions",
           consumption_ref: "base_emissions"
@@ -15794,7 +15720,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_ag_soils",
+        pool_ref: "sub:3.soils#max_emissions",
         limit: {
           indicator_ref: "ind_ag_soils_emissions",
           consumption_ref: "base_emissions"
@@ -16002,7 +15928,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_ag_soils",
+        pool_ref: "sub:3.soils#max_emissions",
         limit: {
           indicator_ref: "ind_ag_soils_emissions",
           consumption_ref: "base_emissions"
@@ -16229,7 +16155,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "activity",
-        pool_ref: "pool_afforestation",
+        pool_ref: "sub:4.forestry#max_emissions",
         limit: {
           indicator_ref: "ind_afforestation_area",
           consumption_ref: "area_kha"
@@ -16453,7 +16379,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_solid_waste",
+        pool_ref: "sub:5.solid_waste#max_emissions",
         limit: {
           indicator_ref: "ind_swaste_emissions",
           consumption_ref: "base_emissions"
@@ -16643,7 +16569,7 @@ var measures_seed_default = {
       baseline_basis: "standalone",
       potential: {
         ceiling_dim: "cut_resource",
-        pool_ref: "pool_wastewater",
+        pool_ref: "sub:5.wastewater#max_emissions",
         limit: {
           indicator_ref: "ind_wastewater_emissions",
           consumption_ref: "base_emissions"
@@ -17045,9 +16971,6 @@ function assembleLibrary(g) {
     };
   }
   const references = Object.fromEntries(g.references.map((r) => [r.id, r]));
-  const pools = Object.fromEntries(
-    g.pools.map((p) => [p.id, { ...p, sector: p.sector_ref }])
-  );
   const subsectors = {};
   for (const s of g.subsectors) (subsectors[s.sector_ref] ??= []).push({ id: s.id, label: L(s.name) });
   return {
@@ -17055,7 +16978,6 @@ function assembleLibrary(g) {
     technologies,
     products,
     references,
-    pools,
     checks: checks_default,
     indicators,
     subsectors,
@@ -17359,6 +17281,266 @@ var measure_schema_default = {
   }
 };
 
+// src/lib/measure/ingest.ts
+var _validate = null;
+function getValidator() {
+  if (_validate) return _validate;
+  const ajv = new import__.default({ allErrors: true, strict: false });
+  _validate = ajv.compile(measure_schema_default);
+  return _validate;
+}
+function schemaErrors(input) {
+  const validate2 = getValidator();
+  if (validate2(input)) return [];
+  return (validate2.errors ?? []).map((e) => {
+    const where = e.instancePath || "(root)";
+    const extra = e.keyword === "additionalProperties" ? ` (${e.params.additionalProperty})` : "";
+    return `schema ${where} ${e.keyword}: ${e.message}${extra}`;
+  });
+}
+function readPath(obj, path) {
+  let cur = obj;
+  for (const seg of path.match(/[^.[\]]+/g) ?? []) {
+    if (cur == null || typeof cur !== "object") return void 0;
+    cur = cur[seg];
+  }
+  return cur;
+}
+function dropOrphanSources(m) {
+  if (!m.sources) return { doc: m, dropped: [] };
+  const dropped = [];
+  const kept = {};
+  for (const [p, s] of Object.entries(m.sources)) {
+    if (readPath(m, p) === void 0 && !m.computed?.[p]) dropped.push(p);
+    else kept[p] = s;
+  }
+  return dropped.length ? { doc: { ...m, sources: kept }, dropped } : { doc: m, dropped };
+}
+function stableStringify(v) {
+  if (v === null || typeof v !== "object") return JSON.stringify(v) ?? "null";
+  if (Array.isArray(v)) return `[${v.map(stableStringify).join(",")}]`;
+  const o = v;
+  return `{${Object.keys(o).sort().map((k) => `${JSON.stringify(k)}:${stableStringify(o[k])}`).join(",")}}`;
+}
+function fingerprint(s) {
+  let h1 = 2166136261, h2 = 2166136261 ^ 2654435769;
+  for (let i = 0; i < s.length; i++) {
+    const c = s.charCodeAt(i);
+    h1 = Math.imul(h1 ^ c, 16777619);
+    h2 = Math.imul(h2 ^ c, 16777619);
+  }
+  const hex = (n) => (n >>> 0).toString(16).padStart(8, "0");
+  return hex(h1) + hex(h2);
+}
+function formulaHash(m) {
+  const computed = Object.fromEntries(
+    Object.entries(m.computed ?? {}).sort(([a], [b]) => a < b ? -1 : 1).map(([k, c]) => [k, c?.formula ?? null])
+  );
+  return fingerprint(stableStringify({
+    abatement_formula: m.abatement?.formula ?? null,
+    abatement_computed: m.abatement?.computed ?? null,
+    computed
+  }));
+}
+var SHOULD_REF_TOL = 1e-6;
+var relDiff = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
+function hasRefBinding(binding) {
+  return !!binding?.ref && (binding.mode === "reuse" || binding.mode === "alt" || binding.mode === "derived");
+}
+function findShouldRef(m, library2) {
+  const out = [];
+  const indicators = (library2.indicators ?? []).filter((i) => i.owner_kind === "subsector" && i.key === "max_emissions");
+  const isCo2 = (u) => !u || /co[₂2]/i.test(u);
+  for (const [k, inp] of Object.entries(m.inputs ?? {})) {
+    if (typeof inp.value !== "number" || inp.value === 0 || !Number.isFinite(inp.value)) continue;
+    if (hasRefBinding(inp.binding) || !isCo2(inp.unit)) continue;
+    const matches = indicators.filter((i) => typeof i.value === "number" && relDiff(i.value, inp.value) <= SHOULD_REF_TOL).map((i) => i.id);
+    if (matches.length) out.push({ path: `inputs.${k}`, value: inp.value, matches });
+  }
+  return out;
+}
+function ingest(input, library2, opts = {}) {
+  const errors = schemaErrors(input);
+  const warnings = [];
+  const { doc, dropped } = dropOrphanSources(input);
+  const formula_hash = formulaHash(doc);
+  const change_kind = opts.prevFormulaHash != null ? opts.prevFormulaHash === formula_hash ? "parametric" : "structural" : void 0;
+  const shouldRef = findShouldRef(doc, library2);
+  for (const s of shouldRef) {
+    const unique = s.matches.length === 1;
+    const msg = unique ? `should-ref: ${s.path}=${s.value} equals library indicator '${s.matches[0]}' \u2014 bind it via {ref} instead of inlining` : `should-ref?: ${s.path}=${s.value} matches indicators [${s.matches.join(", ")}] \u2014 bind one via {ref} if it is the same quantity`;
+    if (unique && opts.shouldRefSeverity === "block") errors.push(msg);
+    else warnings.push(msg);
+  }
+  return {
+    ok: errors.length === 0,
+    doc,
+    errors,
+    warnings,
+    formula_hash,
+    change_kind,
+    droppedSources: dropped,
+    shouldRef
+  };
+}
+
+// mcp/db.ts
+var visibleTo = (userId) => `scope.eq.published,owner_id.eq.${userId}`;
+async function dbListMeasures(user) {
+  const { data, error } = await user.client.from("measures").select("id,scope,data").or(visibleTo(user.userId));
+  if (error) throw new Error(`list: ${error.message}`);
+  return (data ?? []).map((r) => ({ id: r.id, scope: r.scope, data: r.data }));
+}
+async function dbGetMeasure(user, id) {
+  const { data, error } = await user.client.from("measures").select("data").eq("id", id).or(visibleTo(user.userId)).maybeSingle();
+  if (error) throw new Error(`get: ${error.message}`);
+  return data?.data ?? null;
+}
+async function contributorsOf(user, id) {
+  const { data } = await user.client.from("measure_versions").select("author_id").eq("measure_id", id);
+  return [...new Set((data ?? []).map((r) => r.author_id).filter(Boolean))];
+}
+async function dbCreateMeasure(user, measure, library2, note) {
+  const g = ingest({ ...measure, id: measure.id ?? "kz-pending" }, library2);
+  if (!g.ok) throw new Error(`ingest blocked: ${g.errors.join("; ")}`);
+  const { id: _drop, ...payload } = g.doc;
+  const p_meta = { formula_hash: g.formula_hash };
+  const rpc = user.serviceRole ? user.client.rpc("measure_create_admin", { p_data: payload, p_author: user.userId, p_note: note ?? null, p_meta }) : user.client.rpc("measure_create", { p_data: payload, p_note: note ?? null, p_meta });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`create (as ${user.userId}): ${error.message}`);
+  const row = data;
+  return { id: row.id, finalScope: row.scope ?? "draft", version: row.version ?? 1, ownerId: row.owner_id ?? null, contributors: await contributorsOf(user, row.id), warnings: g.warnings, droppedSources: g.droppedSources };
+}
+async function dbUpdateMeasure(user, id, measure, library2, note) {
+  const { data: existing } = await user.client.from("measures").select("id").eq("id", id).maybeSingle();
+  if (!existing) throw new Error(`no measure '${id}' to update \u2014 use create_measure for a new one (the server assigns its id)`);
+  const { data: prev } = await user.client.from("measure_versions").select("formula_hash").eq("measure_id", id).order("version", { ascending: false }).limit(1);
+  const prevFormulaHash = prev?.[0]?.formula_hash ?? void 0;
+  const g = ingest({ ...measure, id }, library2, { prevFormulaHash });
+  if (!g.ok) throw new Error(`ingest blocked: ${g.errors.join("; ")}`);
+  const p_meta = { formula_hash: g.formula_hash, change_kind: g.change_kind ?? null };
+  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: id, p_data: g.doc, p_author: user.userId, p_note: note ?? null, p_meta }) : user.client.rpc("measure_publish", { p_id: id, p_data: g.doc, p_note: note ?? null, p_meta });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`update (as ${user.userId}): ${error.message}`);
+  const row = data;
+  return { id, finalScope: row?.scope ?? "draft", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id), warnings: g.warnings, droppedSources: g.droppedSources };
+}
+async function dbSetScope(user, id, scope, note) {
+  const doc = await dbGetMeasure(user, id);
+  if (!doc) throw new Error(`no measure '${id}' to set scope \u2014 unknown id`);
+  const updated = { ...doc, scope };
+  const p_meta = { formula_hash: formulaHash(updated) };
+  const p_note = note ?? `scope \u2192 ${scope}`;
+  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: id, p_data: updated, p_author: user.userId, p_note, p_meta }) : user.client.rpc("measure_publish", { p_id: id, p_data: updated, p_note, p_meta });
+  const { data, error } = await rpc;
+  if (error) throw new Error(`set scope (as ${user.userId}): ${error.message}`);
+  const row = data;
+  return { id, finalScope: row?.scope ?? scope, version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id), warnings: [], droppedSources: [] };
+}
+async function dbMeasureHistory(user, id) {
+  const { data, error } = await user.client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
+  if (error) throw new Error(`history: ${error.message}`);
+  return data ?? [];
+}
+var LIBRARY_TABLES = {
+  object: "objects",
+  resource: "resources",
+  product: "products",
+  indicator: "indicators",
+  ref: "refs",
+  subsector: "subsectors",
+  unit: "units",
+  bridge: "bridges"
+};
+function assertLibraryEntityValid(kind, entity) {
+  if (kind === "unit") {
+    const errs = validateUnit(entity);
+    if (errs.length) throw new Error(`invalid unit: ${errs.join("; ")}`);
+  } else if (kind === "bridge") {
+    const errs = validateBridge(entity);
+    if (errs.length) throw new Error(`invalid bridge: ${errs.join("; ")}`);
+  }
+}
+async function dbListLibrary(user, filter = {}) {
+  if (filter.kind && !LIBRARY_TABLES[filter.kind]) {
+    throw new Error(`unknown library kind '${filter.kind}' (expected: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
+  }
+  const tables = filter.kind ? [LIBRARY_TABLES[filter.kind]] : Object.values(LIBRARY_TABLES);
+  const out = {};
+  for (const t of tables) {
+    let q = user.client.from(t).select("*");
+    if (filter.owner_ref && t === "indicators") q = q.eq("owner_ref", filter.owner_ref);
+    if (filter.id) q = q.eq("id", filter.id);
+    if (filter.prefix) q = q.ilike("id", `${filter.prefix}%`);
+    const { data, error } = await q;
+    if (error) throw new Error(`list ${t}: ${error.message}`);
+    out[t] = data ?? [];
+  }
+  return out;
+}
+async function dbUpsertLibraryEntity(user, kind, entity) {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
+  if (!entity || typeof entity.id !== "string") throw new Error(`library ${kind}: 'id' (string) is required`);
+  assertLibraryEntityValid(kind, entity);
+  const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
+  const { error } = await user.client.from(table).upsert(row);
+  if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
+  const { data: vers } = await user.client.from("library_versions").select("version").eq("entity", table).eq("entity_id", entity.id).order("version", { ascending: false }).limit(1);
+  return { table, id: entity.id, version: vers?.[0]?.version ?? null };
+}
+async function dbLibraryHistory(user, kind, id) {
+  const table = LIBRARY_TABLES[kind];
+  if (!table) throw new Error(`unknown library kind '${kind}'`);
+  const { data, error } = await user.client.from("library_versions").select("version,author_id,created_at").eq("entity", table).eq("entity_id", id).order("version");
+  if (error) throw new Error(`library history: ${error.message}`);
+  return data ?? [];
+}
+
+// mcp/supabase.ts
+var isNode2 = typeof process !== "undefined" && !!process.versions?.node;
+function getEnv(key) {
+  if (typeof Deno !== "undefined" && Deno?.env) return Deno.env.get(key);
+  if (typeof process !== "undefined" && process.env) return process.env[key];
+  return void 0;
+}
+function readEnvFile(rel) {
+  try {
+    const raw = readFileSync(new URL(rel, import.meta.url), "utf8");
+    for (const line of raw.split("\n")) {
+      const m = line.match(/^([A-Z0-9_]+)=(.+)$/);
+      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+    }
+  } catch {
+  }
+}
+if (isNode2 && !process.env.MCP_SKIP_ENV_FILE) {
+  readEnvFile("../.env.supabase.local");
+  readEnvFile("../.env.local");
+}
+var url = getEnv("SUPABASE_URL") || getEnv("NEXT_PUBLIC_SUPABASE_URL");
+var anonKey = getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY") || getEnv("SUPABASE_ANON_KEY");
+var serviceKey = getEnv("SUPABASE_SERVICE_ROLE_KEY");
+var admin = url && serviceKey && !serviceKey.startsWith("<") ? createClient(url, serviceKey, { auth: { persistSession: false } }) : null;
+async function userFromToken(token) {
+  if (!token || !url || !anonKey) return null;
+  const client = createClient(url, anonKey, {
+    global: { headers: { Authorization: `Bearer ${token}` } },
+    auth: { persistSession: false, autoRefreshToken: false }
+  });
+  const { data, error } = await client.auth.getUser(token);
+  if (error || !data.user) return null;
+  return { userId: data.user.id, email: data.user.email ?? void 0, client };
+}
+async function authedUserFromHeader(authHeader) {
+  const m = authHeader?.match(/^Bearer\s+(.+)$/i);
+  return m ? userFromToken(m[1].trim()) : null;
+}
+
+// mcp/server.ts
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
 // src/lib/measure/eval.ts
 function pv(rate, nper, pmt) {
   if (rate === 0) return -pmt * nper;
@@ -17525,13 +17707,56 @@ function makeResolver(measure, library2) {
   };
   return resolve;
 }
-function poolBaselineKt(measure, library2) {
-  const ref = measure.potential?.pool_ref;
-  const pool = ref ? library2.pools[ref] : void 0;
-  if (pool?.baselineEmissionsKt == null) {
-    throw new Error(`Measure '${measure.id}': share path needs a pool with baselineEmissionsKt`);
+function resolveRefDetail(ref, library2) {
+  const m = ref.match(/^([a-z]+):(.+)$/);
+  if (!m) throw new Error(`resolve_ref: '${ref}' is not a prefixed library ref (sub:/obj:/prd:/res:/glb:)`);
+  const [, prefix, rest] = m;
+  if (prefix === "glb") {
+    const v = library2.globals[rest];
+    if (typeof v !== "number") throw new Error(`resolve_ref '${ref}': library.globals.${rest} is not a number`);
+    return { ref, value: v, key: rest };
   }
-  return pool.baselineEmissionsKt;
+  if (prefix === "in") throw new Error(`resolve_ref '${ref}': 'in:' is measure-scoped \u2014 use compute_measure`);
+  const owner_kind = INDICATOR_PREFIX[prefix];
+  if (!owner_kind) throw new Error(`resolve_ref '${ref}': unknown prefix '${prefix}:'`);
+  const hashAt = rest.indexOf("#");
+  const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
+  const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
+  if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
+    const r = library2.resources[id];
+    if (!r) throw new Error(`resolve_ref '${ref}': resource '${id}' not in library`);
+    const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
+    if (typeof ef2 !== "number") throw new Error(`resolve_ref '${ref}': resource '${id}' has no scalar EF for the active year`);
+    return { ref, value: ef2, owner_kind: "resource", owner_ref: id, key: "ef", unit: r.unit };
+  }
+  if (indKey === void 0) throw new Error(`resolve_ref '${ref}': '${prefix}:' refs need '#<key>' (e.g. '${prefix}:${id}#capex_ud')`);
+  const ind = library2.indicators.find((i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey);
+  if (!ind) throw new Error(`resolve_ref '${ref}': indicator (${owner_kind} '${id}' #${indKey}) absent from library.indicators`);
+  const corridor = ind.reference_ref ? library2.references[ind.reference_ref] : void 0;
+  return {
+    ref,
+    value: ind.value,
+    unit: ind.unit,
+    owner_kind,
+    owner_ref: id,
+    key: indKey,
+    provenance: ind.provenance,
+    corridor: corridor ? { range: corridor.range, unit: corridor.unit, source: corridor.source } : null
+  };
+}
+function poolCeilingKt(poolRef, library2) {
+  if (!poolRef) return void 0;
+  const m = poolRef.match(/^sub:(.+)#(.+)$/);
+  if (!m) return void 0;
+  const ind = library2.indicators.find((i) => i.owner_kind === "subsector" && i.owner_ref === m[1] && i.key === m[2]);
+  return ind ? ind.value * 1e3 : void 0;
+}
+function poolBaselineKt(measure, library2) {
+  const ceil = poolCeilingKt(measure.potential?.pool_ref, library2);
+  if (ceil == null) {
+    throw new Error(`Measure '${measure.id}': share path needs pool_ref \u2192 a subsector max_emissions indicator`);
+  }
+  return ceil;
 }
 function computeAbatement(measure, library2, resolve) {
   const a = measure.abatement;
@@ -17813,15 +18038,15 @@ function stackPools(computed, measureById, library2) {
   const groups = /* @__PURE__ */ new Map();
   for (const c of computed) {
     const poolRef = measureById.get(c.id)?.potential?.pool_ref;
-    const pool = poolRef ? library2.pools[poolRef] : void 0;
-    if (!pool) {
+    const ceil = poolCeilingKt(poolRef, library2);
+    if (ceil == null) {
       out.set(c.id, { potential: c.abatementKt, clipped: false });
       continue;
     }
     (groups.get(poolRef) ?? groups.set(poolRef, []).get(poolRef)).push(c);
   }
   for (const [poolRef, group] of groups) {
-    let remaining = library2.pools[poolRef].annual_flow;
+    let remaining = poolCeilingKt(poolRef, library2);
     for (const c of [...group].sort((a, b) => a.mac - b.mac)) {
       const got = Math.max(0, Math.min(c.abatementKt, remaining));
       remaining -= got;
@@ -17849,16 +18074,14 @@ function buildChecks(measure, c, library2, peers) {
     details.economics = runCheck(library2.checks.economics, { capex: c.capex, denominator: denom, min, max });
   }
   const poolRef = measure.potential?.pool_ref;
-  const pool = poolRef ? library2.pools[poolRef] : void 0;
-  if (pool) {
+  const poolCeil = poolCeilingKt(poolRef, library2);
+  if (poolCeil != null) {
     const cheaperInPool = peers.filter(
       (p) => p.measure.potential?.pool_ref === poolRef && p.computed.mac <= c.mac
     );
     const cum = c.abatementKt + cheaperInPool.reduce((s, p) => s + p.computed.abatementKt, 0);
-    details.pool = runCheck(library2.checks.pool, { sum_pool: cum, ceiling: pool.annual_flow });
-  }
-  if (pool?.baselineEmissionsKt != null) {
-    details.sector = runCheck(library2.checks.sector, { abatement: c.abatementKt, baseline: pool.baselineEmissionsKt });
+    details.pool = runCheck(library2.checks.pool, { sum_pool: cum, ceiling: poolCeil });
+    details.sector = runCheck(library2.checks.sector, { abatement: c.abatementKt, baseline: poolCeil });
   }
   const limit = measure.potential?.limit;
   if (limit) {
@@ -17912,8 +18135,8 @@ function notationGaps(m) {
   return { untagged, computedNoFormula };
 }
 var DRIFT_REL_TOL = 1e-6;
-var relDiff = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
-function readPath(measure, path) {
+var relDiff2 = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
+function readPath2(measure, path) {
   let cur = measure;
   for (const seg of path.match(/[^.[\]]+/g) ?? []) {
     if (cur == null || typeof cur !== "object") return void 0;
@@ -17927,7 +18150,7 @@ function resolveBindingRef(ref, measure, resolve) {
   } catch {
   }
   if (ref.includes(".") || ref.includes("[")) {
-    const v = readPath(measure, ref);
+    const v = readPath2(measure, ref);
     if (typeof v === "number") return v;
   }
   return void 0;
@@ -17939,7 +18162,7 @@ function findDrift(measure, library2) {
     if (binding?.mode !== "reuse" || !binding.ref) return;
     const bound = resolveBindingRef(binding.ref, measure, resolve);
     if (bound == null) return;
-    if (relDiff(local, bound) > DRIFT_REL_TOL) {
+    if (relDiff2(local, bound) > DRIFT_REL_TOL) {
       out.push({ path, ref: binding.ref, local, bound });
     }
   };
@@ -17947,7 +18170,7 @@ function findDrift(measure, library2) {
     if (typeof v.value === "number") check(`inputs.${k}`, v.value, v.binding);
   }
   for (const [p, s] of Object.entries(measure.sources ?? {})) {
-    const local = readPath(measure, p);
+    const local = readPath2(measure, p);
     if (typeof local === "number") check(p, local, s.binding);
   }
   return out;
@@ -17981,7 +18204,7 @@ function validate(measure, library2, peers = []) {
   const measureById = new Map([[measure.id, measure], ...peers.map((m) => [m.id, m])]);
   const alloc = stackPools([c, ...peerComputed.map((p) => p.computed)], measureById, library2).get(c.id) ?? { potential: c.abatementKt, clipped: false };
   const poolRef = measure.potential?.pool_ref;
-  const poolInLibrary = !!poolRef && !!library2.pools[poolRef];
+  const poolInLibrary = poolCeilingKt(poolRef, library2) != null;
   const missing = [];
   const panels = buildPanels(measure, checks, missing);
   const { untagged, computedNoFormula } = notationGaps(measure);
@@ -18030,264 +18253,6 @@ function validate(measure, library2, peers = []) {
     dimension
   };
 }
-
-// src/lib/measure/ingest.ts
-var _validate = null;
-function getValidator() {
-  if (_validate) return _validate;
-  const ajv = new import__.default({ allErrors: true, strict: false });
-  _validate = ajv.compile(measure_schema_default);
-  return _validate;
-}
-function schemaErrors(input) {
-  const validate2 = getValidator();
-  if (validate2(input)) return [];
-  return (validate2.errors ?? []).map((e) => {
-    const where = e.instancePath || "(root)";
-    const extra = e.keyword === "additionalProperties" ? ` (${e.params.additionalProperty})` : "";
-    return `schema ${where} ${e.keyword}: ${e.message}${extra}`;
-  });
-}
-function readPath2(obj, path) {
-  let cur = obj;
-  for (const seg of path.match(/[^.[\]]+/g) ?? []) {
-    if (cur == null || typeof cur !== "object") return void 0;
-    cur = cur[seg];
-  }
-  return cur;
-}
-function dropOrphanSources(m) {
-  if (!m.sources) return { doc: m, dropped: [] };
-  const dropped = [];
-  const kept = {};
-  for (const [p, s] of Object.entries(m.sources)) {
-    if (readPath2(m, p) === void 0 && !m.computed?.[p]) dropped.push(p);
-    else kept[p] = s;
-  }
-  return dropped.length ? { doc: { ...m, sources: kept }, dropped } : { doc: m, dropped };
-}
-function stableStringify(v) {
-  if (v === null || typeof v !== "object") return JSON.stringify(v) ?? "null";
-  if (Array.isArray(v)) return `[${v.map(stableStringify).join(",")}]`;
-  const o = v;
-  return `{${Object.keys(o).sort().map((k) => `${JSON.stringify(k)}:${stableStringify(o[k])}`).join(",")}}`;
-}
-function fingerprint(s) {
-  let h1 = 2166136261, h2 = 2166136261 ^ 2654435769;
-  for (let i = 0; i < s.length; i++) {
-    const c = s.charCodeAt(i);
-    h1 = Math.imul(h1 ^ c, 16777619);
-    h2 = Math.imul(h2 ^ c, 16777619);
-  }
-  const hex = (n) => (n >>> 0).toString(16).padStart(8, "0");
-  return hex(h1) + hex(h2);
-}
-function formulaHash(m) {
-  const computed = Object.fromEntries(
-    Object.entries(m.computed ?? {}).sort(([a], [b]) => a < b ? -1 : 1).map(([k, c]) => [k, c?.formula ?? null])
-  );
-  return fingerprint(stableStringify({
-    abatement_formula: m.abatement?.formula ?? null,
-    abatement_computed: m.abatement?.computed ?? null,
-    computed
-  }));
-}
-var SHOULD_REF_TOL = 1e-6;
-var relDiff2 = (a, b) => Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1);
-function hasRefBinding(binding) {
-  return !!binding?.ref && (binding.mode === "reuse" || binding.mode === "alt" || binding.mode === "derived");
-}
-function findShouldRef(m, library2) {
-  const out = [];
-  const indicators = (library2.indicators ?? []).filter((i) => i.owner_kind === "subsector" && i.key === "max_emissions");
-  const consider = (path, value, binding) => {
-    if (value === 0 || !Number.isFinite(value) || hasRefBinding(binding)) return;
-    const matches = indicators.filter((i) => typeof i.value === "number" && relDiff2(i.value, value) <= SHOULD_REF_TOL).map((i) => i.id);
-    if (matches.length) out.push({ path, value, matches });
-  };
-  for (const path of taggablePaths(m)) {
-    const v = readPath2(m, path);
-    if (typeof v === "number") consider(path, v, m.sources?.[path]?.binding);
-  }
-  for (const [k, inp] of Object.entries(m.inputs ?? {})) {
-    if (typeof inp.value === "number") consider(`inputs.${k}`, inp.value, inp.binding);
-  }
-  return out;
-}
-function ingest(input, library2, opts = {}) {
-  const errors = schemaErrors(input);
-  const warnings = [];
-  const { doc, dropped } = dropOrphanSources(input);
-  const formula_hash = formulaHash(doc);
-  const change_kind = opts.prevFormulaHash != null ? opts.prevFormulaHash === formula_hash ? "parametric" : "structural" : void 0;
-  const shouldRef = findShouldRef(doc, library2);
-  for (const s of shouldRef) {
-    const unique = s.matches.length === 1;
-    const msg = unique ? `should-ref: ${s.path}=${s.value} equals library indicator '${s.matches[0]}' \u2014 bind it via {ref} instead of inlining` : `should-ref?: ${s.path}=${s.value} matches indicators [${s.matches.join(", ")}] \u2014 bind one via {ref} if it is the same quantity`;
-    if (unique && opts.shouldRefSeverity === "block") errors.push(msg);
-    else warnings.push(msg);
-  }
-  return {
-    ok: errors.length === 0,
-    doc,
-    errors,
-    warnings,
-    formula_hash,
-    change_kind,
-    droppedSources: dropped,
-    shouldRef
-  };
-}
-
-// mcp/db.ts
-var visibleTo = (userId) => `scope.eq.published,owner_id.eq.${userId}`;
-async function dbListMeasures(user) {
-  const { data, error } = await user.client.from("measures").select("id,scope,data").or(visibleTo(user.userId));
-  if (error) throw new Error(`list: ${error.message}`);
-  return (data ?? []).map((r) => ({ id: r.id, scope: r.scope, data: r.data }));
-}
-async function dbGetMeasure(user, id) {
-  const { data, error } = await user.client.from("measures").select("data").eq("id", id).or(visibleTo(user.userId)).maybeSingle();
-  if (error) throw new Error(`get: ${error.message}`);
-  return data?.data ?? null;
-}
-async function contributorsOf(user, id) {
-  const { data } = await user.client.from("measure_versions").select("author_id").eq("measure_id", id);
-  return [...new Set((data ?? []).map((r) => r.author_id).filter(Boolean))];
-}
-async function dbCreateMeasure(user, measure, library2, note) {
-  const g = ingest({ ...measure, id: measure.id ?? "kz-pending" }, library2);
-  if (!g.ok) throw new Error(`ingest blocked: ${g.errors.join("; ")}`);
-  const { id: _drop, ...payload } = g.doc;
-  const p_meta = { formula_hash: g.formula_hash };
-  const rpc = user.serviceRole ? user.client.rpc("measure_create_admin", { p_data: payload, p_author: user.userId, p_note: note ?? null, p_meta }) : user.client.rpc("measure_create", { p_data: payload, p_note: note ?? null, p_meta });
-  const { data, error } = await rpc;
-  if (error) throw new Error(`create (as ${user.userId}): ${error.message}`);
-  const row = data;
-  return { id: row.id, finalScope: row.scope ?? "draft", version: row.version ?? 1, ownerId: row.owner_id ?? null, contributors: await contributorsOf(user, row.id), warnings: g.warnings, droppedSources: g.droppedSources };
-}
-async function dbUpdateMeasure(user, id, measure, library2, note) {
-  const { data: existing } = await user.client.from("measures").select("id").eq("id", id).maybeSingle();
-  if (!existing) throw new Error(`no measure '${id}' to update \u2014 use create_measure for a new one (the server assigns its id)`);
-  const { data: prev } = await user.client.from("measure_versions").select("formula_hash").eq("measure_id", id).order("version", { ascending: false }).limit(1);
-  const prevFormulaHash = prev?.[0]?.formula_hash ?? void 0;
-  const g = ingest({ ...measure, id }, library2, { prevFormulaHash });
-  if (!g.ok) throw new Error(`ingest blocked: ${g.errors.join("; ")}`);
-  const p_meta = { formula_hash: g.formula_hash, change_kind: g.change_kind ?? null };
-  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: id, p_data: g.doc, p_author: user.userId, p_note: note ?? null, p_meta }) : user.client.rpc("measure_publish", { p_id: id, p_data: g.doc, p_note: note ?? null, p_meta });
-  const { data, error } = await rpc;
-  if (error) throw new Error(`update (as ${user.userId}): ${error.message}`);
-  const row = data;
-  return { id, finalScope: row?.scope ?? "draft", version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id), warnings: g.warnings, droppedSources: g.droppedSources };
-}
-async function dbSetScope(user, id, scope, note) {
-  const doc = await dbGetMeasure(user, id);
-  if (!doc) throw new Error(`no measure '${id}' to set scope \u2014 unknown id`);
-  const updated = { ...doc, scope };
-  const p_meta = { formula_hash: formulaHash(updated) };
-  const p_note = note ?? `scope \u2192 ${scope}`;
-  const rpc = user.serviceRole ? user.client.rpc("measure_publish_admin", { p_id: id, p_data: updated, p_author: user.userId, p_note, p_meta }) : user.client.rpc("measure_publish", { p_id: id, p_data: updated, p_note, p_meta });
-  const { data, error } = await rpc;
-  if (error) throw new Error(`set scope (as ${user.userId}): ${error.message}`);
-  const row = data;
-  return { id, finalScope: row?.scope ?? scope, version: row?.version ?? null, ownerId: row?.owner_id ?? null, contributors: await contributorsOf(user, id), warnings: [], droppedSources: [] };
-}
-async function dbMeasureHistory(user, id) {
-  const { data, error } = await user.client.from("measure_versions").select("version,author_id,note,created_at").eq("measure_id", id).order("version");
-  if (error) throw new Error(`history: ${error.message}`);
-  return data ?? [];
-}
-var LIBRARY_TABLES = {
-  object: "objects",
-  resource: "resources",
-  product: "products",
-  indicator: "indicators",
-  ref: "refs",
-  pool: "pools",
-  subsector: "subsectors",
-  unit: "units",
-  bridge: "bridges"
-};
-function assertLibraryEntityValid(kind, entity) {
-  if (kind === "unit") {
-    const errs = validateUnit(entity);
-    if (errs.length) throw new Error(`invalid unit: ${errs.join("; ")}`);
-  } else if (kind === "bridge") {
-    const errs = validateBridge(entity);
-    if (errs.length) throw new Error(`invalid bridge: ${errs.join("; ")}`);
-  }
-}
-async function dbListLibrary(user) {
-  const out = {};
-  for (const t of Object.values(LIBRARY_TABLES)) {
-    const { data, error } = await user.client.from(t).select("*");
-    if (error) throw new Error(`list ${t}: ${error.message}`);
-    out[t] = data ?? [];
-  }
-  return out;
-}
-async function dbUpsertLibraryEntity(user, kind, entity) {
-  const table = LIBRARY_TABLES[kind];
-  if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
-  if (!entity || typeof entity.id !== "string") throw new Error(`library ${kind}: 'id' (string) is required`);
-  assertLibraryEntityValid(kind, entity);
-  const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
-  const { error } = await user.client.from(table).upsert(row);
-  if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
-  const { data: vers } = await user.client.from("library_versions").select("version").eq("entity", table).eq("entity_id", entity.id).order("version", { ascending: false }).limit(1);
-  return { table, id: entity.id, version: vers?.[0]?.version ?? null };
-}
-async function dbLibraryHistory(user, kind, id) {
-  const table = LIBRARY_TABLES[kind];
-  if (!table) throw new Error(`unknown library kind '${kind}'`);
-  const { data, error } = await user.client.from("library_versions").select("version,author_id,created_at").eq("entity", table).eq("entity_id", id).order("version");
-  if (error) throw new Error(`library history: ${error.message}`);
-  return data ?? [];
-}
-
-// mcp/supabase.ts
-var isNode2 = typeof process !== "undefined" && !!process.versions?.node;
-function getEnv(key) {
-  if (typeof Deno !== "undefined" && Deno?.env) return Deno.env.get(key);
-  if (typeof process !== "undefined" && process.env) return process.env[key];
-  return void 0;
-}
-function readEnvFile(rel) {
-  try {
-    const raw = readFileSync(new URL(rel, import.meta.url), "utf8");
-    for (const line of raw.split("\n")) {
-      const m = line.match(/^([A-Z0-9_]+)=(.+)$/);
-      if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
-    }
-  } catch {
-  }
-}
-if (isNode2 && !process.env.MCP_SKIP_ENV_FILE) {
-  readEnvFile("../.env.supabase.local");
-  readEnvFile("../.env.local");
-}
-var url = getEnv("SUPABASE_URL") || getEnv("NEXT_PUBLIC_SUPABASE_URL");
-var anonKey = getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY") || getEnv("SUPABASE_ANON_KEY");
-var serviceKey = getEnv("SUPABASE_SERVICE_ROLE_KEY");
-var admin = url && serviceKey && !serviceKey.startsWith("<") ? createClient(url, serviceKey, { auth: { persistSession: false } }) : null;
-async function userFromToken(token) {
-  if (!token || !url || !anonKey) return null;
-  const client = createClient(url, anonKey, {
-    global: { headers: { Authorization: `Bearer ${token}` } },
-    auth: { persistSession: false, autoRefreshToken: false }
-  });
-  const { data, error } = await client.auth.getUser(token);
-  if (error || !data.user) return null;
-  return { userId: data.user.id, email: data.user.email ?? void 0, client };
-}
-async function authedUserFromHeader(authHeader) {
-  const m = authHeader?.match(/^Bearer\s+(.+)$/i);
-  return m ? userFromToken(m[1].trim()) : null;
-}
-
-// mcp/server.ts
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
 
 // src/lib/measure/skill.generated.ts
 var SKILL_GUIDE = {
@@ -18522,13 +18487,38 @@ ${JSON.stringify(library2.uiHelp)}
   );
   server.registerTool(
     "list_library",
-    { title: "List library", description: "Read the whole shared registry \u2014 objects, resources, products, indicators, refs, pools, subsectors \u2014 as raw rows. Use it to reuse existing ids/shapes before authoring a measure or adding a new entity. The library is open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).", inputSchema: {} },
-    async () => {
+    {
+      title: "List library",
+      description: "Read the shared registry \u2014 objects, resources, products, indicators, refs, subsectors, units, bridges \u2014 as raw rows. Use it to reuse existing ids/shapes before authoring. Pass a filter to narrow it (the unfiltered dump is ~270 rows): `kind` one table, `owner_ref` the indicators of one owner (e.g. a subsector), `id` an exact row, `prefix` an id prefix. Open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).",
+      inputSchema: {
+        kind: z.enum(Object.keys(LIBRARY_TABLES)).optional().describe("one entity table (object|resource|product|indicator|ref|subsector|unit|bridge)"),
+        owner_ref: z.string().optional().describe('indicators of this owner only (e.g. a subsector id like "1.A.1.coal_power")'),
+        id: z.string().optional().describe("an exact entity id"),
+        prefix: z.string().optional().describe('id prefix match (e.g. "ind_coal")')
+      }
+    },
+    async ({ kind, owner_ref, id, prefix }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        return ok(await dbListLibrary(user));
+        return ok(await dbListLibrary(user, { kind, owner_ref, id, prefix }));
       } catch (e) {
         return err(`list_library failed: ${e.message}`);
+      }
+    }
+  );
+  server.registerTool(
+    "resolve_ref",
+    {
+      title: "Resolve ref",
+      description: "Resolve one LIBRARY ref to its value AND its full audit chain in a single call: value, unit, owner, indicator key, provenance, and the plausibility corridor (if the indicator has a reference_ref). Supports sub:<subsector>#<key>, obj:<object>#<key>, prd:<product>#<key>, res:<resource>(#ef), glb:<key>. Measure-scoped refs (in:/bare keys) belong to compute_measure. Use it to check what a {ref} points at before reusing it.",
+      inputSchema: { ref: z.string().describe('a library ref, e.g. "sub:1.A.1.coal_power#max_emissions" or "res:coal#ef"') }
+    },
+    ({ ref }) => {
+      if (!user) return err(AUTH_ERR);
+      try {
+        return ok(resolveRefDetail(ref, library2));
+      } catch (e) {
+        return err(`resolve_ref failed: ${e.message}`);
       }
     }
   );
@@ -18536,9 +18526,9 @@ ${JSON.stringify(library2.uiHelp)}
     "upsert_library_entity",
     {
       title: "Upsert library entity",
-      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` \u2014 an inconsistent one is rejected.",
+      description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` \u2014 an inconsistent one is rejected.",
       inputSchema: {
-        kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | pool | subsector | unit | bridge"),
+        kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | subsector | unit | bridge"),
         entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)")
       }
     },
@@ -18597,11 +18587,11 @@ var handleMcpRequest = createMcpHandler();
 // src/lib/measure/load-supabase.ts
 var num = (v) => typeof v === "number" ? v : Number(v);
 async function loadLibrary(db) {
-  const tables = ["objects", "resources", "products", "refs", "pools", "subsectors", "indicators"];
-  const [objects, resources, products, refs, pools, subsectors, indicators] = await Promise.all(
+  const tables = ["objects", "resources", "products", "refs", "subsectors", "indicators"];
+  const [objects, resources, products, refs, subsectors, indicators] = await Promise.all(
     tables.map((t) => db.from(t).select("*"))
   );
-  for (const [i, r] of [objects, resources, products, refs, pools, subsectors, indicators].entries()) {
+  for (const [i, r] of [objects, resources, products, refs, subsectors, indicators].entries()) {
     if (r.error) throw new Error(`load ${tables[i]}: ${r.error.message}`);
   }
   const [units, bridges] = await Promise.all([db.from("units").select("*"), db.from("bridges").select("*")]);
@@ -18631,14 +18621,6 @@ async function loadLibrary(db) {
       range: [num(r.range_min), num(r.range_max)],
       unit: r.unit ?? "",
       source: r.source ?? void 0
-    })),
-    pools: (pools.data ?? []).map((p) => ({
-      id: p.id,
-      caps_ref: p.caps_ref ?? "",
-      annual_flow: num(p.annual_flow),
-      unit: p.unit ?? "",
-      sector_ref: p.sector_ref ?? "",
-      baselineEmissionsKt: p.baseline_emissions_kt != null ? num(p.baseline_emissions_kt) : void 0
     })),
     subsectors: (subsectors.data ?? []).map((s) => ({ id: s.id, sector_ref: s.sector_ref, name: s.name })),
     indicators: (indicators.data ?? []).map((i) => ({

@@ -1,6 +1,6 @@
 {
   "country": "kz",
-  "modelVersion": "kz-sup-76431e5236f2",
+  "modelVersion": "kz-sup-e34f32b217dd",
   "library": {
     "resources": {
       "renewable": {
@@ -1362,152 +1362,6 @@
         }
       }
     },
-    "pools": {
-      "pool_enteric": {
-        "id": "pool_enteric",
-        "caps_ref": "activity:cattle_enteric",
-        "annual_flow": 5000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "3",
-        "baselineEmissionsKt": 17800,
-        "sector": "3"
-      },
-      "pool_coal_power": {
-        "id": "pool_coal_power",
-        "caps_ref": "resource:coal_power",
-        "annual_flow": 88000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.1",
-        "baselineEmissionsKt": 130000,
-        "sector": "1.A.1"
-      },
-      "pool_coal_methane": {
-        "id": "pool_coal_methane",
-        "caps_ref": "resource:coal_mine_ch4",
-        "annual_flow": 3000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.B",
-        "baselineEmissionsKt": 9500,
-        "sector": "1.B"
-      },
-      "pool_coal_efficiency": {
-        "id": "pool_coal_efficiency",
-        "caps_ref": "resource:coal_power",
-        "annual_flow": 5000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.1",
-        "baselineEmissionsKt": 130000,
-        "sector": "1.A.1"
-      },
-      "pool_coal_heat": {
-        "id": "pool_coal_heat",
-        "caps_ref": "resource:coal_heat",
-        "annual_flow": 40000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.1",
-        "baselineEmissionsKt": 42000,
-        "sector": "1.A.1"
-      },
-      "pool_industry_energy": {
-        "id": "pool_industry_energy",
-        "caps_ref": "resource:industry_energy",
-        "annual_flow": 30000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.2",
-        "baselineEmissionsKt": 30000,
-        "sector": "1.A.2"
-      },
-      "pool_road_transport": {
-        "id": "pool_road_transport",
-        "caps_ref": "activity:road_transport",
-        "annual_flow": 27100,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.3",
-        "baselineEmissionsKt": 27100,
-        "sector": "1.A.3"
-      },
-      "pool_residential_heat": {
-        "id": "pool_residential_heat",
-        "caps_ref": "resource:residential_fuel",
-        "annual_flow": 46500,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.A.4",
-        "baselineEmissionsKt": 46500,
-        "sector": "1.A.4"
-      },
-      "pool_og_methane": {
-        "id": "pool_og_methane",
-        "caps_ref": "resource:og_methane",
-        "annual_flow": 34200,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "1.B",
-        "baselineEmissionsKt": 34200,
-        "sector": "1.B"
-      },
-      "pool_cement": {
-        "id": "pool_cement",
-        "caps_ref": "resource:cement_process",
-        "annual_flow": 8600,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "2",
-        "baselineEmissionsKt": 8600,
-        "sector": "2"
-      },
-      "pool_industry_ccs": {
-        "id": "pool_industry_ccs",
-        "caps_ref": "resource:industry_co2",
-        "annual_flow": 27000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "2",
-        "baselineEmissionsKt": 27000,
-        "sector": "2"
-      },
-      "pool_manure": {
-        "id": "pool_manure",
-        "caps_ref": "activity:manure",
-        "annual_flow": 3300,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "3",
-        "baselineEmissionsKt": 3300,
-        "sector": "3"
-      },
-      "pool_ag_soils": {
-        "id": "pool_ag_soils",
-        "caps_ref": "activity:ag_soils",
-        "annual_flow": 11600,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "3",
-        "baselineEmissionsKt": 11600,
-        "sector": "3"
-      },
-      "pool_afforestation": {
-        "id": "pool_afforestation",
-        "caps_ref": "activity:afforestation",
-        "annual_flow": 10000,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "4",
-        "baselineEmissionsKt": 10000,
-        "sector": "4"
-      },
-      "pool_solid_waste": {
-        "id": "pool_solid_waste",
-        "caps_ref": "resource:landfill_gas",
-        "annual_flow": 3600,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "5",
-        "baselineEmissionsKt": 3600,
-        "sector": "5"
-      },
-      "pool_wastewater": {
-        "id": "pool_wastewater",
-        "caps_ref": "resource:wastewater_ch4",
-        "annual_flow": 3200,
-        "unit": "kt CO₂eq/yr",
-        "sector_ref": "5",
-        "baselineEmissionsKt": 3200,
-        "sector": "5"
-      }
-    },
     "checks": {
       "_comment": "§7 guardrails stored as AST notation (not hardcoded in validate()). Each check defines the formula that computes the checked quantity (slots bound at validation time) and the predicate it must satisfy. validate() binds slots, evaluates both via HyperFormula, and renders them for the UI.",
       "factor": {
@@ -2676,6 +2530,76 @@
           "source_type": "literature",
           "geo_applicability": "kz_specific"
         }
+      },
+      {
+        "id": "ind_coal_heat_emissions",
+        "key": "max_emissions",
+        "owner_kind": "subsector",
+        "owner_ref": "1.A.1.coal_heat",
+        "value": 42,
+        "unit": "Мт CO₂eq/год",
+        "provenance": {
+          "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (42000 kt). R3.",
+          "confidence": "low",
+          "source_type": "placeholder",
+          "geo_applicability": "kz_specific"
+        }
+      },
+      {
+        "id": "ind_industry_energy_emissions",
+        "key": "max_emissions",
+        "owner_kind": "subsector",
+        "owner_ref": "1.A.2.industry_energy",
+        "value": 30,
+        "unit": "Мт CO₂eq/год",
+        "provenance": {
+          "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (30000 kt). R3.",
+          "confidence": "low",
+          "source_type": "placeholder",
+          "geo_applicability": "kz_specific"
+        }
+      },
+      {
+        "id": "ind_coal_ch4_emissions",
+        "key": "max_emissions",
+        "owner_kind": "subsector",
+        "owner_ref": "1.B.coal_methane",
+        "value": 9.5,
+        "unit": "Мт CO₂eq/год",
+        "provenance": {
+          "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (9500 kt). R3.",
+          "confidence": "low",
+          "source_type": "placeholder",
+          "geo_applicability": "kz_specific"
+        }
+      },
+      {
+        "id": "ind_enteric_emissions",
+        "key": "max_emissions",
+        "owner_kind": "subsector",
+        "owner_ref": "3.enteric",
+        "value": 17.8,
+        "unit": "Мт CO₂eq/год",
+        "provenance": {
+          "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (17800 kt). R3.",
+          "confidence": "low",
+          "source_type": "placeholder",
+          "geo_applicability": "kz_specific"
+        }
+      },
+      {
+        "id": "ind_forestry_emissions",
+        "key": "max_emissions",
+        "owner_kind": "subsector",
+        "owner_ref": "4.forestry",
+        "value": 10,
+        "unit": "Мт CO₂eq/год",
+        "provenance": {
+          "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (10000 kt). R3.",
+          "confidence": "low",
+          "source_type": "placeholder",
+          "geo_applicability": "kz_specific"
+        }
       }
     ],
     "subsectors": {
@@ -3643,169 +3567,6 @@
   },
   "measures": [
     {
-      "id": "kz-20",
-      "name": {
-        "en": "Feed additives reducing enteric fermentation (CH₄)",
-        "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)"
-      },
-      "scope": "published",
-      "inputs": {
-        "activity": {
-          "unit": "тыс. голов",
-          "value": 2550,
-          "provenance": {
-            "citation": "Поголовье под программу, 2550 тыс. голов",
-            "confidence": "high",
-            "source_type": "official_stat",
-            "geo_applicability": "kz_specific"
-          }
-        },
-        "emission_factor": {
-          "unit": "kt CO₂eq/(тыс. голов·год)",
-          "value": 0.6980392156862745,
-          "provenance": {
-            "citation": "Удельное снижение энтерального CH₄ на тыс. голов от кормовых добавок (в коридоре ref_enteric_factor)",
-            "confidence": "medium",
-            "source_type": "expert_estimate",
-            "geo_applicability": "kz_specific"
-          },
-          "reference_ref": "ref_enteric_factor"
-        },
-        "capex_denominator": {
-          "unit": "голов",
-          "value": 2550000,
-          "provenance": {
-            "citation": "Поголовье под программу 2550 тыс. голов",
-            "confidence": "medium",
-            "source_type": "official_stat",
-            "geo_applicability": "kz_specific"
-          }
-        }
-      },
-      "sectors": [
-        {
-          "sector_ref": "3",
-          "subsector_ref": "3.enteric"
-        }
-      ],
-      "sources": {
-        "materials[0].qty": {
-          "binding": {
-            "ref": "in:capex_denominator",
-            "mode": "reuse"
-          },
-          "provenance": {
-            "citation": "1 доза кормовой добавки на голову в год",
-            "confidence": "medium",
-            "source_type": "expert_estimate"
-          }
-        },
-        "materials[0].price": {
-          "binding": {
-            "ref": "res:feed_additive#price",
-            "mode": "reuse"
-          },
-          "provenance": {
-            "citation": "Цена кормовой добавки ~50 $/голову/год",
-            "confidence": "medium",
-            "source_type": "literature"
-          }
-        },
-        "created_technologies[0].capacity": {
-          "binding": {
-            "ref": "in:capex_denominator",
-            "mode": "reuse"
-          },
-          "provenance": {
-            "citation": "Поголовье под программу, 2550 тыс. голов",
-            "confidence": "medium",
-            "source_type": "official_stat"
-          }
-        },
-        "created_technologies[1].capacity": {
-          "binding": {
-            "mode": "new"
-          },
-          "provenance": {
-            "citation": "Охват ~5100 хозяйств",
-            "confidence": "low",
-            "source_type": "expert_estimate"
-          }
-        },
-        "created_technologies[1].opex_musd": {
-          "binding": {
-            "mode": "new"
-          },
-          "provenance": {
-            "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год",
-            "confidence": "medium",
-            "source_type": "expert_estimate"
-          }
-        }
-      },
-      "abatement": {
-        "formula": {
-          "op": "mul",
-          "args": [
-            {
-              "ref": "activity"
-            },
-            {
-              "ref": "emission_factor"
-            }
-          ]
-        },
-        "factor_ref": "emission_factor",
-        "formula_label": {
-          "en": "head count × per-head CH₄ reduction",
-          "ru": "поголовье × удельное снижение CH₄"
-        }
-      },
-      "materials": [
-        {
-          "qty": {
-            "ref": "in:capex_denominator"
-          },
-          "side": "new",
-          "unit": "голов",
-          "price": {
-            "ref": "res:feed_additive#price"
-          },
-          "resource_ref": "feed_additive"
-        }
-      ],
-      "mechanism": "reduction",
-      "potential": {
-        "limit": {
-          "indicator_ref": "ind_cattle_population",
-          "consumption_ref": "activity"
-        },
-        "pool_ref": "pool_enteric",
-        "ceiling_dim": "activity"
-      },
-      "sector_ref": "3",
-      "baseline_basis": "standalone",
-      "maturity_stage": "computed",
-      "schema_version": 1,
-      "technology_ref": "tech_feed_additive",
-      "mechanism_subtype": "non_co2",
-      "created_technologies": [
-        {
-          "unit": "голов",
-          "capacity": {
-            "ref": "in:capex_denominator"
-          },
-          "technology_ref": "tech_feed_dosing"
-        },
-        {
-          "unit": "хозяйств",
-          "capacity": 5100,
-          "opex_musd": 25.5,
-          "technology_ref": "tech_feed_training"
-        }
-      ]
-    },
-    {
       "id": "kz-2",
       "name": {
         "en": "Conversion of coal CHP and boilers to natural gas",
@@ -4090,7 +3851,7 @@
           "indicator_ref": "ind_coal_power_capacity",
           "consumption_ref": "cap_mw"
         },
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "n_objects"
       },
       "comparison": {
@@ -4119,6 +3880,169 @@
           },
           "technology_ref": "tech_gas_pipeline",
           "capex_ud_factor": 1000
+        }
+      ]
+    },
+    {
+      "id": "kz-20",
+      "name": {
+        "en": "Feed additives reducing enteric fermentation (CH₄)",
+        "ru": "Кормовые добавки для снижения энтеральной ферментации (CH₄)"
+      },
+      "scope": "published",
+      "inputs": {
+        "activity": {
+          "unit": "тыс. голов",
+          "value": 2550,
+          "provenance": {
+            "citation": "Поголовье под программу, 2550 тыс. голов",
+            "confidence": "high",
+            "source_type": "official_stat",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "emission_factor": {
+          "unit": "kt CO₂eq/(тыс. голов·год)",
+          "value": 0.6980392156862745,
+          "provenance": {
+            "citation": "Удельное снижение энтерального CH₄ на тыс. голов от кормовых добавок (в коридоре ref_enteric_factor)",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "kz_specific"
+          },
+          "reference_ref": "ref_enteric_factor"
+        },
+        "capex_denominator": {
+          "unit": "голов",
+          "value": 2550000,
+          "provenance": {
+            "citation": "Поголовье под программу 2550 тыс. голов",
+            "confidence": "medium",
+            "source_type": "official_stat",
+            "geo_applicability": "kz_specific"
+          }
+        }
+      },
+      "sectors": [
+        {
+          "sector_ref": "3",
+          "subsector_ref": "3.enteric"
+        }
+      ],
+      "sources": {
+        "materials[0].qty": {
+          "binding": {
+            "ref": "in:capex_denominator",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "citation": "1 доза кормовой добавки на голову в год",
+            "confidence": "medium",
+            "source_type": "expert_estimate"
+          }
+        },
+        "materials[0].price": {
+          "binding": {
+            "ref": "res:feed_additive#price",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "citation": "Цена кормовой добавки ~50 $/голову/год",
+            "confidence": "medium",
+            "source_type": "literature"
+          }
+        },
+        "created_technologies[0].capacity": {
+          "binding": {
+            "ref": "in:capex_denominator",
+            "mode": "reuse"
+          },
+          "provenance": {
+            "citation": "Поголовье под программу, 2550 тыс. голов",
+            "confidence": "medium",
+            "source_type": "official_stat"
+          }
+        },
+        "created_technologies[1].capacity": {
+          "binding": {
+            "mode": "new"
+          },
+          "provenance": {
+            "citation": "Охват ~5100 хозяйств",
+            "confidence": "low",
+            "source_type": "expert_estimate"
+          }
+        },
+        "created_technologies[1].opex_musd": {
+          "binding": {
+            "mode": "new"
+          },
+          "provenance": {
+            "citation": "Обучение и сопровождение, ~5 тыс.$/хозяйство/год",
+            "confidence": "medium",
+            "source_type": "expert_estimate"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "op": "mul",
+          "args": [
+            {
+              "ref": "activity"
+            },
+            {
+              "ref": "emission_factor"
+            }
+          ]
+        },
+        "factor_ref": "emission_factor",
+        "formula_label": {
+          "en": "head count × per-head CH₄ reduction",
+          "ru": "поголовье × удельное снижение CH₄"
+        }
+      },
+      "materials": [
+        {
+          "qty": {
+            "ref": "in:capex_denominator"
+          },
+          "side": "new",
+          "unit": "голов",
+          "price": {
+            "ref": "res:feed_additive#price"
+          },
+          "resource_ref": "feed_additive"
+        }
+      ],
+      "mechanism": "reduction",
+      "potential": {
+        "limit": {
+          "indicator_ref": "ind_cattle_population",
+          "consumption_ref": "activity"
+        },
+        "pool_ref": "sub:3.enteric#max_emissions",
+        "ceiling_dim": "activity"
+      },
+      "sector_ref": "3",
+      "baseline_basis": "standalone",
+      "maturity_stage": "computed",
+      "schema_version": 1,
+      "technology_ref": "tech_feed_additive",
+      "mechanism_subtype": "non_co2",
+      "created_technologies": [
+        {
+          "unit": "голов",
+          "capacity": {
+            "ref": "in:capex_denominator"
+          },
+          "technology_ref": "tech_feed_dosing"
+        },
+        {
+          "unit": "хозяйств",
+          "capacity": 5100,
+          "opex_musd": 25.5,
+          "technology_ref": "tech_feed_training"
         }
       ]
     },
@@ -4324,7 +4248,7 @@
           "indicator_ref": "ind_cmm_volume",
           "consumption_ref": "activity"
         },
-        "pool_ref": "pool_coal_methane",
+        "pool_ref": "sub:1.B.coal_methane#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "1.B",
@@ -4644,7 +4568,7 @@
           "indicator_ref": "ind_res_potential",
           "consumption_ref": "cap_mw"
         },
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "n_objects"
       },
       "comparison": {
@@ -5097,7 +5021,7 @@
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
         },
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -5492,7 +5416,7 @@
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
         },
-        "pool_ref": "pool_coal_heat",
+        "pool_ref": "sub:1.A.1.coal_heat#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -5990,7 +5914,7 @@
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
         },
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -6200,7 +6124,7 @@
           "indicator_ref": "ind_whr_capacity",
           "consumption_ref": "cap_mw"
         },
-        "pool_ref": "pool_industry_energy",
+        "pool_ref": "sub:1.A.2.industry_energy#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -6659,7 +6583,7 @@
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "1.A.4",
@@ -6880,7 +6804,7 @@
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "1.B",
@@ -7106,7 +7030,7 @@
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "1.B",
@@ -7285,7 +7209,7 @@
           "indicator_ref": "ind_cement_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_cement",
+        "pool_ref": "sub:2.cement#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "2",
@@ -7529,7 +7453,7 @@
           "indicator_ref": "ind_metals_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_industry_ccs",
+        "pool_ref": "sub:2.metallurgy#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "2",
@@ -7754,7 +7678,7 @@
           "indicator_ref": "ind_afforestation_area",
           "consumption_ref": "area_kha"
         },
-        "pool_ref": "pool_afforestation",
+        "pool_ref": "sub:4.forestry#max_emissions",
         "ceiling_dim": "activity"
       },
       "permanence": "short_lived",
@@ -7973,7 +7897,7 @@
           "indicator_ref": "ind_swaste_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_solid_waste",
+        "pool_ref": "sub:5.solid_waste#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "5",
@@ -8283,7 +8207,7 @@
           "indicator_ref": "ind_coal_power_capacity",
           "consumption_ref": "cap_mw"
         },
-        "pool_ref": "pool_coal_efficiency",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "n_objects"
       },
       "sector_ref": "1.A.1",
@@ -8669,7 +8593,7 @@
           "indicator_ref": "ind_industry_coal_heat_gas_capacity",
           "consumption_ref": "cap_mw"
         },
-        "pool_ref": "pool_industry_energy",
+        "pool_ref": "sub:1.A.2.industry_energy#max_emissions",
         "ceiling_dim": "n_objects"
       },
       "comparison": {
@@ -8870,7 +8794,7 @@
           "indicator_ref": "ind_nuclear_gen",
           "consumption_ref": "gen_mwh"
         },
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -9256,7 +9180,7 @@
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
         },
-        "pool_ref": "pool_coal_heat",
+        "pool_ref": "sub:1.A.1.coal_heat#max_emissions",
         "ceiling_dim": "output_product"
       },
       "comparison": {
@@ -9630,7 +9554,7 @@
           "indicator_ref": "ind_road_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_road_transport",
+        "pool_ref": "sub:1.A.3.road#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "1.A.3",
@@ -10061,7 +9985,7 @@
           "indicator_ref": "ind_residential_heat",
           "consumption_ref": "heat_before_kgcal"
         },
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "ceiling_dim": "output_product"
       },
       "sector_ref": "1.A.4",
@@ -10324,7 +10248,7 @@
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "1.A.4",
@@ -10554,7 +10478,7 @@
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "1.B",
@@ -10772,7 +10696,7 @@
           "indicator_ref": "ind_manure_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_manure",
+        "pool_ref": "sub:3.manure#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "3",
@@ -10980,7 +10904,7 @@
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_ag_soils",
+        "pool_ref": "sub:3.soils#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "3",
@@ -11208,7 +11132,7 @@
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_ag_soils",
+        "pool_ref": "sub:3.soils#max_emissions",
         "ceiling_dim": "activity"
       },
       "sector_ref": "3",
@@ -11384,7 +11308,7 @@
           "indicator_ref": "ind_wastewater_emissions",
           "consumption_ref": "base_emissions"
         },
-        "pool_ref": "pool_wastewater",
+        "pool_ref": "sub:5.wastewater#max_emissions",
         "ceiling_dim": "cut_resource"
       },
       "sector_ref": "5",
