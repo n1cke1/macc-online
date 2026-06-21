@@ -2475,6 +2475,107 @@
       ]
     },
     {
+      "id": 28,
+      "sector": "1.A.3",
+      "variant": null,
+      "name": {
+        "en": "Freight modal shift from road to rail",
+        "ru": "Модальный сдвиг грузоперевозок с автодорог на ж/д"
+      },
+      "capex": 200,
+      "opex": 5,
+      "durationYrs": 25,
+      "abatementKt": 354.78,
+      "npv": 239.21569556032276,
+      "discCo2Kt": 2782.588894178262,
+      "mac": 85.96875235893103,
+      "cumAbatementStartKt": 117493.0413793103,
+      "cumAbatementEndKt": 117847.8213793103,
+      "capexItems": [
+        {
+          "label": {
+            "ru": "Intermodal terminals & rolling stock",
+            "en": "Intermodal terminals & rolling stock"
+          },
+          "value": 200,
+          "cell": "obj_kz28_0"
+        }
+      ],
+      "opexItems": [
+        {
+          "label": {
+            "ru": "Net operating change (handling − rail tariff savings)",
+            "en": "Net operating change (handling − rail tariff savings)"
+          },
+          "value": 5,
+          "cell": "res_kz28_0"
+        }
+      ],
+      "physicalItems": [],
+      "localInputs": [
+        {
+          "label": {
+            "ru": "lifetime",
+            "en": "lifetime"
+          },
+          "value": 25,
+          "unit": "лет",
+          "source": "Срок жизни ж/д инфраструктуры/проекта",
+          "cell": "in:kz-28#lifetime"
+        },
+        {
+          "label": {
+            "ru": "opex_net",
+            "en": "opex_net"
+          },
+          "value": 5,
+          "unit": "mUSD/yr",
+          "source": "Чистое изменение OPEX: перевалка/терминалы минус экономия на ж/д тарифе (почти нейтрально) — оценка",
+          "cell": "in:kz-28#opex_net"
+        },
+        {
+          "label": {
+            "ru": "int_improve",
+            "en": "int_improve"
+          },
+          "value": 0.73,
+          "unit": "доля",
+          "source": "Улучшение удельных выбросов ж/д vs авто на ткм: ж/д ~20 vs грузовик ~75 гCO₂/ткм → 1−20/75≈0.73; центральноевропейский кейс −75.7% на сдвинутом потоке",
+          "cell": "in:kz-28#int_improve"
+        },
+        {
+          "label": {
+            "ru": "shift_share",
+            "en": "shift_share"
+          },
+          "value": 0.18,
+          "unit": "доля",
+          "source": "Доля автогрузооборота, переключаемая на ж/д на параллельных коридорах — сценарное допущение; в литературе реалистичны 10–20%",
+          "cell": "in:kz-28#shift_share"
+        },
+        {
+          "label": {
+            "ru": "capex_terminals",
+            "en": "capex_terminals"
+          },
+          "value": 200,
+          "unit": "mUSD",
+          "source": "Интермодальные терминалы + подвижной состав под сдвинутый объём ~6.5 млрд ткм — оценка, требует уточнения",
+          "cell": "in:kz-28#capex_terminals"
+        },
+        {
+          "label": {
+            "ru": "road_freight_emissions",
+            "en": "road_freight_emissions"
+          },
+          "value": 2.7,
+          "unit": "Мт CO₂eq/год",
+          "source": "Грузовой автотранспорт КЗ: грузооборот ~36 млрд ткм (БНС 2024: всего 514.5 − ж/д 327.9 − трубопровод 149.1 − морской 1.6) × EF тяжёлых дизельных грузовиков ~75 гCO₂/ткм ≈ 2.7 Мт",
+          "cell": "in:kz-28#road_freight_emissions"
+        }
+      ]
+    },
+    {
       "id": 20,
       "sector": "3",
       "variant": null,
@@ -2489,8 +2590,8 @@
       "npv": 1004.7341233468627,
       "discCo2Kt": 10057.396990571344,
       "mac": 99.90001630529108,
-      "cumAbatementStartKt": 117493.0413793103,
-      "cumAbatementEndKt": 119273.0413793103,
+      "cumAbatementStartKt": 117847.8213793103,
+      "cumAbatementEndKt": 119627.8213793103,
       "capexItems": [
         {
           "label": {
@@ -2604,8 +2705,8 @@
       "npv": 9111.765611890663,
       "discCo2Kt": 91176.49217775042,
       "mac": 99.93547014428995,
-      "cumAbatementStartKt": 119273.0413793103,
-      "cumAbatementEndKt": 130898.0413793103,
+      "cumAbatementStartKt": 119627.8213793103,
+      "cumAbatementEndKt": 131252.8213793103,
       "capexItems": [
         {
           "label": {
@@ -2785,8 +2886,8 @@
       "npv": 25703.254375370303,
       "discCo2Kt": 221294.17004690142,
       "mac": 116.14971316199933,
-      "cumAbatementStartKt": 130898.0413793103,
-      "cumAbatementEndKt": 159113.0413793103,
+      "cumAbatementStartKt": 131252.8213793103,
+      "cumAbatementEndKt": 159467.8213793103,
       "capexItems": [
         {
           "label": {
@@ -2930,8 +3031,8 @@
       "npv": 211.4587616369549,
       "discCo2Kt": 1798.068225218762,
       "mac": 117.60330262842376,
-      "cumAbatementStartKt": 159113.0413793103,
-      "cumAbatementEndKt": 159377.0413793103,
+      "cumAbatementStartKt": 159467.8213793103,
+      "cumAbatementEndKt": 159731.8213793103,
       "capexItems": [
         {
           "label": {
@@ -3047,8 +3148,8 @@
       "npv": 2655.5297556050946,
       "discCo2Kt": 16941.180482059433,
       "mac": 156.74998317958293,
-      "cumAbatementStartKt": 159377.0413793103,
-      "cumAbatementEndKt": 161537.0413793103,
+      "cumAbatementStartKt": 159731.8213793103,
+      "cumAbatementEndKt": 161891.8213793103,
       "capexItems": [
         {
           "label": {
@@ -3156,8 +3257,8 @@
       "npv": 9465.015396237588,
       "discCo2Kt": 56184.908174479846,
       "mac": 168.4618824479411,
-      "cumAbatementStartKt": 161537.0413793103,
-      "cumAbatementEndKt": 168512.0413793103,
+      "cumAbatementStartKt": 161891.8213793103,
+      "cumAbatementEndKt": 168866.8213793103,
       "capexItems": [
         {
           "label": {
@@ -3290,8 +3391,8 @@
       "npv": 38216.5997334267,
       "discCo2Kt": 223131.1355134301,
       "mac": 171.2741686429793,
-      "cumAbatementStartKt": 168512.0413793103,
-      "cumAbatementEndKt": 195317.6413793103,
+      "cumAbatementStartKt": 168866.8213793103,
+      "cumAbatementEndKt": 195672.4213793103,
       "capexItems": [
         {
           "label": {
@@ -3397,8 +3498,8 @@
       "npv": 3094.1254204110774,
       "discCo2Kt": 16915.88633210146,
       "mac": 182.91240314965475,
-      "cumAbatementStartKt": 195317.6413793103,
-      "cumAbatementEndKt": 197417.6413793103,
+      "cumAbatementStartKt": 195672.4213793103,
+      "cumAbatementEndKt": 197772.4213793103,
       "capexItems": [
         {
           "label": {
@@ -3514,8 +3615,8 @@
       "npv": 17432.49859108747,
       "discCo2Kt": 89969.44845502592,
       "mac": 193.76020294046435,
-      "cumAbatementStartKt": 197417.6413793103,
-      "cumAbatementEndKt": 209462.6413793103,
+      "cumAbatementStartKt": 197772.4213793103,
+      "cumAbatementEndKt": 209817.4213793103,
       "capexItems": [
         {
           "label": {
@@ -3686,8 +3787,8 @@
       "npv": 8856.26113469623,
       "discCo2Kt": 35651.45254206091,
       "mac": 248.41235078003564,
-      "cumAbatementStartKt": 209462.6413793103,
-      "cumAbatementEndKt": 214235.6143522833,
+      "cumAbatementStartKt": 209817.4213793103,
+      "cumAbatementEndKt": 214590.39435228327,
       "capexItems": [
         {
           "label": {
@@ -3803,8 +3904,8 @@
       "npv": 2701.9550174583105,
       "discCo2Kt": 10815.627452020737,
       "mac": 249.81953469130363,
-      "cumAbatementStartKt": 214235.6143522833,
-      "cumAbatementEndKt": 215683.5973609233,
+      "cumAbatementStartKt": 214590.39435228327,
+      "cumAbatementEndKt": 216038.37736092327,
       "capexItems": [
         {
           "label": {
@@ -3978,8 +4079,8 @@
       "npv": 4424.047656003694,
       "discCo2Kt": 14876.818723283315,
       "mac": 297.3786088473159,
-      "cumAbatementStartKt": 215683.5973609233,
-      "cumAbatementEndKt": 217867.8749583259,
+      "cumAbatementStartKt": 216038.37736092327,
+      "cumAbatementEndKt": 218222.65495832587,
       "capexItems": [
         {
           "label": {
@@ -4121,11 +4222,11 @@
     }
   ],
   "totals": {
-    "capexMUsd": 113502.27640783353,
-    "abatementKt": 217867.8749583259,
-    "npvMUsd": 158575.04977936568,
-    "discCo2Kt": 1677136.3313313033,
-    "weightedAvgMac": 94.55107901305168,
+    "capexMUsd": 113702.27640783353,
+    "abatementKt": 218222.65495832587,
+    "npvMUsd": 158814.265474926,
+    "discCo2Kt": 1679918.9202254815,
+    "weightedAvgMac": 94.5368633943415,
     "noRegretsAbatementKt": 12609.6
   }
 }

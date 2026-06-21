@@ -111,6 +111,15 @@
         "unit": "mUSD/yr",
         "ef": 0
       },
+      "res_kz28_0": {
+        "id": "res_kz28_0",
+        "name": {
+          "ru": "Net operating change (handling − rail tariff savings)",
+          "en": "Net operating change (handling − rail tariff savings)"
+        },
+        "unit": "mUSD/yr",
+        "ef": 0
+      },
       "coal": {
         "id": "coal",
         "name": {
@@ -957,6 +966,24 @@
         "capex_ud_unit": "mUSD/шт",
         "indicators": []
       },
+      "obj_kz28_0": {
+        "id": "obj_kz28_0",
+        "name": {
+          "ru": "Intermodal terminals & rolling stock",
+          "en": "Intermodal terminals & rolling stock"
+        },
+        "kind": "infrastructure",
+        "description": {
+          "ru": "Интермодальные терминалы и ж/д подвижной состав для приёма грузов, сдвинутых с автодорог на ж/д.",
+          "en": "Интермодальные терминалы и ж/д подвижной состав для приёма грузов, сдвинутых с автодорог на ж/д."
+        },
+        "rules": {
+          "ru": "Инфраструктура модального сдвига: CAPEX задаётся суммой на сдвинутый объём.",
+          "en": "Инфраструктура модального сдвига: CAPEX задаётся суммой на сдвинутый объём."
+        },
+        "lifetimeYrs": 25,
+        "indicators": []
+      },
       "tech_coal_to_gas": {
         "id": "tech_coal_to_gas",
         "name": {
@@ -1278,6 +1305,7 @@
         },
         "unit": "тыс. Гкал",
         "service_unit": "Гкал",
+        "sector_ref": "1.A.2",
         "carbon_footprint": {
           "value": 0.536,
           "unit": "tCO₂/Гкал"
@@ -1291,6 +1319,7 @@
         },
         "unit": "MWh",
         "service_unit": "MWh",
+        "sector_ref": "1.A.1",
         "carbon_footprint": {
           "value": 1,
           "unit": "tCO₂/MWh (coal baseline)"
@@ -1303,7 +1332,18 @@
           "en": "District heat"
         },
         "unit": "тыс. Гкал",
-        "service_unit": "Гкал"
+        "service_unit": "Гкал",
+        "sector_ref": "1.A.1"
+      },
+      "prod_tkm": {
+        "id": "prod_tkm",
+        "name": {
+          "ru": "Freight turnover (tonne-km)",
+          "en": "Freight turnover (tonne-km)"
+        },
+        "unit": "млрд ткм",
+        "service_unit": "ткм",
+        "sector_ref": "1.A.3"
       }
     },
     "references": {
@@ -2870,11 +2910,8 @@
       },
       "enums": {
         "maturity": {
-          "raw": {
-            "help": "Raw: reduction = baseline × share; no bottom-up anchor or factor check. The first stage — next is computed."
-          },
           "computed": {
-            "help": "Computed: reduction expanded by a bottom-up formula (activity × factor). The per-unit factor is sanity-checked vs its reference corridor (✓/⚠). The highest maturity stage."
+            "help": "Computed: reduction is a bottom-up formula (activity × factor / physics). The per-unit factor is sanity-checked vs its reference corridor (✓/⚠). (The legacy baseline×share `raw` stage was retired — every measure is computed.)"
           }
         },
         "type": {
@@ -5438,6 +5475,151 @@
         },
         {
           "technology_ref": "obj_kz6_1"
+        }
+      ]
+    },
+    {
+      "id": "kz-28",
+      "name": {
+        "en": "Freight modal shift from road to rail",
+        "ru": "Модальный сдвиг грузоперевозок с автодорог на ж/д"
+      },
+      "scope": "draft",
+      "inputs": {
+        "lifetime": {
+          "unit": "лет",
+          "value": 25,
+          "provenance": {
+            "citation": "Срок жизни ж/д инфраструктуры/проекта",
+            "confidence": "high",
+            "source_type": "expert_estimate",
+            "geo_applicability": "global"
+          }
+        },
+        "opex_net": {
+          "unit": "mUSD/yr",
+          "value": 5,
+          "provenance": {
+            "citation": "Чистое изменение OPEX: перевалка/терминалы минус экономия на ж/д тарифе (почти нейтрально) — оценка",
+            "confidence": "low",
+            "source_type": "expert_estimate",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "int_improve": {
+          "unit": "доля",
+          "value": 0.73,
+          "provenance": {
+            "citation": "Улучшение удельных выбросов ж/д vs авто на ткм: ж/д ~20 vs грузовик ~75 гCO₂/ткм → 1−20/75≈0.73; центральноевропейский кейс −75.7% на сдвинутом потоке",
+            "confidence": "medium",
+            "source_type": "literature",
+            "geo_applicability": "global"
+          }
+        },
+        "shift_share": {
+          "unit": "доля",
+          "value": 0.18,
+          "provenance": {
+            "citation": "Доля автогрузооборота, переключаемая на ж/д на параллельных коридорах — сценарное допущение; в литературе реалистичны 10–20%",
+            "confidence": "low",
+            "source_type": "assumption",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "capex_terminals": {
+          "unit": "mUSD",
+          "value": 200,
+          "provenance": {
+            "citation": "Интермодальные терминалы + подвижной состав под сдвинутый объём ~6.5 млрд ткм — оценка, требует уточнения",
+            "confidence": "low",
+            "source_type": "expert_estimate",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "road_freight_emissions": {
+          "unit": "Мт CO₂eq/год",
+          "value": 2.7,
+          "provenance": {
+            "citation": "Грузовой автотранспорт КЗ: грузооборот ~36 млрд ткм (БНС 2024: всего 514.5 − ж/д 327.9 − трубопровод 149.1 − морской 1.6) × EF тяжёлых дизельных грузовиков ~75 гCO₂/ткм ≈ 2.7 Мт",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "kz_specific"
+          }
+        }
+      },
+      "sectors": [
+        {
+          "sector_ref": "1.A.3",
+          "subsector_ref": "1.A.3.road"
+        }
+      ],
+      "sources": {},
+      "computed": {
+        "abate_kt": {
+          "label": {
+            "ru": "снижение, кт/год"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "road_freight_emissions"
+              },
+              {
+                "ref": "shift_share"
+              },
+              {
+                "ref": "int_improve"
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "ru": "CAPEX терминалов и подвижного состава"
+          },
+          "formula": {
+            "ref": "capex_terminals"
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "ref": "abate_kt"
+        },
+        "formula_label": {
+          "en": "road-freight emissions × shift share × intensity improvement × 1000",
+          "ru": "выбросы грузового автотранспорта × доля сдвига × улучшение интенсивности × 1000"
+        }
+      },
+      "materials": [
+        {
+          "side": "new",
+          "cost_musd": {
+            "ref": "opex_net"
+          },
+          "resource_ref": "res_kz28_0"
+        }
+      ],
+      "mechanism": "reduction",
+      "potential": {
+        "limit": {
+          "indicator_ref": "ind_road_emissions",
+          "consumption_ref": "road_freight_emissions"
+        },
+        "pool_ref": "sub:1.A.3.road#max_emissions",
+        "ceiling_dim": "activity"
+      },
+      "sector_ref": "1.A.3",
+      "product_ref": "prod_tkm",
+      "baseline_basis": "standalone",
+      "maturity_stage": "computed",
+      "schema_version": 1,
+      "mechanism_subtype": "demand_reduction",
+      "created_technologies": [
+        {
+          "technology_ref": "obj_kz28_0"
         }
       ]
     },
