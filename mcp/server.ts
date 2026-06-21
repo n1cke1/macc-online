@@ -321,12 +321,13 @@ export function buildServer(deps: ServerDeps): McpServer {
       inputSchema: {
         kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]).describe('object | resource | product | indicator | ref | subsector | unit | bridge'),
         entity: z.record(z.string(), z.any()).describe('the entity row (snake_case columns; must include id)'),
+        note: z.string().optional().describe('why this changed — recorded on the version row (authority entities: object/resource/product/indicator/ref/subsector)'),
       },
     },
-    async ({ kind, entity }) => {
+    async ({ kind, entity, note }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const res = await dbUpsertLibraryEntity(user, kind, entity as Record<string, unknown>);
+        const res = await dbUpsertLibraryEntity(user, kind, entity as Record<string, unknown>, note);
         return ok({ ...res, author: user.email ?? user.userId });
       } catch (e) { return err(`upsert_library_entity failed: ${(e as Error).message}`); }
     },

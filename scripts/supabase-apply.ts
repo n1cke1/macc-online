@@ -20,7 +20,7 @@ function loadDbUrl(): string {
   return line.slice('SUPABASE_DB_URL='.length).trim();
 }
 
-const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql', '0013_indicator_subsector.sql', '0014_products_technology_ref.sql', '0015_dimensional_library.sql', '0016_ingest_versioning.sql'];
+const MIGRATIONS = ['0005_measures_schema.sql', '0006_measures_rls.sql', '0007_library_graph.sql', '0008_measure_versions.sql', '0009_measure_publish_admin.sql', '0010_open_library.sql', '0011_respect_scope.sql', '0012_create_and_archive.sql', '0013_indicator_subsector.sql', '0014_products_technology_ref.sql', '0015_dimensional_library.sql', '0016_ingest_versioning.sql', '0017_library_note_admin_drop_pools.sql', '0018_library_upsert_column_scoped.sql'];
 const mode = process.argv[2] ?? '--check';
 
 interface Graph {
@@ -59,6 +59,7 @@ async function migrate(c: Client) {
     : f.includes('0013') ? ckSrc.includes('subsector')
     : f.includes('0014') ? prodCols.includes('technology_ref')
     : f.includes('0016') ? funcSrc.includes('p_meta')  // full-replace + meta-carrying publish
+    : f.includes('0017') ? funcs.includes('library_upsert_admin')  // library note-parity admin twin
     : false;
   for (const f of MIGRATIONS) {
     if (applied(f)) { console.log(`  ⤳ ${f}: skip (already applied)`); continue; }

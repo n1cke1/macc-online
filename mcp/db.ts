@@ -170,18 +170,34 @@ export async function dbListLibrary(user: AuthedUser, filter: LibraryFilter = {}
   return out;
 }
 
+/** Authority tables write through the note-aware RPC (records WHY a number changed);
+ *  unit/bridge keep the direct path (their dimensional validation runs client-side first). */
+const AUTHORITY_TABLES = new Set(['objects', 'resources', 'products', 'indicators', 'refs', 'subsectors']);
+
 /**
- * Create or correct one library entity (open collaboration; versioned + attributed by
- * the 0010 triggers). The user-scoped path writes as the user (auth.uid() attributes it);
- * the service-role path (OAuth Worker — RLS bypassed) stamps `last_author_id` explicitly.
+ * Create or correct one library entity (open collaboration; versioned + attributed). Authority
+ * entities go through library_upsert / library_upsert_admin so a `note` (why) lands on the
+ * version row; unit/bridge use a direct upsert (dimensional validation already ran). The
+ * service-role path (OAuth Worker — RLS bypassed) passes the author explicitly.
  */
 export async function dbUpsertLibraryEntity(
-  user: AuthedUser, kind: string, entity: Record<string, unknown>,
+  user: AuthedUser, kind: string, entity: Record<string, unknown>, note?: string,
 ): Promise<{ table: string; id: string; version: number | null }> {
   const table = LIBRARY_TABLES[kind];
   if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(', ')})`);
   if (!entity || typeof entity.id !== 'string') throw new Error(`library ${kind}: 'id' (string) is required`);
   assertLibraryEntityValid(kind, entity);
+
+  if (AUTHORITY_TABLES.has(table)) {
+    const rpc = user.serviceRole
+      ? user.client.rpc('library_upsert_admin', { p_entity: table, p_row: entity, p_author: user.userId, p_note: note ?? null })
+      : user.client.rpc('library_upsert', { p_entity: table, p_row: entity, p_note: note ?? null });
+    const { data, error } = await rpc;
+    if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
+    return { table, id: entity.id as string, version: (data as { version?: number } | null)?.version ?? null };
+  }
+
+  // unit / bridge — direct upsert (snapshotted by the 0015 trigger; no note channel).
   const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
   const { error } = await user.client.from(table).upsert(row);
   if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
