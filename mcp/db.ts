@@ -147,11 +147,23 @@ function assertLibraryEntityValid(kind: string, entity: Record<string, unknown>)
   }
 }
 
-/** Read the whole registry (raw rows per table) — what an author needs to reuse ids/shapes. */
-export async function dbListLibrary(user: AuthedUser): Promise<Record<string, unknown[]>> {
+/** R4 — addressable read filter (was an unconditional dump of all 9 tables). */
+export interface LibraryFilter { kind?: string; owner_ref?: string; id?: string; prefix?: string }
+
+/** Read the registry (raw rows per table), optionally narrowed — what an author needs to reuse
+ *  ids/shapes or list "indicators of subsector X" without pulling ~270 rows. */
+export async function dbListLibrary(user: AuthedUser, filter: LibraryFilter = {}): Promise<Record<string, unknown[]>> {
+  if (filter.kind && !LIBRARY_TABLES[filter.kind]) {
+    throw new Error(`unknown library kind '${filter.kind}' (expected: ${Object.keys(LIBRARY_TABLES).join(', ')})`);
+  }
+  const tables = filter.kind ? [LIBRARY_TABLES[filter.kind]] : Object.values(LIBRARY_TABLES);
   const out: Record<string, unknown[]> = {};
-  for (const t of Object.values(LIBRARY_TABLES)) {
-    const { data, error } = await user.client.from(t).select('*');
+  for (const t of tables) {
+    let q = user.client.from(t).select('*');
+    if (filter.owner_ref && t === 'indicators') q = q.eq('owner_ref', filter.owner_ref); // owner_ref lives on indicators
+    if (filter.id) q = q.eq('id', filter.id);
+    if (filter.prefix) q = q.ilike('id', `${filter.prefix}%`);
+    const { data, error } = await q;
     if (error) throw new Error(`list ${t}: ${error.message}`);
     out[t] = data ?? [];
   }

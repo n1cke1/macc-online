@@ -8,7 +8,7 @@ import type { CostItem, Localized, LocalInput, PhysicalItem, SectorCode } from '
 import { economicCore, evalAst, type RefResolver } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import { economicsRollup } from './guardrails';
-import type { IndicatorOwnerKind, Library, Measure, NumberOrRef } from './schema';
+import type { IndicatorOwnerKind, Library, Measure, NumberOrRef, Provenance } from './schema';
 
 /** §C — turn a `NumberOrRef` into a number, resolving `{ref}` through `resolve`. */
 export const isRef = (v: NumberOrRef | undefined): v is { ref: string } =>
@@ -110,6 +110,56 @@ export function makeResolver(measure: Measure, library: Library): RefResolver {
     return inp.value;
   };
   return resolve;
+}
+
+/** R4 — what `resolve_ref` returns: the value plus its full audit chain in one call. */
+export interface RefDetail {
+  ref: string;
+  value: number;
+  unit?: string;
+  owner_kind?: IndicatorOwnerKind;
+  owner_ref?: string;
+  key?: string;
+  provenance?: Provenance;
+  /** The plausibility corridor (reference_ref → Reference), null when the indicator has none. */
+  corridor?: { range: [number, number]; unit: string; source?: Provenance } | null;
+}
+
+/**
+ * R4 — resolve a LIBRARY ref to its value + owner + key + provenance + corridor (the audit
+ * chain R3 makes first-class on every indicator). Library-scoped: `sub:`/`obj:`/`prd:`/`res:`/
+ * `glb:` only; measure-scoped `in:`/bare keys belong to compute_measure.
+ */
+export function resolveRefDetail(ref: string, library: Library): RefDetail {
+  const m = ref.match(/^([a-z]+):(.+)$/);
+  if (!m) throw new Error(`resolve_ref: '${ref}' is not a prefixed library ref (sub:/obj:/prd:/res:/glb:)`);
+  const [, prefix, rest] = m;
+  if (prefix === 'glb') {
+    const v = (library.globals as unknown as Record<string, unknown>)[rest];
+    if (typeof v !== 'number') throw new Error(`resolve_ref '${ref}': library.globals.${rest} is not a number`);
+    return { ref, value: v, key: rest };
+  }
+  if (prefix === 'in') throw new Error(`resolve_ref '${ref}': 'in:' is measure-scoped — use compute_measure`);
+  const owner_kind = INDICATOR_PREFIX[prefix];
+  if (!owner_kind) throw new Error(`resolve_ref '${ref}': unknown prefix '${prefix}:'`);
+  const hashAt = rest.indexOf('#');
+  const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
+  const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : undefined;
+  if (prefix === 'res' && (indKey === undefined || indKey === 'ef')) {
+    const r = library.resources[id];
+    if (!r) throw new Error(`resolve_ref '${ref}': resource '${id}' not in library`);
+    const ef = typeof r.ef === 'number' ? r.ef : r.ef[library.globals.year ?? ''];
+    if (typeof ef !== 'number') throw new Error(`resolve_ref '${ref}': resource '${id}' has no scalar EF for the active year`);
+    return { ref, value: ef, owner_kind: 'resource', owner_ref: id, key: 'ef', unit: r.unit };
+  }
+  if (indKey === undefined) throw new Error(`resolve_ref '${ref}': '${prefix}:' refs need '#<key>' (e.g. '${prefix}:${id}#capex_ud')`);
+  const ind = library.indicators.find((i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey);
+  if (!ind) throw new Error(`resolve_ref '${ref}': indicator (${owner_kind} '${id}' #${indKey}) absent from library.indicators`);
+  const corridor = ind.reference_ref ? library.references[ind.reference_ref] : undefined;
+  return {
+    ref, value: ind.value, unit: ind.unit, owner_kind, owner_ref: id, key: indKey, provenance: ind.provenance,
+    corridor: corridor ? { range: corridor.range, unit: corridor.unit, source: corridor.source } : null,
+  };
 }
 
 /**

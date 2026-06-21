@@ -11,7 +11,7 @@
 // RLS scope; writes publish directly (versioned + attributed, session-10 model).
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { compute } from '../src/lib/measure/compute';
+import { compute, resolveRefDetail } from '../src/lib/measure/compute';
 import { validate } from '../src/lib/measure/validate';
 import { SKILL_GUIDE } from '../src/lib/measure/skill.generated';
 import measureSchema from '../data/measure.schema.json';
@@ -267,14 +267,38 @@ export function buildServer(deps: ServerDeps): McpServer {
     },
   );
 
-  // ── Tool: read the whole library/registry (objects/resources/products/indicators/refs/pools/subsectors) ──
+  // ── Tool: read the registry (objects/resources/products/indicators/refs/subsectors/units/bridges) ──
   server.registerTool(
     'list_library',
-    { title: 'List library', description: 'Read the whole shared registry — objects, resources, products, indicators, refs, pools, subsectors — as raw rows. Use it to reuse existing ids/shapes before authoring a measure or adding a new entity. The library is open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).', inputSchema: {} },
-    async () => {
+    {
+      title: 'List library',
+      description: 'Read the shared registry — objects, resources, products, indicators, refs, subsectors, units, bridges — as raw rows. Use it to reuse existing ids/shapes before authoring. Pass a filter to narrow it (the unfiltered dump is ~270 rows): `kind` one table, `owner_ref` the indicators of one owner (e.g. a subsector), `id` an exact row, `prefix` an id prefix. Open collaboration: any signed-in user may add or correct any entity (see upsert_library_entity).',
+      inputSchema: {
+        kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]).optional().describe('one entity table (object|resource|product|indicator|ref|subsector|unit|bridge)'),
+        owner_ref: z.string().optional().describe('indicators of this owner only (e.g. a subsector id like "1.A.1.coal_power")'),
+        id: z.string().optional().describe('an exact entity id'),
+        prefix: z.string().optional().describe('id prefix match (e.g. "ind_coal")'),
+      },
+    },
+    async ({ kind, owner_ref, id, prefix }) => {
       if (!user) return err(AUTH_ERR);
-      try { return ok(await dbListLibrary(user)); }
+      try { return ok(await dbListLibrary(user, { kind, owner_ref, id, prefix })); }
       catch (e) { return err(`list_library failed: ${(e as Error).message}`); }
+    },
+  );
+
+  // ── Tool: resolve a library ref → value + owner + key + provenance + corridor (audit chain) ──
+  server.registerTool(
+    'resolve_ref',
+    {
+      title: 'Resolve ref',
+      description: 'Resolve one LIBRARY ref to its value AND its full audit chain in a single call: value, unit, owner, indicator key, provenance, and the plausibility corridor (if the indicator has a reference_ref). Supports sub:<subsector>#<key>, obj:<object>#<key>, prd:<product>#<key>, res:<resource>(#ef), glb:<key>. Measure-scoped refs (in:/bare keys) belong to compute_measure. Use it to check what a {ref} points at before reusing it.',
+      inputSchema: { ref: z.string().describe('a library ref, e.g. "sub:1.A.1.coal_power#max_emissions" or "res:coal#ef"') },
+    },
+    ({ ref }) => {
+      if (!user) return err(AUTH_ERR);
+      try { return ok(resolveRefDetail(ref, library)); }
+      catch (e) { return err(`resolve_ref failed: ${(e as Error).message}`); }
     },
   );
 
@@ -283,9 +307,9 @@ export function buildServer(deps: ServerDeps): McpServer {
     'upsert_library_entity',
     {
       title: 'Upsert library entity',
-      description: 'Create or correct one library entity and save it to the shared registry (open collaboration — any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; pool {id,caps_ref,annual_flow,unit,sector_ref,baseline_emissions_kt?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` — an inconsistent one is rejected.',
+      description: 'Create or correct one library entity and save it to the shared registry (open collaboration — any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` — an inconsistent one is rejected.',
       inputSchema: {
-        kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]).describe('object | resource | product | indicator | ref | pool | subsector | unit | bridge'),
+        kind: z.enum(Object.keys(LIBRARY_TABLES) as [string, ...string[]]).describe('object | resource | product | indicator | ref | subsector | unit | bridge'),
         entity: z.record(z.string(), z.any()).describe('the entity row (snake_case columns; must include id)'),
       },
     },
