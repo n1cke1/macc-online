@@ -14,7 +14,8 @@ import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver, compute, poolCeilingKt } from '@/lib/measure/compute';
 import { validate, type CheckId, type CheckStatus, type PanelKey, type PanelStatus } from '@/lib/measure/validate';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
-import { library, getSeedMeasure } from '@/lib/measure/library';
+import { bundleLibrary as library, bundleMeasure } from '@/lib/calc/measure-recalc';
+import type { Measure } from '@/lib/measure/schema';
 import type { Localized, NumberOrRef } from '@/lib/measure/schema';
 import { useUi } from '@/store';
 import { useAuth } from '@/lib/supabase/auth';
@@ -79,7 +80,7 @@ export default function MeasureDrilldown() {
   const { session, loading: authLoading } = useAuth();
   const selectedId = useUi((s) => s.selectedId);
 
-  const measure = useMemo(() => (selectedId != null ? getSeedMeasure(`kz-${selectedId}`) : undefined), [selectedId]);
+  const measure = useMemo(() => (selectedId != null ? bundleMeasure(`kz-${selectedId}`) : undefined), [selectedId]);
   const result = useMemo(() => {
     if (!measure) return null;
     try {
@@ -131,7 +132,6 @@ export default function MeasureDrilldown() {
 
 type Computed = ReturnType<typeof compute>;
 type Validation = ReturnType<typeof validate>;
-type Measure = NonNullable<ReturnType<typeof getSeedMeasure>>;
 type Tx = ReturnType<typeof useTranslations>;
 
 function MeasureBody({

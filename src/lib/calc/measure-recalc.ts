@@ -24,6 +24,14 @@ export const canonicalMeasureIds: ReadonlySet<string> = new Set(bundle.measures.
 
 export const modelVersion = bundle.modelVersion;
 
+/** The baked library + a measure-by-id lookup over the SAME baked bundle the curve uses.
+ *  The read-only drill-down must resolve measures here (not the 26-measure seed mirror), or a
+ *  measure added after the seed — kz-27 (R3), kz-28 (MCP) — has a curve bar but no breakdown. */
+export const bundleLibrary: Library = bundle.library;
+export function bundleMeasure(id: string): Measure | undefined {
+  return bundle.measures.find((m) => m.id === id);
+}
+
 /** kz-N → numeric MaccPoint id (matches scripts/bake-from-supabase.ts so ids are stable
  *  between the baked snapshot and a live recompute). All canonical ids are numeric-suffixed. */
 function numericId(id: string): number {
