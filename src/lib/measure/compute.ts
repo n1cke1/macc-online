@@ -112,14 +112,28 @@ export function makeResolver(measure: Measure, library: Library): RefResolver {
   return resolve;
 }
 
-/** Sub-category baseline (kt CO₂eq/yr) the share path scales — taken from the measure's pool. */
+/**
+ * R3 — the pool/sector ceiling (kt CO₂eq/yr) the measure competes against: the subsector
+ * emissions baseline named by `potential.pool_ref` (`sub:<subsector>#max_emissions`). The
+ * `Pool` entity is gone; the ceiling AND the sub-category baseline are now this one indicator
+ * (so the §7 pool ceiling and the sector backstop can't drift). Indicators are stored in
+ * Мт CO₂eq → ×1000 to the kt the engine works in.
+ */
+export function poolCeilingKt(poolRef: string | undefined, library: Library): number | undefined {
+  if (!poolRef) return undefined;
+  const m = poolRef.match(/^sub:(.+)#(.+)$/);
+  if (!m) return undefined;
+  const ind = library.indicators.find((i) => i.owner_kind === 'subsector' && i.owner_ref === m[1] && i.key === m[2]);
+  return ind ? ind.value * 1000 : undefined;
+}
+
+/** Sub-category baseline (kt CO₂eq/yr) the share path scales — the measure's pool indicator. */
 function poolBaselineKt(measure: Measure, library: Library): number {
-  const ref = measure.potential?.pool_ref;
-  const pool = ref ? library.pools[ref] : undefined;
-  if (pool?.baselineEmissionsKt == null) {
-    throw new Error(`Measure '${measure.id}': share path needs a pool with baselineEmissionsKt`);
+  const ceil = poolCeilingKt(measure.potential?.pool_ref, library);
+  if (ceil == null) {
+    throw new Error(`Measure '${measure.id}': share path needs pool_ref → a subsector max_emissions indicator`);
   }
-  return pool.baselineEmissionsKt;
+  return ceil;
 }
 
 function computeAbatement(

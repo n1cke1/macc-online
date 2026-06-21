@@ -14,7 +14,6 @@
 import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020';
 import measureSchema from '../../../data/measure.schema.json';
 import type { Binding, Library, Measure, ValueSource } from './schema';
-import { taggablePaths } from './validate';
 
 export interface ShouldRefEntry {
   path: string; // where the inline number lives in the measure
@@ -140,31 +139,25 @@ function hasRefBinding(binding?: Binding): boolean {
  *  EMISSIONS baseline — a trustworthy value pasted inline that should point at the
  *  indicator (e.g. `base_emissions=135.3` = the coal subsector's `max_emissions`; C9).
  *
- *  Matching is by value only, so it is deliberately narrow: the R1.0/R1.1 audit showed
- *  that matching against any indicator produces almost only false positives — a free
- *  input coincidentally equal to a per-measure capex (`0.1`, `5`), a resource LHV/price
- *  (`lifetime=20` = coal LHV) or a physical ceiling (`cap_mw=5000` = max_capacity), all
- *  dimension mismatches. The one class that is reliable without a dimension check is the
- *  subsector emissions baseline (`owner_kind==='subsector' && key==='max_emissions'`) —
- *  the exact C9 case. R3 will make the match dimension-aware and widen it to resource/
- *  product owners, then promote a unique match to a hard block (see `ingest` opts). */
+ *  Matching is by value, so it is deliberately narrow on two axes: only subsector
+ *  `max_emissions` indicators (the exact C9 case), and only measure INPUTS whose unit is
+ *  CO₂ (or unit-less) — an emissions baseline lives in an input, never in an object
+ *  capacity or a `лет`/`доля` factor, so the unit guard stops a round-valued baseline
+ *  (industry_energy=30, forestry=10 Мт) from colliding with an unrelated round input
+ *  (`lifetime=30`). R3/R8 will fold full dimensions in and promote a unique match to a
+ *  hard block (see `ingest` opts); today it is a warn. */
 export function findShouldRef(m: Measure, library: Library): ShouldRefEntry[] {
   const out: ShouldRefEntry[] = [];
   const indicators = (library.indicators ?? [])
     .filter((i) => i.owner_kind === 'subsector' && i.key === 'max_emissions');
-  const consider = (path: string, value: number, binding?: Binding) => {
-    if (value === 0 || !Number.isFinite(value) || hasRefBinding(binding)) return;
-    const matches = indicators
-      .filter((i) => typeof i.value === 'number' && relDiff(i.value, value) <= SHOULD_REF_TOL)
-      .map((i) => i.id);
-    if (matches.length) out.push({ path, value, matches });
-  };
-  for (const path of taggablePaths(m)) {
-    const v = readPath(m, path);
-    if (typeof v === 'number') consider(path, v, m.sources?.[path]?.binding);
-  }
+  const isCo2 = (u?: string) => !u || /co[₂2]/i.test(u);
   for (const [k, inp] of Object.entries(m.inputs ?? {})) {
-    if (typeof inp.value === 'number') consider(`inputs.${k}`, inp.value, inp.binding);
+    if (typeof inp.value !== 'number' || inp.value === 0 || !Number.isFinite(inp.value)) continue;
+    if (hasRefBinding(inp.binding) || !isCo2(inp.unit)) continue;
+    const matches = indicators
+      .filter((i) => typeof i.value === 'number' && relDiff(i.value, inp.value) <= SHOULD_REF_TOL)
+      .map((i) => i.id);
+    if (matches.length) out.push({ path: `inputs.${k}`, value: inp.value, matches });
   }
   return out;
 }

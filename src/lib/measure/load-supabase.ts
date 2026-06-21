@@ -14,11 +14,11 @@ import type { Library, Measure } from './schema';
 const num = (v: unknown): number => (typeof v === 'number' ? v : Number(v));
 
 export async function loadLibrary(db: SupabaseClient): Promise<Library> {
-  const tables = ['objects', 'resources', 'products', 'refs', 'pools', 'subsectors', 'indicators'] as const;
-  const [objects, resources, products, refs, pools, subsectors, indicators] = await Promise.all(
+  const tables = ['objects', 'resources', 'products', 'refs', 'subsectors', 'indicators'] as const;
+  const [objects, resources, products, refs, subsectors, indicators] = await Promise.all(
     tables.map((t) => db.from(t).select('*')),
   );
-  for (const [i, r] of [objects, resources, products, refs, pools, subsectors, indicators].entries()) {
+  for (const [i, r] of [objects, resources, products, refs, subsectors, indicators].entries()) {
     if (r.error) throw new Error(`load ${tables[i]}: ${r.error.message}`);
   }
   // L3 — the dimensional vocabulary + bridge overlay. Tolerate the tables not existing yet
@@ -38,10 +38,6 @@ export async function loadLibrary(db: SupabaseClient): Promise<Library> {
     })),
     references: (refs.data ?? []).map((r) => ({
       id: r.id, type: r.type ?? '', range: [num(r.range_min), num(r.range_max)], unit: r.unit ?? '', source: r.source ?? undefined,
-    })),
-    pools: (pools.data ?? []).map((p) => ({
-      id: p.id, caps_ref: p.caps_ref ?? '', annual_flow: num(p.annual_flow), unit: p.unit ?? '',
-      sector_ref: p.sector_ref ?? '', baselineEmissionsKt: p.baseline_emissions_kt != null ? num(p.baseline_emissions_kt) : undefined,
     })),
     subsectors: (subsectors.data ?? []).map((s) => ({ id: s.id, sector_ref: s.sector_ref, name: s.name })),
     indicators: (indicators.data ?? []).map((i) => ({

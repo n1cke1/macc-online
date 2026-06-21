@@ -15,7 +15,7 @@
 // server-authoritative (Edge Function). This pure function only reports.
 import { type Ast, isNode, isLeafSlot } from './ast';
 import { evalAst, evalPredicate, type RefResolver } from './eval';
-import { compute, makeResolver, type ComputedMeasure } from './compute';
+import { compute, makeResolver, poolCeilingKt, type ComputedMeasure } from './compute';
 import { dimensionCheck, type DimensionResult } from './dimension-check';
 import type { Binding, Library, CheckDef, Measure, Scope } from './schema';
 
@@ -110,15 +110,15 @@ export function stackPools(
   const groups = new Map<string, ComputedMeasure[]>();
   for (const c of computed) {
     const poolRef = measureById.get(c.id)?.potential?.pool_ref;
-    const pool = poolRef ? library.pools[poolRef] : undefined;
-    if (!pool) {
+    const ceil = poolCeilingKt(poolRef, library);
+    if (ceil == null) {
       out.set(c.id, { potential: c.abatementKt, clipped: false });
       continue;
     }
     (groups.get(poolRef!) ?? groups.set(poolRef!, []).get(poolRef!)!).push(c);
   }
   for (const [poolRef, group] of groups) {
-    let remaining = library.pools[poolRef].annual_flow;
+    let remaining = poolCeilingKt(poolRef, library)!;
     for (const c of [...group].sort((a, b) => a.mac - b.mac)) {
       const got = Math.max(0, Math.min(c.abatementKt, remaining));
       remaining -= got;
@@ -161,19 +161,18 @@ function buildChecks(
   // pool — MAC-cumulative: pool peers at least as cheap (MAC ≤ ours) claim the ceiling
   // first; this measure warns iff *its* share is the one clipped (matches stackPools and
   // checks.md), not whenever the whole group oversubscribes.
+  // R3: the pool ceiling AND the sub-category baseline are one indicator — the subsector
+  // emissions baseline named by pool_ref (`sub:<subsector>#max_emissions`, kt).
   const poolRef = measure.potential?.pool_ref;
-  const pool = poolRef ? library.pools[poolRef] : undefined;
-  if (pool) {
+  const poolCeil = poolCeilingKt(poolRef, library);
+  if (poolCeil != null) {
     const cheaperInPool = peers.filter(
       (p) => p.measure.potential?.pool_ref === poolRef && p.computed.mac <= c.mac,
     );
     const cum = c.abatementKt + cheaperInPool.reduce((s, p) => s + p.computed.abatementKt, 0);
-    details.pool = runCheck(library.checks.pool, { sum_pool: cum, ceiling: pool.annual_flow });
-  }
-
-  // sector — reduction vs the sub-category baseline.
-  if (pool?.baselineEmissionsKt != null) {
-    details.sector = runCheck(library.checks.sector, { abatement: c.abatementKt, baseline: pool.baselineEmissionsKt });
+    details.pool = runCheck(library.checks.pool, { sum_pool: cum, ceiling: poolCeil });
+    // sector — reduction vs the sub-category baseline (the same indicator as the pool).
+    details.sector = runCheck(library.checks.sector, { abatement: c.abatementKt, baseline: poolCeil });
   }
 
   // limit — §7 per-measure limiting factor: this measure's own consumption (an input/computed
@@ -374,7 +373,7 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     ?? { potential: c.abatementKt, clipped: false };
 
   const poolRef = measure.potential?.pool_ref;
-  const poolInLibrary = !!poolRef && !!library.pools[poolRef];
+  const poolInLibrary = poolCeilingKt(poolRef, library) != null;
 
   const missing: string[] = [];
   const panels = buildPanels(measure, checks, missing);

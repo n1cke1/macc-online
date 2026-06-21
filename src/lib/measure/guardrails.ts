@@ -14,7 +14,7 @@ import type { CheckId, CheckStatus } from './validate';
 // means. Imported lazily-bound through ESM cycle (compute → guardrails for
 // economicsRollup; guardrails → compute for makeResolver) — safe because both
 // call sites are runtime, not module-init.
-import { makeResolver, unboxNumber } from './compute';
+import { makeResolver, poolCeilingKt, unboxNumber } from './compute';
 
 function bindSlots(ast: Ast, slots: Record<string, number>): Ast {
   if (isLeafSlot(ast)) {
@@ -42,8 +42,8 @@ export function abatementJs(measure: Measure, library: Library): number {
     return evalJs(bindTemplate(tmpl, a.computed.bindings, resolve), resolve);
   }
   if (!a.raw) throw new Error(`Measure '${measure.id}': no abatement block`);
-  const baseline = library.pools[measure.potential?.pool_ref ?? '']?.baselineEmissionsKt;
-  if (baseline == null) throw new Error(`Measure '${measure.id}': share path needs pool.baselineEmissionsKt`);
+  const baseline = poolCeilingKt(measure.potential?.pool_ref, library);
+  if (baseline == null) throw new Error(`Measure '${measure.id}': share path needs pool_ref → subsector max_emissions indicator`);
   return baseline * a.raw.share;
 }
 
@@ -146,19 +146,18 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
     checks.economics = run('economics', { capex, denominator: denom, min, max });
   }
 
+  // R3: pool ceiling + sub-category baseline are one indicator (sub:<subsector>#max_emissions).
   const poolRef = measure.potential?.pool_ref;
-  const pool = poolRef ? library.pools[poolRef] : undefined;
-  if (pool) {
+  const poolCeil = poolCeilingKt(poolRef, library);
+  if (poolCeil != null) {
     // MAC-cumulative: only pool peers at least as cheap claim the ceiling first (mirrors
     // validate.ts + stackPools) — the measure warns iff its own share is the one clipped.
     const ownMac = macJs(measure, library);
     const cum = abatementKt + peers
       .filter((p) => p.potential?.pool_ref === poolRef && macJs(p, library) <= ownMac)
       .reduce((s, p) => s + abatementJs(p, library), 0);
-    checks.pool = run('pool', { sum_pool: cum, ceiling: pool.annual_flow });
-  }
-  if (pool?.baselineEmissionsKt != null) {
-    checks.sector = run('sector', { abatement: abatementKt, baseline: pool.baselineEmissionsKt });
+    checks.pool = run('pool', { sum_pool: cum, ceiling: poolCeil });
+    checks.sector = run('sector', { abatement: abatementKt, baseline: poolCeil });
   }
 
   // limit — §7 per-measure ceiling: this measure's consumption vs an industry indicator.
@@ -179,6 +178,6 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
   // Pool competition (oversubscription clip) is a render-time outcome, not a quality
   // failure — excluded from eligibility, mirroring validate.ts. Pool *membership* gates.
   const GATING: CheckId[] = ['factor', 'economics', 'sector', 'limit'];
-  const eligible = !!pool && GATING.every((k) => checks[k] !== 'warn');
+  const eligible = poolCeil != null && GATING.every((k) => checks[k] !== 'warn');
   return { checks, eligible, abatementKt };
 }

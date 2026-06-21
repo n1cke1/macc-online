@@ -30,7 +30,6 @@ interface Graph {
   products: Array<{ id: string; name: string; unit?: string; service_unit?: string; sector_ref?: string; technology_ref?: string }>;
   references: Array<{ id: string; type?: string; range: [number, number]; unit?: string; source?: unknown }>;
   indicators: Array<{ id: string; key: string; owner_kind: string; owner_ref: string; value: number; unit?: string; reference_ref?: string; provenance?: unknown }>;
-  pools: Array<{ id: string; caps_ref?: string; annual_flow: number; unit?: string; sector_ref?: string; baselineEmissionsKt?: number }>;
 }
 const g = graph as unknown as Graph;
 const measures = (measuresSeed as { measures: Array<Record<string, unknown>> }).measures;
@@ -95,8 +94,6 @@ async function seedGraph(c: Client) {
     g.products.map((p) => [p.id, null, p.name, p.unit ?? null, p.service_unit ?? null, p.sector_ref ?? null, p.technology_ref ?? null]));
   await upsert(c, 'refs', ['id', 'type', 'range_min', 'range_max', 'unit', 'source'],
     g.references.map((r) => [r.id, r.type ?? null, r.range[0], r.range[1], r.unit ?? null, r.source ? JSON.stringify(r.source) : null]));
-  await upsert(c, 'pools', ['id', 'caps_ref', 'annual_flow', 'unit', 'sector_ref', 'baseline_emissions_kt'],
-    g.pools.map((p) => [p.id, p.caps_ref ?? null, p.annual_flow, p.unit ?? null, p.sector_ref ?? null, p.baselineEmissionsKt ?? null]));
   await upsert(c, 'subsectors', ['id', 'sector_ref', 'name'],
     g.subsectors.map((s) => [s.id, s.sector_ref, s.name]));
   await upsert(c, 'indicators', ['id', 'key', 'owner_kind', 'owner_ref', 'value', 'unit', 'reference_ref', 'provenance'],

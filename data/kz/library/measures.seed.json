@@ -101,7 +101,7 @@
       ],
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_enteric",
+        "pool_ref": "sub:3.enteric#max_emissions",
         "limit": {
           "indicator_ref": "ind_cattle_population",
           "consumption_ref": "activity"
@@ -320,7 +320,7 @@
       ],
       "potential": {
         "ceiling_dim": "n_objects",
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_power_capacity",
           "consumption_ref": "cap_mw"
@@ -599,7 +599,7 @@
       ],
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_coal_methane",
+        "pool_ref": "sub:1.B.coal_methane#max_emissions",
         "limit": {
           "indicator_ref": "ind_cmm_volume",
           "consumption_ref": "activity"
@@ -869,7 +869,7 @@
       "product_ref": "prod_mwh",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_coal_efficiency",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_fleet_emissions",
           "consumption_ref": "base_emissions"
@@ -943,7 +943,7 @@
       },
       "potential": {
         "ceiling_dim": "n_objects",
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_res_potential",
           "consumption_ref": "cap_mw"
@@ -1574,7 +1574,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
@@ -1905,7 +1905,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_nuclear_gen",
           "consumption_ref": "gen_mwh"
@@ -2160,7 +2160,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_coal_heat",
+        "pool_ref": "sub:1.A.1.coal_heat#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
@@ -2524,7 +2524,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_coal_heat",
+        "pool_ref": "sub:1.A.1.coal_heat#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_heat_supply",
           "consumption_ref": "heat_kgcal"
@@ -3040,7 +3040,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_coal_power",
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
         "limit": {
           "indicator_ref": "ind_coal_generation",
           "consumption_ref": "gen_displaced_gwh"
@@ -3349,7 +3349,7 @@
       },
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_industry_energy",
+        "pool_ref": "sub:1.A.2.industry_energy#max_emissions",
         "limit": {
           "indicator_ref": "ind_whr_capacity",
           "consumption_ref": "cap_mw"
@@ -3642,7 +3642,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_road_transport",
+        "pool_ref": "sub:1.A.3.road#max_emissions",
         "limit": {
           "indicator_ref": "ind_road_emissions",
           "consumption_ref": "base_emissions"
@@ -4052,7 +4052,7 @@
       "product_ref": "prod_heat",
       "potential": {
         "ceiling_dim": "output_product",
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "limit": {
           "indicator_ref": "ind_residential_heat",
           "consumption_ref": "heat_before_kgcal"
@@ -4401,7 +4401,7 @@
       "product_ref": "prod_heat",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "limit": {
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
@@ -4734,7 +4734,7 @@
       "product_ref": "prod_heat",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_residential_heat",
+        "pool_ref": "sub:1.A.4.residential#max_emissions",
         "limit": {
           "indicator_ref": "ind_residential_emissions",
           "consumption_ref": "base_emissions"
@@ -5078,7 +5078,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
@@ -5308,7 +5308,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
@@ -5554,7 +5554,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_og_methane",
+        "pool_ref": "sub:1.B.og_methane#max_emissions",
         "limit": {
           "indicator_ref": "ind_og_methane_emissions",
           "consumption_ref": "base_emissions"
@@ -5730,7 +5730,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_cement",
+        "pool_ref": "sub:2.cement#max_emissions",
         "limit": {
           "indicator_ref": "ind_cement_emissions",
           "consumption_ref": "base_emissions"
@@ -5919,7 +5919,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_industry_ccs",
+        "pool_ref": "sub:2.metallurgy#max_emissions",
         "limit": {
           "indicator_ref": "ind_metals_emissions",
           "consumption_ref": "base_emissions"
@@ -6178,7 +6178,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_manure",
+        "pool_ref": "sub:3.manure#max_emissions",
         "limit": {
           "indicator_ref": "ind_manure_emissions",
           "consumption_ref": "base_emissions"
@@ -6399,7 +6399,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_ag_soils",
+        "pool_ref": "sub:3.soils#max_emissions",
         "limit": {
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
@@ -6607,7 +6607,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_ag_soils",
+        "pool_ref": "sub:3.soils#max_emissions",
         "limit": {
           "indicator_ref": "ind_ag_soils_emissions",
           "consumption_ref": "base_emissions"
@@ -6834,7 +6834,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "activity",
-        "pool_ref": "pool_afforestation",
+        "pool_ref": "sub:4.forestry#max_emissions",
         "limit": {
           "indicator_ref": "ind_afforestation_area",
           "consumption_ref": "area_kha"
@@ -7058,7 +7058,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_solid_waste",
+        "pool_ref": "sub:5.solid_waste#max_emissions",
         "limit": {
           "indicator_ref": "ind_swaste_emissions",
           "consumption_ref": "base_emissions"
@@ -7248,7 +7248,7 @@
       "baseline_basis": "standalone",
       "potential": {
         "ceiling_dim": "cut_resource",
-        "pool_ref": "pool_wastewater",
+        "pool_ref": "sub:5.wastewater#max_emissions",
         "limit": {
           "indicator_ref": "ind_wastewater_emissions",
           "consumption_ref": "base_emissions"

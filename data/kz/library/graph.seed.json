@@ -1804,150 +1804,76 @@
         "confidence": "medium",
         "geo_applicability": "kz_specific"
       }
-    }
-  ],
-  "pools": [
-    {
-      "id": "pool_enteric",
-      "caps_ref": "activity:cattle_enteric",
-      "annual_flow": 5000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "3",
-      "baselineEmissionsKt": 17800
     },
     {
-      "id": "pool_coal_power",
-      "caps_ref": "resource:coal_power",
-      "annual_flow": 88000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.1",
-      "baselineEmissionsKt": 130000,
-      "_source": "Угольная электрогенерация РК ≈88 ТВт·ч/год × EF≈1 тCO₂/МВт·ч ≈88 Мт CO₂ — потолок вытеснения (Samruk-Energy 2024)"
+      "id": "ind_coal_heat_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.1.coal_heat",
+      "value": 42,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "source_type": "placeholder",
+        "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (42000 kt). R3.",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
     },
     {
-      "id": "pool_coal_methane",
-      "caps_ref": "resource:coal_mine_ch4",
-      "annual_flow": 3000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.B",
-      "baselineEmissionsKt": 9500
+      "id": "ind_industry_energy_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.A.2.industry_energy",
+      "value": 30,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "source_type": "placeholder",
+        "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (30000 kt). R3.",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
     },
     {
-      "id": "pool_coal_efficiency",
-      "caps_ref": "resource:coal_power",
-      "annual_flow": 5000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.1",
-      "baselineEmissionsKt": 130000,
-      "_source": "Потенциал снижения за счёт роста КПД угольного парка (не вытеснение — отдельный пул, иначе двойной счёт с вытесняющими мерами)"
+      "id": "ind_coal_ch4_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "1.B.coal_methane",
+      "value": 9.5,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "source_type": "placeholder",
+        "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (9500 kt). R3.",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
     },
     {
-      "id": "pool_coal_heat",
-      "caps_ref": "resource:coal_heat",
-      "annual_flow": 40000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.1",
-      "baselineEmissionsKt": 42000,
-      "_source": "Выбросы угольного централизованного теплоснабжения РК (ТЭЦ-тепло + угольные котельные) ≈42 Мт — оценка как остаток 1.A.1 за вычетом электрогенерации"
+      "id": "ind_enteric_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "3.enteric",
+      "value": 17.8,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "source_type": "placeholder",
+        "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (17800 kt). R3.",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
     },
     {
-      "id": "pool_industry_energy",
-      "caps_ref": "resource:industry_energy",
-      "annual_flow": 30000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.2",
-      "baselineEmissionsKt": 30000,
-      "_source": "Энергетические выбросы обрабатывающей промышленности РК 1.A.2 (≈30 Мт, оценка; промышленность ~21,6% ГВт-выбросов, металлургия 70% — MDPI 2025)"
-    },
-    {
-      "id": "pool_road_transport",
-      "caps_ref": "activity:road_transport",
-      "annual_flow": 27100,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.3",
-      "baselineEmissionsKt": 27100,
-      "_source": "Выбросы дорожного транспорта РК ≈27,1 Мт (лист «Выбросы», BTR1)"
-    },
-    {
-      "id": "pool_residential_heat",
-      "caps_ref": "resource:residential_fuel",
-      "annual_flow": 46500,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.A.4",
-      "baselineEmissionsKt": 46500,
-      "_source": "Выбросы ЖКХ/прочих секторов РК ≈46,5 Мт (лист «Выбросы», BTR1) — общий пул конкуренции газификации/электрификации/термомодернизации"
-    },
-    {
-      "id": "pool_og_methane",
-      "caps_ref": "resource:og_methane",
-      "annual_flow": 34200,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "1.B",
-      "baselineEmissionsKt": 34200,
-      "_source": "Летучие выбросы метана нефтегаза РК ≈34,2 Мт (BTR1) — общий пул конкуренции LDAR/ПНГ/утечек ГТС"
-    },
-    {
-      "id": "pool_cement",
-      "caps_ref": "resource:cement_process",
-      "annual_flow": 8600,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "2",
-      "baselineEmissionsKt": 8600,
-      "_source": "Процессные выбросы цемента РК ≈8,6 Мт (BTR1)"
-    },
-    {
-      "id": "pool_industry_ccs",
-      "caps_ref": "resource:industry_co2",
-      "annual_flow": 27000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "2",
-      "baselineEmissionsKt": 27000,
-      "_source": "Выбросы металлургии+цемента под CCS ≈27 Мт (BTR1)"
-    },
-    {
-      "id": "pool_manure",
-      "caps_ref": "activity:manure",
-      "annual_flow": 3300,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "3",
-      "baselineEmissionsKt": 3300,
-      "_source": "Выбросы управления навозом ≈3,3 Мт (BTR1)"
-    },
-    {
-      "id": "pool_ag_soils",
-      "caps_ref": "activity:ag_soils",
-      "annual_flow": 11600,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "3",
-      "baselineEmissionsKt": 11600,
-      "_source": "Выбросы с/х почв+пастбищ ≈11,6 Мт (BTR1) — общий пул точного земледелия и управления пастбищами"
-    },
-    {
-      "id": "pool_afforestation",
-      "caps_ref": "activity:afforestation",
-      "annual_flow": 10000,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "4",
-      "baselineEmissionsKt": 10000,
-      "_source": "Потенциал поглощения лесонасаждением РК (оценка)"
-    },
-    {
-      "id": "pool_solid_waste",
-      "caps_ref": "resource:landfill_gas",
-      "annual_flow": 3600,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "5",
-      "baselineEmissionsKt": 3600,
-      "_source": "Выбросы CH₄ ТБО ≈3,6 Мт (BTR1)"
-    },
-    {
-      "id": "pool_wastewater",
-      "caps_ref": "resource:wastewater_ch4",
-      "annual_flow": 3200,
-      "unit": "kt CO₂eq/yr",
-      "sector_ref": "5",
-      "baselineEmissionsKt": 3200,
-      "_source": "Выбросы CH₄ сточных вод ≈3,2 Мт (BTR1)"
+      "id": "ind_forestry_emissions",
+      "key": "max_emissions",
+      "owner_kind": "subsector",
+      "owner_ref": "4.forestry",
+      "value": 10,
+      "unit": "Мт CO₂eq/год",
+      "provenance": {
+        "source_type": "placeholder",
+        "citation": "Placeholder — требует ре-сорсинга UNFCCC BTR1. Засеяно из прежнего pool.baselineEmissionsKt (10000 kt). R3.",
+        "confidence": "low",
+        "geo_applicability": "kz_specific"
+      }
     }
   ]
 }

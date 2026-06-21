@@ -128,7 +128,7 @@ export async function dbMeasureHistory(user: AuthedUser, id: string): Promise<Ar
 /** Library entity kind → its table. The whole library is now world-read + any-authenticated-write. */
 export const LIBRARY_TABLES: Record<string, string> = {
   object: 'objects', resource: 'resources', product: 'products',
-  indicator: 'indicators', ref: 'refs', pool: 'pools', subsector: 'subsectors',
+  indicator: 'indicators', ref: 'refs', subsector: 'subsectors',
   unit: 'units', bridge: 'bridges',
 };
 

@@ -9,7 +9,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { pick } from '@/lib/data';
 import { fmt, fmtMac, fmtInt } from '@/lib/format';
 import { renderAst, evalAst } from '@/lib/measure/eval';
-import { makeResolver } from '@/lib/measure/compute';
+import { makeResolver, poolCeilingKt } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
 import type { BuiltTechnology, Library, Localized, NumberOrRef, UiHelp, Provenance, RetiredTechnology, ValueSource } from '@/lib/measure/schema';
 import type { CheckId, CheckStatus, PanelKey, PanelStatus } from '@/lib/measure/validate';
@@ -184,7 +184,7 @@ export default function MeasureEditor() {
   const ab = measure.abatement;
   const basis = measure.baseline_basis; // §B axis; absent ⇒ not yet classified (badge hidden)
   const product = measure.product_ref ? library.products[measure.product_ref] : undefined;
-  const pool = measure.potential?.pool_ref ? library.pools[measure.potential.pool_ref] : undefined;
+  const poolCeil = measure.potential?.pool_ref ? poolCeilingKt(measure.potential.pool_ref, library) : undefined;
   const num = (n: number, d = 2) => fmt(n, locale, { maximumFractionDigits: d });
   const tech = (ref: string) => library.technologies[ref];
   // UI help source (measure-ui-help.json) → tooltips / «?» help.
@@ -509,7 +509,7 @@ export default function MeasureEditor() {
       {/* Потенциал меры */}
       <Panel pkey="potential" title={t('panel.potential')} status={v?.panels.potential} help={gh(nt.panels.potential)}>
         <Row label={t('field.ceilingDim')} help={gh(nt.fields.ceilingDim)}><Badge title={measure.potential?.ceiling_dim ? gh(nt.enums.ceilingDim[measure.potential.ceiling_dim]) : undefined}>{measure.potential?.ceiling_dim ?? '—'}</Badge></Row>
-        {pool && <Row label={t('field.poolCeiling')} help={gh(nt.fields.pool)}><span className="tabular-nums">{fmtInt(pool.annual_flow, locale)} {pool.unit}</span></Row>}
+        {poolCeil != null && <Row label={t('field.poolCeiling')} help={gh(nt.fields.pool)}><span className="tabular-nums">{fmtInt(poolCeil, locale)} kt CO₂eq/yr</span></Row>}
         <Row label={t('field.potentialAfter')}><b className="tabular-nums">{v ? fmtInt(v.potential, locale) : '—'} kt/{locale === 'en' ? 'yr' : 'год'}</b></Row>
         <div className="mt-2 space-y-1.5"><CheckFormula id="pool" /><CheckFormula id="sector" /></div>
       </Panel>

@@ -5,8 +5,7 @@
 // Proves three things:
 //   1. The AST→HyperFormula path reproduces the Excel-derived MAC/abatement for the
 //      two parity measures (A=kz-20 feed additives, B=kz-2 coal CHP→gas).
-//   2. kz-16 (mine degassing) trips the factor guardrail (⚠) and kz-2 is clipped in its
-//      shared coal-power pool by cheaper peers — both stay draft, never auto-promoted.
+//   2. kz-16 (mine degassing) trips the factor guardrail (⚠) → stays draft, never auto-promoted.
 //   3. Pool stacking clips potential by MAC order, independent of input order.
 // The frozen Excel-cached snapshot is the parity oracle (the original workbook's values),
 // NOT the live `model.data.json` (which is now baked from Supabase and may carry post-Excel
@@ -14,7 +13,7 @@
 import baselineJson from '../data/kz/model.excel.json';
 import { library, getSeedMeasure, seedMeasures, assembleLibrary, type Graph } from '../src/lib/measure/library';
 import graphSeed from '../data/kz/library/graph.seed.json';
-import { compute, makeResolver, type ComputedMeasure } from '../src/lib/measure/compute';
+import { compute, makeResolver, poolCeilingKt, type ComputedMeasure } from '../src/lib/measure/compute';
 import { evalAst } from '../src/lib/measure/eval';
 import { validate, stackPools, findDrift } from '../src/lib/measure/validate';
 import { runGuardrails, abatementJs } from '../src/lib/measure/guardrails';
@@ -93,15 +92,15 @@ expect(vA.checks.economics === 'ok', 'kz-20', `economics check ok — got ${vA.c
 expect(vA.eligibleForModel === true, 'kz-20', 'eligible for published');
 expect(vA.displaced === false, 'kz-20', 'not displaced — claims its full pool share');
 
-// kz-2 (coal→gas) shares pool_coal_power with cheaper coal-displacers (kz-3/4/5/8). Being the
-// most expensive, its share is clipped on oversubscription — so its pool check ⚠ AND it is
-// flagged `displaced`. But pool competition is a render-time outcome, not a quality failure:
-// after 1B it no longer gates promotion, so kz-2 is `готово` (eligibleForModel) yet displaced.
+// kz-2 (coal→gas) competes in the coal-power pool — R3: the pool is now the subsector
+// emissions baseline (1.A.1.coal_power#max_emissions = 135.3 Мт), not the old 88-Мт
+// `annual_flow` (a "garbage" number, dropped). The coal cluster fits under 135.3 Мт, so
+// kz-2 is no longer clipped: pool check ok, not displaced, готово (eligibleForModel).
 const vB = validate(getSeedMeasure('kz-2')!, library, seedMeasures.filter((m) => m.id !== 'kz-2'));
 expect(vB.checks.economics === 'ok', 'kz-2', `economics check ok — got ${vB.checks.economics}`);
-expect(vB.checks.pool === 'warn', 'kz-2', `pool check ⚠ informational (clipped by cheaper coal-displacers) — got ${vB.checks.pool}`);
-expect(vB.eligibleForModel === true, 'kz-2', 'готово — pool clipping no longer gates eligibility (render-time concern)');
-expect(vB.displaced === true, 'kz-2', 'displaced=true — share clipped in pool_coal_power by cheaper peers');
+expect(vB.checks.pool === 'ok', 'kz-2', `pool check ok (coal cluster fits the 135.3 Мт subsector baseline) — got ${vB.checks.pool}`);
+expect(vB.eligibleForModel === true, 'kz-2', 'готово — coal cluster fits its subsector emissions baseline');
+expect(vB.displaced === false, 'kz-2', 'not displaced — R3: pool = subsector emissions baseline (135.3 Мт), cluster fits');
 
 const vC = validate(getSeedMeasure('kz-16')!, library, seedMeasures.filter((m) => m.id !== 'kz-16'));
 const cC = compute(getSeedMeasure('kz-16')!, library);
@@ -113,8 +112,8 @@ expect(vC.scope !== 'published', 'kz-16', `recommended scope stays draft (publis
 // ── 3. Pool stacking: order-independent clip by MAC ───────────────────────────
 // Two synthetic measures share one pool whose ceiling (1000) is oversubscribed by
 // their combined potential (700 + 600). The cheaper (lower MAC) claims first.
-const POOL = 'pool_coal_power';
-const ceiling = library.pools[POOL].annual_flow;
+const POOL = 'sub:1.A.1.coal_power#max_emissions';
+const ceiling = poolCeilingKt(POOL, library)!;
 const synth = (id: string, mac: number, ab: number): ComputedMeasure => ({
   id, sector: '1.A.1', name: { ru: id, en: id }, maturity: 'raw',
   capex: 0, opex: 0, durationYrs: 1, abatementKt: ab, npv: 0, discCo2Kt: 1, mac,

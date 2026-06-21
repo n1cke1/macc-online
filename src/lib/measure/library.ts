@@ -18,7 +18,7 @@ import { BUILTIN_TEMPLATES } from './templates';
 import { mergeUnits, type LibraryUnit } from './dimensions';
 import { mergeBridges, type Bridge } from './bridges';
 import type {
-  Indicator, Library, Localized, Measure, Pool, Product, Reference, Resource, Subsector, Technology,
+  Indicator, Library, Localized, Measure, Product, Reference, Resource, Subsector, Technology,
 } from './schema';
 
 /** The normalized graph shape (graph.seed.json today; the Supabase tables via load-supabase.ts). */
@@ -29,7 +29,6 @@ export interface Graph {
   products: Array<{ id: string; name: string; unit: string; service_unit?: string; sector_ref?: string; technology_ref?: string }>;
   references: Array<Reference>;
   indicators: Array<Indicator>;
-  pools: Array<{ id: string; caps_ref: string; annual_flow: number; unit: string; sector_ref: string; baselineEmissionsKt?: number }>;
   /** L3 — author-extendable dimensional vocabulary + bridge registry (overlay the code seed). */
   units?: LibraryUnit[];
   bridges?: Bridge[];
@@ -89,14 +88,11 @@ export function assembleLibrary(g: Graph): Library {
   }
 
   const references: Record<string, Reference> = Object.fromEntries(g.references.map((r) => [r.id, r]));
-  const pools: Record<string, Pool> = Object.fromEntries(
-    g.pools.map((p) => [p.id, { ...p, sector: p.sector_ref as Pool['sector'] }]),
-  );
   const subsectors: Record<string, Subsector[]> = {};
   for (const s of g.subsectors) (subsectors[s.sector_ref] ??= []).push({ id: s.id, label: L(s.name) });
 
   return {
-    resources, technologies, products, references, pools,
+    resources, technologies, products, references,
     checks: checks as unknown as Library['checks'],
     indicators,
     subsectors,

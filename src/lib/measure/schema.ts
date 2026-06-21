@@ -246,7 +246,9 @@ export interface PotentialLimit {
 }
 export interface Potential {
   ceiling_dim: CeilingDim;
-  pool_ref: string; // §1 pool; a self-created pool ⇒ measure stays draft
+  // §1 pool — R3: an indicator ref to the subsector emissions baseline measures compete
+  // for (`sub:<subsector>#max_emissions`). The ceiling is that indicator's value.
+  pool_ref: string;
   // Measures sharing a pool «combine»: their summed potential can't exceed the
   // pool ceiling, so on oversubscription the cheaper (lower-MAC) ones claim it
   // first and the rest are clipped (see stackPools in validate.ts).
@@ -486,16 +488,11 @@ export interface Reference {
   source?: Provenance;
 }
 
-/** §1/§7 — a resource/product/activity pool with an annual-flow ceiling. */
-export interface Pool {
-  id: string;
-  caps_ref: string; // what it caps (Resource / Product / activity) — pins entity + unit
-  annual_flow: number; // ceiling as an annual flow, NOT a stock
-  unit: string;
-  sector: SectorCode;
-  /** Sub-category baseline emissions used by the §7 sector backstop (kt CO₂eq/yr). */
-  baselineEmissionsKt?: number;
-}
+// §1/§7 — R3: the `Pool` entity is DISSOLVED into the indicator hub. A pool is now just
+// the subsector's emissions baseline (`sub:<subsector>#max_emissions`) — the shared volume
+// measures compete for. `potential.pool_ref` holds that indicator ref; the ceiling is the
+// indicator's value. The per-measure physical cap lives in `potential.limit` (also an
+// indicator). One value type (indicator), one owner, one provenance.
 
 /** §1 — global parameters: read-only, shared across measures. */
 export interface GlobalParams {
@@ -511,7 +508,6 @@ export interface Library {
   products: Record<string, Product>;
   formulaTemplates: Record<string, FormulaTemplate>;
   references: Record<string, Reference>;
-  pools: Record<string, Pool>;
   /** §7 guardrail definitions as stored AST formulas (keyed by check id). */
   checks: Record<string, CheckDef>;
   /** §1 hub — every library number as an indicator (storage form; also denormalized onto owners). */
