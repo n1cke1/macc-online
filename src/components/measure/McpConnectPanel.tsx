@@ -37,8 +37,8 @@ export default function McpConnectPanel() {
         <div className="mt-3 space-y-3 text-sm">
           <p className="text-xs text-muted">
             {tr(
-              'Подключите этот MCP-коннектор к Claude или ChatGPT — и предлагайте свои меры прямо из чата с AI. Вход под вашим аккаунтом произойдёт автоматически: копировать токен не нужно, ничего не протухает.',
-              'Connect this MCP connector to Claude or ChatGPT and propose your own measures right from the AI chat. Sign-in under your account happens automatically — no token to copy, nothing expires.',
+              'Подключите этот MCP-коннектор к Claude или ChatGPT — и AI сможет проверять ключевые показатели, исходные предпосылки и источники данных, формулы, использованные в мерах декарбонизации, предлагать свои корректировки и новые проекты, которых пока нет на MACC.',
+              'Connect this MCP connector to Claude or ChatGPT — the AI can then check the key indicators, the source assumptions and data sources, and the formulas behind each decarbonization measure, propose its own corrections, and add new projects not yet on the MACC.',
             )}
           </p>
 
