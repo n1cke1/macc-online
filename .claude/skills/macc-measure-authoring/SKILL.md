@@ -57,9 +57,12 @@ What a measure *is*, before you author it.
   **infrastructure** system, an asset **retrofit**, or an operational **practice** (its
   **class**). A measure reuses one from the library or creates it — never invents one inline.
 - **Indicator** — one number (capex, EF, price, lifetime, a limiting factor…) owned by a
-  technology / product / resource / industry, with units and provenance.
+  technology / product / resource / subsector, with units and provenance, and optionally a
+  **plausibility corridor**: `reference_ref → reference{range, source}`. The value and its
+  corridor live together on the indicator — a `reference` is the reusable, typed corridor it
+  points at (so the same `[min,max]` band can back many indicators).
 - **Library entity** — a registry row: technology · product · resource · indicator ·
-  reference · pool · subsector.
+  reference · subsector · unit · bridge.
 
 ## Mechanism & baseline — two axes
 
@@ -139,8 +142,10 @@ The shared registry that makes measures comparable: industries/subsectors, **tec
 # B. Data quality
 
 Each library **indicator** carries: a name, a short description, a value with units, a
-**traceable source** (web link or other unambiguous citation), and optionally a realistic
-range.
+**traceable source** (web link or other unambiguous citation), and optionally a **plausibility
+corridor** via `reference_ref` → a `reference` entity (`{range:[min,max], unit, source}`). The
+corridor belongs on the indicator itself (not only on a measure input) — set/reuse one for any
+number that materially moves a MAC, so the checks can sanity-test it.
 
 - **Geo-applicability** — classify each number as **global** (low geo-sensitivity) ·
   **KZ-specific** (economics, climate, construction cost & lead times) ·

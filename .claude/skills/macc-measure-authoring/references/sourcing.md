@@ -30,5 +30,8 @@ Mandatory note for `binding=alt`: why the value diverges from the library refere
 ## Reference (corridor)
 
 A `[min, max]` corridor with a unit a check anchors to: `factor` — the reduction factor,
-`capex_ud` — the object unit CAPEX. Set `reference_ref` on the factor input and on the object;
-the corridor's own source lives in its `source` field.
+`capex_ud` — the object unit CAPEX. A `reference` is a reusable, typed entity (`{type, range,
+unit, source}`); a value points at it via `reference_ref`. The corridor lives on the **library
+indicator** that holds the value (`indicator.reference_ref → reference`) — that is where value +
+plausibility band sit together; the same applies to a measure input (`factor`) and an object's
+`capex_ud`. Set/reuse a `reference_ref` for any number that materially moves a MAC.
