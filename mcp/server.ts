@@ -214,13 +214,13 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: CREATE a new measure (server assigns the id; never collides) ───────────
   server.registerTool(
     'create_measure',
-    { title: 'Create measure', description: 'Create a NEW measure. The SERVER assigns its id (kz-N) — do NOT supply one; any `id` you pass is ignored. The document SCOPE is honored: omit it / "draft" → a private work-in-progress (visible only to you), "published" → live in the shared model. Versioned (v1) + attributed. validate() runs as ADVISORY only. Returns the assigned id. (To change an existing measure use update_measure; to publish/retire one use set_measure_scope.)', inputSchema: { measure: measureArg.describe('the measure content as an OBJECT (no id needed; see schema://measure)'), note: z.string().optional().describe('optional note for the version history') } },
+    { title: 'Create measure', description: 'Create a NEW measure. The SERVER assigns its id (kz-N) — do NOT supply one; any `id` you pass is ignored. Send the COMPLETE measure document (it is gated by the schema: unknown keys are rejected, every required field must be present). The document SCOPE is honored: omit it / "draft" → a private work-in-progress (visible only to you), "published" → live in the shared model. Versioned (v1) + attributed. A blocking schema error rejects the write; validate() quality checks stay ADVISORY. Returns the assigned id. (To change an existing measure use update_measure; to publish/retire one use set_measure_scope.)', inputSchema: { measure: measureArg.describe('the complete measure document as an OBJECT (no id needed; see schema://measure)'), note: z.string().optional().describe('optional note for the version history') } },
     async ({ measure, note }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const res = await dbCreateMeasure(user, measure as Measure, note);
+        const res = await dbCreateMeasure(user, measure as Measure, library, note);
         const v = validate({ ...(measure as Measure), id: res.id }, library, seedMeasures);
-        return ok({ id: res.id, action: 'created', author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, eligibleForModel: v.eligibleForModel, advisory: advisoryOf(v) });
+        return ok({ id: res.id, action: 'created', author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, eligibleForModel: v.eligibleForModel, advisory: [...advisoryOf(v), ...res.warnings] });
       } catch (e) { return err(`create failed: ${(e as Error).message}`); }
     },
   );
@@ -228,14 +228,15 @@ export function buildServer(deps: ServerDeps): McpServer {
   // ── Tool: UPDATE an existing measure (id required; refuses unknown id) ────────────
   server.registerTool(
     'update_measure',
-    { title: 'Update measure', description: 'Correct an EXISTING measure by id (the id must already exist — an unknown id is refused, so a typo cannot create a phantom). `measure` is merged into the stored document; its SCOPE is honored. Any logged-in user may edit any measure; the change is versioned + attributed (co-authors tracked). validate() is ADVISORY only.', inputSchema: { id: z.string().describe('the existing measure id, e.g. "kz-2"'), measure: measureArg.describe('the fields to set, as an OBJECT (merged into the stored document)'), note: z.string().optional().describe('change note for the version history') } },
+    { title: 'Update measure', description: 'Correct an EXISTING measure by id (the id must already exist — an unknown id is refused, so a typo cannot create a phantom). `measure` is the COMPLETE document and REPLACES the stored one (NOT a patch merge): call get_measure first, edit the whole document, then send it all back — any field you omit is dropped. It is gated by the schema (unknown keys rejected); its SCOPE is honored. Any logged-in user may edit any measure; the change is versioned + attributed (co-authors tracked), tagged structural/parametric. A blocking schema error rejects the write; validate() quality checks stay ADVISORY.', inputSchema: { id: z.string().describe('the existing measure id, e.g. "kz-2"'), measure: measureArg.describe('the COMPLETE measure document as an OBJECT — it replaces the stored one (get_measure → edit → send whole)'), note: z.string().optional().describe('change note for the version history') } },
     async ({ id, measure, note }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const res = await dbUpdateMeasure(user, id, measure as Record<string, unknown>, note);
+        const res = await dbUpdateMeasure(user, id, measure as Record<string, unknown>, library, note);
         const full = (await dbGetMeasure(user, id)) ?? ({ ...(measure as Measure), id } as Measure);
         const v = validate(full, library, peersOf(id));
-        return ok({ id, action: 'updated', author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, contributors: res.contributors, eligibleForModel: v.eligibleForModel, advisory: advisoryOf(v) });
+        const droppedAdvisory = res.droppedSources.map((p) => `dropped orphan source: ${p}`);
+        return ok({ id, action: 'updated', author: user.email ?? user.userId, finalScope: res.finalScope, version: res.version, ownerId: res.ownerId, contributors: res.contributors, eligibleForModel: v.eligibleForModel, advisory: [...advisoryOf(v), ...res.warnings, ...droppedAdvisory] });
       } catch (e) { return err(`update failed: ${(e as Error).message}`); }
     },
   );
