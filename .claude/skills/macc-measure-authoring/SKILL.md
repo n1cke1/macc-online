@@ -3,7 +3,7 @@ name: macc-measure-authoring
 description: >-
   Author, correct, and quality-check MACC measures in the macc-online notation —
   the measure-document JSON consumed by compute_measure / validate_measure and the
-  shared library (technologies, products, resources, indicators, refs, pools, subsectors). Use this
+  shared library (technologies, products, resources, indicators, refs, subsectors, units, bridges). Use this
   whenever the user wants to create, edit, back-calculate, validate, or publish a
   Kazakhstan MACC measure; add or reuse a library entity; move a measure between the
   Excel model and the notation; or asks why a measure fails validation or its MAC /

@@ -16,8 +16,12 @@ it is treated as a placeholder (low confidence, flagged).
 ## Binding
 
 Assumption discipline: `reuse` (take the library value by ref), `alt` (a custom value + a
-required `divergence_reason`), `new` (local, no analogue — flagged for review). The goal is
-reuse and explainability.
+required `divergence_reason`), `new` (local, no analogue — flagged for review), `derived` (the
+number is produced by a formula in `computed`, not entered). The goal is reuse and explainability.
+
+A **trustworthy/shared** number — one that equals an existing library indicator (e.g. a subsector
+emissions baseline) — must be a `{ref}`, not pasted inline: the ingest gate flags an inline value
+that matches an indicator (`should-ref`) so the single source can't drift (R1/C9).
 
 ## Divergence reason
 
@@ -26,5 +30,5 @@ Mandatory note for `binding=alt`: why the value diverges from the library refere
 ## Reference (corridor)
 
 A `[min, max]` corridor with a unit a check anchors to: `factor` — the reduction factor,
-`capex_ud` — the object unit CAPEX. Set `reference_ref` on the back-calc and on the object;
+`capex_ud` — the object unit CAPEX. Set `reference_ref` on the factor input and on the object;
 the corridor's own source lives in its `source` field.

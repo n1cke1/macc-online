@@ -36,8 +36,9 @@ When the credible figure is a total rather than a full bottom-up chain, still au
   corridor) blocks promotion and the measure stays `draft` (see kz-16).
 - Provenance must state plainly that the factor is an anchor/assumption, not a derivation.
 
-> The legacy `back_calc` maturity stage (baseline × share, with an *implied* factor) is
-> **retired** — express the same thing bottom-up as `activity × factor` instead.
+> The legacy `raw` (baseline × share) and `back_calc` (implied-factor) maturity stages are
+> **retired** — `maturity_stage` is `computed` only; express the same thing bottom-up as
+> `activity × factor` instead.
 
 The available `formula_ref`s and their required bindings are exposed in the
 `get_measure` MCP response: for any measure on a `formula_ref`, the answer

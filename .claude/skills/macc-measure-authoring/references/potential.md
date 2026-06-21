@@ -8,7 +8,7 @@ economics, §0). They cap **volume only**.
 ```jsonc
 "potential": {
   "ceiling_dim": "n_objects",          // which dimension caps this measure
-  "pool_ref": "pool_coal_power",       // shared ceiling — measures in the pool COMBINE
+  "pool_ref": "sub:1.A.1.coal_power#max_emissions", // shared ceiling = the subsector emissions baseline; measures COMBINE
   "limit": {                            // per-measure ceiling — THIS measure's own scale
     "indicator_ref": "ind_coal_power_capacity",
     "consumption_ref": "cap_mw"
@@ -25,8 +25,10 @@ indicator's unit and the consumed value in *that same* dimension.
 
 ## The pool — a **shared** ceiling (measures combine)
 
-`pool_ref` points at a library pool with an `annual_flow` ceiling (kt CO₂eq/yr). Measures that
-share a pool **compete for the same headroom**: `validate` sorts the group ascending by MAC, the
+`pool_ref` points at the subsector **emissions baseline indicator** (`sub:<subsector>#max_emissions`)
+— the shared emissions volume measures compete for; its value is the ceiling. (R3: the standalone
+`pool` library entity was dissolved into this indicator — one value type, one owner, one provenance.)
+Measures that share a pool **compete for the same headroom**: `validate` sorts the group ascending by MAC, the
 cheapest claims the pool first, and the rest are **clipped** to what remains (`stackPools` in
 `validate.ts`). The `pool` check ⚠ flags any measure whose share is clipped. A measure with **no
 pool is `incomplete`** on the potential panel — the pool is required.

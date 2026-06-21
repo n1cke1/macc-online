@@ -17,12 +17,13 @@ Map each measure to the subsector id under its sector code (e.g. `1.A.1.coal_pow
 
 ## Pools and ceilings
 
-A `pool` caps the total abatement available to the measures that share it
-(`{id, caps_ref, annual_flow, unit, sector_ref, baseline_emissions_kt?}`). When a measure
-sets `potential.pool_ref`, its contribution counts against that pool's `ceiling`, checked
-by `checks.pool`. Measures competing for the same physical resource MUST share a pool, or
-the model will double-count their potential. Note the simplification: pools do not model
-deployment-order interactions between measures.
+A measure's **pool** is the subsector **emissions baseline indicator**
+(`sub:<subsector>#max_emissions`) — there is no separate `pool` entity (R3 dissolved it into the
+indicator hub). When a measure sets `potential.pool_ref` to that indicator, its contribution
+counts against the indicator's value as the ceiling, checked by `checks.pool`. Measures abating
+the same subsector's emissions MUST share the same `pool_ref`, or the model will double-count
+their potential. Note the simplification: pools do not model deployment-order interactions
+between measures.
 
 ## Registry hygiene (anti-duplication)
 
