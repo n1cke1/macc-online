@@ -9,6 +9,7 @@ import { type Ast, isLeafSlot, isNode } from './ast';
 import { type RefResolver as Resolver, evalAst as evalJs, economicCore } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import type { Library, Measure } from './schema';
+import { classificationCoherence } from './validate';
 import type { CheckId, CheckStatus } from './validate';
 // One shared resolver: compute() and the guardrails must agree on what a {ref}
 // means. Imported lazily-bound through ESM cycle (compute → guardrails for
@@ -178,6 +179,8 @@ export function runGuardrails(measure: Measure, library: Library, peers: Measure
   // Pool competition (oversubscription clip) is a render-time outcome, not a quality
   // failure — excluded from eligibility, mirroring validate.ts. Pool *membership* gates.
   const GATING: CheckId[] = ['factor', 'economics', 'sector', 'limit'];
-  const eligible = poolCeil != null && GATING.every((k) => checks[k] !== 'warn');
+  // §R8 A1.3 — classification coherence gates here too (mirrors validate.ts).
+  const eligible = poolCeil != null && GATING.every((k) => checks[k] !== 'warn')
+    && classificationCoherence(measure, library).length === 0;
   return { checks, eligible, abatementKt };
 }

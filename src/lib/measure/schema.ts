@@ -395,6 +395,8 @@ export interface Product {
   name: Localized;
   unit: string;
   service_unit?: string;
+  /** IPCC sector the product belongs to — used by the A1.3 classification-coherence check. */
+  sector_ref?: string;
   /** Carbon footprint of the conventional production this product displaces. */
   carbon_footprint?: { value: number; unit: string };
 }

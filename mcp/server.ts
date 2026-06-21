@@ -209,7 +209,9 @@ export function buildServer(deps: ServerDeps): McpServer {
 
   const advisoryOf = (v: ReturnType<typeof validate>) =>
     [...v.untagged.map((p) => `untagged: ${p}`), ...v.computedNoFormula.map((p) => `no-formula: ${p}`),
-     ...Object.entries(v.checks).filter(([, s]) => s === 'warn').map(([k]) => `check ${k}: warn`), ...v.missing];
+     ...Object.entries(v.checks).filter(([, s]) => s === 'warn').map(([k]) => `check ${k}: warn`), ...v.missing,
+     // §R8 honest badge — name the plausibility rules eligibility was granted without.
+     ...v.unchecked.map((u) => `unchecked — ${u}`)];
 
   // ── Tool: CREATE a new measure (server assigns the id; never collides) ───────────
   server.registerTool(

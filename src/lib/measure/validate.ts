@@ -65,6 +65,12 @@ export interface ValidateResult {
   details: Record<CheckId, CheckDetail | null>;
   /** L3 slice 2 — dimensional verdict on the abatement formula (gates the reduction panel). */
   dimension: DimensionResult;
+  /** §R8 (A1.5/A1.6/C11) — plausibility rules that did NOT run (no corridor / no unit-CAPEX
+   *  basis / no cross-check data). Eligibility is granted WITHOUT them, so they are surfaced
+   *  here for an honest badge — never a silent `na`. Advisory: does not gate. */
+  unchecked: string[];
+  /** §R8 (A1.3) — product↔sector↔pool classification incoherence (gates; empty ⇒ coherent). */
+  classificationIssues: string[];
 }
 
 /** Economics tolerance: implied unit cost within [0.5×, 2×] of the technology point estimate. */
@@ -356,6 +362,85 @@ function buildPanels(
   };
 }
 
+// ── §R8 semantic layer (L2) ───────────────────────────────────────────────────
+
+/**
+ * A1.5/A1.6/C11 — the plausibility rules that could NOT run, so eligibility was granted
+ * blind to them. The factor/economics corridors are opt-in (most measures lack them yet),
+ * so instead of a silent `na` we name what was skipped — honest-badge input, not a gate.
+ */
+function uncheckedReasons(measure: Measure, c: ComputedMeasure, library: Library): string[] {
+  const out: string[] = [];
+  // factor (X-axis corridor): needs a factor_ref input AND that input's reference_ref.
+  const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : undefined;
+  if (!factorInput) out.push('factor: no factor_ref input — per-unit abatement not corridor-checked');
+  else if (!factorInput.reference_ref || !library.references[factorInput.reference_ref]) {
+    out.push('factor: no reference corridor on the factor input — plausibility unchecked');
+  }
+  // economics (Y-axis): needs a technology unit CAPEX + a physical denominator.
+  const tech = measure.technology_ref ? library.technologies[measure.technology_ref] : undefined;
+  const denom = measure.inputs?.capex_denominator?.value;
+  if (!tech?.capex_ud || denom == null) {
+    out.push('economics: no unit-CAPEX basis (technology_ref.capex_ud + capex_denominator) — implied $/unit unchecked');
+  } else if (!tech.capex_ud_reference_ref || !library.references[tech.capex_ud_reference_ref]) {
+    out.push('economics: no corridor on the technology capex_ud — checked against a ±band fallback only');
+  }
+  // C8 owner-coherence: emissions ≈ generation × ef for the measure's pool subsector.
+  out.push(...subsectorCoherence(measure, library));
+  return out;
+}
+
+/** Map a subsector id (e.g. `1.A.1.coal_power`) to its IPCC sector via library.subsectors. */
+function sectorOfSubsector(subId: string, library: Library): string | undefined {
+  for (const [sector, list] of Object.entries(library.subsectors)) {
+    if (list.some((s) => s.id === subId)) return sector;
+  }
+  return undefined;
+}
+
+/**
+ * A1.3 — pool ↔ sector classification coherence: the abatement a measure claims is counted
+ * against its pool (a subsector emissions baseline), so that subsector MUST sit in the
+ * measure's own sector. A measure in sector X competing for sector Y's pool is double-counting
+ * across sectors — a real error → gates.
+ *
+ * NOTE: product↔sector is deliberately NOT checked. Electricity/heat (prod_mwh/prod_heat) are
+ * produced in 1.A.1 but legitimately displace emissions across sectors (1.A.2/1.A.4), so a
+ * product's production sector ≠ the measure's abatement sector. A correct product check needs a
+ * product-applicability model (which sectors a product may serve) — deferred (R8 follow-up).
+ */
+export function classificationCoherence(measure: Measure, library: Library): string[] {
+  const sec = measure.sector_ref;
+  if (!sec) return []; // overview panel already flags a missing sector
+  const subId = measure.potential?.pool_ref?.match(/^sub:(.+)#/)?.[1];
+  if (!subId) return [];
+  const subSector = sectorOfSubsector(subId, library);
+  return subSector && subSector !== sec
+    ? [`pool subsector '${subId}' is sector ${subSector}, but the measure is ${sec}`]
+    : [];
+}
+
+/**
+ * C8 — owner-coherence: a subsector's stated emissions must reconcile with generation × EF
+ * (the coal case: 135.3 Мт vs 88.3 ТВт·ч × 1 = 88.3 Мт). Intra-entity invariant over the
+ * subsector's own indicators. Dormant until a subsector carries an `ef` indicator (today the
+ * EF lives on the resource, with no subsector link) — then it warns on a mismatch. Advisory.
+ */
+function subsectorCoherence(measure: Measure, library: Library): string[] {
+  const subId = measure.potential?.pool_ref?.match(/^sub:(.+)#/)?.[1];
+  if (!subId) return [];
+  const ind = (key: string) => library.indicators.find((i) => i.owner_kind === 'subsector' && i.owner_ref === subId && i.key === key);
+  const emissions = ind('max_emissions')?.value; // Мт
+  const generation = ind('max_generation')?.value; // ГВт·ч
+  const ef = ind('ef')?.value; // tCO₂/MWh
+  if (emissions == null || generation == null || ef == null) return []; // not cross-checkable yet
+  const implied = generation * 1000 * ef / 1e6; // ГВт·ч → MWh × tCO₂/MWh → tCO₂ → Мт
+  if (relDiff(emissions, implied) > 0.1) {
+    return [`owner-coherence: ${subId} emissions ${emissions} Мт ≠ generation×EF ${implied.toFixed(1)} Мт (>10%)`];
+  }
+  return [];
+}
+
 // ── entry point ────────────────────────────────────────────────────────────
 
 /**
@@ -427,6 +512,18 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     if (panels.reduction !== 'warn') panels.reduction = 'incomplete';
   }
 
+  // §R8 A1.3 — classification coherence (product↔sector↔pool). A misfiled measure gates;
+  // current data is coherent, so this guards future drift, not today's set.
+  const classificationIssues = classificationCoherence(measure, library);
+  if (classificationIssues.length) {
+    missing.push(...classificationIssues.map((s) => `classification: ${s}`));
+    if (panels.baseline !== 'warn') panels.baseline = 'incomplete';
+  }
+
+  // §R8 A1.5/A1.6/C11 — name every plausibility rule that did not run, so a `готово` badge
+  // can say "N rules unchecked" instead of hiding it as a silent `na`. Advisory: never gates.
+  const unchecked = uncheckedReasons(measure, c, library);
+
   // §7 precondition: belongs to a published pool, no failing INTRINSIC guardrail, no
   // incomplete panel, no drift. The `pool` check is EXCLUDED here — being clipped by
   // cheaper peers (pool oversubscription) is a render-time allocation outcome, not a
@@ -452,5 +549,7 @@ export function validate(measure: Measure, library: Library, peers: Measure[] = 
     checks,
     details,
     dimension,
+    unchecked,
+    classificationIssues,
   };
 }

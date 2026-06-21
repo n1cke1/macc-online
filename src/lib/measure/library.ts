@@ -83,6 +83,7 @@ export function assembleLibrary(g: Graph): Library {
     const cf = ind('product', p.id, 'carbon_footprint');
     products[p.id] = {
       id: p.id, name: L(p.name), unit: p.unit, service_unit: p.service_unit,
+      sector_ref: p.sector_ref,
       carbon_footprint: cf ? { value: cf.value, unit: cf.unit ?? '' } : undefined,
     };
   }

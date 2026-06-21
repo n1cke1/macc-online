@@ -14,6 +14,7 @@
     "golden": "tsx scripts/golden.ts",
     "measure-golden": "tsx scripts/measure-golden.ts",
     "ingest-test": "tsx scripts/ingest-test.ts",
+    "r8-test": "tsx scripts/r8-test.ts",
     "gen-skill": "tsx scripts/gen-skill-bundle.ts",
     "seed-library": "tsx scripts/seed-library.ts",
     "supabase-apply": "tsx scripts/supabase-apply.ts",
