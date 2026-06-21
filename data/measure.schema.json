@@ -27,7 +27,7 @@
     "baseline_basis": { "enum": ["comparison", "standalone"], "description": "§B axis (parallel to mechanism). comparison ⇒ service-unit baseline + comparison.service_unit_ref; standalone ⇒ absolute project footprint (CCS, agro). Optional until all measures are authored, then required." },
     "scope": { "enum": ["published", "draft"] },
     "owner_ref": { "type": "string", "description": "Identity claim from the write path (§9); the creator. Set by the server." },
-    "maturity_stage": { "enum": ["raw", "computed"] },
+    "maturity_stage": { "enum": ["computed"] },
     "review_status": { "enum": ["open", "accepted", "rejected", "wontfix"] },
     "comparison": {
       "type": "object", "additionalProperties": false,
@@ -51,13 +51,9 @@
     },
     "abatement": {
       "type": "object",
-      "description": "Exactly one stage block, keyed by maturity_stage.",
+      "description": "A bottom-up formula (inline AST) or a template binding.",
       "additionalProperties": false,
       "properties": {
-        "raw": {
-          "type": "object", "required": ["share"], "additionalProperties": false,
-          "properties": { "share": { "type": "number" }, "justification": { "type": "string" } }
-        },
         "computed": {
           "type": "object", "required": ["formula_ref", "bindings"], "additionalProperties": false,
           "properties": {

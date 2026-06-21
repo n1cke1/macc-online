@@ -232,7 +232,6 @@ export function taggablePaths(m: Measure): string[] {
     // this an inline `cost_musd` is a black-box value the notation rule never flags.
     if (isLit(mt.cost_musd) || m.computed?.[`materials[${i}].cost_musd`]) p.push(`materials[${i}].cost_musd`);
   });
-  if (m.abatement.raw) p.push('abatement.raw.share');
   return p;
 }
 
@@ -321,7 +320,7 @@ function buildPanels(
 ): Record<PanelKey, PanelStatus> {
   // An inline `abatement.formula` is a valid reduction definition too (the 26 migrated
   // measures use it) — recognize it so the panel isn't falsely flagged incomplete.
-  const stageBlock = measure.abatement.formula ?? measure.abatement.raw ?? measure.abatement.computed;
+  const stageBlock = measure.abatement.formula ?? measure.abatement.computed;
 
   const req = (cond: boolean, label: string): PanelStatus => {
     if (cond) return 'ok';

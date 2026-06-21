@@ -177,15 +177,6 @@ export function poolCeilingKt(poolRef: string | undefined, library: Library): nu
   return ind ? ind.value * 1000 : undefined;
 }
 
-/** Sub-category baseline (kt CO₂eq/yr) the share path scales — the measure's pool indicator. */
-function poolBaselineKt(measure: Measure, library: Library): number {
-  const ceil = poolCeilingKt(measure.potential?.pool_ref, library);
-  if (ceil == null) {
-    throw new Error(`Measure '${measure.id}': share path needs pool_ref → a subsector max_emissions indicator`);
-  }
-  return ceil;
-}
-
 function computeAbatement(
   measure: Measure,
   library: Library,
@@ -210,10 +201,6 @@ function computeAbatement(
       if (!tmpl) throw new Error(`Unknown formula template '${a.computed.formula_ref}'`);
       const ast = bindTemplate(tmpl, a.computed.bindings, resolve);
       return { abatementKt: evalAst(ast, resolve), impliedFactor };
-    }
-    case 'raw': {
-      if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
-      return { abatementKt: poolBaselineKt(measure, library) * a.raw.share };
     }
     // Total by construction: an unknown/absent maturity_stage with no inline formula
     // gets a descriptive error (never `undefined`), so the caller's destructure can't

@@ -37,15 +37,12 @@ export function abatementJs(measure: Measure, library: Library): number {
   const a = measure.abatement;
   // §3/§10 — inline abatement AST wins (pure-TS mirror of compute.ts).
   if (a.formula) return evalJs(a.formula, resolve);
-  if (measure.maturity_stage === 'computed' && a.computed) {
+  if (a.computed) {
     const tmpl = getTemplate(a.computed.formula_ref);
     if (!tmpl) throw new Error(`Unknown template '${a.computed.formula_ref}'`);
     return evalJs(bindTemplate(tmpl, a.computed.bindings, resolve), resolve);
   }
-  if (!a.raw) throw new Error(`Measure '${measure.id}': no abatement block`);
-  const baseline = poolCeilingKt(measure.potential?.pool_ref, library);
-  if (baseline == null) throw new Error(`Measure '${measure.id}': share path needs pool_ref → subsector max_emissions indicator`);
-  return baseline * a.raw.share;
+  throw new Error(`Measure '${measure.id}': no abatement (provide abatement.formula or .computed)`);
 }
 
 /**

@@ -281,14 +281,6 @@ function MeasureBody({
         </div>
       );
     }
-    if (ab.raw) {
-      return (
-        <div className="rounded bg-slate-50 p-2 text-xs leading-relaxed text-slate-600">
-          {locale === 'en' ? 'share of baseline' : 'доля от базовых выбросов'}: <b className="tabular-nums">{num(ab.raw.share * 100, 1)}%</b> = <b>{fmtInt(computed.abatementKt, locale)} kt</b>
-          {ab.raw.justification && <div className="mt-0.5 italic text-slate-500">{ab.raw.justification}</div>}
-        </div>
-      );
-    }
     return null;
   }
 

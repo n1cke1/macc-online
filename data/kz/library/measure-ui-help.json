@@ -99,11 +99,8 @@
   },
   "enums": {
     "maturity": {
-      "raw": {
-        "help": "Raw: reduction = baseline × share; no bottom-up anchor or factor check. The first stage — next is computed."
-      },
       "computed": {
-        "help": "Computed: reduction expanded by a bottom-up formula (activity × factor). The per-unit factor is sanity-checked vs its reference corridor (✓/⚠). The highest maturity stage."
+        "help": "Computed: reduction is a bottom-up formula (activity × factor / physics). The per-unit factor is sanity-checked vs its reference corridor (✓/⚠). (The legacy baseline×share `raw` stage was retired — every measure is computed.)"
       }
     },
     "type": {

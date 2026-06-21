@@ -120,7 +120,9 @@ export interface ComputedValue {
 // `archived` (soft-delete) is the only author/governance lifecycle action and lives
 // at the DB/MCP layer, not in this core outcome type.
 export type Scope = 'published' | 'draft';
-export type MaturityStage = 'raw' | 'computed';
+// §5 — `raw` (baseline × share) was retired (R5): every measure is bottom-up `computed`
+// (an inline `abatement.formula` or a template). The enum keeps one value.
+export type MaturityStage = 'computed';
 export type ReviewStatus = 'open' | 'accepted' | 'rejected' | 'wontfix';
 
 /** A flow line: how much of a resource is consumed/produced per service unit. */
@@ -183,18 +185,13 @@ export interface Material {
   unit?: string;
 }
 
-/** §2 `abatement` — exactly one block, keyed by the measure's maturity stage (§5). */
-export interface AbatementRaw {
-  share: number; // fraction of the sector/sub-category baseline
-  justification?: string;
-}
+/** §2 `abatement` — a bottom-up formula (inline AST) or a template binding (§5). */
 export interface AbatementComputed {
   formula_ref: string; // FormulaTemplate.id or inline-AST id
   bindings: Record<string, FormulaBinding>; // slot name → key/const it maps to
   derived_share?: number; // (ro)
 }
 export interface Abatement {
-  raw?: AbatementRaw;
   computed?: AbatementComputed;
   /**
    * §3/§10 — an inline abatement AST over the measure's own inputs (and `res:<id>`

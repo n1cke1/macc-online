@@ -115,7 +115,7 @@ expect(vC.scope !== 'published', 'kz-16', `recommended scope stays draft (publis
 const POOL = 'sub:1.A.1.coal_power#max_emissions';
 const ceiling = poolCeilingKt(POOL, library)!;
 const synth = (id: string, mac: number, ab: number): ComputedMeasure => ({
-  id, sector: '1.A.1', name: { ru: id, en: id }, maturity: 'raw',
+  id, sector: '1.A.1', name: { ru: id, en: id }, maturity: 'computed',
   capex: 0, opex: 0, durationYrs: 1, abatementKt: ab, npv: 0, discCo2Kt: 1, mac,
 });
 const cheap = synth('cheap', 10, ceiling * 0.7);
