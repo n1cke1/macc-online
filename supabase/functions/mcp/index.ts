@@ -16967,6 +16967,7 @@ function assembleLibrary(g) {
       name: L(p.name),
       unit: p.unit,
       service_unit: p.service_unit,
+      sector_ref: p.sector_ref,
       carbon_footprint: cf ? { value: cf.value, unit: cf.unit ?? "" } : void 0
     };
   }
@@ -17620,272 +17621,13 @@ function numStr(n) {
   return String(Number(n.toPrecision(6)));
 }
 
-// src/lib/measure/guardrails.ts
-function economicsRollup(measure, library2) {
-  const created = measure.created_technologies ?? [];
-  const retired = measure.retired_technologies ?? [];
-  const materials = measure.materials ?? [];
-  if (created.length || retired.length || materials.length) {
-    const tech = (ref) => library2.technologies[ref];
-    const resolve = makeResolver(measure, library2);
-    const pick = (path, inline) => {
-      const c = measure.computed?.[path];
-      if (c) return evalAst(c.formula, resolve);
-      return unboxNumber(inline, resolve);
-    };
-    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
-    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
-    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0) - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
-    const opexMaterials = materials.reduce((s, m, i) => {
-      const explicit = unboxNumber(m.cost_musd, resolve);
-      const cost = explicit ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
-      return s + (m.side === "retired" ? -cost : cost);
-    }, 0);
-    return { capex: capexCreated - capexRetired, opex: opexObjects + opexMaterials };
-  }
-  const e = measure.economics;
-  const sum = (xs) => (xs ?? []).reduce((s, x) => s + x.value, 0);
-  return { capex: sum(e?.capex), opex: sum(e?.opex) - sum(e?.revenue) };
-}
-
-// src/lib/measure/compute.ts
-var isRef = (v) => typeof v === "object" && v !== null && typeof v.ref === "string";
-function unboxNumber(v, resolve) {
-  if (v == null) return void 0;
-  if (typeof v === "number") return v;
-  if (isRef(v)) return resolve(v.ref);
-  return void 0;
-}
-var INDICATOR_PREFIX = {
-  res: "resource",
-  obj: "object",
-  prd: "product",
-  sub: "subsector"
-};
-function makeResolver(measure, library2) {
-  const resolve = (key) => {
-    const m = key.match(/^([a-z]+):(.+)$/);
-    if (m) {
-      const [, prefix, rest] = m;
-      if (prefix === "glb") {
-        const v = library2.globals[rest];
-        if (typeof v !== "number") throw new Error(`unresolved ref '${key}': library.globals.${rest} is not a number`);
-        return v;
-      }
-      if (prefix === "in") {
-        const inp2 = measure.inputs?.[rest];
-        if (!inp2) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no input '${rest}'`);
-        return inp2.value;
-      }
-      const owner_kind = INDICATOR_PREFIX[prefix];
-      if (owner_kind) {
-        const hashAt = rest.indexOf("#");
-        const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
-        const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
-        if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
-          const r = library2.resources[id];
-          if (!r) throw new Error(`unresolved ref '${key}': resource '${id}' not in library (registry not hydrated?)`);
-          const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
-          if (typeof ef2 !== "number") throw new Error(`unresolved ref '${key}': resource '${id}' has no scalar EF for the active year`);
-          return ef2;
-        }
-        if (indKey === void 0) {
-          throw new Error(`unresolved ref '${key}': '${prefix}:' refs require '#<indicator-key>' (e.g. '${prefix}:${id}#capex_ud')`);
-        }
-        const ind = library2.indicators.find(
-          (i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey
-        );
-        if (!ind) throw new Error(`unresolved ref '${key}': indicator (owner_kind=${owner_kind}, owner_ref='${id}', key='${indKey}') absent from library.indicators`);
-        return ind.value;
-      }
-    }
-    const c = measure.computed?.[key];
-    if (c) return evalAst(c.formula, resolve);
-    const inp = measure.inputs?.[key];
-    if (!inp) throw new Error(`unresolved ref '${key}': not a known prefix and measure '${measure.id}' has no input/computed '${key}'`);
-    return inp.value;
-  };
-  return resolve;
-}
-function resolveRefDetail(ref, library2) {
-  const m = ref.match(/^([a-z]+):(.+)$/);
-  if (!m) throw new Error(`resolve_ref: '${ref}' is not a prefixed library ref (sub:/obj:/prd:/res:/glb:)`);
-  const [, prefix, rest] = m;
-  if (prefix === "glb") {
-    const v = library2.globals[rest];
-    if (typeof v !== "number") throw new Error(`resolve_ref '${ref}': library.globals.${rest} is not a number`);
-    return { ref, value: v, key: rest };
-  }
-  if (prefix === "in") throw new Error(`resolve_ref '${ref}': 'in:' is measure-scoped \u2014 use compute_measure`);
-  const owner_kind = INDICATOR_PREFIX[prefix];
-  if (!owner_kind) throw new Error(`resolve_ref '${ref}': unknown prefix '${prefix}:'`);
-  const hashAt = rest.indexOf("#");
-  const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
-  const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
-  if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
-    const r = library2.resources[id];
-    if (!r) throw new Error(`resolve_ref '${ref}': resource '${id}' not in library`);
-    const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
-    if (typeof ef2 !== "number") throw new Error(`resolve_ref '${ref}': resource '${id}' has no scalar EF for the active year`);
-    return { ref, value: ef2, owner_kind: "resource", owner_ref: id, key: "ef", unit: r.unit };
-  }
-  if (indKey === void 0) throw new Error(`resolve_ref '${ref}': '${prefix}:' refs need '#<key>' (e.g. '${prefix}:${id}#capex_ud')`);
-  const ind = library2.indicators.find((i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey);
-  if (!ind) throw new Error(`resolve_ref '${ref}': indicator (${owner_kind} '${id}' #${indKey}) absent from library.indicators`);
-  const corridor = ind.reference_ref ? library2.references[ind.reference_ref] : void 0;
-  return {
-    ref,
-    value: ind.value,
-    unit: ind.unit,
-    owner_kind,
-    owner_ref: id,
-    key: indKey,
-    provenance: ind.provenance,
-    corridor: corridor ? { range: corridor.range, unit: corridor.unit, source: corridor.source } : null
-  };
-}
-function poolCeilingKt(poolRef, library2) {
-  if (!poolRef) return void 0;
-  const m = poolRef.match(/^sub:(.+)#(.+)$/);
-  if (!m) return void 0;
-  const ind = library2.indicators.find((i) => i.owner_kind === "subsector" && i.owner_ref === m[1] && i.key === m[2]);
-  return ind ? ind.value * 1e3 : void 0;
-}
-function poolBaselineKt(measure, library2) {
-  const ceil = poolCeilingKt(measure.potential?.pool_ref, library2);
-  if (ceil == null) {
-    throw new Error(`Measure '${measure.id}': share path needs pool_ref \u2192 a subsector max_emissions indicator`);
-  }
-  return ceil;
-}
-function computeAbatement(measure, library2, resolve) {
-  const a = measure.abatement;
-  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed or .raw)`);
-  const impliedFactor = a.factor_ref ? measure.inputs?.[a.factor_ref]?.value : void 0;
-  if (a.formula) {
-    return { abatementKt: evalAst(a.formula, resolve), impliedFactor };
-  }
-  switch (measure.maturity_stage) {
-    case "computed": {
-      if (!a.computed) throw new Error(`Measure '${measure.id}': maturity=computed but no computed block`);
-      const tmpl = getTemplate(a.computed.formula_ref);
-      if (!tmpl) throw new Error(`Unknown formula template '${a.computed.formula_ref}'`);
-      const ast = bindTemplate(tmpl, a.computed.bindings, resolve);
-      return { abatementKt: evalAst(ast, resolve), impliedFactor };
-    }
-    case "raw": {
-      if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
-      return { abatementKt: poolBaselineKt(measure, library2) * a.raw.share };
-    }
-    // Total by construction: an unknown/absent maturity_stage with no inline formula
-    // gets a descriptive error (never `undefined`), so the caller's destructure can't
-    // crash — the tools surface this as an advisory message, not a hard failure.
-    default:
-      throw new Error(
-        `Measure '${measure.id}': cannot derive abatement \u2014 provide an inline 'abatement.formula' or a valid stage block (maturity_stage='${String(measure.maturity_stage)}')`
-      );
-  }
-}
-function resolveDuration(measure, library2) {
-  const tech = measure.technology_ref ? library2.technologies[measure.technology_ref] : void 0;
-  const dur = tech?.lifetimeYrs ?? measure.inputs?.lifetime?.value;
-  if (dur == null) throw new Error(`Measure '${measure.id}': cannot resolve duration (technology.lifetimeYrs or inputs.lifetime)`);
-  return dur;
-}
-function buildBreakdown(measure, library2, resolve) {
-  const created = measure.created_technologies ?? [];
-  const retired = measure.retired_technologies ?? [];
-  const materials = measure.materials ?? [];
-  const tech = (ref) => library2.technologies[ref];
-  const pick = (path, inline) => {
-    const c = measure.computed?.[path];
-    if (c) return evalAst(c.formula, resolve);
-    return unboxNumber(inline, resolve);
-  };
-  const techName = (ref) => library2.technologies[ref]?.name ?? { ru: ref, en: ref };
-  const resName = (ref) => library2.resources[ref]?.name ?? { ru: ref, en: ref };
-  const capexItems = [];
-  const opexItems = [];
-  const physicalItems = [];
-  created.forEach((o, i) => {
-    const capacity = pick(`created_technologies[${i}].capacity`, o.capacity);
-    const capex = pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (capacity ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6;
-    if (capex) capexItems.push({ label: techName(o.technology_ref), value: capex, cell: o.technology_ref });
-    const opex = pick(`created_technologies[${i}].opex_musd`, o.opex_musd);
-    if (opex) opexItems.push({ label: techName(o.technology_ref), value: opex, cell: o.technology_ref });
-    if (capacity != null) {
-      physicalItems.push({ label: techName(o.technology_ref), value: capacity, unit: o.unit ?? tech(o.technology_ref)?.capex_ud_unit ?? "", cell: o.technology_ref });
-    }
-  });
-  retired.forEach((r, i) => {
-    const capacity = pick(`retired_technologies[${i}].capacity`, r.capacity);
-    const maint = pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (capacity ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6;
-    if (maint) capexItems.push({ label: techName(r.technology_ref), value: -maint, cell: r.technology_ref });
-    const opex = pick(`retired_technologies[${i}].opex_musd`, r.opex_musd);
-    if (opex) opexItems.push({ label: techName(r.technology_ref), value: -opex, cell: r.technology_ref });
-    if (capacity != null) {
-      physicalItems.push({ label: techName(r.technology_ref), value: capacity, unit: r.unit ?? "", cell: r.technology_ref });
-    }
-  });
-  materials.forEach((m, i) => {
-    const explicit = unboxNumber(m.cost_musd, resolve);
-    const qty = pick(`materials[${i}].qty`, m.qty);
-    const price = pick(`materials[${i}].price`, m.price);
-    const cost = explicit ?? (qty ?? 0) * (price ?? 0) / 1e6;
-    const signed = m.side === "retired" ? -cost : cost;
-    if (signed) opexItems.push({ label: resName(m.resource_ref), value: signed, cell: m.resource_ref });
-    if (qty != null) {
-      physicalItems.push({ label: resName(m.resource_ref), value: qty, unit: m.unit ?? library2.resources[m.resource_ref]?.unit ?? "", cell: m.resource_ref });
-    }
-  });
-  const localInputs = Object.entries(measure.inputs ?? {}).map(([key, inp]) => ({
-    label: { ru: key, en: key },
-    value: inp.value,
-    unit: inp.unit ?? "",
-    source: inp.provenance?.citation ?? "",
-    // Measure-scoped so the in-memory override store (keyed by `cell`) never collides
-    // when two measures share an input name (e.g. `lifetime`). measure-recalc parses
-    // `in:<measureId>#<key>` back to that measure's input.
-    cell: `in:${measure.id}#${key}`
-  }));
-  return { capexItems, opexItems, physicalItems, localInputs };
-}
-function compute(measure, library2) {
-  const resolve = makeResolver(measure, library2);
-  const { abatementKt, impliedFactor } = computeAbatement(measure, library2, resolve);
-  const { capex, opex } = economicsRollup(measure, library2);
-  const durationYrs = resolveDuration(measure, library2);
-  const { npv, discCo2Kt, mac } = economicCore({
-    capex,
-    opex,
-    abatementKt,
-    durationYrs,
-    discountRate: library2.globals.discountRate
-  });
-  return {
-    id: measure.id,
-    sector: measure.sector_ref,
-    name: measure.name,
-    maturity: measure.maturity_stage,
-    capex,
-    opex,
-    durationYrs,
-    abatementKt,
-    npv,
-    discCo2Kt,
-    mac,
-    impliedFactor,
-    ...buildBreakdown(measure, library2, resolve)
-  };
-}
-
 // src/lib/measure/dimension-check.ts
 var CO2_RATE = { mass_co2: 1, time: -1 };
 var CO2_STOCK = { mass_co2: 1 };
 var isCO2 = (d) => dimEqual(d, CO2_RATE) || dimEqual(d, CO2_STOCK);
 var DimensionError = class extends Error {
 };
-var INDICATOR_PREFIX2 = {
+var INDICATOR_PREFIX = {
   res: "resource",
   obj: "object",
   prd: "product",
@@ -17909,7 +17651,7 @@ function dimOfRef(ref, ctx) {
     const [, prefix, rest] = m;
     if (prefix === "glb") return { dim: {} };
     if (prefix === "in") return { dim: dimOfBareKey(rest, ctx, ref) };
-    const owner_kind = INDICATOR_PREFIX2[prefix];
+    const owner_kind = INDICATOR_PREFIX[prefix];
     if (owner_kind) {
       const hashAt = rest.indexOf("#");
       const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
@@ -18197,6 +17939,51 @@ function buildPanels(measure, checks, missing) {
     potential: !measure.potential?.pool_ref ? (missing.push("potential.pool_ref"), "incomplete") : !measure.potential?.limit ? (missing.push("potential.limit"), "incomplete") : checks.limit === "warn" ? (missing.push("potential.limit exceeded"), "warn") : "ok"
   };
 }
+function uncheckedReasons(measure, c, library2) {
+  const out = [];
+  const factorInput = measure.abatement.factor_ref ? measure.inputs?.[measure.abatement.factor_ref] : void 0;
+  if (!factorInput) out.push("factor: no factor_ref input \u2014 per-unit abatement not corridor-checked");
+  else if (!factorInput.reference_ref || !library2.references[factorInput.reference_ref]) {
+    out.push("factor: no reference corridor on the factor input \u2014 plausibility unchecked");
+  }
+  const tech = measure.technology_ref ? library2.technologies[measure.technology_ref] : void 0;
+  const denom = measure.inputs?.capex_denominator?.value;
+  if (!tech?.capex_ud || denom == null) {
+    out.push("economics: no unit-CAPEX basis (technology_ref.capex_ud + capex_denominator) \u2014 implied $/unit unchecked");
+  } else if (!tech.capex_ud_reference_ref || !library2.references[tech.capex_ud_reference_ref]) {
+    out.push("economics: no corridor on the technology capex_ud \u2014 checked against a \xB1band fallback only");
+  }
+  out.push(...subsectorCoherence(measure, library2));
+  return out;
+}
+function sectorOfSubsector(subId, library2) {
+  for (const [sector, list] of Object.entries(library2.subsectors)) {
+    if (list.some((s) => s.id === subId)) return sector;
+  }
+  return void 0;
+}
+function classificationCoherence(measure, library2) {
+  const sec = measure.sector_ref;
+  if (!sec) return [];
+  const subId = measure.potential?.pool_ref?.match(/^sub:(.+)#/)?.[1];
+  if (!subId) return [];
+  const subSector = sectorOfSubsector(subId, library2);
+  return subSector && subSector !== sec ? [`pool subsector '${subId}' is sector ${subSector}, but the measure is ${sec}`] : [];
+}
+function subsectorCoherence(measure, library2) {
+  const subId = measure.potential?.pool_ref?.match(/^sub:(.+)#/)?.[1];
+  if (!subId) return [];
+  const ind = (key) => library2.indicators.find((i) => i.owner_kind === "subsector" && i.owner_ref === subId && i.key === key);
+  const emissions = ind("max_emissions")?.value;
+  const generation = ind("max_generation")?.value;
+  const ef2 = ind("ef")?.value;
+  if (emissions == null || generation == null || ef2 == null) return [];
+  const implied = generation * 1e3 * ef2 / 1e6;
+  if (relDiff2(emissions, implied) > 0.1) {
+    return [`owner-coherence: ${subId} emissions ${emissions} \u041C\u0442 \u2260 generation\xD7EF ${implied.toFixed(1)} \u041C\u0442 (>10%)`];
+  }
+  return [];
+}
 function validate(measure, library2, peers = []) {
   const c = compute(measure, library2);
   const peerComputed = peers.map((m) => ({ measure: m, computed: compute(m, library2) }));
@@ -18232,6 +18019,12 @@ function validate(measure, library2, peers = []) {
     missing.push(...dimension.issues.map((s) => `dimension: ${s}`));
     if (panels.reduction !== "warn") panels.reduction = "incomplete";
   }
+  const classificationIssues = classificationCoherence(measure, library2);
+  if (classificationIssues.length) {
+    missing.push(...classificationIssues.map((s) => `classification: ${s}`));
+    if (panels.baseline !== "warn") panels.baseline = "incomplete";
+  }
+  const unchecked = uncheckedReasons(measure, c, library2);
   const GATING_CHECKS = ["factor", "economics", "sector", "limit"];
   const noWarn = GATING_CHECKS.every((k) => checks[k] !== "warn");
   const panelsComplete = Object.values(panels).every((s) => s !== "incomplete");
@@ -18250,7 +18043,268 @@ function validate(measure, library2, peers = []) {
     panels,
     checks,
     details,
-    dimension
+    dimension,
+    unchecked,
+    classificationIssues
+  };
+}
+
+// src/lib/measure/guardrails.ts
+function economicsRollup(measure, library2) {
+  const created = measure.created_technologies ?? [];
+  const retired = measure.retired_technologies ?? [];
+  const materials = measure.materials ?? [];
+  if (created.length || retired.length || materials.length) {
+    const tech = (ref) => library2.technologies[ref];
+    const resolve = makeResolver(measure, library2);
+    const pick = (path, inline) => {
+      const c = measure.computed?.[path];
+      if (c) return evalAst(c.formula, resolve);
+      return unboxNumber(inline, resolve);
+    };
+    const capexCreated = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (pick(`created_technologies[${i}].capacity`, o.capacity) ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
+    const capexRetired = retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (pick(`retired_technologies[${i}].capacity`, r.capacity) ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6), 0);
+    const opexObjects = created.reduce((s, o, i) => s + (pick(`created_technologies[${i}].opex_musd`, o.opex_musd) ?? 0), 0) - retired.reduce((s, r, i) => s + (pick(`retired_technologies[${i}].opex_musd`, r.opex_musd) ?? 0), 0);
+    const opexMaterials = materials.reduce((s, m, i) => {
+      const explicit = unboxNumber(m.cost_musd, resolve);
+      const cost = explicit ?? (pick(`materials[${i}].qty`, m.qty) ?? 0) * (pick(`materials[${i}].price`, m.price) ?? 0) / 1e6;
+      return s + (m.side === "retired" ? -cost : cost);
+    }, 0);
+    return { capex: capexCreated - capexRetired, opex: opexObjects + opexMaterials };
+  }
+  const e = measure.economics;
+  const sum = (xs) => (xs ?? []).reduce((s, x) => s + x.value, 0);
+  return { capex: sum(e?.capex), opex: sum(e?.opex) - sum(e?.revenue) };
+}
+
+// src/lib/measure/compute.ts
+var isRef = (v) => typeof v === "object" && v !== null && typeof v.ref === "string";
+function unboxNumber(v, resolve) {
+  if (v == null) return void 0;
+  if (typeof v === "number") return v;
+  if (isRef(v)) return resolve(v.ref);
+  return void 0;
+}
+var INDICATOR_PREFIX2 = {
+  res: "resource",
+  obj: "object",
+  prd: "product",
+  sub: "subsector"
+};
+function makeResolver(measure, library2) {
+  const resolve = (key) => {
+    const m = key.match(/^([a-z]+):(.+)$/);
+    if (m) {
+      const [, prefix, rest] = m;
+      if (prefix === "glb") {
+        const v = library2.globals[rest];
+        if (typeof v !== "number") throw new Error(`unresolved ref '${key}': library.globals.${rest} is not a number`);
+        return v;
+      }
+      if (prefix === "in") {
+        const inp2 = measure.inputs?.[rest];
+        if (!inp2) throw new Error(`unresolved ref '${key}': measure '${measure.id}' has no input '${rest}'`);
+        return inp2.value;
+      }
+      const owner_kind = INDICATOR_PREFIX2[prefix];
+      if (owner_kind) {
+        const hashAt = rest.indexOf("#");
+        const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
+        const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
+        if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
+          const r = library2.resources[id];
+          if (!r) throw new Error(`unresolved ref '${key}': resource '${id}' not in library (registry not hydrated?)`);
+          const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
+          if (typeof ef2 !== "number") throw new Error(`unresolved ref '${key}': resource '${id}' has no scalar EF for the active year`);
+          return ef2;
+        }
+        if (indKey === void 0) {
+          throw new Error(`unresolved ref '${key}': '${prefix}:' refs require '#<indicator-key>' (e.g. '${prefix}:${id}#capex_ud')`);
+        }
+        const ind = library2.indicators.find(
+          (i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey
+        );
+        if (!ind) throw new Error(`unresolved ref '${key}': indicator (owner_kind=${owner_kind}, owner_ref='${id}', key='${indKey}') absent from library.indicators`);
+        return ind.value;
+      }
+    }
+    const c = measure.computed?.[key];
+    if (c) return evalAst(c.formula, resolve);
+    const inp = measure.inputs?.[key];
+    if (!inp) throw new Error(`unresolved ref '${key}': not a known prefix and measure '${measure.id}' has no input/computed '${key}'`);
+    return inp.value;
+  };
+  return resolve;
+}
+function resolveRefDetail(ref, library2) {
+  const m = ref.match(/^([a-z]+):(.+)$/);
+  if (!m) throw new Error(`resolve_ref: '${ref}' is not a prefixed library ref (sub:/obj:/prd:/res:/glb:)`);
+  const [, prefix, rest] = m;
+  if (prefix === "glb") {
+    const v = library2.globals[rest];
+    if (typeof v !== "number") throw new Error(`resolve_ref '${ref}': library.globals.${rest} is not a number`);
+    return { ref, value: v, key: rest };
+  }
+  if (prefix === "in") throw new Error(`resolve_ref '${ref}': 'in:' is measure-scoped \u2014 use compute_measure`);
+  const owner_kind = INDICATOR_PREFIX2[prefix];
+  if (!owner_kind) throw new Error(`resolve_ref '${ref}': unknown prefix '${prefix}:'`);
+  const hashAt = rest.indexOf("#");
+  const id = hashAt >= 0 ? rest.slice(0, hashAt) : rest;
+  const indKey = hashAt >= 0 ? rest.slice(hashAt + 1) : void 0;
+  if (prefix === "res" && (indKey === void 0 || indKey === "ef")) {
+    const r = library2.resources[id];
+    if (!r) throw new Error(`resolve_ref '${ref}': resource '${id}' not in library`);
+    const ef2 = typeof r.ef === "number" ? r.ef : r.ef[library2.globals.year ?? ""];
+    if (typeof ef2 !== "number") throw new Error(`resolve_ref '${ref}': resource '${id}' has no scalar EF for the active year`);
+    return { ref, value: ef2, owner_kind: "resource", owner_ref: id, key: "ef", unit: r.unit };
+  }
+  if (indKey === void 0) throw new Error(`resolve_ref '${ref}': '${prefix}:' refs need '#<key>' (e.g. '${prefix}:${id}#capex_ud')`);
+  const ind = library2.indicators.find((i) => i.owner_kind === owner_kind && i.owner_ref === id && i.key === indKey);
+  if (!ind) throw new Error(`resolve_ref '${ref}': indicator (${owner_kind} '${id}' #${indKey}) absent from library.indicators`);
+  const corridor = ind.reference_ref ? library2.references[ind.reference_ref] : void 0;
+  return {
+    ref,
+    value: ind.value,
+    unit: ind.unit,
+    owner_kind,
+    owner_ref: id,
+    key: indKey,
+    provenance: ind.provenance,
+    corridor: corridor ? { range: corridor.range, unit: corridor.unit, source: corridor.source } : null
+  };
+}
+function poolCeilingKt(poolRef, library2) {
+  if (!poolRef) return void 0;
+  const m = poolRef.match(/^sub:(.+)#(.+)$/);
+  if (!m) return void 0;
+  const ind = library2.indicators.find((i) => i.owner_kind === "subsector" && i.owner_ref === m[1] && i.key === m[2]);
+  return ind ? ind.value * 1e3 : void 0;
+}
+function poolBaselineKt(measure, library2) {
+  const ceil = poolCeilingKt(measure.potential?.pool_ref, library2);
+  if (ceil == null) {
+    throw new Error(`Measure '${measure.id}': share path needs pool_ref \u2192 a subsector max_emissions indicator`);
+  }
+  return ceil;
+}
+function computeAbatement(measure, library2, resolve) {
+  const a = measure.abatement;
+  if (!a) throw new Error(`Measure '${measure.id}': no 'abatement' block (provide abatement.formula, .computed or .raw)`);
+  const impliedFactor = a.factor_ref ? measure.inputs?.[a.factor_ref]?.value : void 0;
+  if (a.formula) {
+    return { abatementKt: evalAst(a.formula, resolve), impliedFactor };
+  }
+  switch (measure.maturity_stage) {
+    case "computed": {
+      if (!a.computed) throw new Error(`Measure '${measure.id}': maturity=computed but no computed block`);
+      const tmpl = getTemplate(a.computed.formula_ref);
+      if (!tmpl) throw new Error(`Unknown formula template '${a.computed.formula_ref}'`);
+      const ast = bindTemplate(tmpl, a.computed.bindings, resolve);
+      return { abatementKt: evalAst(ast, resolve), impliedFactor };
+    }
+    case "raw": {
+      if (!a.raw) throw new Error(`Measure '${measure.id}': maturity=raw but no raw block`);
+      return { abatementKt: poolBaselineKt(measure, library2) * a.raw.share };
+    }
+    // Total by construction: an unknown/absent maturity_stage with no inline formula
+    // gets a descriptive error (never `undefined`), so the caller's destructure can't
+    // crash — the tools surface this as an advisory message, not a hard failure.
+    default:
+      throw new Error(
+        `Measure '${measure.id}': cannot derive abatement \u2014 provide an inline 'abatement.formula' or a valid stage block (maturity_stage='${String(measure.maturity_stage)}')`
+      );
+  }
+}
+function resolveDuration(measure, library2) {
+  const tech = measure.technology_ref ? library2.technologies[measure.technology_ref] : void 0;
+  const dur = tech?.lifetimeYrs ?? measure.inputs?.lifetime?.value;
+  if (dur == null) throw new Error(`Measure '${measure.id}': cannot resolve duration (technology.lifetimeYrs or inputs.lifetime)`);
+  return dur;
+}
+function buildBreakdown(measure, library2, resolve) {
+  const created = measure.created_technologies ?? [];
+  const retired = measure.retired_technologies ?? [];
+  const materials = measure.materials ?? [];
+  const tech = (ref) => library2.technologies[ref];
+  const pick = (path, inline) => {
+    const c = measure.computed?.[path];
+    if (c) return evalAst(c.formula, resolve);
+    return unboxNumber(inline, resolve);
+  };
+  const techName = (ref) => library2.technologies[ref]?.name ?? { ru: ref, en: ref };
+  const resName = (ref) => library2.resources[ref]?.name ?? { ru: ref, en: ref };
+  const capexItems = [];
+  const opexItems = [];
+  const physicalItems = [];
+  created.forEach((o, i) => {
+    const capacity = pick(`created_technologies[${i}].capacity`, o.capacity);
+    const capex = pick(`created_technologies[${i}].capex_musd`, o.capex_musd) ?? (capacity ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6;
+    if (capex) capexItems.push({ label: techName(o.technology_ref), value: capex, cell: o.technology_ref });
+    const opex = pick(`created_technologies[${i}].opex_musd`, o.opex_musd);
+    if (opex) opexItems.push({ label: techName(o.technology_ref), value: opex, cell: o.technology_ref });
+    if (capacity != null) {
+      physicalItems.push({ label: techName(o.technology_ref), value: capacity, unit: o.unit ?? tech(o.technology_ref)?.capex_ud_unit ?? "", cell: o.technology_ref });
+    }
+  });
+  retired.forEach((r, i) => {
+    const capacity = pick(`retired_technologies[${i}].capacity`, r.capacity);
+    const maint = pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd) ?? (capacity ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6;
+    if (maint) capexItems.push({ label: techName(r.technology_ref), value: -maint, cell: r.technology_ref });
+    const opex = pick(`retired_technologies[${i}].opex_musd`, r.opex_musd);
+    if (opex) opexItems.push({ label: techName(r.technology_ref), value: -opex, cell: r.technology_ref });
+    if (capacity != null) {
+      physicalItems.push({ label: techName(r.technology_ref), value: capacity, unit: r.unit ?? "", cell: r.technology_ref });
+    }
+  });
+  materials.forEach((m, i) => {
+    const explicit = unboxNumber(m.cost_musd, resolve);
+    const qty = pick(`materials[${i}].qty`, m.qty);
+    const price = pick(`materials[${i}].price`, m.price);
+    const cost = explicit ?? (qty ?? 0) * (price ?? 0) / 1e6;
+    const signed = m.side === "retired" ? -cost : cost;
+    if (signed) opexItems.push({ label: resName(m.resource_ref), value: signed, cell: m.resource_ref });
+    if (qty != null) {
+      physicalItems.push({ label: resName(m.resource_ref), value: qty, unit: m.unit ?? library2.resources[m.resource_ref]?.unit ?? "", cell: m.resource_ref });
+    }
+  });
+  const localInputs = Object.entries(measure.inputs ?? {}).map(([key, inp]) => ({
+    label: { ru: key, en: key },
+    value: inp.value,
+    unit: inp.unit ?? "",
+    source: inp.provenance?.citation ?? "",
+    // Measure-scoped so the in-memory override store (keyed by `cell`) never collides
+    // when two measures share an input name (e.g. `lifetime`). measure-recalc parses
+    // `in:<measureId>#<key>` back to that measure's input.
+    cell: `in:${measure.id}#${key}`
+  }));
+  return { capexItems, opexItems, physicalItems, localInputs };
+}
+function compute(measure, library2) {
+  const resolve = makeResolver(measure, library2);
+  const { abatementKt, impliedFactor } = computeAbatement(measure, library2, resolve);
+  const { capex, opex } = economicsRollup(measure, library2);
+  const durationYrs = resolveDuration(measure, library2);
+  const { npv, discCo2Kt, mac } = economicCore({
+    capex,
+    opex,
+    abatementKt,
+    durationYrs,
+    discountRate: library2.globals.discountRate
+  });
+  return {
+    id: measure.id,
+    sector: measure.sector_ref,
+    name: measure.name,
+    maturity: measure.maturity_stage,
+    capex,
+    opex,
+    durationYrs,
+    abatementKt,
+    npv,
+    discCo2Kt,
+    mac,
+    impliedFactor,
+    ...buildBreakdown(measure, library2, resolve)
   };
 }
 
@@ -18427,7 +18481,9 @@ ${JSON.stringify(library2.uiHelp)}
     ...v.untagged.map((p) => `untagged: ${p}`),
     ...v.computedNoFormula.map((p) => `no-formula: ${p}`),
     ...Object.entries(v.checks).filter(([, s]) => s === "warn").map(([k]) => `check ${k}: warn`),
-    ...v.missing
+    ...v.missing,
+    // §R8 honest badge — name the plausibility rules eligibility was granted without.
+    ...v.unchecked.map((u) => `unchecked \u2014 ${u}`)
   ];
   server.registerTool(
     "create_measure",
