@@ -5,6 +5,8 @@
   "description": "Open, interactive MACC tool for Kazakhstan — static core",
   "scripts": {
     "dev": "next dev",
+    "bake": "tsx scripts/bake-from-supabase.ts",
+    "prebuild": "tsx scripts/bake-from-supabase.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

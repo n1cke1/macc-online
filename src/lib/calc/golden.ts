@@ -1,16 +1,20 @@
-// Golden test — the published trust anchor (see CLAUDE.md principle #2).
+// Golden test — recompute-vs-snapshot regression guard.
 //
-// It runs the v1 HyperFormula engine at the *baseline* levers and asserts that
-// every measure output and every total matches the values the ETL cached from
-// Excel (`model.data.json`). A pass proves the client-side recalc is bit-for-bit
-// faithful to the original workbook — the curve is verifiable, not a black box.
+// It runs the live measure-recalc engine at the *baseline* levers and asserts that
+// every measure output and every total matches the baked `model.data.json` snapshot.
+// A pass proves the slider/override recompute path is consistent with the committed
+// curve (no bundle↔snapshot drift) and that `recalc(levers, {})` ≡ `recalc(levers)`.
+//
+// The Excel trust anchor (bit-for-bit parity vs the original workbook) is now the
+// separate `measure-golden` test; this one pins the recompute path itself.
 //
 // Run it: `npm run golden`. It is plain TypeScript with no test-framework
 // dependency, so anyone can audit it. CI/contributors can also wrap `runGolden`
 // in their runner of choice.
 import baselineJson from '../../../data/kz/model.data.json';
 import type { Dataset, MaccPoint } from '@data/schema';
-import { recalc, BASELINE_LEVERS, modelVersion } from './engine';
+import { recalc, modelVersion } from './measure-recalc';
+import { BASELINE_LEVERS } from '@/lib/scenario';
 
 const baseline = baselineJson as unknown as Dataset;
 

@@ -8,7 +8,10 @@
 //   2. kz-16 (mine degassing) trips the factor guardrail (⚠) and kz-2 is clipped in its
 //      shared coal-power pool by cheaper peers — both stay draft, never auto-promoted.
 //   3. Pool stacking clips potential by MAC order, independent of input order.
-import baselineJson from '../data/kz/model.data.json';
+// The frozen Excel-cached snapshot is the parity oracle (the original workbook's values),
+// NOT the live `model.data.json` (which is now baked from Supabase and may carry post-Excel
+// measure edits). This keeps measure-golden the bit-for-bit anchor to the original Excel.
+import baselineJson from '../data/kz/model.excel.json';
 import { library, getSeedMeasure, seedMeasures, assembleLibrary, type Graph } from '../src/lib/measure/library';
 import graphSeed from '../data/kz/library/graph.seed.json';
 import { compute, makeResolver, type ComputedMeasure } from '../src/lib/measure/compute';

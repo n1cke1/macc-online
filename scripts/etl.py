@@ -4,7 +4,10 @@ ETL for the open MACC tool — the published trust anchor.
 
 Reads the source Excel workbook (read-only) and emits, for one country:
   data/<country>/workbook.engine.json  — full formula+literal grid seeding HyperFormula
-  data/<country>/model.data.json       — clean, labelled, bilingual dataset (Dataset schema)
+  data/<country>/model.excel.json      — Excel-cached dataset (Dataset schema); the frozen
+                                          provenance reference `measure-golden` pins against.
+                                          The LIVE curve (model.data.json) is baked from
+                                          Supabase by scripts/bake-from-supabase.ts.
   data/<country>/fingerprint.json       — content hash + structural signature + source date
 
 Run:  py scripts/etl.py            (defaults to country=kz, source from CONFIG)
@@ -608,7 +611,9 @@ def run(source: Path, country: str, check_only: bool) -> int:
 
     print("\nWriting:")
     dump("fingerprint.json", fingerprint)
-    dump("model.data.json", dataset)
+    # The Excel-cached dataset is the frozen provenance reference (measure-golden's oracle),
+    # NOT the live curve — that is baked from Supabase into model.data.json.
+    dump("model.excel.json", dataset)
     dump("workbook.engine.json", engine_doc)
     return 0
 

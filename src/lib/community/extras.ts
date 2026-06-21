@@ -12,6 +12,7 @@ import { getSupabase } from '@/lib/supabase/client';
 import { loadLibrary, loadMeasures } from '@/lib/measure/load-supabase';
 import { compute, type ComputedMeasure } from '@/lib/measure/compute';
 import { stackPools, validate } from '@/lib/measure/validate';
+import { canonicalMeasureIds } from '@/lib/calc/measure-recalc';
 import type { Library, Measure } from '@/lib/measure/schema';
 
 /** `measures` = ALL published measures (canonical + extras): the full set is needed so pool
@@ -19,8 +20,10 @@ import type { Library, Measure } from '@/lib/measure/schema';
  *  Only the non-canonical ones are plotted (see computeExtras). */
 export interface CommunityData { measures: Measure[]; library: Library }
 
-/** The canonical file curve owns kz-1…kz-26; only ids beyond that are "extras". */
-const FILE_IDS = new Set(Array.from({ length: 26 }, (_, i) => `kz-${i + 1}`));
+/** The baked canonical curve owns every measure in the build-time bundle (kz-1…kz-27, incl
+ *  drafts); only measures NOT yet baked are "extras" — i.e. ones published/edited after the
+ *  last build, surfaced live until the next rebuild bakes them in. Avoids double-plotting. */
+const FILE_IDS = canonicalMeasureIds;
 
 /** Synthetic numeric MaccPoint id for an extra (the file model is keyed by number). */
 const extraPointId = (measureId: string): number => 10000 + (Number(measureId.replace('kz-', '')) || 0);
@@ -42,12 +45,19 @@ export async function loadCommunityExtras(): Promise<CommunityData | null> {
 /** Apply the live levers to the library so extras recompute with the sliders (WACC via the
  *  discount rate; the fuel-price levers map onto resource prices for price-bound economics). */
 function leveredLibrary(library: Library, levers: Levers): Library {
+  const priceById: Record<string, number> = {
+    coal: levers.coalPrice, gas: levers.gasPrice, electricity: levers.electricityPrice,
+  };
   const resources = { ...library.resources };
-  const setPrice = (id: string, price: number) => { if (resources[id]) resources[id] = { ...resources[id], price }; };
-  setPrice('coal', levers.coalPrice);
-  setPrice('gas', levers.gasPrice);
-  setPrice('electricity', levers.electricityPrice);
-  return { ...library, resources, globals: { ...library.globals, discountRate: levers.discountRate } };
+  for (const [id, price] of Object.entries(priceById)) {
+    if (resources[id]) resources[id] = { ...resources[id], price };
+  }
+  // A `res:<id>#price` ref resolves through library.indicators (the §1 hub), so the lever
+  // must update the indicator too — not just the denormalized resources[id].price field.
+  const indicators = library.indicators.map((ind) =>
+    ind.owner_kind === 'resource' && ind.key === 'price' && priceById[ind.owner_ref] !== undefined
+      ? { ...ind, value: priceById[ind.owner_ref] } : ind);
+  return { ...library, resources, indicators, globals: { ...library.globals, discountRate: levers.discountRate } };
 }
 
 /** Compute the extras into plottable MaccPoints at the given levers (skips any that error).

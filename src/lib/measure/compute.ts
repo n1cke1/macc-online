@@ -4,7 +4,7 @@
 // (§5): `raw` = baseline × share, `computed` = an inline AST / formula template
 // evaluated through HyperFormula (§3). The output mirrors `MaccPoint` field names
 // (`data/schema.ts`) so the chart/drilldown can render a measure as one more bar.
-import type { Localized, SectorCode } from '@data/schema';
+import type { CostItem, Localized, LocalInput, PhysicalItem, SectorCode } from '@data/schema';
 import { economicCore, evalAst, type RefResolver } from './eval';
 import { bindTemplate, getTemplate } from './templates';
 import { economicsRollup } from './guardrails';
@@ -37,6 +37,13 @@ export interface ComputedMeasure {
   /** §7 X-axis — the per-unit abatement factor the measure asserts (the `factor_ref`
    *  input), compared to a reference corridor. Present only when `abatement.factor_ref` is set. */
   impliedFactor?: number;
+  /** Drill-down breakdown — `MaccPoint`-compatible. Derived from the §2 composition
+   *  (created/retired technologies, materials, inputs) via `buildBreakdown`; the capex/opex
+   *  item sums equal `capex`/`opex` by construction (same `pick()` logic as economicsRollup). */
+  capexItems?: CostItem[];
+  opexItems?: CostItem[];
+  physicalItems?: PhysicalItem[];
+  localInputs?: LocalInput[];
 }
 
 /**
@@ -161,6 +168,84 @@ function resolveDuration(measure: Measure, library: Library): number {
   return dur;
 }
 
+/**
+ * Per-statement drill-down breakdown, mirroring `economicsRollup`'s `pick()` logic so
+ * the capex/opex item sums equal the scalar `capex`/`opex` by construction. Each line's
+ * `cell` carries the §6 provenance pointer (technology/resource id or `in:<key>`) in place
+ * of the Excel cell the old ETL used. Empty for un-composed (legacy) measures.
+ */
+function buildBreakdown(
+  measure: Measure,
+  library: Library,
+  resolve: RefResolver,
+): Pick<ComputedMeasure, 'capexItems' | 'opexItems' | 'physicalItems' | 'localInputs'> {
+  const created = measure.created_technologies ?? [];
+  const retired = measure.retired_technologies ?? [];
+  const materials = measure.materials ?? [];
+
+  const tech = (ref: string) => library.technologies[ref];
+  const pick = (path: string, inline?: NumberOrRef): number | undefined => {
+    const c = measure.computed?.[path];
+    if (c) return evalAst(c.formula, resolve);
+    return unboxNumber(inline, resolve);
+  };
+  const techName = (ref: string): Localized => library.technologies[ref]?.name ?? { ru: ref, en: ref };
+  const resName = (ref: string): Localized => library.resources[ref]?.name ?? { ru: ref, en: ref };
+
+  const capexItems: CostItem[] = [];
+  const opexItems: CostItem[] = [];
+  const physicalItems: PhysicalItem[] = [];
+
+  created.forEach((o, i) => {
+    const capacity = pick(`created_technologies[${i}].capacity`, o.capacity);
+    const capex = pick(`created_technologies[${i}].capex_musd`, o.capex_musd)
+      ?? (capacity ?? 0) * (tech(o.technology_ref)?.capex_ud ?? 0) * (unboxNumber(o.capex_ud_factor, resolve) ?? 1) / 1e6;
+    if (capex) capexItems.push({ label: techName(o.technology_ref), value: capex, cell: o.technology_ref });
+    const opex = pick(`created_technologies[${i}].opex_musd`, o.opex_musd);
+    if (opex) opexItems.push({ label: techName(o.technology_ref), value: opex, cell: o.technology_ref });
+    if (capacity != null) {
+      physicalItems.push({ label: techName(o.technology_ref), value: capacity, unit: o.unit ?? tech(o.technology_ref)?.capex_ud_unit ?? '', cell: o.technology_ref });
+    }
+  });
+
+  retired.forEach((r, i) => {
+    const capacity = pick(`retired_technologies[${i}].capacity`, r.capacity);
+    const maint = pick(`retired_technologies[${i}].maintenance_capex_musd`, r.maintenance_capex_musd)
+      ?? (capacity ?? 0) * (tech(r.technology_ref)?.maintenance_capex_ud ?? 0) * (unboxNumber(r.capex_ud_factor, resolve) ?? 1) / 1e6;
+    if (maint) capexItems.push({ label: techName(r.technology_ref), value: -maint, cell: r.technology_ref });
+    const opex = pick(`retired_technologies[${i}].opex_musd`, r.opex_musd);
+    if (opex) opexItems.push({ label: techName(r.technology_ref), value: -opex, cell: r.technology_ref });
+    if (capacity != null) {
+      physicalItems.push({ label: techName(r.technology_ref), value: capacity, unit: r.unit ?? '', cell: r.technology_ref });
+    }
+  });
+
+  materials.forEach((m, i) => {
+    const explicit = unboxNumber(m.cost_musd, resolve);
+    const qty = pick(`materials[${i}].qty`, m.qty);
+    const price = pick(`materials[${i}].price`, m.price);
+    const cost = explicit ?? (qty ?? 0) * (price ?? 0) / 1e6;
+    const signed = m.side === 'retired' ? -cost : cost;
+    if (signed) opexItems.push({ label: resName(m.resource_ref), value: signed, cell: m.resource_ref });
+    if (qty != null) {
+      physicalItems.push({ label: resName(m.resource_ref), value: qty, unit: m.unit ?? library.resources[m.resource_ref]?.unit ?? '', cell: m.resource_ref });
+    }
+  });
+
+  const localInputs: LocalInput[] = Object.entries(measure.inputs ?? {}).map(([key, inp]) => ({
+    label: { ru: key, en: key },
+    value: inp.value,
+    unit: inp.unit ?? '',
+    source: inp.provenance?.citation ?? '',
+    // Measure-scoped so the in-memory override store (keyed by `cell`) never collides
+    // when two measures share an input name (e.g. `lifetime`). measure-recalc parses
+    // `in:<measureId>#<key>` back to that measure's input.
+    cell: `in:${measure.id}#${key}`,
+  }));
+
+  return { capexItems, opexItems, physicalItems, localInputs };
+}
+
 /** Compute a measure's plottable outputs from its inputs + the library. */
 export function compute(measure: Measure, library: Library): ComputedMeasure {
   const resolve = makeResolver(measure, library);
@@ -187,5 +272,6 @@ export function compute(measure: Measure, library: Library): ComputedMeasure {
     discCo2Kt,
     mac,
     impliedFactor,
+    ...buildBreakdown(measure, library, resolve),
   };
 }

@@ -20,8 +20,12 @@ the first deliverable). The full approved plan is the source of truth for scope 
    drill-down + URL scenarios + exports) + an **optional, self-hostable collaboration layer**. If the
    backend is down/absent, the tool still fully works (comments just hidden). **The static core must never
    import the Supabase client** — collaboration is lazy-loaded and feature-flagged via env.
-2. **Publish the trust anchor.** Ship `data/kz/*.json`, `scripts/etl.py`, and the golden test publicly so
-   the curve is third-party verifiable, not a black box.
+2. **Publish the trust anchor.** The curve is now baked from the **measure-notation graph**
+   (`data/kz/library/{graph,measures}.seed.json`, mirrored in Supabase) via `scripts/bake-from-supabase.ts`,
+   and every measure is pinned bit-for-bit against the original Excel by `measure-golden`. Ship the seed
+   JSON, the bake script, `data/kz/*.json`, and both golden tests publicly so the curve is third-party
+   verifiable, not a black box. The Excel workbook + `scripts/etl.py` stay as the **provenance artifact**
+   the seed was derived from (not in the build path; `npm run etl` regenerates the Excel-sourced JSON for cross-checking).
 3. **Honest framing.** It's a **scenario explorer, not a forecast** (prominent banner); every view is tied
    to a **dated, fingerprinted model version**.
 
@@ -76,14 +80,22 @@ supabase/{migrations,functions}/
 
 ## Commands
 
-- **Toolchain present:** Node 18 + npm; Python 3.13 with **openpyxl 3.1.5** (for the ETL).
-- **ETL:** `py scripts/etl.py` → regenerates `data/kz/{workbook.engine.json, model.data.json, fingerprint.json}`;
-  `py scripts/etl.py --check` verifies vs the Excel cached values without writing. EN labels live in the
-  editable overlay `scripts/translations.en.json` (machine-draft, pending domain-expert review).
+- **Toolchain present:** Node 18 + npm; Python 3.13 with **openpyxl 3.1.5** (for the ETL artifact).
+- **Bake (curve source of truth):** `npm run bake` → `scripts/bake-from-supabase.ts` loads the measure
+  graph from Supabase, runs every measure through the shared TS calc core (`compute()`), and writes
+  `data/kz/model.data.json` (27 bars: 24 published + drafts kz-2/kz-16/kz-27 — the whole canonical set).
+  `npm run bake -- --check` reports the curve diff vs the committed snapshot without writing. Needs
+  `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` (drafts are anon-invisible per RLS); with no creds it
+  **skips** and keeps the committed snapshot, so builds never depend on backend reachability. `npm run build`
+  runs this automatically via the `prebuild` hook ⇒ an MCP/editor measure edit shows on the curve after a rebuild.
+- **ETL (provenance artifact, NOT in the build path):** `py scripts/etl.py` → regenerates the
+  Excel-sourced `data/kz/{workbook.engine.json, model.data.json, fingerprint.json}` for cross-checking
+  the bake against the original workbook; `--check` verifies vs the Excel cached values without writing.
+  EN labels live in the editable overlay `scripts/translations.en.json`.
 - **App:** Next.js 15 (App Router, **static export** `output: 'export'`) + Tailwind + next-intl `/[locale]`
-  (ru/en) + Visx + Zustand. `npm install`; dev `npm run dev`; build `npm run build` → static site in `out/`
-  (deployable to Cloudflare Pages / GitHub Pages / any static host). `public/_redirects` sends `/` → `/ru/`.
-  React is pinned to **18.3.1** (Visx peer deps don't yet allow React 19).
+  (ru/en) + Visx + Zustand. `npm install`; dev `npm run dev`; build `npm run build` → bakes the curve then
+  emits the static site in `out/` (deployable to Cloudflare Pages / GitHub Pages / any static host).
+  `public/_redirects` sends `/` → `/ru/`. React is pinned to **18.3.1** (Visx peer deps don't yet allow React 19).
 
 ## Conventions
 

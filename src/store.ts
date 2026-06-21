@@ -135,8 +135,11 @@ async function recompute(
     base = baselineProjects;
     totals = baselineTotals;
   } else {
-    // Lazy-load the calc engine only when the user actually moves off baseline.
-    const { recalc } = await import('@/lib/calc');
+    // Lazy-load the calc engine only when the user actually moves off baseline. The
+    // canonical curve recomputes from the measure-notation bundle (baked from Supabase),
+    // NOT the Excel HyperFormula engine — so a slider/override runs the same calc core as
+    // the bake and keeps MCP/editor measure edits instead of snapping back to Excel.
+    const { recalc } = await import('@/lib/calc/measure-recalc');
     const result = recalc(levers, overrides);
     if (get().recomputeToken !== token) return; // a newer recompute superseded us
     base = result.projects;
