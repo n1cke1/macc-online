@@ -13,6 +13,7 @@
     "etl": "py scripts/etl.py",
     "golden": "tsx scripts/golden.ts",
     "measure-golden": "tsx scripts/measure-golden.ts",
+    "ingest-test": "tsx scripts/ingest-test.ts",
     "gen-skill": "tsx scripts/gen-skill-bundle.ts",
     "seed-library": "tsx scripts/seed-library.ts",
     "supabase-apply": "tsx scripts/supabase-apply.ts",
@@ -25,6 +26,7 @@
   "dependencies": {
     "@cloudflare/workers-oauth-provider": "0.8.0",
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "ajv": "^8.20.0",
     "@supabase/supabase-js": "^2.108.1",
     "@visx/axis": "^3.12.0",
     "@visx/event": "^3.12.0",

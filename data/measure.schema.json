@@ -182,7 +182,7 @@
     "binding": {
       "type": "object", "required": ["mode"], "additionalProperties": false,
       "properties": {
-        "mode": { "enum": ["reuse", "alt", "new"] },
+        "mode": { "enum": ["reuse", "alt", "new", "derived"] },
         "ref": { "type": "string" }, "value": { "type": "number" },
         "divergence_reason": { "type": "string", "description": "required for mode=alt" }
       }

@@ -60,9 +60,11 @@ export interface Provenance {
  *  - `reuse` (default): points at a library key; `value` taken from library.
  *  - `alt`: own `value` diverging from `ref`; `divergence_reason` REQUIRED.
  *  - `new`: local value, no library analogue yet ⇒ keeps the measure draft.
+ *  - `derived`: the number is produced by a formula (its formula lives in
+ *    `Measure.computed` at the same path), not entered; optional `ref` names the basis.
  */
 export interface Binding {
-  mode: 'reuse' | 'alt' | 'new';
+  mode: 'reuse' | 'alt' | 'new' | 'derived';
   ref?: string; // library key (reuse / alt)
   value?: number; // alt / new
   divergence_reason?: string; // required for `alt`
