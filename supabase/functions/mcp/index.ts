@@ -17470,11 +17470,18 @@ async function dbListLibrary(user, filter = {}) {
   }
   return out;
 }
-async function dbUpsertLibraryEntity(user, kind, entity) {
+var AUTHORITY_TABLES = /* @__PURE__ */ new Set(["objects", "resources", "products", "indicators", "refs", "subsectors"]);
+async function dbUpsertLibraryEntity(user, kind, entity, note) {
   const table = LIBRARY_TABLES[kind];
   if (!table) throw new Error(`unknown library kind '${kind}' (expected one of: ${Object.keys(LIBRARY_TABLES).join(", ")})`);
   if (!entity || typeof entity.id !== "string") throw new Error(`library ${kind}: 'id' (string) is required`);
   assertLibraryEntityValid(kind, entity);
+  if (AUTHORITY_TABLES.has(table)) {
+    const rpc = user.serviceRole ? user.client.rpc("library_upsert_admin", { p_entity: table, p_row: entity, p_author: user.userId, p_note: note ?? null }) : user.client.rpc("library_upsert", { p_entity: table, p_row: entity, p_note: note ?? null });
+    const { data, error: error2 } = await rpc;
+    if (error2) throw new Error(`upsert ${table} (as ${user.userId}): ${error2.message}`);
+    return { table, id: entity.id, version: data?.version ?? null };
+  }
   const row = user.serviceRole ? { ...entity, last_author_id: user.userId } : entity;
   const { error } = await user.client.from(table).upsert(row);
   if (error) throw new Error(`upsert ${table} (as ${user.userId}): ${error.message}`);
@@ -18573,13 +18580,14 @@ ${JSON.stringify(library2.uiHelp)}
       description: "Create or correct one library entity and save it to the shared registry (open collaboration \u2014 any signed-in user may edit any entity; every write is versioned + attributed). `kind` selects the entity table; `entity` is the row (must include `id`). Shapes: object {id,name,kind,description?,rules?,lifetime_yrs?}; resource {id,name,unit}; product {id,name,unit,service_unit?,sector_ref?,technology_ref?}; indicator {id,key,owner_kind,owner_ref,value,unit?,reference_ref?,provenance?}; ref {id,type,range_min,range_max,unit,source?}; subsector {id,sector_ref,name}; unit {id (the unit string),dim (exponent vector over the base dims energy/mass/mass_co2/time/currency/count/area/volume; {} = scalar),scale (to the canonical base unit)}; bridge {id,from:{dim,carrier?},via:[{name,dim,indicator?}],to:{dim,carrier?},expr (AST over the `from`+via slots),carrier_rule?,authoring}. unit and bridge are validated server-side: a unit needs a base-dim vector + finite non-zero scale, a bridge`s expr must fold to its declared `to` \u2014 an inconsistent one is rejected.",
       inputSchema: {
         kind: z.enum(Object.keys(LIBRARY_TABLES)).describe("object | resource | product | indicator | ref | subsector | unit | bridge"),
-        entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)")
+        entity: z.record(z.string(), z.any()).describe("the entity row (snake_case columns; must include id)"),
+        note: z.string().optional().describe("why this changed \u2014 recorded on the version row (authority entities: object/resource/product/indicator/ref/subsector)")
       }
     },
-    async ({ kind, entity }) => {
+    async ({ kind, entity, note }) => {
       if (!user) return err(AUTH_ERR);
       try {
-        const res = await dbUpsertLibraryEntity(user, kind, entity);
+        const res = await dbUpsertLibraryEntity(user, kind, entity, note);
         return ok({ ...res, author: user.email ?? user.userId });
       } catch (e) {
         return err(`upsert_library_entity failed: ${e.message}`);
