@@ -65,11 +65,11 @@ bottom-up, reads `ceiling = indicator.value`, and asserts `consumption ≤ ceili
 ## Worked example — kz-2 (coal CHP/boilers → gas)
 
 The limiting factor is the coal-fired capacity there is to convert. Indicator
-`ind_coal_power_capacity` (`subsector` `1.A.1.coal_power`, `max_capacity` = 12000 МВт). The
+`ind_coal_power_capacity` (`subsector` `1.A.1.coal_power`, `max_capacity` = {{indicator:ind_coal_power_capacity}}). The
 measure's scale is `cap_mw` = 5000 МВт. So `limit = {indicator_ref: ind_coal_power_capacity,
-consumption_ref: cap_mw}`; the check reads 5000 ≤ 12000 → ✓. Raise `cap_mw` past 12000 and the
+consumption_ref: cap_mw}`; the check reads `cap_mw ≤ the ceiling` → ✓. Raise `cap_mw` past the ceiling and the
 check ⚠, the potential panel warns, and the measure drops out of `eligibleForModel` until the
-scale is lowered. The MAC (193.76) is unchanged either way — the limit never touches it.
+scale is lowered. The MAC is unchanged either way — the limit never touches it.
 
 ## Status
 

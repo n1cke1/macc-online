@@ -146,15 +146,23 @@ export function buildServer(deps: ServerDeps): McpServer {
     'get_authoring_guide',
     {
       title: 'Get the measure authoring guide',
-      description: 'Read the full measure-authoring guide (the macc-measure-authoring skill: model, quality bar, workflow, sectors, sourcing, formula AST, potential, checks) PLUS the measure JSON Schema and field-level help. Call this FIRST, before create_measure / update_measure / upsert_library_entity. Public — no sign-in required.',
-      inputSchema: {},
+      description: 'Read the measure-authoring guide (the macc-measure-authoring skill: model, quality bar, workflow, sectors, sourcing, formula AST, potential, checks) PLUS the measure JSON Schema and field-level help. Call this FIRST, before create_measure / update_measure / upsert_library_entity. Public — no sign-in required. Pass `section` to fetch ONE part instead of the whole guide (cheaper) — sections: ' + Object.keys(SKILL_GUIDE.sections).join(', ') + '.',
+      inputSchema: {
+        section: z.enum(Object.keys(SKILL_GUIDE.sections) as [string, ...string[]]).optional().describe('one guide section (omit for the full guide + schema + field help)'),
+      },
     },
-    async () => ({
-      content: [{
-        type: 'text' as const,
-        text: `${SKILL_GUIDE.markdown}\n\n---\n\n# Measure JSON Schema (structure)\n\n\`\`\`json\n${JSON.stringify(compactSchema)}\n\`\`\`\n\n# Field-level help (uiHelp)\n\n\`\`\`json\n${JSON.stringify(library.uiHelp)}\n\`\`\`\n`,
-      }],
-    }),
+    async ({ section }) => {
+      if (section) {
+        const text = (SKILL_GUIDE.sections as Record<string, string>)[section];
+        return { content: [{ type: 'text' as const, text: text ?? `unknown section '${section}' — available: ${Object.keys(SKILL_GUIDE.sections).join(', ')}` }] };
+      }
+      return {
+        content: [{
+          type: 'text' as const,
+          text: `${SKILL_GUIDE.markdown}\n\n---\n\n# Measure JSON Schema (structure)\n\n\`\`\`json\n${JSON.stringify(compactSchema)}\n\`\`\`\n\n# Field-level help (uiHelp)\n\n\`\`\`json\n${JSON.stringify(library.uiHelp)}\n\`\`\`\n`,
+        }],
+      };
+    },
   );
 
   // ── Tool: list the measures visible to the signed-in user ──────────────────────

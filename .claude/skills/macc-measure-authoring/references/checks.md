@@ -15,7 +15,7 @@ apply yourself — keep them in mind while authoring.
 
 `between(factor, reference.min, reference.max)` — the per-unit factor named by
 `abatement.factor_ref` (= reduction / activity) vs its input's `reference_ref` corridor. The
-quality signal for the raw→computed ladder; ⚠ when out of corridor → stays `draft`.
+quality signal for the bottom-up factor; ⚠ when out of corridor → stays `draft`.
 
 ## economics — [implemented]
 
@@ -66,6 +66,5 @@ and (for an assumption) `binding ≠ new` — see the publish gate in the workfl
 
 ## doubleCountReduction — [author-applied rule]
 
-Reduction is set by exactly one method per maturity: raw — baseline × share;
-computed — activity × factor; comparison — Δflow × EF. Mixing methods on one
-measure should be a ⚠.
+Reduction is set by exactly one bottom-up method: computed — activity × factor;
+comparison — Δflow × EF. Mixing methods on one measure should be a ⚠.
