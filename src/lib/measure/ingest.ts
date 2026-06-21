@@ -11,9 +11,18 @@
 // Pure TS, no IO. The ajv validator is isolated behind `getValidator()` so the Edge
 // bundle (Deno) can later swap a precompiled standalone validator if runtime codegen
 // proves unavailable there — without touching the gate logic. (R1.5.)
-import Ajv2020, { type ValidateFunction } from 'ajv/dist/2020';
-import measureSchema from '../../../data/measure.schema.json';
+//
+// The validator is PRECOMPILED (ajv standalone, `npm run gen-validator`) into
+// measure-validator.generated.ts. ajv's runtime `.compile()` builds the validator via
+// `new Function`, which Cloudflare Workers (the OAuth MCP transport) forbid — so a write
+// through the Worker threw EvalError. The standalone module is plain JS, zero runtime codegen,
+// and works on every transport (Node / Deno / Worker).
+import type { ErrorObject } from 'ajv';
+import measureValidate from './measure-validator.generated';
 import type { Binding, Library, Measure, ValueSource } from './schema';
+
+type CompiledValidator = ((data: unknown) => boolean) & { errors?: ErrorObject[] | null };
+const validateMeasureSchema = measureValidate as unknown as CompiledValidator;
 
 export interface ShouldRefEntry {
   path: string; // where the inline number lives in the measure
@@ -33,22 +42,11 @@ export interface IngestResult {
   shouldRef: ShouldRefEntry[];
 }
 
-// ── ajv (schema gate, A2) ──────────────────────────────────────────────────────
-
-let _validate: ValidateFunction | null = null;
-function getValidator(): ValidateFunction {
-  if (_validate) return _validate;
-  // strict:false — the schema uses only standard 2020-12 keywords; we don't want ajv
-  // throwing on schema-authoring style. allErrors so one write reports every violation.
-  const ajv = new Ajv2020({ allErrors: true, strict: false });
-  _validate = ajv.compile(measureSchema as object);
-  return _validate;
-}
+// ── ajv (schema gate, A2) — precompiled standalone, no runtime codegen ───────────
 
 function schemaErrors(input: unknown): string[] {
-  const validate = getValidator();
-  if (validate(input)) return [];
-  return (validate.errors ?? []).map((e) => {
+  if (validateMeasureSchema(input)) return [];
+  return (validateMeasureSchema.errors ?? []).map((e) => {
     const where = e.instancePath || '(root)';
     const extra = e.keyword === 'additionalProperties'
       ? ` (${(e.params as { additionalProperty: string }).additionalProperty})`

@@ -17,6 +17,7 @@
     "r8-test": "tsx scripts/r8-test.ts",
     "i18n-check": "tsx scripts/i18n-check.ts",
     "gen-skill": "tsx scripts/gen-skill-bundle.ts",
+    "gen-validator": "tsx scripts/gen-measure-validator.ts",
     "seed-library": "tsx scripts/seed-library.ts",
     "supabase-apply": "tsx scripts/supabase-apply.ts",
     "mcp": "tsx mcp/measure-server.ts",
