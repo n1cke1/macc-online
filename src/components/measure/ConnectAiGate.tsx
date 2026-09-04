@@ -8,16 +8,23 @@
 // header instead of popping in after hydration. The sign-up dialog — the only part that
 // needs auth — is pulled in on click, which keeps the static core backend-free.
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { collabEnabled, mcpConnectorUrl } from '@/lib/config';
-import { openConnectPanel } from '@/lib/connect-panel';
+import { OPEN_CONNECT_DIALOG, openConnectPanel } from '@/lib/connect-panel';
 
 const ConnectAiDialog = dynamic(() => import('./ConnectAiDialog'), { ssr: false });
 
 export default function ConnectAiGate() {
   const locale = useLocale() as 'ru' | 'en';
   const [asking, setAsking] = useState(false);
+
+  // The panel's signed-out state asks for this dialog rather than growing its own.
+  useEffect(() => {
+    const onAsk = () => setAsking(true);
+    window.addEventListener(OPEN_CONNECT_DIALOG, onAsk);
+    return () => window.removeEventListener(OPEN_CONNECT_DIALOG, onAsk);
+  }, []);
 
   if (!mcpConnectorUrl) return null;
 

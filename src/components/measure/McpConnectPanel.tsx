@@ -1,12 +1,16 @@
 'use client';
 // «Add your own measure with AI» helper. The hosted MCP is an OAuth remote server (the
 // Cloudflare Worker), so connecting is just adding ONE URL as a custom connector — the
-// app does the OAuth sign-in itself; no token to copy, nothing that expires. The URL is
-// public (the connector address), so this is shown to everyone (no auth gate).
+// app does the OAuth sign-in itself; no token to copy, nothing that expires.
+//
+// The pitch is public; the URL and the setup steps are behind sign-in. Not a security
+// boundary — the Worker answers 401 to anyone without a token, and the OAuth flow would let
+// a stranger register anyway — but the address is worth an email address.
 import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { mcpConnectorUrl } from '@/lib/config';
-import { OPEN_CONNECT_PANEL } from '@/lib/connect-panel';
+import { OPEN_CONNECT_PANEL, openConnectDialog } from '@/lib/connect-panel';
+import AuthGate from '@/components/collab/AuthGate';
 
 export default function McpConnectPanel() {
   const locale = useLocale() as 'ru' | 'en';
@@ -54,6 +58,24 @@ export default function McpConnectPanel() {
             )}
           </p>
 
+          <AuthGate
+            fallback={
+              <div className="rounded-md border border-violet-200 bg-white p-3">
+                <p className="text-xs text-muted">
+                  {tr(
+                    'Адрес коннектора и порядок подключения — после входа. Учётная запись нужна и самому коннектору: он пускает только по входу.',
+                    'The connector URL and the setup steps come after you sign in. The connector needs an account of its own anyway — it only answers to a signed-in caller.',
+                  )}
+                </p>
+                <button
+                  onClick={openConnectDialog}
+                  className="mt-2 rounded-md bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-violet-700"
+                >
+                  {tr('Войти и получить адрес', 'Sign in and get the URL')}
+                </button>
+              </div>
+            }
+          >
           <div>
             <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{tr('Адрес коннектора', 'Connector URL')}</p>
             <div className="flex items-center gap-2">
@@ -84,6 +106,7 @@ export default function McpConnectPanel() {
               <li>{tr('авторизуйтесь — инструменты меры появятся в чате', 'sign in — the measure tools appear in the chat')}</li>
             </ol>
           </div>
+          </AuthGate>
         </div>
       )}
     </section>
