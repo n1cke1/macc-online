@@ -9,7 +9,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick, sectorLabel } from '@/lib/data';
-import { fmt, fmtMac, fmtInt } from '@/lib/format';
+import { fmt, fmtMac, fmtInt, formatUnit } from '@/lib/format';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver, compute, poolCeilingKt } from '@/lib/measure/compute';
 import { validate, type CheckId, type CheckStatus, type PanelKey, type PanelStatus } from '@/lib/measure/validate';
@@ -198,7 +198,7 @@ function MeasureBody({
             {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${inp.provenance.citation}` : ''}<ProvLink url={inp.provenance.url} /></span>}
             {res && <span className="text-slate-400">{locale === 'en' ? 'resource EF' : 'EF ресурса'}</span>}
           </span>
-          <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${unit}` : ''}</span>
+          <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${formatUnit(unit, locale)}` : ''}</span>
         </div>
         {c && isOpen && (
           <>
@@ -252,7 +252,7 @@ function MeasureBody({
           ) : (
             <span className="tabular-nums">{value}</span>
           )}
-          {unit ? <span className="text-slate-500">{unit}</span> : null}
+          {unit ? <span className="text-slate-500">{formatUnit(unit, locale)}</span> : null}
         </Row>
         {path != null && breakdown(path)}
       </>
@@ -298,7 +298,7 @@ function MeasureBody({
         <div className="mt-0.5 tabular-nums text-slate-500">{renderAst(def.quantity, nm)} = {renderAst(def.quantity, vl)} = <b>{num(d.value ?? 0)}</b></div>
         <div className="tabular-nums text-slate-500">{renderAst(def.predicate, vl)}</div>
         {ref && (
-          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
+          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
         )}
       </div>
     );
@@ -339,9 +339,9 @@ function MeasureBody({
                 {tc && <Badge>{t(`techKind.${tc.kind}`)}</Badge>}
               </div>
               {tc?.description && <p className="mt-0.5 text-xs text-muted">{pick(tc.description, locale)}</p>}
-              <FLine label={`${t('field.capacity')}${o.unit ? `, ${o.unit}` : ''}`} path={`created_technologies[${i}].capacity`} value={o.capacity != null ? num(resolveNum(o.capacity) ?? 0, 2) : '—'} />
-              <Row label={t('field.capexUd')}><span className="tabular-nums">{tc?.capex_ud != null ? `${num(tc.capex_ud, 0)} ${tc.capex_ud_unit ?? ''}` : '—'}</span></Row>
-              {tc?.indicators?.map((ind) => <Row key={ind.key} label={pick(ind.label, locale)}><span className="tabular-nums">{num(ind.value, 3)} {ind.unit ?? ''}</span></Row>)}
+              <FLine label={`${t('field.capacity')}${o.unit ? `, ${formatUnit(o.unit, locale)}` : ''}`} path={`created_technologies[${i}].capacity`} value={o.capacity != null ? num(resolveNum(o.capacity) ?? 0, 2) : '—'} />
+              <Row label={t('field.capexUd')}><span className="tabular-nums">{tc?.capex_ud != null ? `${num(tc.capex_ud, 0)} ${tc.capex_ud_unit ? formatUnit(tc.capex_ud_unit, locale) : ''}` : '—'}</span></Row>
+              {tc?.indicators?.map((ind) => <Row key={ind.key} label={pick(ind.label, locale)}><span className="tabular-nums">{num(ind.value, 3)} {ind.unit ? formatUnit(ind.unit, locale) : ''}</span></Row>)}
             </div>
           );
         })}
@@ -355,7 +355,7 @@ function MeasureBody({
           return <Row key={i} label={t('field.sector')}><span>{sectorLabel(s.sector_ref, locale)}{sub ? ` · ${pick(sub.label, locale)}` : ''}</span></Row>;
         })}
         <Row label={t('field.produce')}><span>{product ? pick(product.name, locale) : t('field.sectorOnly')}</span></Row>
-        {product?.carbon_footprint && <Row label={t('field.carbonFootprint')}><span className="tabular-nums">{num(product.carbon_footprint.value, 3)} {product.carbon_footprint.unit}</span></Row>}
+        {product?.carbon_footprint && <Row label={t('field.carbonFootprint')}><span className="tabular-nums">{num(product.carbon_footprint.value, 3)} {formatUnit(product.carbon_footprint.unit, locale)}</span></Row>}
       </Panel>
 
       {/* Что закрываем */}
@@ -382,7 +382,7 @@ function MeasureBody({
         <ReductionFormula />
         {ab.factor_ref && measure.inputs?.[ab.factor_ref] && (
           <div className="mt-2">
-            <Row label={`${t('field.factor')}${measure.inputs[ab.factor_ref].unit ? ` (${measure.inputs[ab.factor_ref].unit})` : ''}`}><span className="tabular-nums">{num(measure.inputs[ab.factor_ref].value, 4)}</span></Row>
+            <Row label={`${t('field.factor')}${measure.inputs[ab.factor_ref].unit ? ` (${formatUnit(measure.inputs[ab.factor_ref].unit!, locale)})` : ''}`}><span className="tabular-nums">{num(measure.inputs[ab.factor_ref].value, 4)}</span></Row>
             <div className="mt-2"><CheckFormula id="factor" /></div>
           </div>
         )}

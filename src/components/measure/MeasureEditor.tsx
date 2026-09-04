@@ -7,7 +7,7 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick } from '@/lib/data';
-import { fmt, fmtMac, fmtInt } from '@/lib/format';
+import { fmt, fmtMac, fmtInt, formatUnit } from '@/lib/format';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver, poolCeilingKt } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
@@ -235,11 +235,11 @@ export default function MeasureEditor() {
               ? <button onClick={() => toggle(nodeId)} className="w-3 text-slate-400 hover:text-slate-700" aria-label="expand">{open ? '▾' : '▸'}</button>
               : <span className="inline-block w-3 text-center text-slate-300">·</span>}
             <span>{refName(refKey)}</span>
-            {c && <span className="text-slate-300" title="вычислено">ƒ</span>}
+            {c && <span className="text-slate-300" title={locale === 'en' ? 'computed' : 'вычислено'}>ƒ</span>}
             {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${inp.provenance.citation}` : ''}<ProvLink url={inp.provenance.url} /></span>}
             {res && <span className="text-slate-400">{locale === 'en' ? 'resource EF' : 'EF ресурса'}</span>}
           </span>
-          <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${unit}` : ''}</span>
+          <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${formatUnit(unit, locale)}` : ''}</span>
         </div>
         {c && open && (
           <>
@@ -301,7 +301,7 @@ export default function MeasureEditor() {
         <div className="mt-0.5 tabular-nums text-slate-500">{renderAst(def.quantity, nm)} = {renderAst(def.quantity, vl)} = <b>{num(d.value ?? 0)}</b></div>
         <div className="tabular-nums text-slate-500">{renderAst(def.predicate, vl)}</div>
         {ref && (
-          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
+          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
         )}
       </div>
     );
@@ -337,13 +337,13 @@ export default function MeasureEditor() {
                 <button onClick={() => remove(i)} title={t('field.delete')} aria-label="delete" className="px-1 text-slate-400 hover:text-red-500">✕</button>
               </div>
               {tc?.description && <p className="mt-0.5 text-xs text-muted">{pick(tc.description, locale)}</p>}
-              <Row label={`${t('field.capacity')}${o.unit ? `, ${o.unit}` : ''}`} help={<><div>{gh(nt.fields.capacity)}</div>{srcNode(`${kind}_objects[${i}].capacity`)}</>}>
+              <Row label={`${t('field.capacity')}${o.unit ? `, ${formatUnit(o.unit, locale)}` : ''}`} help={<><div>{gh(nt.fields.capacity)}</div>{srcNode(`${kind}_objects[${i}].capacity`)}</>}>
                 <NumberOrRefField input value={o.capacity} onCommit={(val) => mutate(i, (x) => { x.capacity = val; })} />
               </Row>
               <Row label={kind === 'created' ? t('field.capexUd') : t('field.maintCapexUd')} help={<><div>{gh(nt.fields.capexUd)}</div><div className="mt-1">{t('help.objectSource')}: <ProvText p={tc?.provenance} /></div></>}>
-                <span className="tabular-nums">{ud != null ? `${num(ud, 0)} ${tc?.capex_ud_unit ?? ''}` : '—'}</span>
+                <span className="tabular-nums">{ud != null ? `${num(ud, 0)} ${tc?.capex_ud_unit ? formatUnit(tc.capex_ud_unit, locale) : ''}` : '—'}</span>
               </Row>
-              {tc?.indicators?.map((ind) => <Row key={ind.key} label={pick(ind.label, locale)}><span className="tabular-nums">{num(ind.value, 3)} {ind.unit ?? ''}</span></Row>)}
+              {tc?.indicators?.map((ind) => <Row key={ind.key} label={pick(ind.label, locale)}><span className="tabular-nums">{num(ind.value, 3)} {ind.unit ? formatUnit(ind.unit, locale) : ''}</span></Row>)}
             </div>
           );
         })}
@@ -414,7 +414,7 @@ export default function MeasureEditor() {
           return <Row key={i} label={t('field.sector')}><span>{s.sector_ref}{sub ? ` · ${pick(sub.label, locale)}` : ''}</span></Row>;
         })}
         <Row label={t('field.produce')} help={gh(nt.fields.produce)}><span>{product ? pick(product.name, locale) : t('field.sectorOnly')}</span></Row>
-        {product?.carbon_footprint && <Row label={t('field.carbonFootprint')} help={gh(nt.fields.carbonFootprint)}><span className="tabular-nums">{num(product.carbon_footprint.value, 3)} {product.carbon_footprint.unit}</span></Row>}
+        {product?.carbon_footprint && <Row label={t('field.carbonFootprint')} help={gh(nt.fields.carbonFootprint)}><span className="tabular-nums">{num(product.carbon_footprint.value, 3)} {formatUnit(product.carbon_footprint.unit, locale)}</span></Row>}
       </Panel>
 
       {/* Что закрываем */}
@@ -436,7 +436,7 @@ export default function MeasureEditor() {
         <ReductionFormula />
         {ab.factor_ref && measure.inputs?.[ab.factor_ref] && (
           <div className="mt-2">
-            <Row label={`${t('field.factor')}${measure.inputs[ab.factor_ref].unit ? ` (${measure.inputs[ab.factor_ref].unit})` : ''}`} help={<><div>{gh(nt.fields.activity)}</div><ProvText p={measure.inputs[ab.factor_ref].provenance} /></>}><NumberField input value={measure.inputs[ab.factor_ref].value} onCommit={(val) => update((m) => { m.inputs![ab.factor_ref!].value = val; })} /></Row>
+            <Row label={`${t('field.factor')}${measure.inputs[ab.factor_ref].unit ? ` (${formatUnit(measure.inputs[ab.factor_ref].unit!, locale)})` : ''}`} help={<><div>{gh(nt.fields.activity)}</div><ProvText p={measure.inputs[ab.factor_ref].provenance} /></>}><NumberField input value={measure.inputs[ab.factor_ref].value} onCommit={(val) => update((m) => { m.inputs![ab.factor_ref!].value = val; })} /></Row>
             <div className="mt-2"><CheckFormula id="factor" /></div>
           </div>
         )}

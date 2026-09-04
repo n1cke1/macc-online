@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick } from '@/lib/data';
-import { fmt } from '@/lib/format';
+import { fmt, formatUnit } from '@/lib/format';
 import { LEVER_META, type LeverKey, type LeverMeta } from '@/lib/scenario';
 import { useScenario } from '@/store';
 import AnchorComments from '@/components/collab/AnchorComments';
@@ -13,7 +13,7 @@ function formatValue(m: LeverMeta, value: number, locale: string): string {
     return fmt(value * 100, locale, { maximumFractionDigits: 1 }) + '%';
   }
   const n = fmt(value, locale, { maximumFractionDigits: m.step < 1 ? 1 : 0 });
-  return m.unit ? `${n} ${m.unit}` : n;
+  return m.unit ? `${n} ${formatUnit(m.unit, locale)}` : n;
 }
 
 function LeverSlider({ meta }: { meta: LeverMeta }) {
