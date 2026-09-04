@@ -974,12 +974,12 @@
         },
         "kind": "infrastructure",
         "description": {
-          "ru": "Интермодальные терминалы и ж/д подвижной состав для приёма грузов, сдвинутых с автодорог на ж/д.",
-          "en": "Интермодальные терминалы и ж/д подвижной состав для приёма грузов, сдвинутых с автодорог на ж/д."
+          "ru": "Intermodal terminals and rail rolling stock receiving freight shifted off the roads.",
+          "en": "Intermodal terminals and rail rolling stock receiving freight shifted off the roads."
         },
         "rules": {
-          "ru": "Инфраструктура модального сдвига: CAPEX задаётся суммой на сдвинутый объём.",
-          "en": "Инфраструктура модального сдвига: CAPEX задаётся суммой на сдвинутый объём."
+          "ru": "Modal-shift infrastructure: CAPEX is stated as a lump sum per shifted volume.",
+          "en": "Modal-shift infrastructure: CAPEX is stated as a lump sum per shifted volume."
         },
         "lifetimeYrs": 25,
         "indicators": []
@@ -2803,8 +2803,8 @@
         {
           "id": "1.A.4.residential",
           "label": {
-            "ru": "Residential & municipal heat (ЖКХ)",
-            "en": "Residential & municipal heat (ЖКХ)"
+            "ru": "Residential & municipal heat",
+            "en": "Residential & municipal heat"
           }
         }
       ]
@@ -5557,6 +5557,7 @@
       "computed": {
         "abate_kt": {
           "label": {
+            "en": "abatement, kt/yr",
             "ru": "снижение, кт/год"
           },
           "formula": {
@@ -5577,6 +5578,7 @@
         },
         "created_technologies[0].capex_musd": {
           "label": {
+            "en": "CAPEX of terminals and rolling stock",
             "ru": "CAPEX терминалов и подвижного состава"
           },
           "formula": {
@@ -8101,317 +8103,6 @@
       ]
     },
     {
-      "id": "kz-1",
-      "name": {
-        "en": "Coal CHP efficiency improvement (turbine & boiler retrofit)",
-        "ru": "Повышение КПД угольных ТЭЦ (модернизация турбин и котлов)"
-      },
-      "scope": "published",
-      "inputs": {
-        "eff_base": {
-          "unit": "доля",
-          "value": 0.35,
-          "provenance": {
-            "citation": "Экспертная оценка (N): базовый электрический КПД угольного флота КЗ ~0.35; уточнить источником",
-            "confidence": "medium",
-            "source_type": "expert_estimate",
-            "geo_applicability": "kz_specific"
-          }
-        },
-        "eff_gain": {
-          "unit": "доля",
-          "value": 0.02,
-          "provenance": {
-            "citation": "2 п.п. КПД, модернизация турбин/котлов",
-            "confidence": "medium",
-            "source_type": "expert_estimate",
-            "geo_applicability": "global"
-          }
-        },
-        "lifetime": {
-          "unit": "лет",
-          "value": 20,
-          "provenance": {
-            "citation": "Срок проекта",
-            "confidence": "high",
-            "source_type": "expert_estimate",
-            "geo_applicability": "global"
-          }
-        },
-        "opex_rate": {
-          "unit": "доля",
-          "value": 0.01,
-          "provenance": {
-            "citation": "ТОиР 1% от CAPEX",
-            "confidence": "medium",
-            "source_type": "expert_estimate",
-            "geo_applicability": "global"
-          }
-        },
-        "project_factor": {
-          "unit": "доля",
-          "value": 0.3,
-          "provenance": {
-            "citation": "30% ПНР от оборудования",
-            "confidence": "medium",
-            "source_type": "expert_estimate",
-            "geo_applicability": "global"
-          }
-        }
-      },
-      "sectors": [
-        {
-          "sector_ref": "1.A.1",
-          "subsector_ref": "1.A.1.coal_power"
-        }
-      ],
-      "sources": {},
-      "computed": {
-        "cap_mw": {
-          "label": {
-            "ru": "мощность угольного флота"
-          },
-          "formula": {
-            "ref": "sub:1.A.1.coal_power#max_capacity"
-          }
-        },
-        "abate_kt": {
-          "label": {
-            "ru": "снижение, кт/год"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              {
-                "ref": "fleet_emissions_kt"
-              },
-              {
-                "ref": "reduction_fraction"
-              }
-            ]
-          }
-        },
-        "opex_tor": {
-          "label": {
-            "ru": "ТОиР, mUSD/год"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              {
-                "ref": "capex_total"
-              },
-              {
-                "ref": "opex_rate"
-              }
-            ]
-          }
-        },
-        "capex_total": {
-          "formula": {
-            "op": "add",
-            "args": [
-              {
-                "ref": "created_technologies[0].capex_musd"
-              },
-              {
-                "ref": "created_technologies[1].capex_musd"
-              }
-            ]
-          }
-        },
-        "fuel_saving": {
-          "label": {
-            "ru": "экономия топлива, mUSD/год"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              -1,
-              {
-                "ref": "coal_saved_mt"
-              },
-              {
-                "ref": "res:coal#price"
-              }
-            ]
-          }
-        },
-        "ef_coal_mass": {
-          "label": {
-            "ru": "EF угля по массе, тCO₂/т"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              {
-                "ref": "res:coal#carbon_content"
-              },
-              {
-                "op": "div",
-                "args": [
-                  44,
-                  12
-                ]
-              }
-            ]
-          }
-        },
-        "coal_saved_mt": {
-          "label": {
-            "ru": "экономия угля, Мт/год"
-          },
-          "formula": {
-            "op": "div",
-            "args": [
-              {
-                "ref": "abate_kt"
-              },
-              {
-                "op": "mul",
-                "args": [
-                  1000,
-                  {
-                    "ref": "ef_coal_mass"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        "fleet_emissions_kt": {
-          "label": {
-            "ru": "выбросы электрогенерации флота, кт/год"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              {
-                "ref": "sub:1.A.1.coal_power#max_generation"
-              },
-              {
-                "ref": "res:coal#ef"
-              }
-            ]
-          }
-        },
-        "reduction_fraction": {
-          "label": {
-            "ru": "доля снижения = Δη/(η+Δη)"
-          },
-          "formula": {
-            "op": "div",
-            "args": [
-              {
-                "ref": "eff_gain"
-              },
-              {
-                "op": "add",
-                "args": [
-                  {
-                    "ref": "eff_base"
-                  },
-                  {
-                    "ref": "eff_gain"
-                  }
-                ]
-              }
-            ]
-          }
-        },
-        "created_technologies[0].capex_musd": {
-          "label": {
-            "ru": "CAPEX модернизации турбин/котлов"
-          },
-          "formula": {
-            "op": "div",
-            "args": [
-              {
-                "op": "mul",
-                "args": [
-                  {
-                    "ref": "cap_mw"
-                  },
-                  {
-                    "ref": "obj:obj_kz1_0#capex_ud"
-                  }
-                ]
-              },
-              1000
-            ]
-          }
-        },
-        "created_technologies[1].capex_musd": {
-          "label": {
-            "ru": "CAPEX проектных и ПНР"
-          },
-          "formula": {
-            "op": "mul",
-            "args": [
-              {
-                "ref": "created_technologies[0].capex_musd"
-              },
-              {
-                "ref": "project_factor"
-              }
-            ]
-          }
-        }
-      },
-      "abatement": {
-        "formula": {
-          "ref": "abate_kt"
-        },
-        "formula_label": {
-          "en": "fleet generation × EF × Δη/(η+Δη)",
-          "ru": "выработка флота × EF × Δη/(η+Δη)"
-        }
-      },
-      "materials": [
-        {
-          "side": "new",
-          "cost_musd": {
-            "ref": "opex_tor"
-          },
-          "resource_ref": "res_kz1_0"
-        },
-        {
-          "side": "new",
-          "cost_musd": {
-            "ref": "fuel_saving"
-          },
-          "resource_ref": "res_kz1_1"
-        }
-      ],
-      "mechanism": "reduction",
-      "potential": {
-        "limit": {
-          "indicator_ref": "ind_coal_power_capacity",
-          "consumption_ref": "cap_mw"
-        },
-        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
-        "ceiling_dim": "n_objects"
-      },
-      "sector_ref": "1.A.1",
-      "product_ref": "prod_mwh",
-      "baseline_basis": "standalone",
-      "maturity_stage": "computed",
-      "schema_version": 1,
-      "mechanism_subtype": "efficiency",
-      "created_technologies": [
-        {
-          "unit": "МВт",
-          "capacity": {
-            "ref": "cap_mw"
-          },
-          "technology_ref": "obj_kz1_0"
-        },
-        {
-          "technology_ref": "obj_kz1_1"
-        }
-      ]
-    },
-    {
       "id": "kz-27",
       "name": {
         "en": "Coal-to-gas fuel switch in industrial process heat",
@@ -8797,6 +8488,327 @@
           "opex_musd": -31,
           "technology_ref": "tech_coal_to_gas",
           "capex_ud_factor": 1000
+        }
+      ]
+    },
+    {
+      "id": "kz-1",
+      "name": {
+        "en": "Coal CHP efficiency improvement (turbine & boiler retrofit)",
+        "ru": "Повышение КПД угольных ТЭЦ (модернизация турбин и котлов)"
+      },
+      "scope": "published",
+      "inputs": {
+        "eff_base": {
+          "unit": "доля",
+          "value": 0.35,
+          "provenance": {
+            "citation": "Экспертная оценка (N): базовый электрический КПД угольного флота КЗ ~0.35; уточнить источником",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "kz_specific"
+          }
+        },
+        "eff_gain": {
+          "unit": "доля",
+          "value": 0.02,
+          "provenance": {
+            "citation": "2 п.п. КПД, модернизация турбин/котлов",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "global"
+          }
+        },
+        "lifetime": {
+          "unit": "лет",
+          "value": 20,
+          "provenance": {
+            "citation": "Срок проекта",
+            "confidence": "high",
+            "source_type": "expert_estimate",
+            "geo_applicability": "global"
+          }
+        },
+        "opex_rate": {
+          "unit": "доля",
+          "value": 0.01,
+          "provenance": {
+            "citation": "ТОиР 1% от CAPEX",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "global"
+          }
+        },
+        "project_factor": {
+          "unit": "доля",
+          "value": 0.3,
+          "provenance": {
+            "citation": "30% ПНР от оборудования",
+            "confidence": "medium",
+            "source_type": "expert_estimate",
+            "geo_applicability": "global"
+          }
+        }
+      },
+      "sectors": [
+        {
+          "sector_ref": "1.A.1",
+          "subsector_ref": "1.A.1.coal_power"
+        }
+      ],
+      "sources": {},
+      "computed": {
+        "cap_mw": {
+          "label": {
+            "en": "coal fleet capacity",
+            "ru": "мощность угольного флота"
+          },
+          "formula": {
+            "ref": "sub:1.A.1.coal_power#max_capacity"
+          }
+        },
+        "abate_kt": {
+          "label": {
+            "en": "abatement, kt/yr",
+            "ru": "снижение, кт/год"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "fleet_emissions_kt"
+              },
+              {
+                "ref": "reduction_fraction"
+              }
+            ]
+          }
+        },
+        "opex_tor": {
+          "label": {
+            "en": "O&M, mUSD/yr",
+            "ru": "ТОиР, mUSD/год"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "capex_total"
+              },
+              {
+                "ref": "opex_rate"
+              }
+            ]
+          }
+        },
+        "capex_total": {
+          "formula": {
+            "op": "add",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "created_technologies[1].capex_musd"
+              }
+            ]
+          }
+        },
+        "fuel_saving": {
+          "label": {
+            "en": "fuel savings, mUSD/yr",
+            "ru": "экономия топлива, mUSD/год"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              -1,
+              {
+                "ref": "coal_saved_mt"
+              },
+              {
+                "ref": "res:coal#price"
+              }
+            ]
+          }
+        },
+        "ef_coal_mass": {
+          "label": {
+            "en": "coal EF by mass, tCO₂/t",
+            "ru": "EF угля по массе, тCO₂/т"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "res:coal#carbon_content"
+              },
+              {
+                "op": "div",
+                "args": [
+                  44,
+                  12
+                ]
+              }
+            ]
+          }
+        },
+        "coal_saved_mt": {
+          "label": {
+            "en": "coal saved, Mt/yr",
+            "ru": "экономия угля, Мт/год"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "ref": "abate_kt"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  1000,
+                  {
+                    "ref": "ef_coal_mass"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "fleet_emissions_kt": {
+          "label": {
+            "en": "fleet power-generation emissions, kt/yr",
+            "ru": "выбросы электрогенерации флота, кт/год"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "sub:1.A.1.coal_power#max_generation"
+              },
+              {
+                "ref": "res:coal#ef"
+              }
+            ]
+          }
+        },
+        "reduction_fraction": {
+          "label": {
+            "en": "reduction fraction = Δη/(η+Δη)",
+            "ru": "доля снижения = Δη/(η+Δη)"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "ref": "eff_gain"
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "ref": "eff_base"
+                  },
+                  {
+                    "ref": "eff_gain"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "created_technologies[0].capex_musd": {
+          "label": {
+            "en": "CAPEX of turbine/boiler retrofit",
+            "ru": "CAPEX модернизации турбин/котлов"
+          },
+          "formula": {
+            "op": "div",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "ref": "cap_mw"
+                  },
+                  {
+                    "ref": "obj:obj_kz1_0#capex_ud"
+                  }
+                ]
+              },
+              1000
+            ]
+          }
+        },
+        "created_technologies[1].capex_musd": {
+          "label": {
+            "en": "CAPEX of design and commissioning",
+            "ru": "CAPEX проектных и ПНР"
+          },
+          "formula": {
+            "op": "mul",
+            "args": [
+              {
+                "ref": "created_technologies[0].capex_musd"
+              },
+              {
+                "ref": "project_factor"
+              }
+            ]
+          }
+        }
+      },
+      "abatement": {
+        "formula": {
+          "ref": "abate_kt"
+        },
+        "formula_label": {
+          "en": "fleet generation × EF × Δη/(η+Δη)",
+          "ru": "выработка флота × EF × Δη/(η+Δη)"
+        }
+      },
+      "materials": [
+        {
+          "side": "new",
+          "cost_musd": {
+            "ref": "opex_tor"
+          },
+          "resource_ref": "res_kz1_0"
+        },
+        {
+          "side": "new",
+          "cost_musd": {
+            "ref": "fuel_saving"
+          },
+          "resource_ref": "res_kz1_1"
+        }
+      ],
+      "mechanism": "reduction",
+      "potential": {
+        "limit": {
+          "indicator_ref": "ind_coal_power_capacity",
+          "consumption_ref": "cap_mw"
+        },
+        "pool_ref": "sub:1.A.1.coal_power#max_emissions",
+        "ceiling_dim": "n_objects"
+      },
+      "sector_ref": "1.A.1",
+      "product_ref": "prod_mwh",
+      "baseline_basis": "standalone",
+      "maturity_stage": "computed",
+      "schema_version": 1,
+      "mechanism_subtype": "efficiency",
+      "created_technologies": [
+        {
+          "unit": "МВт",
+          "capacity": {
+            "ref": "cap_mw"
+          },
+          "technology_ref": "obj_kz1_0"
+        },
+        {
+          "technology_ref": "obj_kz1_1"
         }
       ]
     },
