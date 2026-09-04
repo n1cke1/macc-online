@@ -3,9 +3,10 @@
 // Cloudflare Worker), so connecting is just adding ONE URL as a custom connector — the
 // app does the OAuth sign-in itself; no token to copy, nothing that expires.
 //
-// The pitch is public; the URL and the setup steps are behind sign-in. Not a security
-// boundary — the Worker answers 401 to anyone without a token, and the OAuth flow would let
-// a stranger register anyway — but the address is worth an email address.
+// How it works is public — the steps tell people what they are signing up for. Only the URL
+// itself is masked until sign-in. Not a security boundary: the Worker answers 401 without a
+// token, and the URL is inlined in this bundle at build time either way. It buys the email
+// address of someone who wants the connector.
 import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { mcpConnectorUrl } from '@/lib/config';
@@ -31,6 +32,9 @@ export default function McpConnectPanel() {
 
   // Hidden until the connector URL is configured (NEXT_PUBLIC_MCP_URL).
   if (!mcpConnectorUrl) return null;
+
+  // Same shape and width as the real thing, so the row does not jump on sign-in.
+  const masked = mcpConnectorUrl.replace(/./g, '*');
 
   const copy = () => {
     void navigator.clipboard?.writeText(mcpConnectorUrl);
@@ -58,35 +62,31 @@ export default function McpConnectPanel() {
             )}
           </p>
 
-          <AuthGate
-            fallback={
-              <div className="rounded-md border border-violet-200 bg-white p-3">
-                <p className="text-xs text-muted">
-                  {tr(
-                    'Адрес коннектора и порядок подключения — после входа. Учётная запись нужна и самому коннектору: он пускает только по входу.',
-                    'The connector URL and the setup steps come after you sign in. The connector needs an account of its own anyway — it only answers to a signed-in caller.',
-                  )}
-                </p>
-                <button
-                  onClick={openConnectDialog}
-                  className="mt-2 rounded-md bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-violet-700"
-                >
-                  {tr('Войти и получить адрес', 'Sign in and get the URL')}
-                </button>
-              </div>
-            }
-          >
           <div>
             <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted">{tr('Адрес коннектора', 'Connector URL')}</p>
-            <div className="flex items-center gap-2">
-              <code className="min-w-0 flex-1 break-all rounded border border-line bg-white px-2 py-1 text-xs">{mcpConnectorUrl}</code>
-              <button
-                onClick={copy}
-                className="shrink-0 rounded border border-line bg-white px-2 py-1 text-[11px] transition hover:bg-violet-50"
-              >
-                {copied ? tr('Скопировано ✓', 'Copied ✓') : tr('Копировать', 'Copy')}
-              </button>
-            </div>
+            <AuthGate
+              fallback={
+                <div className="flex items-center gap-2">
+                  <code className="min-w-0 flex-1 select-none break-all rounded border border-line bg-white px-2 py-1 text-xs text-slate-400">{masked}</code>
+                  <button
+                    onClick={openConnectDialog}
+                    className="shrink-0 rounded bg-violet-600 px-2 py-1 text-[11px] font-semibold text-white transition hover:bg-violet-700"
+                  >
+                    {tr('Войти и получить', 'Sign in to get it')}
+                  </button>
+                </div>
+              }
+            >
+              <div className="flex items-center gap-2">
+                <code className="min-w-0 flex-1 break-all rounded border border-line bg-white px-2 py-1 text-xs">{mcpConnectorUrl}</code>
+                <button
+                  onClick={copy}
+                  className="shrink-0 rounded border border-line bg-white px-2 py-1 text-[11px] transition hover:bg-violet-50"
+                >
+                  {copied ? tr('Скопировано ✓', 'Copied ✓') : tr('Копировать', 'Copy')}
+                </button>
+              </div>
+            </AuthGate>
           </div>
 
           <div>
@@ -106,7 +106,6 @@ export default function McpConnectPanel() {
               <li>{tr('авторизуйтесь — инструменты меры появятся в чате', 'sign in — the measure tools appear in the chat')}</li>
             </ol>
           </div>
-          </AuthGate>
         </div>
       )}
     </section>
