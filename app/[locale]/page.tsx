@@ -37,7 +37,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
           <p className="mt-0.5 text-sm text-muted">{t('subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <VersionBadge />
           <ConnectAiGate />
           <AuthButtonGate />
           <LocaleSwitch />
@@ -50,8 +49,6 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
       <div className="space-y-4">
         <MethodologyBanner />
         <KpiStrip />
-        <AssumptionsPanel />
-        <GlobalAssumptionsPanel />
         <HowToRead />
         <McpConnectPanel />
 
@@ -65,6 +62,10 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             <MaccChart />
           </div>
         </section>
+
+        {/* Sliders sit under the curve they move. */}
+        <AssumptionsPanel />
+        <GlobalAssumptionsPanel />
 
         <section>
           <MeasuresTable />
@@ -83,6 +84,10 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
             layer; renders nothing when backend off) */}
         <AllComments className="rounded-lg border border-line bg-white p-4" />
       </div>
+
+      <footer className="mt-6 flex justify-center border-t border-line pt-4">
+        <VersionBadge />
+      </footer>
 
       <ProjectDrilldown />
     </main>
