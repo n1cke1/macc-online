@@ -7,3 +7,6 @@ export const routing = defineRouting({
 });
 
 export type Locale = (typeof routing.locales)[number];
+
+/** Canonical origin — needed for absolute hreflang/OG URLs in the static export. */
+export const SITE_URL = 'https://macc-online.pages.dev';
