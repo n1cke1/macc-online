@@ -8,6 +8,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick } from '@/lib/data';
 import { fmt, fmtMac, fmtInt, formatUnit } from '@/lib/format';
+import { citationEn } from '@/lib/citations';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver, poolCeilingKt } from '@/lib/measure/compute';
 import { type Ast, isLeafRef, isNode } from '@/lib/measure/ast';
@@ -122,8 +123,9 @@ function ProvLink({ url }: { url?: string }) {
 }
 
 function ProvText({ p }: { p?: Provenance }) {
+  const locale = useLocale();
   if (!p) return <>—</>;
-  return <>{p.source_type} · {p.confidence}{p.geo_applicability ? ` · ${p.geo_applicability}` : ''}{p.citation ? ` — ${p.citation}` : ''}{p.kz_reliability ? ` (KZ: ${p.kz_reliability})` : ''}<ProvLink url={p.url} /></>;
+  return <>{p.source_type} · {p.confidence}{p.geo_applicability ? ` · ${p.geo_applicability}` : ''}{p.citation ? ` — ${citationEn(p.citation, locale)}` : ''}{p.kz_reliability ? ` (KZ: ${p.kz_reliability})` : ''}<ProvLink url={p.url} /></>;
 }
 
 /**
@@ -132,12 +134,13 @@ function ProvText({ p }: { p?: Provenance }) {
  * This is the «sourcing» half of the measure-notation surfaced at each value's "?".
  */
 function SourceText({ s, nt }: { s?: ValueSource; nt: UiHelp }) {
+  const locale = useLocale();
   if (!s) return <span className="text-slate-400">—</span>;
   const b = s.binding;
   const e = b ? nt.enums.bindingMode[b.mode] : undefined;
   return (
     <>
-      <div>{s.provenance.source_type} · {s.provenance.confidence}{s.provenance.geo_applicability ? ` · ${s.provenance.geo_applicability}` : ''}{s.provenance.citation ? ` — ${s.provenance.citation}` : ''}{s.provenance.kz_reliability ? ` (KZ: ${s.provenance.kz_reliability})` : ''}<ProvLink url={s.provenance.url} /></div>
+      <div>{s.provenance.source_type} · {s.provenance.confidence}{s.provenance.geo_applicability ? ` · ${s.provenance.geo_applicability}` : ''}{s.provenance.citation ? ` — ${citationEn(s.provenance.citation, locale)}` : ''}{s.provenance.kz_reliability ? ` (KZ: ${s.provenance.kz_reliability})` : ''}<ProvLink url={s.provenance.url} /></div>
       {b && (
         <div className="mt-1">
           <span className="rounded bg-slate-100 px-1 font-medium" title={e?.help}>binding: {b.mode}</span>
@@ -236,7 +239,7 @@ export default function MeasureEditor() {
               : <span className="inline-block w-3 text-center text-slate-300">·</span>}
             <span>{refName(refKey)}</span>
             {c && <span className="text-slate-300" title={locale === 'en' ? 'computed' : 'вычислено'}>ƒ</span>}
-            {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${inp.provenance.citation}` : ''}<ProvLink url={inp.provenance.url} /></span>}
+            {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${citationEn(inp.provenance.citation, locale)}` : ''}<ProvLink url={inp.provenance.url} /></span>}
             {res && <span className="text-slate-400">{locale === 'en' ? 'resource EF' : 'EF ресурса'}</span>}
           </span>
           <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${formatUnit(unit, locale)}` : ''}</span>
@@ -301,7 +304,7 @@ export default function MeasureEditor() {
         <div className="mt-0.5 tabular-nums text-slate-500">{renderAst(def.quantity, nm)} = {renderAst(def.quantity, vl)} = <b>{num(d.value ?? 0)}</b></div>
         <div className="tabular-nums text-slate-500">{renderAst(def.predicate, vl)}</div>
         {ref && (
-          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
+          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${citationEn(ref.source.citation, locale)}` : ''}</div>
         )}
       </div>
     );

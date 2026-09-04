@@ -110,6 +110,7 @@ const UNIT_EN_EXACT: Record<string, string> = {
   'млн м³': 'million m³',
   'млрд м³/год': 'bn m³/yr',
   'млрд ткм': 'bn t·km',
+  'ткм': 't·km',
   'т': 't',
   'тыс. га': 'thousand ha',
   'тыс. голов': 'thousand head',

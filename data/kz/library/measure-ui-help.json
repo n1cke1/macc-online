@@ -31,7 +31,7 @@
       "help": "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several."
     },
     "subsector": {
-      "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Выбросы» sheet, extendable."
+      "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Emissions» sheet, extendable."
     },
     "produce": {
       "help": "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)."
@@ -61,7 +61,7 @@
       "help": "Maintenance unit CAPEX of a retired object; subtracted as avoided cost."
     },
     "share": {
-      "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Мероприятия» sheet."
+      "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Measures» sheet."
     },
     "activity": {
       "help": "Activity scale (head, million m³ …) the bottom-up reduction anchors to: reduction = activity × factor."

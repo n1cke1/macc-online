@@ -41,7 +41,7 @@
         }
       ]
     },
-    "authoring": "Установленная мощность × часы в году × КИУМ = годовая выработка энергии того же ресурса."
+    "authoring": "Installed capacity × hours per year × capacity factor = annual energy generated from the same resource."
   },
   "fuel_to_energy": {
     "id": "fuel_to_energy",
@@ -78,8 +78,8 @@
         }
       ]
     },
-    "carrier_rule": "lhv ОБЯЗАН быть res:$R#lhv — LHV того же ресурса, что и масса топлива.",
-    "authoring": "Масса топлива × его теплотворность (LHV) = энергосодержание; LHV берётся из реестра ресурса."
+    "carrier_rule": "lhv MUST be res:$R#lhv — the LHV of the same resource the fuel mass belongs to.",
+    "authoring": "Fuel mass × its heating value (LHV) = energy content; the LHV is taken from the resource registry."
   },
   "energy_to_co2": {
     "id": "energy_to_co2",
@@ -115,8 +115,8 @@
         }
       ]
     },
-    "carrier_rule": "ef ОБЯЗАН быть res:$R#ef — тот же носитель R, что у энергии (иначе ошибка класса kz-27).",
-    "authoring": "Энергия ресурса R × EF ТОГО ЖЕ R = CO₂. Взять EF другого ресурса — это ошибка носителя."
+    "carrier_rule": "ef MUST be res:$R#ef — the same carrier R the energy belongs to (otherwise the kz-27 class of error).",
+    "authoring": "Energy of resource R × the EF of THAT SAME R = CO₂. Taking another resource EF is a carrier error."
   },
   "fuel_switch_abatement": {
     "id": "fuel_switch_abatement",
@@ -168,7 +168,7 @@
         }
       ]
     },
-    "carrier_rule": "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; from — энергия R_old. Две цепочки своих ресурсов.",
-    "authoring": "Снижение = энергия замещаемого топлива × (EF замещаемого − EF нового). Оба EF — своих ресурсов."
+    "carrier_rule": "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; `from` is the energy of R_old. Two chains, each on its own resource.",
+    "authoring": "Abatement = energy of the displaced fuel × (displaced EF − new EF). Each EF belongs to its own resource."
   }
 }

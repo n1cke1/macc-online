@@ -4,6 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { dataset, sectorLabel, pick, itemAnchorKey } from '@/lib/data';
 import type { CostItem, PhysicalItem, LocalInput } from '@data/schema';
 import { fmt, fmtMac, fmtInt, fmtMt, fmtPct, formatUnit } from '@/lib/format';
+import { citationEn } from '@/lib/citations';
 import { useUi, useScenario } from '@/store';
 import AnchorComments from '@/components/collab/AnchorComments';
 import Commentable from '@/components/collab/Commentable';
@@ -217,7 +218,7 @@ function AssumptionRow({
     <li className="flex items-start justify-between gap-3 px-3 py-1.5 text-sm">
       <span className="min-w-0 text-slate-700">
         {pick(it.label, locale)}
-        {it.source && <span className="block truncate text-xs text-muted">{it.source}</span>}
+        {it.source && <span className="block truncate text-xs text-muted">{citationEn(it.source, locale)}</span>}
       </span>
       <Commentable id={`project:${projectId}:item:${itemAnchorKey(it.label)}`} label={pick(it.label, locale)}>
         <div className="shrink-0 text-right">

@@ -1,6 +1,6 @@
 {
   "country": "kz",
-  "modelVersion": "kz-sup-e34f32b217dd",
+  "modelVersion": "kz-sup-bdce1873f33a",
   "library": {
     "resources": {
       "renewable": {
@@ -1958,21 +1958,6 @@
         }
       },
       {
-        "id": "ind_coal_comb",
-        "key": "comb_factor",
-        "owner_kind": "resource",
-        "owner_ref": "coal",
-        "value": 96.1,
-        "unit": "кг CO₂/ГДж",
-        "provenance": {
-          "citation": "IPCC 2006 GL Vol.2 Table 1.4, суббитуминозный уголь (96 100 кг/ТДж)",
-          "confidence": "medium",
-          "source_type": "standard",
-          "kz_reliability": "КЗ энергоуголь преим. суббитуминозный; точность средняя, марка-зависима",
-          "geo_applicability": "global"
-        }
-      },
-      {
         "id": "ind_gas_comb",
         "key": "comb_factor",
         "owner_kind": "resource",
@@ -2204,6 +2189,21 @@
           "citation": "Уд. CAPEX модернизации угольной ТЭЦ — избегаемый (Расчёты in_4_1)",
           "confidence": "medium",
           "source_type": "expert_estimate",
+          "geo_applicability": "global"
+        }
+      },
+      {
+        "id": "ind_coal_comb",
+        "key": "comb_factor",
+        "owner_kind": "resource",
+        "owner_ref": "coal",
+        "value": 96.1,
+        "unit": "кг CO₂/ГДж",
+        "provenance": {
+          "citation": "IPCC 2006 GL Vol.2 Table 1.4, суббитуминозный уголь (96 100 кг/ТДж)",
+          "confidence": "medium",
+          "source_type": "standard",
+          "kz_reliability": "KZ steam coal is predominantly sub-bituminous; medium accuracy, grade-dependent",
           "geo_applicability": "global"
         }
       },
@@ -2842,7 +2842,7 @@
           "help": "The IPCC sector the measure belongs to (drives curve color/filter). CCS/CCUS may pick several."
         },
         "subsector": {
-          "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Выбросы» sheet, extendable."
+          "help": "Subsector within the sector (e.g. Energy → coal power). Base from the «Emissions» sheet, extendable."
         },
         "produce": {
           "help": "The product we produce, displacing conventional production. May be omitted for practices and capture (CCS)."
@@ -2872,7 +2872,7 @@
           "help": "Maintenance unit CAPEX of a retired object; subtracted as avoided cost."
         },
         "share": {
-          "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Мероприятия» sheet."
+          "help": "Sub-category coverage share (0–1). Reduction = sub-category baseline × share. Source — the «Measures» sheet."
         },
         "activity": {
           "help": "Activity scale (head, million m³ …) the bottom-up reduction anchors to: reduction = activity × factor."
@@ -3470,7 +3470,7 @@
             }
           ]
         },
-        "authoring": "Установленная мощность × часы в году × КИУМ = годовая выработка энергии того же ресурса."
+        "authoring": "Installed capacity × hours per year × capacity factor = annual energy generated from the same resource."
       },
       "fuel_to_energy": {
         "id": "fuel_to_energy",
@@ -3507,8 +3507,8 @@
             }
           ]
         },
-        "carrier_rule": "lhv ОБЯЗАН быть res:$R#lhv — LHV того же ресурса, что и масса топлива.",
-        "authoring": "Масса топлива × его теплотворность (LHV) = энергосодержание; LHV берётся из реестра ресурса."
+        "carrier_rule": "lhv MUST be res:$R#lhv — the LHV of the same resource the fuel mass belongs to.",
+        "authoring": "Fuel mass × its heating value (LHV) = energy content; the LHV is taken from the resource registry."
       },
       "energy_to_co2": {
         "id": "energy_to_co2",
@@ -3544,8 +3544,8 @@
             }
           ]
         },
-        "carrier_rule": "ef ОБЯЗАН быть res:$R#ef — тот же носитель R, что у энергии (иначе ошибка класса kz-27).",
-        "authoring": "Энергия ресурса R × EF ТОГО ЖЕ R = CO₂. Взять EF другого ресурса — это ошибка носителя."
+        "carrier_rule": "ef MUST be res:$R#ef — the same carrier R the energy belongs to (otherwise the kz-27 class of error).",
+        "authoring": "Energy of resource R × the EF of THAT SAME R = CO₂. Taking another resource EF is a carrier error."
       },
       "fuel_switch_abatement": {
         "id": "fuel_switch_abatement",
@@ -3597,8 +3597,8 @@
             }
           ]
         },
-        "carrier_rule": "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; from — энергия R_old. Две цепочки своих ресурсов.",
-        "authoring": "Снижение = энергия замещаемого топлива × (EF замещаемого − EF нового). Оба EF — своих ресурсов."
+        "carrier_rule": "ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; `from` is the energy of R_old. Two chains, each on its own resource.",
+        "authoring": "Abatement = energy of the displaced fuel × (displaced EF − new EF). Each EF belongs to its own resource."
       }
     }
   },

@@ -65,7 +65,7 @@ export const ATOMIC_BRIDGES: Record<string, Bridge> = {
     ],
     to: { dim: ENERGY, carrier: '$R' },
     expr: { op: 'mul', args: [{ slot: 'from' }, { slot: 'hours' }, { slot: 'cf' }] },
-    authoring: 'Установленная мощность × часы в году × КИУМ = годовая выработка энергии того же ресурса.',
+    authoring: 'Installed capacity × hours per year × capacity factor = annual energy generated from the same resource.',
   },
   // mass of fuel × its LHV = energy content of that fuel (carries the fuel as its resource).
   fuel_to_energy: {
@@ -74,8 +74,8 @@ export const ATOMIC_BRIDGES: Record<string, Bridge> = {
     via: [{ name: 'lhv', dim: LHV, indicator: 'res:$R#lhv' }],
     to: { dim: ENERGY, carrier: '$R' },
     expr: { op: 'mul', args: [{ slot: 'from' }, { slot: 'lhv' }] },
-    carrier_rule: 'lhv ОБЯЗАН быть res:$R#lhv — LHV того же ресурса, что и масса топлива.',
-    authoring: 'Масса топлива × его теплотворность (LHV) = энергосодержание; LHV берётся из реестра ресурса.',
+    carrier_rule: 'lhv MUST be res:$R#lhv — the LHV of the same resource the fuel mass belongs to.',
+    authoring: 'Fuel mass × its heating value (LHV) = energy content; the LHV is taken from the resource registry.',
   },
   // energy of resource R × EF of R = CO₂. The carrier lock forbids an EF of a different resource.
   energy_to_co2: {
@@ -84,8 +84,8 @@ export const ATOMIC_BRIDGES: Record<string, Bridge> = {
     via: [{ name: 'ef', dim: EF, indicator: 'res:$R#ef' }],
     to: { dim: CO2 },
     expr: { op: 'mul', args: [{ slot: 'from' }, { slot: 'ef' }] },
-    carrier_rule: 'ef ОБЯЗАН быть res:$R#ef — тот же носитель R, что у энергии (иначе ошибка класса kz-27).',
-    authoring: 'Энергия ресурса R × EF ТОГО ЖЕ R = CO₂. Взять EF другого ресурса — это ошибка носителя.',
+    carrier_rule: 'ef MUST be res:$R#ef — the same carrier R the energy belongs to (otherwise the kz-27 class of error).',
+    authoring: 'Energy of resource R × the EF of THAT SAME R = CO₂. Taking another resource EF is a carrier error.',
   },
 };
 
@@ -104,8 +104,8 @@ export const COMPOSITE_BRIDGES: Record<string, Bridge> = {
       op: 'mul',
       args: [{ slot: 'from' }, { op: 'sub', args: [{ slot: 'ef_old' }, { slot: 'ef_new' }] }],
     },
-    carrier_rule: 'ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; from — энергия R_old. Две цепочки своих ресурсов.',
-    authoring: 'Снижение = энергия замещаемого топлива × (EF замещаемого − EF нового). Оба EF — своих ресурсов.',
+    carrier_rule: 'ef_old=res:$R_old#ef, ef_new=res:$R_new#ef; `from` is the energy of R_old. Two chains, each on its own resource.',
+    authoring: 'Abatement = energy of the displaced fuel × (displaced EF − new EF). Each EF belongs to its own resource.',
   },
 };
 

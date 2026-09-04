@@ -5,6 +5,7 @@
 // English-base `en===ru` with no Cyrillic is allowed; only Cyrillic-in-en is a failure.)
 import { readFileSync } from 'node:fs';
 import { formatUnit } from '../src/lib/format';
+import { citationEn } from '../src/lib/citations';
 
 const read = (p: string) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url), 'utf8'));
 const CYR = /[а-яА-ЯёЁ]/;
@@ -53,7 +54,7 @@ const collectUnits = (o: unknown): void => {
   if (Array.isArray(o)) return o.forEach(collectUnits);
   if (!o || typeof o !== 'object') return;
   for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
-    if (k === 'unit' && typeof v === 'string' && v) units.add(v);
+    if (k.endsWith('unit') && typeof v === 'string' && v) units.add(v);
     else collectUnits(v);
   }
 };
@@ -83,6 +84,43 @@ const missPairEn = pairs.filter((p) => !p.en);
 const cyrPairEn = pairs.filter((p) => p.en && CYR.test(p.en));
 ok(missPairEn.length === 0, `every {ru,…} pair has an en (${pairs.length} pairs, ${missPairEn.length} missing${missPairEn.length ? ': ' + missPairEn.slice(0, 5).map((p) => p.path).join(', ') : ''})`);
 ok(cyrPairEn.length === 0, `no Cyrillic in any pair's en (${cyrPairEn.length}${cyrPairEn.length ? ': ' + cyrPairEn.slice(0, 3).map((p) => p.path).join(', ') : ''})`);
+
+// 5. provenance citations — the line under every slider and every leaf of the formula tree.
+// `citation` is a plain RU string in the notation, so /en resolves it through the curated
+// overlay (data/kz/citations.en.json). A citation authored since the last curation pass has
+// no entry and would fall back to Russian on the page — fail here instead.
+console.log('5. provenance citations (en overlay)');
+const cites = new Set<string>();
+const collectCites = (o: unknown): void => {
+  if (Array.isArray(o)) return o.forEach(collectCites);
+  if (!o || typeof o !== 'object') return;
+  for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
+    if ((k === 'citation' || k === 'source') && typeof v === 'string' && v) cites.add(v);
+    else collectCites(v);
+  }
+};
+[read('data/kz/model.data.json'), read('data/kz/measures.bundle.json')].forEach(collectCites);
+const ruCites = [...cites].filter((c) => CYR.test(c));
+const uncovered = ruCites.filter((c) => CYR.test(citationEn(c, 'en') ?? c));
+ok(uncovered.length === 0, `every RU citation has an en overlay (${ruCites.length} RU, ${uncovered.length} uncovered${uncovered.length ? ': ' + uncovered.slice(0, 3).map((c) => c.slice(0, 40)).join(' | ') : ''})`);
+
+// 6. catch-all: nothing else in the bundle may hold Cyrillic on the en surface. `ru` is the
+// RU half of a pair; `*unit` is check 3's job; `citation`/`source` is check 5's. Anything
+// else — a library description, an authoring rule, a reliability note — is a single
+// English-base field, and Russian in it reaches /en verbatim.
+console.log('6. no stray Cyrillic outside the covered fields');
+const strays: string[] = [];
+const COVERED = (k: string) => k === 'ru' || k.endsWith('unit') || k === 'citation' || k === 'source';
+const scanStrays = (o: unknown, path: string): void => {
+  if (Array.isArray(o)) return o.forEach((v, i) => scanStrays(v, `${path}[${i}]`));
+  if (!o || typeof o !== 'object') return;
+  for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
+    if (typeof v === 'string') { if (CYR.test(v) && !COVERED(k)) strays.push(`${path}.${k}`); }
+    else scanStrays(v, `${path}.${k}`);
+  }
+};
+scanStrays(read('data/kz/measures.bundle.json'), 'bundle');
+ok(strays.length === 0, `no Cyrillic in a single-language field (${strays.length}${strays.length ? ': ' + strays.slice(0, 4).join(', ') : ''})`);
 
 console.log(`\n${failures === 0 ? 'PASS' : `FAIL (${failures})`}`);
 process.exit(failures === 0 ? 0 : 1);

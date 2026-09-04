@@ -10,6 +10,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { pick, sectorLabel } from '@/lib/data';
 import { fmt, fmtMac, fmtInt, formatUnit } from '@/lib/format';
+import { citationEn } from '@/lib/citations';
 import { renderAst, evalAst } from '@/lib/measure/eval';
 import { makeResolver, compute, poolCeilingKt } from '@/lib/measure/compute';
 import { validate, type CheckId, type CheckStatus, type PanelKey, type PanelStatus } from '@/lib/measure/validate';
@@ -195,7 +196,7 @@ function MeasureBody({
               : <span className="inline-block w-3 text-center text-slate-300">·</span>}
             <span>{refName(refKey)}</span>
             {c && <span className="text-slate-300" title={locale === 'en' ? 'computed' : 'вычислено'}>ƒ</span>}
-            {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${inp.provenance.citation}` : ''}<ProvLink url={inp.provenance.url} /></span>}
+            {inp && <span className="text-slate-400">{inp.provenance.source_type}/{inp.provenance.confidence}{inp.provenance.citation ? ` — ${citationEn(inp.provenance.citation, locale)}` : ''}<ProvLink url={inp.provenance.url} /></span>}
             {res && <span className="text-slate-400">{locale === 'en' ? 'resource EF' : 'EF ресурса'}</span>}
           </span>
           <span className="tabular-nums text-slate-600">{val != null ? num(val, 4) : '—'}{unit ? ` ${formatUnit(unit, locale)}` : ''}</span>
@@ -298,7 +299,7 @@ function MeasureBody({
         <div className="mt-0.5 tabular-nums text-slate-500">{renderAst(def.quantity, nm)} = {renderAst(def.quantity, vl)} = <b>{num(d.value ?? 0)}</b></div>
         <div className="tabular-nums text-slate-500">{renderAst(def.predicate, vl)}</div>
         {ref && (
-          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${ref.source.citation}` : ''}</div>
+          <div className="mt-0.5 text-slate-500">{t('field.reference')}: <span className="rounded bg-slate-100 px-1 font-medium">{ref.id}</span> [{ref.range.join(' – ')}] {ref.unit ? formatUnit(ref.unit, locale) : ''}{ref.source?.citation ? ` · ${citationEn(ref.source.citation, locale)}` : ''}</div>
         )}
       </div>
     );
