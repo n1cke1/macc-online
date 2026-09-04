@@ -3,15 +3,27 @@
 // Cloudflare Worker), so connecting is just adding ONE URL as a custom connector — the
 // app does the OAuth sign-in itself; no token to copy, nothing that expires. The URL is
 // public (the connector address), so this is shown to everyone (no auth gate).
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocale } from 'next-intl';
 import { mcpConnectorUrl } from '@/lib/config';
+import { OPEN_CONNECT_PANEL } from '@/lib/connect-panel';
 
 export default function McpConnectPanel() {
   const locale = useLocale() as 'ru' | 'en';
   const tr = (ru: string, en: string) => (locale === 'en' ? en : ru);
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const ref = useRef<HTMLElement>(null);
+
+  // The header CTA sends people here — expand and bring the panel into view.
+  useEffect(() => {
+    const onOpen = () => {
+      setOpen(true);
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    window.addEventListener(OPEN_CONNECT_PANEL, onOpen);
+    return () => window.removeEventListener(OPEN_CONNECT_PANEL, onOpen);
+  }, []);
 
   // Hidden until the connector URL is configured (NEXT_PUBLIC_MCP_URL).
   if (!mcpConnectorUrl) return null;
@@ -23,7 +35,7 @@ export default function McpConnectPanel() {
   };
 
   return (
-    <section className="rounded-lg border border-violet-200 bg-violet-50/40 p-4">
+    <section ref={ref} className="scroll-mt-4 rounded-lg border border-violet-200 bg-violet-50/40 p-4">
       <button
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}

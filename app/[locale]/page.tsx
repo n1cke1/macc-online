@@ -18,6 +18,7 @@ import AuthButtonGate from '@/components/collab/AuthButtonGate';
 import AllComments from '@/components/collab/AllComments';
 import MeasureDrilldownGate from '@/components/measure/MeasureDrilldownGate';
 import McpConnectPanel from '@/components/measure/McpConnectPanel';
+import ConnectAiGate from '@/components/measure/ConnectAiGate';
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -37,6 +38,7 @@ export default async function Page({ params }: { params: Promise<{ locale: strin
         </div>
         <div className="flex items-center gap-2">
           <VersionBadge />
+          <ConnectAiGate />
           <AuthButtonGate />
           <LocaleSwitch />
         </div>
