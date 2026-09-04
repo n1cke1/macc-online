@@ -4,6 +4,7 @@
 // stay key-for-key in sync. (Library object/tech RU names are a separate, deferred layer —
 // English-base `en===ru` with no Cyrillic is allowed; only Cyrillic-in-en is a failure.)
 import { readFileSync } from 'node:fs';
+import { formatUnit } from '../src/lib/format';
 
 const read = (p: string) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url), 'utf8'));
 const CYR = /[а-яА-ЯёЁ]/;
@@ -42,6 +43,46 @@ const missDomEn = dom.filter((o) => o.en == null || o.en === '');
 const cyrDomEn = dom.filter((o) => o.en && CYR.test(o.en));
 ok(missDomEn.length === 0, `every domain {ru,en} has an en (${missDomEn.length} missing)`);
 ok(cyrDomEn.length === 0, `no Cyrillic leaked into a domain en (${cyrDomEn.length}${cyrDomEn.length ? ': ' + cyrDomEn.slice(0, 3).map((o) => o.en).join(' | ') : ''})`);
+
+// 3. units — every `unit` the baked curve ships must render Cyrillic-free on /en.
+// formatUnit() falls back to a token pass for unseen units, so a new unit authored in
+// Supabase surfaces here instead of on the page.
+console.log('3. physical units render in en');
+const units = new Set<string>();
+const collectUnits = (o: unknown): void => {
+  if (Array.isArray(o)) return o.forEach(collectUnits);
+  if (!o || typeof o !== 'object') return;
+  for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
+    if (k === 'unit' && typeof v === 'string' && v) units.add(v);
+    else collectUnits(v);
+  }
+};
+[read('data/kz/model.data.json'), read('data/kz/measures.bundle.json')].forEach(collectUnits);
+const badUnits = [...units].filter((u) => CYR.test(formatUnit(u, 'en')));
+ok(badUnits.length === 0, `every unit renders Cyrillic-free on /en (${units.size} distinct, ${badUnits.length} failing${badUnits.length ? ': ' + badUnits.slice(0, 5).join(', ') : ''})`);
+
+// 4/5. every {ru,en} pair in the bundle, not just the five domain fields of check 2 —
+// computed labels arrive from the MCP with `ru` only, and the library's English-base rows
+// can carry RU text straight onto the en surface. (The provenance layer — `citation`,
+// `localInputs[].source` — is a plain `string` with no en slot at all; that is a separate
+// epic, and this gate deliberately does not claim to cover it.)
+console.log('4. every {ru,en} pair in the bundle');
+const pairs: Array<{ path: string; ru?: string; en?: string }> = [];
+const collectPairs = (o: unknown, path: string): void => {
+  if (Array.isArray(o)) return o.forEach((v, i) => collectPairs(v, `${path}[${i}]`));
+  if (!o || typeof o !== 'object') return;
+  const rec = o as Record<string, unknown>;
+  if (typeof rec.ru === 'string' && ('en' in rec || Object.keys(rec).length === 1)) {
+    pairs.push({ path, ru: rec.ru, en: typeof rec.en === 'string' ? rec.en : undefined });
+    return;
+  }
+  for (const [k, v] of Object.entries(rec)) collectPairs(v, `${path}.${k}`);
+};
+collectPairs(read('data/kz/measures.bundle.json'), 'bundle');
+const missPairEn = pairs.filter((p) => !p.en);
+const cyrPairEn = pairs.filter((p) => p.en && CYR.test(p.en));
+ok(missPairEn.length === 0, `every {ru,…} pair has an en (${pairs.length} pairs, ${missPairEn.length} missing${missPairEn.length ? ': ' + missPairEn.slice(0, 5).map((p) => p.path).join(', ') : ''})`);
+ok(cyrPairEn.length === 0, `no Cyrillic in any pair's en (${cyrPairEn.length}${cyrPairEn.length ? ': ' + cyrPairEn.slice(0, 3).map((p) => p.path).join(', ') : ''})`);
 
 console.log(`\n${failures === 0 ? 'PASS' : `FAIL (${failures})`}`);
 process.exit(failures === 0 ? 0 : 1);
